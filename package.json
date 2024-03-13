@@ -1,7 +1,7 @@
 {
   "name": "@azify/aziface-mobile",
   "version": "0.0.1",
-  "description": "A Aziface sdk adapter to react native.  📱",
+  "description": "A Aziface sdk adapter to react native. 📱",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -39,11 +39,6 @@
     "podspec": "pod ipc spec aziface-mobile-sdk.podspec",
     "test:clean": "jest --clearCache"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
   "repository": "https://github.com/azifydev/aziface-mobile",
   "author": "Azify <nayaradias743@gmail.com> (https://github.com/azifydev)",
   "license": "MIT",
