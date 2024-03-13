@@ -31,4 +31,4 @@ jobs:
           npm ci
 
       - name: Publish Release
-        run: npm run release
+        run: npx semantic-release --ci
