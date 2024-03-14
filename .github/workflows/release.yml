@@ -26,9 +26,10 @@ jobs:
         uses: c-hive/gha-npm-cache@v1
 
       - name: Install dependencies
-        run: |
-          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          npm ci
+        run: npm ci
 
       - name: Publish Release
         run: npx semantic-release --ci
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
