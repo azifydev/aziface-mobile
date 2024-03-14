@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C21A3AC2BA330540083BDB0 /* FaceTecSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C21A3AB2BA330540083BDB0 /* FaceTecSDK.xcframework */; };
 		7C435D612BA1D46D00A5ADCD /* AzifaceMobileSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
 		7C435D6A2BA1D69000A5ADCD /* AzifaceMobileSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */; };
-		7CE3FB352BA0AE9B004C2D09 /* FaceTecSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CE3FB342BA0AE9B004C2D09 /* FaceTecSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F1C9802AB2257700A8261D /* AziFaceViewController.swift */; };
 		CEBC6E982AA66F5800A76DE0 /* FaceTecUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6E972AA66F5800A76DE0 /* FaceTecUtilities.swift */; };
 		CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA42AA66FDD00A76DE0 /* ThemeHelpers.swift */; };
@@ -37,11 +37,11 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libAzifaceMobileSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAzifaceMobileSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C21A3AB2BA330540083BDB0 /* FaceTecSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FaceTecSDK.xcframework; sourceTree = "<group>"; };
 		7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzifaceMobileSdk.swift; sourceTree = "<group>"; };
 		7C435D622BA1D56900A5ADCD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzifaceMobileSdk.m; sourceTree = "<group>"; };
 		7C435D6C2BA1D8DB00A5ADCD /* AzifaceMobileSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AzifaceMobileSdk-Bridging-Header.h"; sourceTree = "<group>"; };
-		7CE3FB342BA0AE9B004C2D09 /* FaceTecSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FaceTecSDK.framework; sourceTree = "<group>"; };
 		84F1C9802AB2257700A8261D /* AziFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AziFaceViewController.swift; sourceTree = "<group>"; };
 		CEBC6E972AA66F5800A76DE0 /* FaceTecUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTecUtilities.swift; sourceTree = "<group>"; };
 		CEBC6EA42AA66FDD00A76DE0 /* ThemeHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeHelpers.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CE3FB352BA0AE9B004C2D09 /* FaceTecSDK.framework in Frameworks */,
+				7C21A3AC2BA330540083BDB0 /* FaceTecSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,13 +80,21 @@
 				CEBC6EA22AA66FC900A76DE0 /* Processors */,
 				CEBC6E962AA66F4E00A76DE0 /* Utilities */,
 				CEBC6E932AA66F4000A76DE0 /* ViewController */,
-				7CE3FB342BA0AE9B004C2D09 /* FaceTecSDK.framework */,
 				7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */,
 				7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */,
 				7C435D622BA1D56900A5ADCD /* Config.swift */,
+				7C21A3AA2BA330360083BDB0 /* Frameworks */,
 				7C435D6C2BA1D8DB00A5ADCD /* AzifaceMobileSdk-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		7C21A3AA2BA330360083BDB0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C21A3AB2BA330540083BDB0 /* FaceTecSDK.xcframework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		CEBC6E932AA66F4000A76DE0 /* ViewController */ = {

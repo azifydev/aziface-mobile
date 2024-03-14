@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "11.0" }
   s.source       = { :git => "https://github.com/azifydev/aziface-mobile.git", :tag => "#{s.version}" }
 
-  s.vendored_frameworks = "ios/Frameworks/FaceTecSDK.framework"
+  s.vendored_frameworks = "ios/Frameworks/FaceTecSDK.xcframework"
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.requires_arc = true
 
