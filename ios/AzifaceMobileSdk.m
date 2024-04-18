@@ -17,7 +17,13 @@
 RCT_EXTERN_METHOD(initializeSdk:(NSDictionary *)params
                   headers:(NSDictionary *)headers
                   callback:(RCTResponseSenderBlock)callback)
-RCT_EXTERN_METHOD(handleFaceUser:(NSDictionary *)config
+RCT_EXTERN_METHOD(handleLivenessCheck:(NSDictionary *)data
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(handleEnrollUser:(NSDictionary *)data
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(handleAuthenticateUser:(NSDictionary *)data
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 RCT_EXTERN_METHOD(handlePhotoIDMatch:(NSDictionary *)data
@@ -30,4 +36,3 @@ RCT_EXTERN_METHOD(handleTheme:(NSDictionary *)options)
 RCT_EXTERN_METHOD(supportedEvents)
 
 @end
-

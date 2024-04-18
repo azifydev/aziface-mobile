@@ -11,7 +11,6 @@ import FaceTecSDK
 import LocalAuthentication
 
 class AziFaceViewController: UIViewController, URLSessionDelegate {
-    private let exceptionHttpMessage = "Exception raised while attempting HTTPS call."
     var isSuccess: Bool! = false
     var latestExternalDatabaseRefID: String = ""
     var latestSessionResult: FaceTecSessionResult!
@@ -24,24 +23,31 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         super.viewDidLoad()
     }
 
-    private func generateUUID() -> String {
-        return "ios_app_" + UUID().uuidString
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return FaceTecUtilities.DefaultStatusBarStyle
-    }
-    
-    func onFaceUser(_ config: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    func onLivenessCheck(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
 
         getSessionToken() { sessionToken in
             self.resetLatestResults()
-            let faceConfig = FaceConfig(config: config)
-            if (faceConfig.isWhichFlow(KeyFaceProcessor.enrollMessage, key: faceConfig.getKey() ?? "")) {
-                self.latestExternalDatabaseRefID = self.generateUUID()
-            }
-            self.latestProcessor = FaceProcessor(sessionToken: sessionToken, fromViewController: self, faceConfig: faceConfig)
+            self.latestProcessor = LivenessCheckProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
+        }
+    }
+
+    func onEnrollUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        setProcessorPromise(resolve, rejecter: reject);
+
+        getSessionToken() { sessionToken in
+            self.resetLatestResults()
+            self.latestExternalDatabaseRefID = "ios_capitual_app_" + UUID().uuidString
+            self.latestProcessor = EnrollmentProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
+        }
+    }
+
+    func onAuthenticateUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        setProcessorPromise(resolve, rejecter: reject);
+
+        getSessionToken() { sessionToken in
+            self.resetLatestResults()
+            self.latestProcessor = AuthenticateProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
         }
     }
 
@@ -50,7 +56,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
 
         getSessionToken() { sessionToken in
             self.resetLatestResults()
-            self.latestExternalDatabaseRefID = self.generateUUID()
+            self.latestExternalDatabaseRefID = "ios_capitual_app_" + UUID().uuidString
             self.latestProcessor = PhotoIDMatchProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
         }
     }
@@ -65,11 +71,11 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     }
 
     func onComplete() {
+        UIApplication.shared.statusBarStyle = FaceTecUtilities.DefaultStatusBarStyle;
+
         if self.latestProcessor != nil {
             self.isSuccess = self.latestProcessor.isSuccess();
         }
-        
-        setNeedsStatusBarAppearanceUpdate()
 
         AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
 
@@ -111,23 +117,26 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode < 200 || httpResponse.statusCode >= 299 {
+                    print("Exception raised while attempting HTTPS call. Status code: \(httpResponse.statusCode)");
                     if self.processorRejecter != nil {
-                        self.processorRejecter("Exception raised while attempting to parse JSON result.", "JSONError", nil);
+                        self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                     }
                     return
                 }
             }
 
             if let error = error {
+                print("Exception raised while attempting HTTPS call.")
                 if self.processorRejecter != nil {
-                    self.processorRejecter(self.exceptionHttpMessage, "HTTPSError", nil);
+                    self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                 }
                 return
             }
 
             guard let data = data else {
+                print("Exception raised while attempting HTTPS call.")
                 if self.processorRejecter != nil {
-                    self.processorRejecter(self.exceptionHttpMessage, "HTTPSError", nil);
+                    self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                 }
                 return
             }
@@ -137,14 +146,9 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
                     sessionTokenCallback(responseJSONObj["sessionToken"] as! String)
                     return
                 } else {
-                    var errorMessage: String!
-                    if ((responseJSONObj["errorMessage"] as? String) != nil) {
-                        errorMessage = responseJSONObj["errorMessage"] as! String
-                    } else {
-                        errorMessage = "Response JSON is missing sessionToken."
-                    }
+                    print("Exception raised while attempting HTTPS call.")
                     if self.processorRejecter != nil {
-                        self.processorRejecter(errorMessage, "JSONError", nil);
+                        self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                     }
                 }
             }

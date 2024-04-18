@@ -11,6 +11,9 @@
 		7C435D612BA1D46D00A5ADCD /* AzifaceMobileSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
 		7C435D6A2BA1D69000A5ADCD /* AzifaceMobileSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */; };
+		7C9ECD0A2BD1449C00638710 /* LivenessCheckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */; };
+		7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */; };
+		7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */; };
 		84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F1C9802AB2257700A8261D /* AziFaceViewController.swift */; };
 		CEBC6E982AA66F5800A76DE0 /* FaceTecUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6E972AA66F5800A76DE0 /* FaceTecUtilities.swift */; };
 		CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA42AA66FDD00A76DE0 /* ThemeHelpers.swift */; };
@@ -18,9 +21,6 @@
 		CEBC6EAF2AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */; };
 		CEBC6EB02AA66FF300A76DE0 /* PhotoIDScanProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */; };
 		CEE455C32AA6869C0063FD54 /* ThemeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE455C22AA6869C0063FD54 /* ThemeUtils.swift */; };
-		CEE7AF452AB09DDF00E90A50 /* FaceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AF442AB09DDF00E90A50 /* FaceConfig.swift */; };
-		CEE7AF472AB09E7000E90A50 /* FaceProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AF462AB09E7000E90A50 /* FaceProcessor.swift */; };
-		CEE7AF492AB09FBD00E90A50 /* KeyFaceProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE7AF482AB09FBD00E90A50 /* KeyFaceProcessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +42,9 @@
 		7C435D622BA1D56900A5ADCD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzifaceMobileSdk.m; sourceTree = "<group>"; };
 		7C435D6C2BA1D8DB00A5ADCD /* AzifaceMobileSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AzifaceMobileSdk-Bridging-Header.h"; sourceTree = "<group>"; };
+		7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivenessCheckProcessor.swift; sourceTree = "<group>"; };
+		7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentProcessor.swift; sourceTree = "<group>"; };
+		7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateProcessor.swift; sourceTree = "<group>"; };
 		84F1C9802AB2257700A8261D /* AziFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AziFaceViewController.swift; sourceTree = "<group>"; };
 		CEBC6E972AA66F5800A76DE0 /* FaceTecUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTecUtilities.swift; sourceTree = "<group>"; };
 		CEBC6EA42AA66FDD00A76DE0 /* ThemeHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeHelpers.swift; sourceTree = "<group>"; };
@@ -49,9 +52,6 @@
 		CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDMatchProcessor.swift; sourceTree = "<group>"; };
 		CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDScanProcessor.swift; sourceTree = "<group>"; };
 		CEE455C22AA6869C0063FD54 /* ThemeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeUtils.swift; sourceTree = "<group>"; };
-		CEE7AF442AB09DDF00E90A50 /* FaceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceConfig.swift; sourceTree = "<group>"; };
-		CEE7AF462AB09E7000E90A50 /* FaceProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceProcessor.swift; sourceTree = "<group>"; };
-		CEE7AF482AB09FBD00E90A50 /* KeyFaceProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFaceProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,9 +120,9 @@
 				CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */,
 				CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */,
 				CEBC6EA72AA66FF300A76DE0 /* ProcesingDelegate.swift */,
-				CEE7AF442AB09DDF00E90A50 /* FaceConfig.swift */,
-				CEE7AF462AB09E7000E90A50 /* FaceProcessor.swift */,
-				CEE7AF482AB09FBD00E90A50 /* KeyFaceProcessor.swift */,
+				7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */,
+				7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */,
+				7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */,
 			);
 			path = Processors;
 			sourceTree = "<group>";
@@ -194,18 +194,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBC6E982AA66F5800A76DE0 /* FaceTecUtilities.swift in Sources */,
-				CEE7AF452AB09DDF00E90A50 /* FaceConfig.swift in Sources */,
 				CEE455C32AA6869C0063FD54 /* ThemeUtils.swift in Sources */,
 				CEBC6EAD2AA66FF300A76DE0 /* ProcesingDelegate.swift in Sources */,
 				CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */,
+				7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */,
 				7C435D6A2BA1D69000A5ADCD /* AzifaceMobileSdk.m in Sources */,
 				7C435D632BA1D56900A5ADCD /* Config.swift in Sources */,
-				CEE7AF492AB09FBD00E90A50 /* KeyFaceProcessor.swift in Sources */,
 				7C435D612BA1D46D00A5ADCD /* AzifaceMobileSdk.swift in Sources */,
-				CEE7AF472AB09E7000E90A50 /* FaceProcessor.swift in Sources */,
 				84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */,
 				CEBC6EAF2AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift in Sources */,
+				7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */,
 				CEBC6EB02AA66FF300A76DE0 /* PhotoIDScanProcessor.swift in Sources */,
+				7C9ECD0A2BD1449C00638710 /* LivenessCheckProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

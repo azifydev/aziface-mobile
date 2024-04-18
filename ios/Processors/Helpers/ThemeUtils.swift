@@ -10,7 +10,7 @@ import Foundation
 import FaceTecSDK
 
 public class ThemeUtils {
-    private func themeAndKeyDoesNotExists(_ key: String) -> Bool {
+     private func themeAndKeyDoesNotExists(_ key: String) -> Bool {
         return Config.Theme == nil || Config.Theme?[key] == nil;
     }
     
@@ -252,5 +252,5 @@ public class ThemeUtils {
         }
         
         return defaultStatusBar;
-    }
+    } 
 }

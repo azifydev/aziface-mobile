@@ -8,12 +8,14 @@ import {
   ScrollView,
   NativeEventEmitter,
 } from 'react-native';
-import AzifaceSdk, {
-  AzifaceSdkProps,
+import {
+  AzifaceMobileSdk,
+  authenticate,
+  enroll,
   initialize,
-  faceMatch,
   photoMatch,
 } from '@azify/aziface-mobile';
+// import getFacetecConfig, { FACETEC_URI } from './apiAziface';
 
 export default function App() {
   const init = async () => {
@@ -23,6 +25,7 @@ export default function App() {
      * functions can work!
      *
      * */
+
     const headers = {
       'clientInfo': 'YUOR_CLIENT_INFO',
       'contentType': 'YOUR_CONTENT_TYPE',
@@ -45,10 +48,9 @@ export default function App() {
       headers,
     });
 
-    console.log(isInitialized);
+    console.log('isInitialized', isInitialized);
   };
-
-  const emitter = new NativeEventEmitter(AzifaceSdk);
+  const emitter = new NativeEventEmitter(AzifaceMobileSdk);
   emitter.addListener('onCloseModal', (event: boolean) =>
     console.log('onCloseModal', event)
   );
@@ -56,20 +58,30 @@ export default function App() {
   const onPressPhotoMatch = async () => {
     try {
       const isSuccess = await photoMatch();
+      console.log('onPressPhotoMatch', isSuccess);
       console.log(isSuccess);
     } catch (error: any) {
+      console.error('ERROR onPressPhotoMatch', error.message);
       console.error(error.message);
     }
   };
 
-  const onPressFaceMatch = async (
-    type: AzifaceSdkProps.MatchType,
-    data?: AzifaceSdkProps.MatchData
-  ) => {
+  const onPressEnroll = async () => {
     try {
-      const isSuccess = await faceMatch(type, data);
+      const isSuccess = await enroll();
+      console.log('onPressEnroll', isSuccess);
+    } catch (error: any) {
+      console.error('ERROR onPressEnroll', error.message);
+    }
+  };
+
+  const onPressAuthenticate = async () => {
+    try {
+      const isSuccess = await authenticate();
+      console.log('onPressAuthenticate', isSuccess);
       console.log(isSuccess);
     } catch (error: any) {
+      console.error('ERROR onPressAuthenticate', error.message);
       console.error(error.message);
     }
   };
@@ -83,23 +95,11 @@ export default function App() {
         <TouchableOpacity style={styles.button} onPress={onPressPhotoMatch}>
           <Text style={styles.text}>Open Photo Match</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={async () => await onPressFaceMatch('enroll', {})}
-        >
+        <TouchableOpacity style={styles.button} onPress={onPressEnroll}>
           <Text style={styles.text}>Open Enroll</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={async () => await onPressFaceMatch('authenticate', {})}
-        >
+        <TouchableOpacity style={styles.button} onPress={onPressAuthenticate}>
           <Text style={styles.text}>Open Authenticate</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={async () => await onPressFaceMatch('liveness', {})}
-        >
-          <Text style={styles.text}>Open Liveness</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: 'rgb(0, 94, 255)',
+    backgroundColor: '#4a68b3',
     padding: 20,
     borderRadius: 15,
     alignItems: 'center',

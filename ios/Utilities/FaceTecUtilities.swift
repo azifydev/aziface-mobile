@@ -9,30 +9,27 @@
 import Foundation
 
 class FaceTecUtilities: NSObject {
-    private static let CapThemeUtils: ThemeUtils! = ThemeUtils();
+    private static let AziThemeUtils: ThemeUtils! = ThemeUtils();
     public static let DefaultStatusBarStyle = UIStatusBarStyle.default;
 
     private static func preferredStatusBarStyle() -> UIStatusBarStyle {
         if #available(iOS 13, *) {
-            return CapThemeUtils.handleStatusBarStyle("defaultStatusBarColorIos")
+            let statusBarColor: UIStatusBarStyle = AziThemeUtils.handleStatusBarStyle("defaultStatusBarColorIos")
+            return statusBarColor;
         } else {
-            return DefaultStatusBarStyle
+            return DefaultStatusBarStyle;
         }
     }
 
     public static func getTopMostViewController() -> UIViewController? {
-        if let topViewController = UIApplication.shared.windows.first?.rootViewController {
-            var topMostViewController = topViewController
+        UIApplication.shared.statusBarStyle = preferredStatusBarStyle();
 
-            while let presentedViewController = topMostViewController.presentedViewController {
-                topMostViewController = presentedViewController
-            }
+        var topMostViewController = UIApplication.shared.windows[0].rootViewController;
 
-            topMostViewController.setNeedsStatusBarAppearanceUpdate()
-
-            return topMostViewController
+        while let presentedViewController = topMostViewController?.presentedViewController {
+            topMostViewController = presentedViewController;
         }
 
-        return nil
+        return topMostViewController;
     }
 }

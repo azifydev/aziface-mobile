@@ -30,7 +30,7 @@ import com.facetec.sdk.*;
 
 @ReactModule(name = AzifaceMobileSdkModule.NAME)
 public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
-  private static final ThemeUtils capThemeUtils = new ThemeUtils();
+  private static final ThemeUtils aziThemeUtils = new ThemeUtils();
   public static final String NAME = "AzifaceMobileSdk";
   private final String initializationMessage = "Aziface SDK has not been initialized!";
   private final ReactApplicationContext reactContext;
@@ -45,7 +45,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public AzifaceMobileSdkModule(ReactApplicationContext context) {
     super(context);
     reactContext = context;
-    capThemeUtils.setReactContext(context);
+    aziThemeUtils.setReactContext(context);
   }
 
   @Override

@@ -11,7 +11,7 @@ import UIKit
 import FaceTecSDK
 
 public class ThemeHelpers {
-    @available(iOS 8.2, *)
+     @available(iOS 8.2, *)
     public class func setAppTheme(_ options: NSDictionary?) {
         Config.setTheme(options);
         Config.currentCustomization = getCustomizationForTheme()
@@ -62,7 +62,7 @@ extension UIColor {
         case 6: // RGB (24-bit)
             (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
         case 8: // ARGB (32-bit)
-            (a, r, g, b) = (int & 0xFF, int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
         default:
             (a, r, g, b) = (255, 0, 0, 0)
         }

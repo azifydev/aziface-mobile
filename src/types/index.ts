@@ -1,9 +1,17 @@
+import { NativeModules, Platform } from 'react-native';
+
+const LINKING_ERROR =
+  `The package '@azify/aziface-mobile' doesn't seem to be linked. Make sure: \n\n` +
+  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
+  '- You rebuilt the app after installing the package\n' +
+  '- You are not using Expo Go\n';
+
 /**
  * @namespace
  *
  * @description The principal namespace of the Aziface SDK.
  */
-export declare namespace AzifaceSdkProps {
+export declare namespace AzifaceSdk {
   /**
    * @type
    *
@@ -670,6 +678,12 @@ export declare namespace AzifaceSdkProps {
 
     /**
      * @description An object with all messages to will be used the during the
+     * photo ID scan flow.
+     */
+    photoIdScanMessage?: DefaultScanMessage;
+
+    /**
+     * @description An object with all messages to will be used the during the
      * photo ID match flow.
      */
     photoIdMatchMessage?: DefaultScanMessage & DefaultMessage;
@@ -732,10 +746,7 @@ export declare namespace AzifaceSdkProps {
     productionKey: string;
 
     /**
-     * @description Option to select production or developement mode for
-     * initialize AzifaceSDK.
-     *
-     * @default false
+     * @description Option to select production or developement mode for initialize AzifaceSDK.
      */
     isDeveloperMode?: boolean;
   }
@@ -764,11 +775,6 @@ export declare namespace AzifaceSdkProps {
     HTTPSError = 'HTTPSError',
 
     /**
-     * @description When the configurations doesn't provided to **faceMatch**.
-     */
-    NoConfigurationsProvided = 'NoConfigurationsProvided',
-
-    /**
      * @description When exists some problem in getting data in request of
      * **base URL** information. Only Android.
      */
@@ -793,87 +799,6 @@ export declare namespace AzifaceSdkProps {
   }
 
   /**
-   * @type
-   *
-   * @description This is the type of face match.
-   */
-  type MatchType = 'enroll' | 'liveness' | 'authenticate';
-
-  /**
-   * @type
-   *
-   * @description This is the type of face key.
-   */
-  type MatchKey = 'enrollMessage' | 'livenessMessage' | 'authenticateMessage';
-
-  /**
-   * @interface MatchConfig
-   *
-   * @description There are all configurations from face match.
-   */
-  interface MatchConfig {
-    /**
-     * @description The key to will be used to like identificator of the face match.
-     */
-    key: MatchKey;
-
-    /**
-     * @description If the face match has external database reference ID.
-     * It's optional.
-     */
-    hasExternalDatabaseRefID: boolean;
-
-    /**
-     * @description The endpoint to will be used to make requests. It's optional.
-     *
-     * @description To the `authenticate` method.
-     * @default "/match-3d-3d"
-     *
-     * @description To the `enroll` method.
-     * @default "/enrollment-3d"
-     *
-     * @description To the `liveness` method.
-     * @default "/liveness-3d"
-     */
-    endpoint?: string | null;
-
-    /**
-     * @description The success message to will be used to show to user on the
-     * flow end. It's optional.
-     *
-     * @default "Liveness Confirmed"
-     *
-     * @description Exception to `authenticate` method.
-     * @default "Autheticated"
-     */
-    successMessage?: string | null;
-
-    /**
-     * @description The upload message to will be used to show to user on loading
-     * flow. It's optional. Only iOS.
-     *
-     * @default "Still Uploading..."
-     */
-    uploadMessageIos?: string | null;
-
-    /**
-     * @description The parameters to will be used to sent data by headers.
-     * It's optional.
-     *
-     * @default null
-     */
-    parameters?: Object | null;
-  }
-
-  /**
-   * @type
-   *
-   * @description The object with properties that will be sent to native modules
-   * to make the requests, change text labels and sent parameters via headers.
-   */
-  type MatchData = Omit<MatchConfig, 'key' | 'hasExternalDatabaseRefID'>;
-
-  /**
    * @interface Methods
    *
    * @description This is the available methods in Aziface SDK.
@@ -884,8 +809,8 @@ export declare namespace AzifaceSdkProps {
      * **called first** to initialize the Aziface SDK. If he doens't be called
      * the other methods **don't works!**
      *
-     * @param {AzifaceSdkProps.Params} params - Initialization SDK parameters.
-     * @param {AzifaceSdkProps.Headers} headers - Headers your requests, to each
+     * @param {AzifaceSdk.Params} params - Initialization SDK parameters.
+     * @param {AzifaceSdk.Headers} headers - Headers your requests, to each
      * request it's sent. The headers is optional.
      * @param {Function} callback - Callback function to be called after with
      * the response of the successfully. The callback is optional.
@@ -911,29 +836,34 @@ export declare namespace AzifaceSdkProps {
     handlePhotoIDMatch(data?: Object): Promise<boolean>;
 
     /**
-     * @description This method is called to make enrollment, authenticate and
-     * liveness available. The **enrollment method** makes a 3D reading of the
-     * user's face. But, you must use to **subscribe** user in Aziface SDK or in
-     * your server. The **authenticate method** makes a 3D reading of the user's
-     * face. But, you must use to **authenticate** user in Aziface SDK or in
-     * your server. Finally, the **liveness** method makes a 3D reading of the
-     * user's face.
+     * @description This method makes a 3D reading of the user's face. But, you
+     * must use to **subscribe** user in Aziface SDK or in your server.
      *
-     * @param {AzifaceSdkProps.MatchData|undefined} data - The object with data to
-     * be will send by headers on the requests. The data is optional.
+     * @param {Object|undefined} data - The object with data to be will send on
+     * enrollment. The data is optional.
      *
-     * @return {Promise<boolean>} Represents if flow was a successful.
-     * @throws If was a unsuccessful or occurred some interference.
+     * @return {Promise<boolean>} Represents if enrollment was a successful.
+     * @throws If enrollment was a unsuccessful or occurred some interference.
      */
-    handleFaceUser(
-      data?: AzifaceSdkProps.MatchData | undefined
-    ): Promise<boolean>;
+    handleEnrollUser(data?: Object): Promise<boolean>;
+
+    /**
+     * @description This method makes a 3D reading of the user's face. But, you
+     * must use to **authenticate** user in Aziface SDK or in your server.
+     *
+     * @param {Object|undefined} data - The object with data to be will send on
+     * authentication. The data is optional.
+     *
+     * @return {Promise<boolean>} Represents if authentication was a successful.
+     * @throws If authenticate was a unsuccessful or occurred some interference.
+     */
+    handleAuthenticateUser(data?: Object): Promise<boolean>;
 
     /**
      * @description This method must be used to **set** the **theme** of the
      * Aziface SDK screen.
      *
-     * @param {AzifaceSdkProps.Theme|undefined} options - The object theme options.
+     * @param {AzifaceSdk.Theme|undefined} options - The object theme options.
      * All options are optional.
      *
      * @return {void}
@@ -941,3 +871,26 @@ export declare namespace AzifaceSdkProps {
     handleTheme(options?: Theme): void;
   }
 }
+
+/**
+ * @description Native module AzifaceSDK, it's recommended use it with event
+ * types.
+ *
+ * @example
+ * import { NativeEventEmitter } from 'react-native';
+ * import AzifaceMobileSdk from '@azify/aziface-mobile';
+ *
+ * const emitter = new NativeEventEmitter(AzifaceMobileSdk);
+ * emitter.addListener('onCloseModal', (event: boolean) => console.log('onCloseModal', event));
+ */
+export const AzifaceMobileSdk: AzifaceSdk.Methods =
+  NativeModules.AzifaceMobileSdk
+    ? NativeModules.AzifaceMobileSdk
+    : new Proxy(
+        {},
+        {
+          get() {
+            throw new Error(LINKING_ERROR);
+          },
+        }
+      );

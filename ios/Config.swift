@@ -10,14 +10,18 @@ import UIKit
 import Foundation
 import FaceTecSDK
 
+import UIKit
+import Foundation
+import FaceTecSDK
+
 public class Config {
-    private static let CapThemeUtils: ThemeUtils! = ThemeUtils();
     public static var DeviceKeyIdentifier: String!
     public static var BaseURL: String!
     public static var PublicFaceScanEncryptionKey: String!
     public static var ProductionKeyText: String!
     public static var Headers: NSDictionary?
     public static var Theme: NSDictionary?
+    private static let AziThemeUtils: ThemeUtils! = ThemeUtils();
 
     public static func setDevice(_ device: String) {
         Config.DeviceKeyIdentifier = device;
@@ -84,57 +88,57 @@ public class Config {
 
         let defaultCustomization = FaceTecCustomization();
 
-        defaultCustomization.frameCustomization.cornerRadius = CapThemeUtils.handleBorderRadius("frameCornerRadius");
-        defaultCustomization.frameCustomization.backgroundColor = CapThemeUtils.handleColor("frameBackgroundColor");
-        defaultCustomization.frameCustomization.borderColor = CapThemeUtils.handleColor("frameBorderColor");
+        defaultCustomization.frameCustomization.cornerRadius = AziThemeUtils.handleBorderRadius("frameCornerRadius");
+        defaultCustomization.frameCustomization.backgroundColor = AziThemeUtils.handleColor("frameBackgroundColor");
+        defaultCustomization.frameCustomization.borderColor = AziThemeUtils.handleColor("frameBorderColor");
 
-        defaultCustomization.overlayCustomization.brandingImage = CapThemeUtils.handleImage("logoImage", defaultImage: "facetec_your_app_logo");
-        defaultCustomization.overlayCustomization.backgroundColor = CapThemeUtils.handleColor("overlayBackgroundColor");
+        defaultCustomization.overlayCustomization.brandingImage = AziThemeUtils.handleImage("logoImage", defaultImage: "facetec_your_app_logo");
+        defaultCustomization.overlayCustomization.backgroundColor = AziThemeUtils.handleColor("overlayBackgroundColor");
 
-        defaultCustomization.guidanceCustomization.backgroundColors = CapThemeUtils.handleSimpleLinearGradient("guidanceBackgroundColorsIos");
-        defaultCustomization.guidanceCustomization.foregroundColor = CapThemeUtils.handleColor("guidanceForegroundColor", defaultColor: "#272937");
-        defaultCustomization.guidanceCustomization.buttonBackgroundNormalColor = CapThemeUtils.handleColor("guidanceButtonBackgroundNormalColor", defaultColor: "#026ff4");
-        defaultCustomization.guidanceCustomization.buttonBackgroundDisabledColor = CapThemeUtils.handleColor("guidanceButtonBackgroundDisabledColor", defaultColor: "#b3d4fc");
-        defaultCustomization.guidanceCustomization.buttonBackgroundHighlightColor = CapThemeUtils.handleColor("guidanceButtonBackgroundHighlightColor", defaultColor: "#0264dc");
-        defaultCustomization.guidanceCustomization.buttonTextNormalColor = CapThemeUtils.handleColor("guidanceButtonTextNormalColor");
-        defaultCustomization.guidanceCustomization.buttonTextDisabledColor = CapThemeUtils.handleColor("guidanceButtonTextDisabledColor");
-        defaultCustomization.guidanceCustomization.buttonTextHighlightColor = CapThemeUtils.handleColor("guidanceButtonTextHighlightColor");
-        defaultCustomization.guidanceCustomization.retryScreenImageBorderColor = CapThemeUtils.handleColor("guidanceRetryScreenImageBorderColor");
-        defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor = CapThemeUtils.handleColor("guidanceRetryScreenOvalStrokeColor");
+        defaultCustomization.guidanceCustomization.backgroundColors = AziThemeUtils.handleSimpleLinearGradient("guidanceBackgroundColorsIos");
+        defaultCustomization.guidanceCustomization.foregroundColor = AziThemeUtils.handleColor("guidanceForegroundColor", defaultColor: "#272937");
+        defaultCustomization.guidanceCustomization.buttonBackgroundNormalColor = AziThemeUtils.handleColor("guidanceButtonBackgroundNormalColor", defaultColor: "#026ff4");
+        defaultCustomization.guidanceCustomization.buttonBackgroundDisabledColor = AziThemeUtils.handleColor("guidanceButtonBackgroundDisabledColor", defaultColor: "#b3d4fc");
+        defaultCustomization.guidanceCustomization.buttonBackgroundHighlightColor = AziThemeUtils.handleColor("guidanceButtonBackgroundHighlightColor", defaultColor: "#0264dc");
+        defaultCustomization.guidanceCustomization.buttonTextNormalColor = AziThemeUtils.handleColor("guidanceButtonTextNormalColor");
+        defaultCustomization.guidanceCustomization.buttonTextDisabledColor = AziThemeUtils.handleColor("guidanceButtonTextDisabledColor");
+        defaultCustomization.guidanceCustomization.buttonTextHighlightColor = AziThemeUtils.handleColor("guidanceButtonTextHighlightColor");
+        defaultCustomization.guidanceCustomization.retryScreenImageBorderColor = AziThemeUtils.handleColor("guidanceRetryScreenImageBorderColor");
+        defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor = AziThemeUtils.handleColor("guidanceRetryScreenOvalStrokeColor");
 
-        defaultCustomization.ovalCustomization.strokeColor = CapThemeUtils.handleColor("ovalStrokeColor", defaultColor: "#026ff4");
-        defaultCustomization.ovalCustomization.progressColor1 = CapThemeUtils.handleColor("ovalFirstProgressColor", defaultColor: "#0264dc");
-        defaultCustomization.ovalCustomization.progressColor2 = CapThemeUtils.handleColor("ovalSecondProgressColor", defaultColor: "#0264dc");
+        defaultCustomization.ovalCustomization.strokeColor = AziThemeUtils.handleColor("ovalStrokeColor", defaultColor: "#026ff4");
+        defaultCustomization.ovalCustomization.progressColor1 = AziThemeUtils.handleColor("ovalFirstProgressColor", defaultColor: "#0264dc");
+        defaultCustomization.ovalCustomization.progressColor2 = AziThemeUtils.handleColor("ovalSecondProgressColor", defaultColor: "#0264dc");
 
-        defaultCustomization.feedbackCustomization.backgroundColor = CapThemeUtils.handleCAGradient("feedbackBackgroundColorsIos");
-        defaultCustomization.feedbackCustomization.textColor = CapThemeUtils.handleColor("feedbackTextColor");
+        defaultCustomization.feedbackCustomization.backgroundColor = AziThemeUtils.handleCAGradient("feedbackBackgroundColorsIos");
+        defaultCustomization.feedbackCustomization.textColor = AziThemeUtils.handleColor("feedbackTextColor");
 
-        defaultCustomization.cancelButtonCustomization.customImage = CapThemeUtils.handleImage("cancelImage", defaultImage: "facetec_cancel");
-        defaultCustomization.cancelButtonCustomization.location = CapThemeUtils.handleButtonLocation("cancelButtonLocation");
+        defaultCustomization.cancelButtonCustomization.customImage = AziThemeUtils.handleImage("cancelImage", defaultImage: "facetec_cancel");
+        defaultCustomization.cancelButtonCustomization.location = AziThemeUtils.handleButtonLocation("cancelButtonLocation");
 
-        defaultCustomization.resultScreenCustomization.backgroundColors = CapThemeUtils.handleSimpleLinearGradient("resultScreenBackgroundColorsIos");
-        defaultCustomization.resultScreenCustomization.foregroundColor = CapThemeUtils.handleColor("resultScreenForegroundColor", defaultColor: "#272937");
-        defaultCustomization.resultScreenCustomization.activityIndicatorColor = CapThemeUtils.handleColor("resultScreenActivityIndicatorColor", defaultColor: "#026ff4");
-        defaultCustomization.resultScreenCustomization.resultAnimationBackgroundColor = CapThemeUtils.handleColor("resultScreenResultAnimationBackgroundColor", defaultColor: "#026ff4");
-        defaultCustomization.resultScreenCustomization.resultAnimationForegroundColor = CapThemeUtils.handleColor("resultScreenResultAnimationForegroundColor");
-        defaultCustomization.resultScreenCustomization.uploadProgressFillColor = CapThemeUtils.handleColor("resultScreenUploadProgressFillColor", defaultColor: "#026ff4");
+        defaultCustomization.resultScreenCustomization.backgroundColors = AziThemeUtils.handleSimpleLinearGradient("resultScreenBackgroundColorsIos");
+        defaultCustomization.resultScreenCustomization.foregroundColor = AziThemeUtils.handleColor("resultScreenForegroundColor", defaultColor: "#272937");
+        defaultCustomization.resultScreenCustomization.activityIndicatorColor = AziThemeUtils.handleColor("resultScreenActivityIndicatorColor", defaultColor: "#026ff4");
+        defaultCustomization.resultScreenCustomization.resultAnimationBackgroundColor = AziThemeUtils.handleColor("resultScreenResultAnimationBackgroundColor", defaultColor: "#026ff4");
+        defaultCustomization.resultScreenCustomization.resultAnimationForegroundColor = AziThemeUtils.handleColor("resultScreenResultAnimationForegroundColor");
+        defaultCustomization.resultScreenCustomization.uploadProgressFillColor = AziThemeUtils.handleColor("resultScreenUploadProgressFillColor", defaultColor: "#026ff4");
 
         defaultCustomization.securityWatermarkImage = securityWatermarkImage;
 
-        defaultCustomization.idScanCustomization.selectionScreenBackgroundColors = CapThemeUtils.handleSimpleLinearGradient("idScanSelectionScreenBackgroundColorsIos");
-        defaultCustomization.idScanCustomization.selectionScreenForegroundColor = CapThemeUtils.handleColor("idScanSelectionScreenForegroundColor", defaultColor: "#272937");
-        defaultCustomization.idScanCustomization.reviewScreenForegroundColor = CapThemeUtils.handleColor("idScanReviewScreenForegroundColor");
-        defaultCustomization.idScanCustomization.reviewScreenTextBackgroundColor = CapThemeUtils.handleColor("idScanReviewScreenTextBackgroundColor", defaultColor: "#026ff4");
-        defaultCustomization.idScanCustomization.captureScreenForegroundColor = CapThemeUtils.handleColor("idScanCaptureScreenForegroundColor");
-        defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor = CapThemeUtils.handleColor("idScanCaptureScreenTextBackgroundColor", defaultColor: "#026ff4");
-        defaultCustomization.idScanCustomization.buttonBackgroundNormalColor = CapThemeUtils.handleColor("idScanButtonBackgroundNormalColor", defaultColor: "#026ff4");
-        defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor = CapThemeUtils.handleColor("idScanButtonBackgroundDisabledColor", defaultColor: "#b3d4fc");
-        defaultCustomization.idScanCustomization.buttonBackgroundHighlightColor = CapThemeUtils.handleColor("idScanButtonBackgroundHighlightColor", defaultColor: "#0264dc");
-        defaultCustomization.idScanCustomization.buttonTextNormalColor = CapThemeUtils.handleColor("idScanButtonTextNormalColor");
-        defaultCustomization.idScanCustomization.buttonTextDisabledColor = CapThemeUtils.handleColor("idScanButtonTextDisabledColor");
-        defaultCustomization.idScanCustomization.buttonTextHighlightColor = CapThemeUtils.handleColor("idScanButtonTextHighlightColor");
-        defaultCustomization.idScanCustomization.captureScreenBackgroundColor = CapThemeUtils.handleColor("idScanCaptureScreenBackgroundColor");
-        defaultCustomization.idScanCustomization.captureFrameStrokeColor = CapThemeUtils.handleColor("idScanCaptureFrameStrokeColor");
+        defaultCustomization.idScanCustomization.selectionScreenBackgroundColors = AziThemeUtils.handleSimpleLinearGradient("idScanSelectionScreenBackgroundColorsIos");
+        defaultCustomization.idScanCustomization.selectionScreenForegroundColor = AziThemeUtils.handleColor("idScanSelectionScreenForegroundColor", defaultColor: "#272937");
+        defaultCustomization.idScanCustomization.reviewScreenForegroundColor = AziThemeUtils.handleColor("idScanReviewScreenForegroundColor");
+        defaultCustomization.idScanCustomization.reviewScreenTextBackgroundColor = AziThemeUtils.handleColor("idScanReviewScreenTextBackgroundColor", defaultColor: "#026ff4");
+        defaultCustomization.idScanCustomization.captureScreenForegroundColor = AziThemeUtils.handleColor("idScanCaptureScreenForegroundColor");
+        defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor = AziThemeUtils.handleColor("idScanCaptureScreenTextBackgroundColor", defaultColor: "#026ff4");
+        defaultCustomization.idScanCustomization.buttonBackgroundNormalColor = AziThemeUtils.handleColor("idScanButtonBackgroundNormalColor", defaultColor: "#026ff4");
+        defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor = AziThemeUtils.handleColor("idScanButtonBackgroundDisabledColor", defaultColor: "#b3d4fc");
+        defaultCustomization.idScanCustomization.buttonBackgroundHighlightColor = AziThemeUtils.handleColor("idScanButtonBackgroundHighlightColor", defaultColor: "#0264dc");
+        defaultCustomization.idScanCustomization.buttonTextNormalColor = AziThemeUtils.handleColor("idScanButtonTextNormalColor");
+        defaultCustomization.idScanCustomization.buttonTextDisabledColor = AziThemeUtils.handleColor("idScanButtonTextDisabledColor");
+        defaultCustomization.idScanCustomization.buttonTextHighlightColor = AziThemeUtils.handleColor("idScanButtonTextHighlightColor");
+        defaultCustomization.idScanCustomization.captureScreenBackgroundColor = AziThemeUtils.handleColor("idScanCaptureScreenBackgroundColor");
+        defaultCustomization.idScanCustomization.captureFrameStrokeColor = AziThemeUtils.handleColor("idScanCaptureFrameStrokeColor");
 
         return defaultCustomization;
     }

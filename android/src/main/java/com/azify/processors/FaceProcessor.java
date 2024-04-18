@@ -23,7 +23,7 @@ public class FaceProcessor extends Processor implements FaceTecFaceScanProcessor
   private final String key;
   private final AzifaceMobileSdkModule aziFaceModule;
   private final FaceConfig faceConfig;
-  private final ThemeUtils capThemeUtils = new ThemeUtils();
+  private final ThemeUtils aziThemeUtils = new ThemeUtils();
   private boolean success = false;
 
   public FaceProcessor(String sessionToken, Context context, AzifaceMobileSdkModule aziFaceModule,
@@ -96,7 +96,7 @@ public class FaceProcessor extends Processor implements FaceTecFaceScanProcessor
 
           if (wasProcessed) {
             final String message = faceConfig.getSuccessMessage();
-            FaceTecCustomization.overrideResultScreenSuccessMessage = capThemeUtils
+            FaceTecCustomization.overrideResultScreenSuccessMessage = aziThemeUtils
                 .handleMessage(key, "successMessage", message);
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {

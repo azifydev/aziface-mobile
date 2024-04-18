@@ -10,11 +10,11 @@ import Foundation
 import FaceTecSDK
 import LocalAuthentication
 
+
 @objc(AzifaceMobileSdk)
 class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
-    private let initializationMessage = "Aziface SDK has not been initialized!"
     public static var emitter: RCTEventEmitter!
-    var aziFaceViewController: AziFaceViewController!
+    var AziFaceViewController: AziFaceViewController!
     var isInitialized: Bool = false;
     
     override init() {
@@ -40,11 +40,13 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     
     @objc func initializeSdk(_ params: NSDictionary, headers: NSDictionary, callback: @escaping RCTResponseSenderBlock) -> Void {
         DispatchQueue.main.async {
-            self.aziFaceViewController = AziFaceViewController();
+            self.AziFaceViewController = aziface_mobile_sdk.AziFaceViewController();
+            self.handleTheme(Config.Theme);
             
             if params.count == 0 {
                 self.isInitialized = false;
                 callback([false]);
+                print("No parameters provided!");
                 return;
             }
             
@@ -58,9 +60,8 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
             } else {
                 self.isInitialized = false;
                 callback([false]);
+                print("AziFace SDK Configuration doesn't exists!");
             }
-
-            self.handleTheme(Config.Theme);
         }
     }
     
@@ -80,27 +81,48 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
         return ["onCloseModal"];
     }
     
-    @objc func handleFaceUser(_ config: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    @objc func handleLivenessCheck(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if self.isInitialized {
-            self.aziFaceViewController.onFaceUser(config, resolve: resolve, reject: reject);
+            self.AziFaceViewController.onLivenessCheck(data, resolve: resolve, reject: reject);
         } else {
-            return reject(self.initializationMessage, "AziFaceHasNotBeenInitialized", nil);
+            print("AziFace SDK has not been initialized!");
+            return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil);
+        }
+    }
+    
+    @objc func handleEnrollUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if self.isInitialized {
+            self.AziFaceViewController.onEnrollUser(data, resolve: resolve, reject: reject);
+        } else {
+            print("AziFace SDK has not been initialized!");
+            return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil);
+        }
+    }
+    
+    @objc func handleAuthenticateUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if self.isInitialized {
+            self.AziFaceViewController.onAuthenticateUser(data, resolve: resolve, reject: reject);
+        } else {
+            print("AziFace SDK has not been initialized!");
+            return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil);
         }
     }
     
     @objc func handlePhotoIDMatch(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if self.isInitialized {
-            self.aziFaceViewController.onPhotoIDMatch(data, resolve: resolve, reject: reject);
+            self.AziFaceViewController.onPhotoIDMatch(data, resolve: resolve, reject: reject);
         } else {
-            return reject(self.initializationMessage, "AziFaceHasNotBeenInitialized", nil);
+            print("AziFace SDK has not been initialized!");
+            return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil);
         }
     }
     
     @objc func handlePhotoIDScan(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if self.isInitialized {
-            self.aziFaceViewController.onPhotoIDScan(data, resolve: resolve, reject: reject);
+            self.AziFaceViewController.onPhotoIDScan(data, resolve: resolve, reject: reject);
         } else {
-            return reject(self.initializationMessage, "AziFaceHasNotBeenInitialized", nil);
+            print("AziFace SDK has not been initialized!");
+            return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil);
         }
     }
     
