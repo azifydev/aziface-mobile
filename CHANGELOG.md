@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/azifydev/aziface-mobile/compare/v1.0.0...v1.0.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* rollback to old version ([e59a879](https://github.com/azifydev/aziface-mobile/commit/e59a8794f64e50d35559aabf6376d73007ab922d))
+
 # 1.0.0 (2024-03-14)
 
 
