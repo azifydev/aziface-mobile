@@ -7,6 +7,9 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -24,10 +27,9 @@ jobs:
         uses: c-hive/gha-npm-cache@v1
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          npm ci
 
       - name: Publish Release
         run: npx semantic-release --ci
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN_v2 }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN_V2 }}
