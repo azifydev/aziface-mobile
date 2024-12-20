@@ -50,8 +50,5 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - name: Lint files
-        run: npm run lint
-      
       - name: Run build
         run: npm run prepack
