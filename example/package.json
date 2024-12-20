@@ -9,7 +9,7 @@
     "pods": "pod-install --quiet"
   },
   "dependencies": {
-    "@azify/aziface-mobile": "file:../azify-aziface-mobile-0.0.1.tgz",
+    "@azify/aziface-mobile": "file:../azify-aziface-mobile-1.0.1.tgz",
     "axios": "^1.6.8",
     "md5": "^2.3.0",
     "react": "18.2.0",

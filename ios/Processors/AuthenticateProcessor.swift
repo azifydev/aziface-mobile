@@ -34,9 +34,9 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
 
     func processSessionWhileFaceTecSDKWaits(sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback) {
         fromViewController.setLatestSessionResult(sessionResult: sessionResult)
-
         self.faceScanResultCallback = faceScanResultCallback
-
+        
+        // validate session result
         if sessionResult.status != FaceTecSessionStatus.sessionCompletedSuccessfully {
             if latestNetworkRequest != nil {
                 latestNetworkRequest.cancel()
@@ -46,69 +46,86 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             faceScanResultCallback.onFaceScanResultCancel()
             return
         }
-
-        var parameters: [String : Any] = [:]
-        if (self.data != nil) {
-            parameters["data"] = self.data
+        
+        // prepare parameters
+        var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
+        if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
+            parameters["auditTrailImage"] = auditTrailImage
         }
-        parameters["faceScan"] = sessionResult.faceScanBase64
-        parameters["auditTrailImage"] = sessionResult.auditTrailCompressedBase64![0]
-        parameters["lowQualityAuditTrailImage"] = sessionResult.lowQualityAuditTrailCompressedBase64![0]
+        if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
+            parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
+        }
         parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+        if let data = self.data {
+            parameters["data"] = data
+        }
 
-        var request = Config.makeRequest(url: "/match-3d-3d", httpMethod: "POST")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
-
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        latestNetworkRequest = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode < 200 || httpResponse.statusCode >= 299 {
-                    print("Exception raised while attempting HTTPS call. Status code: \(httpResponse.statusCode)");
-                    faceScanResultCallback.onFaceScanResultCancel()
-                    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
+        // route and request configuration
+        let route = "/Process/" + Config.ProcessId + "/Match3d3d"
+        do {
+            var request = Config.makeRequest(url: route, httpMethod: "POST")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            
+            let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+            latestNetworkRequest = session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+                
+                if let error = error {
+                    print("Network error")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                    return
+            }
+                
+            guard let data = data else {
+                    print("No data received from server.")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                    return
+            }
+            // decode response
+            do {
+              
+                guard let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {
+                    print("Invalid JSON response.")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
                     return
                 }
-            }
 
-            if let error = error {
-                print("Exception raised while attempting HTTPS call.")
+                    guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
+                        print("Missing 'data' in response.")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    if let error = responseData["error"] as? Int, error != 0 {
+                        let errorMessage = responseData["errorMessage"] as? String
+                        print("Error in response")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    guard let scanResultBlob = responseData["scanResultBlob"] as? String,
+                        let wasProcessed = responseData["wasProcessed"] as? Int else {
+                        print("Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    if wasProcessed == 1 {
+                        FaceTecCustomization.setOverrideResultScreenSuccessMessage("3D Liveness Proven\nFace Verified")
+                        self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(scanResultBlob: scanResultBlob)
+                    } else {
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                    }
+                } catch {
+                    print("Error parsing JSON response")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                }
+            }
+            latestNetworkRequest?.resume()
+            } catch {
+                print("Error creating request")
                 faceScanResultCallback.onFaceScanResultCancel()
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                return
             }
-
-            guard let data = data else {
-                faceScanResultCallback.onFaceScanResultCancel()
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                return
-            }
-
-            guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: AnyObject] else {
-                faceScanResultCallback.onFaceScanResultCancel()
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                return
-            }
-
-            guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-                  let wasProcessed = responseJSON["wasProcessed"] as? Bool else {
-                faceScanResultCallback.onFaceScanResultCancel()
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                return;
-            }
-
-            if wasProcessed == true {
-                let message = self.AziThemeUtils.handleMessage(self.principalKey, child: "successMessage", defaultMessage: "Authenticated");
-                FaceTecCustomization.setOverrideResultScreenSuccessMessage(message);
-
-                self.success = faceScanResultCallback.onFaceScanGoToNextStep(scanResultBlob: scanResultBlob)
-            } else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                faceScanResultCallback.onFaceScanResultCancel()
-                return;
-            }
-        })
-
-        latestNetworkRequest.resume()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
             if self.latestNetworkRequest.state == .completed { return }

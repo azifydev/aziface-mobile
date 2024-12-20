@@ -35,6 +35,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
         Config.setUrl(params.value(forKey: "url") as! String);
         Config.setKey(params.value(forKey: "key") as! String);
         Config.setProductionKeyText(params.value(forKey: "productionKey") as! String);
+        Config.setProcessId(params.value(forKey: "processId") as! String);
         Config.setHeaders(headers);
     }
     

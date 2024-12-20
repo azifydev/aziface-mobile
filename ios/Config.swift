@@ -17,6 +17,7 @@ import FaceTecSDK
 public class Config {
     public static var DeviceKeyIdentifier: String!
     public static var BaseURL: String!
+    public static var ProcessId: String!
     public static var PublicFaceScanEncryptionKey: String!
     public static var ProductionKeyText: String!
     public static var Headers: NSDictionary?
@@ -29,6 +30,10 @@ public class Config {
 
     public static func setUrl(_ url: String) {
         Config.BaseURL = url;
+    }
+
+    public static func setProcessId(_ id: String) {
+        Config.ProcessId = id;
     }
 
     public static func setKey(_ key: String) {
