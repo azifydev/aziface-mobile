@@ -74,69 +74,89 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             return
         }
 
-        var parameters: [String : Any] = [:]
-        if (self.data != nil) {
-            parameters["data"] = self.data
+        // prepare parameters
+        var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
+        if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
+            parameters["auditTrailImage"] = auditTrailImage
         }
-        parameters["faceScan"] = sessionResult.faceScanBase64
-        parameters["auditTrailImage"] = sessionResult.auditTrailCompressedBase64![0]
-        parameters["lowQualityAuditTrailImage"] = sessionResult.lowQualityAuditTrailCompressedBase64![0]
-        parameters["externalDatabaseRefID"] = self.latestExternalDatabaseRefID
+        if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
+            parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
+        }
+        parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+        if let data = self.data {
+            parameters["data"] = data
+        }
 
-        var request = Config.makeRequest(url: "/enrollment-3d", httpMethod: "POST")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
+        // route and request configuration
+        let route = "/Process/" + Config.ProcessId + "/Enrollment3d"
+        do {
+            var request = Config.makeRequest(url: route, httpMethod: "POST")
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            
+            let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+            latestNetworkRequest = session.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+                
+                if let error = error {
+                    print("Network error")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                    return
+            }
+                
+            guard let data = data else {
+                    print("No data received from server.")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                    return
+            }
 
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        latestNetworkRequest = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode < 200 || httpResponse.statusCode >= 299 {
-                    print("Exception raised while attempting HTTPS call. Status code: \(httpResponse.statusCode)");
-                    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                    faceScanResultCallback.onFaceScanResultCancel()
+            // decode response
+            do {
+              
+                guard let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {
+                    print("Invalid JSON response.")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
                     return
                 }
-            }
 
-            if let error = error {
-                print("Exception raised while attempting HTTPS call.")
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
+                    guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
+                        print("Missing 'data' in response.")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    if let error = responseData["error"] as? Int, error != 0 {
+                        let errorMessage = responseData["errorMessage"] as? String
+                        print("Error in response")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    guard let scanResultBlob = responseData["scanResultBlob"] as? String,
+                        let wasProcessed = responseData["wasProcessed"] as? Int else {
+                        print("Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                        return
+                    }
+
+                    if wasProcessed == 1 {
+                        FaceTecCustomization.setOverrideResultScreenSuccessMessage("Face Scanned\n3D Liveness Proven")
+                        self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(scanResultBlob: scanResultBlob)
+                    } else {
+                        print("Face scan was not processed successfully.")
+                        self.faceScanResultCallback.onFaceScanResultCancel()
+                    }
+                } catch {
+                    print("Error parsing JSON response")
+                    self.faceScanResultCallback.onFaceScanResultCancel()
+                }
+            }
+            latestNetworkRequest?.resume()
+            } catch {
+                print("Error creating request")
                 faceScanResultCallback.onFaceScanResultCancel()
-                return
             }
-
-            guard let data = data else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                faceScanResultCallback.onFaceScanResultCancel()
-                return
-            }
-
-            guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: AnyObject] else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                faceScanResultCallback.onFaceScanResultCancel()
-                return
-            }
-
-            guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-                  let wasProcessed = responseJSON["wasProcessed"] as? Bool else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                faceScanResultCallback.onFaceScanResultCancel()
-                return;
-            }
-
-            if wasProcessed == true {
-                let message = self.AziThemeUtils.handleMessage(self.principalKey, child: "successMessage", defaultMessage: "Liveness\nConfirmed");
-                FaceTecCustomization.setOverrideResultScreenSuccessMessage(message);
-
-                self.faceScanWasSuccessful = faceScanResultCallback.onFaceScanGoToNextStep(scanResultBlob: scanResultBlob);
-            } else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                faceScanResultCallback.onFaceScanResultCancel()
-                return;
-            }
-        })
-
-        latestNetworkRequest.resume()
-
+        
+        // show loading message
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
             if self.latestNetworkRequest.state == .completed { return }
 
@@ -146,101 +166,102 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         }
     }
 
-    func processIDScanWhileFaceTecSDKWaits(idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback) {
-        fromViewController.setLatestIDScanResult(idScanResult: idScanResult)
+func processIDScanWhileFaceTecSDKWaits(idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback) {
+    fromViewController.setLatestIDScanResult(idScanResult: idScanResult)
 
-        self.idScanResultCallback = idScanResultCallback
+    self.idScanResultCallback = idScanResultCallback
 
-        if idScanResult.status != FaceTecIDScanStatus.success {
-            if latestNetworkRequest != nil {
-                latestNetworkRequest.cancel()
-            }
+    if idScanResult.status != FaceTecIDScanStatus.success {
+        latestNetworkRequest?.cancel()
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        idScanResultCallback.onIDScanResultCancel()
+        return
+    }
 
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
+    // prepare parameters
+    let minMatchLevel = 3
+    var parameters: [String: Any] = [:]
+    parameters["idScan"] = idScanResult.idScanBase64
+    if let frontImage = idScanResult.frontImagesCompressedBase64?.first {
+        parameters["idScanFrontImage"] = frontImage
+    }
+    if let backImage = idScanResult.backImagesCompressedBase64?.first {
+        parameters["idScanBackImage"] = backImage
+    }
+    parameters["minMatchLevel"] = minMatchLevel
+    parameters["externalDatabaseRefID"] = self.latestExternalDatabaseRefID
+
+    let route = "/Process/" + Config.ProcessId + "/Match3d2dIdScan"
+    var request = Config.makeRequest(url: route, httpMethod: "POST")
+    do {
+        request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+    } catch {
+        print("Error creating request")
+        idScanResultCallback.onIDScanResultCancel()
+        return
+    }
+
+    let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+    latestNetworkRequest = session.dataTask(with: request) { data, response, error in
+        if let error = error {
             idScanResultCallback.onIDScanResultCancel()
             return
         }
 
-        let minMatchLevel = 3
-
-        var parameters: [String : Any] = [:]
-        parameters["idScan"] = idScanResult.idScanBase64
-        if idScanResult.frontImagesCompressedBase64?.isEmpty == false {
-            parameters["idScanFrontImage"] = idScanResult.frontImagesCompressedBase64![0]
+        guard let data = data else {
+            idScanResultCallback.onIDScanResultCancel()
+            return
         }
-        if idScanResult.backImagesCompressedBase64?.isEmpty == false {
-            parameters["idScanBackImage"] = idScanResult.backImagesCompressedBase64![0]
+
+        guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {
+            print("Invalid JSON response.")
+            idScanResultCallback.onIDScanResultCancel()
+            return
         }
-        parameters["minMatchLevel"] = minMatchLevel
-        parameters["externalDatabaseRefID"] = self.latestExternalDatabaseRefID
 
-        var request = Config.makeRequest(url: "/match-3d-2d-idscan", httpMethod: "POST")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
+        if let error = responseJSON["error"] as? Bool, error {
+            let errorMessage = responseJSON["errorMessage"] as? String ?? "Erro desconhecido"
+            print("Missing 'data' in response.")
+            idScanResultCallback.onIDScanResultCancel()
+            return
+        }
 
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        latestNetworkRequest = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode < 200 || httpResponse.statusCode >= 299 {
-                    print("Exception raised while attempting HTTPS call. Status code: \(httpResponse.statusCode)");
-                    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                    idScanResultCallback.onIDScanResultCancel()
-                    return
-                }
-            }
+        guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
+              let wasProcessed = responseJSON["wasProcessed"] as? Bool else {
+            print("Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
+            idScanResultCallback.onIDScanResultCancel()
+            return
+        }
 
-            if let error = error {
-                print("Exception raised while attempting HTTPS call.")
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                idScanResultCallback.onIDScanResultCancel()
-                return
-            }
+        if wasProcessed {
+            FaceTecCustomization.setIDScanResultScreenMessageOverrides(
+                successFrontSide: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSide", defaultMessage: "ID Scan Complete"),
+                successFrontSideBackNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSideBackNext", defaultMessage: "Front of ID\nScanned"),
+                successFrontSideNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSideNFCNext", defaultMessage: "Front of ID\nScanned"),
+                successBackSide: self.AziThemeUtils.handleMessage(self.principalKey, child: "successBackSide", defaultMessage: "ID Scan Complete"),
+                successBackSideNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successBackSideNFCNext", defaultMessage: "Back of ID\nScanned"),
+                successPassport: self.AziThemeUtils.handleMessage(self.principalKey, child: "successPassport", defaultMessage: "Passport Scan Complete"),
+                successPassportNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successPassportNFCNext", defaultMessage: "Passport Scanned"),
+                successUserConfirmation: self.AziThemeUtils.handleMessage(self.principalKey, child: "successUserConfirmation", defaultMessage: "Photo ID Scan\nComplete"),
+                successNFC: self.AziThemeUtils.handleMessage(self.principalKey, child: "successNFC", defaultMessage: "ID Scan Complete"),
+                retryFaceDidNotMatch: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryFaceDidNotMatch", defaultMessage: "Face Didn’t Match\nHighly Enough"),
+                retryIDNotFullyVisible: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryIDNotFullyVisible", defaultMessage: "ID Document\nNot Fully Visible"),
+                retryOCRResultsNotGoodEnough: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryOCRResultsNotGoodEnough", defaultMessage: "ID Text Not Legible"),
+                retryIDTypeNotSupported: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryIDTypeNotSupported", defaultMessage: "ID Type Mismatch\nPlease Try Again"),
+                skipOrErrorNFC: self.AziThemeUtils.handleMessage(self.principalKey, child: "skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")
+            )
 
-            guard let data = data else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                idScanResultCallback.onIDScanResultCancel()
-                return
-            }
-
-            guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: AnyObject] else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                idScanResultCallback.onIDScanResultCancel()
-                return
-            }
-
-            guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-                  let wasProcessed = responseJSON["wasProcessed"] as? Bool else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                idScanResultCallback.onIDScanResultCancel()
-                return
-            }
-
-            if wasProcessed == true {
-                FaceTecCustomization.setIDScanResultScreenMessageOverrides(
-                    successFrontSide: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSide", defaultMessage: "ID Scan Complete"),                           // Successful scan of ID front-side (ID Types with no back-side).
-                    successFrontSideBackNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSideBackNext", defaultMessage: "Front of ID\nScanned"),               // Successful scan of ID front-side (ID Types that do have a back-side).
-                    successFrontSideNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successFrontSideNFCNext", defaultMessage: "Front of ID\nScanned"),                // Successful scan of ID front-side (ID Types that do have NFC but do not have a back-side).
-                    successBackSide: self.AziThemeUtils.handleMessage(self.principalKey, child: "successBackSide", defaultMessage: "ID Scan Complete"),                            // Successful scan of the ID back-side (ID Types that do not have NFC).
-                    successBackSideNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successBackSideNFCNext", defaultMessage: "Back of ID\nScanned"),                  // Successful scan of the ID back-side (ID Types that do have NFC).
-                    successPassport: self.AziThemeUtils.handleMessage(self.principalKey, child: "successPassport", defaultMessage: "Passport Scan Complete"),                      // Successful scan of a Passport that does not have NFC.
-                    successPassportNFCNext: self.AziThemeUtils.handleMessage(self.principalKey, child: "successPassportNFCNext", defaultMessage: "Passport Scanned"),                     // Successful scan of a Passport that does have NFC.
-                    successUserConfirmation: self.AziThemeUtils.handleMessage(self.principalKey, child: "successUserConfirmation", defaultMessage: "Photo ID Scan\nComplete"),             // Successful upload of final IDScan containing User-Confirmed ID Text.
-                    successNFC: self.AziThemeUtils.handleMessage(self.principalKey, child: "successNFC", defaultMessage: "ID Scan Complete"),                                 // Successful upload of the scanned NFC chip information.
-                    retryFaceDidNotMatch: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryFaceDidNotMatch", defaultMessage: "Face Didn’t Match\nHighly Enough"),       // Case where a Retry is needed because the Face on the Photo ID did not Match the User's Face highly enough.
-                    retryIDNotFullyVisible: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryIDNotFullyVisible", defaultMessage: "ID Document\nNot Fully Visible"),       // Case where a Retry is needed because a Full ID was not detected with high enough confidence.
-                    retryOCRResultsNotGoodEnough: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryOCRResultsNotGoodEnough", defaultMessage: "ID Text Not Legible"),            // Case where a Retry is needed because the OCR did not produce good enough results and the User should Retry with a better capture.
-                    retryIDTypeNotSupported: self.AziThemeUtils.handleMessage(self.principalKey, child: "retryIDTypeNotSupported", defaultMessage: "ID Type Mismatch\nPlease Try Again"),  // Case where there is likely no OCR Template installed for the document the User is attempting to scan.
-                    skipOrErrorNFC: self.AziThemeUtils.handleMessage(self.principalKey, child: "skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")                          // Case where NFC Scan was skipped due to the user's interaction or an unexpected error.
-                )
-
-                self.success = idScanResultCallback.onIDScanResultProceedToNextStep(scanResultBlob: scanResultBlob)
-            } else {
-                AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false);
-                idScanResultCallback.onIDScanResultCancel()
-            }
-        })
-
-        latestNetworkRequest.resume()
+            self.success = idScanResultCallback.onIDScanResultProceedToNextStep(scanResultBlob: scanResultBlob)
+        } else {
+            print("Face scan was not processed successfully.")
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            idScanResultCallback.onIDScanResultCancel()
+        }
     }
+
+    latestNetworkRequest?.resume()
+}
+
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
         let uploadProgress: Float = Float(totalBytesSent) / Float(totalBytesExpectedToSend)

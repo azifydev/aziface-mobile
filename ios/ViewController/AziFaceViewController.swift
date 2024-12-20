@@ -6,6 +6,7 @@
 //  Copyright © 2024 Azify. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import FaceTecSDK
 import LocalAuthentication
@@ -18,14 +19,15 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     var processorRevolver: RCTPromiseResolveBlock!;
     var processorRejecter: RCTPromiseRejectBlock!;
     var latestProcessor: Processor!
-
+    var utils: FaceTecUtilities!
+    @IBOutlet weak var themeTransitionText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     func onLivenessCheck(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
-
         getSessionToken() { sessionToken in
             self.resetLatestResults()
             self.latestProcessor = LivenessCheckProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
@@ -34,17 +36,15 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
 
     func onEnrollUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
-
         getSessionToken() { sessionToken in
             self.resetLatestResults()
-            self.latestExternalDatabaseRefID = "ios_capitual_app_" + UUID().uuidString
+            self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
             self.latestProcessor = EnrollmentProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
         }
     }
 
     func onAuthenticateUser(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
-
         getSessionToken() { sessionToken in
             self.resetLatestResults()
             self.latestProcessor = AuthenticateProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
@@ -53,17 +53,15 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
 
     func onPhotoIDMatch(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
-
         getSessionToken() { sessionToken in
             self.resetLatestResults()
-            self.latestExternalDatabaseRefID = "ios_capitual_app_" + UUID().uuidString
+            self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
             self.latestProcessor = PhotoIDMatchProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
         }
     }
 
     func onPhotoIDScan(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         setProcessorPromise(resolve, rejecter: reject);
-
         getSessionToken() { sessionToken in
             self.resetLatestResults()
             self.latestProcessor = PhotoIDScanProcessor(sessionToken: sessionToken, fromViewController: self, data: data)
@@ -110,50 +108,37 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     }
 
     func getSessionToken(sessionTokenCallback: @escaping (String) -> ()) {
-        let request = Config.makeRequest(url: "/session-token", httpMethod: "GET");
-
+        let request = Config.makeRequest(url:"/Process/Session/Token", httpMethod: "GET");
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode < 200 || httpResponse.statusCode >= 299 {
-                    print("Exception raised while attempting HTTPS call. Status code: \(httpResponse.statusCode)");
-                    if self.processorRejecter != nil {
-                        self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
-                    }
-                    return
-                }
-            }
-
-            if let error = error {
-                print("Exception raised while attempting HTTPS call.")
-                if self.processorRejecter != nil {
-                    self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
-                }
-                return
-            }
-
             guard let data = data else {
                 print("Exception raised while attempting HTTPS call.")
+               
                 if self.processorRejecter != nil {
                     self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                 }
                 return
             }
-
-            if let responseJSONObj = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: AnyObject] {
-                if((responseJSONObj["sessionToken"] as? String) != nil) {
-                    sessionTokenCallback(responseJSONObj["sessionToken"] as! String)
-                    return
-                } else {
-                    print("Exception raised while attempting HTTPS call.")
-                    if self.processorRejecter != nil {
-                        self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
+        
+            if let responseJSONObj = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject] {
+                
+                if let dataObj = responseJSONObj["data"] as? [String: AnyObject] {
+                        if let sessionToken = dataObj["sessionToken"] as? String {
+                            sessionTokenCallback(sessionToken)
+                            return
+                        } else {
+                            print("Session token not found.")
+                        }
+                    } else {
+                        print("Data object not found.")
                     }
-                }
+                    
+                    print("Exception raised while attempting HTTPS call.")
+                    if let processorRejecter = self.processorRejecter {
+                        processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
+                    }
             }
         })
-
-        task.resume();
+           task.resume()
     }
 }

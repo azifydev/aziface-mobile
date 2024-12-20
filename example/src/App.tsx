@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   NativeEventEmitter,
+  NativeModule,
 } from 'react-native';
 import {
   AzifaceMobileSdk,
@@ -15,7 +16,6 @@ import {
   initialize,
   photoMatch,
 } from '@azify/aziface-mobile';
-// import getFacetecConfig, { FACETEC_URI } from './apiAziface';
 
 export default function App() {
   const init = async () => {
@@ -35,12 +35,15 @@ export default function App() {
       'locale': 'YOUR_LOCALE',
       'xForwardedFor': 'YOUR_X_FORWARDED_FOR',
       'user-agent': 'YOUR_USER_AGENT',
+      'x-token-bearer': 'YOUR_X_TOKEN_BEARER',
+      'x-only-raw-analysis': '1',
     };
     const params = {
       device: 'YOUR_DEVICE',
       url: 'YOUR_BASE_URL',
       key: 'YOUR_KEY',
       productionKey: 'YOUR_PRODUCTION_KEY',
+      processId: 'USER_PROCESS_ID',
     };
 
     const isInitialized = await initialize({
@@ -50,14 +53,16 @@ export default function App() {
 
     console.log('isInitialized', isInitialized);
   };
-  const emitter = new NativeEventEmitter(AzifaceMobileSdk);
+  const emitter = new NativeEventEmitter(
+    AzifaceMobileSdk as unknown as NativeModule
+  );
   emitter.addListener('onCloseModal', (event: boolean) =>
     console.log('onCloseModal', event)
   );
 
   const onPressPhotoMatch = async () => {
     try {
-      const isSuccess = await photoMatch();
+      const isSuccess = await photoMatch({});
       console.log('onPressPhotoMatch', isSuccess);
       console.log(isSuccess);
     } catch (error: any) {
@@ -68,7 +73,7 @@ export default function App() {
 
   const onPressEnroll = async () => {
     try {
-      const isSuccess = await enroll();
+      const isSuccess = await enroll({});
       console.log('onPressEnroll', isSuccess);
     } catch (error: any) {
       console.error('ERROR onPressEnroll', error.message);
@@ -77,7 +82,7 @@ export default function App() {
 
   const onPressAuthenticate = async () => {
     try {
-      const isSuccess = await authenticate();
+      const isSuccess = await authenticate({});
       console.log('onPressAuthenticate', isSuccess);
       console.log(isSuccess);
     } catch (error: any) {
