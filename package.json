@@ -36,7 +36,8 @@
     "bootstrap": "npm i example && npm install && npm i example pods",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
     "podspec": "pod ipc spec aziface-mobile-sdk.podspec",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "release": "npx semantic-release --ci"
   },
   "repository": "https://github.com/azifydev/aziface-mobile",
   "author": "Azify <nayaradias743@gmail.com> (https://github.com/azifydev)",

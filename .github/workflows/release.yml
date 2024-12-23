@@ -10,14 +10,13 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 21
           cache: 'npm'
@@ -32,4 +31,4 @@ jobs:
           npm ci
 
       - name: Publish Release
-        run: npx semantic-release --ci
+        run: npm run release
