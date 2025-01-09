@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+/* eslint-disable react/react-in-jsx-scope */
 import {
   StyleSheet,
   View,
@@ -7,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   NativeEventEmitter,
-  NativeModule,
+  type NativeModule,
 } from 'react-native';
 import {
   AzifaceMobileSdk,
