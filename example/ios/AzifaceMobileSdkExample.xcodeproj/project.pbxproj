@@ -11,9 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		247F089AB22530C1DB46BC5E /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC4772197DCED03368D4E9E /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */; };
-		7EBB414F5B4443B5D27B40CB /* libPods-AzifaceMobileSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F83D6D7BA19CA446A61F40F /* libPods-AzifaceMobileSdkExample.a */; };
+		1DA4A8BC2C6277BF7BF3120B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 596821ABFDAFA1C5D3F7262F /* PrivacyInfo.xcprivacy */; };
+		608C39EA8F44A9084C392424 /* libPods-AzifaceMobileSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		F127DBEAE8919188F46B7FB8 /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +28,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00CEB308EFD90EB634406C74 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* AzifaceMobileSdkExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzifaceMobileSdkExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AzifaceMobileSdkExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzifaceMobileSdkExampleTests.m; sourceTree = "<group>"; };
@@ -37,12 +37,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AzifaceMobileSdkExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AzifaceMobileSdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AzifaceMobileSdkExample/main.m; sourceTree = "<group>"; };
-		1F83D6D7BA19CA446A61F40F /* libPods-AzifaceMobileSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		69AA8473C7F1550B80E8D0F3 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		74BD28E6D2B4F2D1FB2E723A /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		3B8BD9EDCA027724454689B6 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
+		596821ABFDAFA1C5D3F7262F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = AzifaceMobileSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AzifaceMobileSdkExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		ADC4772197DCED03368D4E9E /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C705CB4038A1FF10A88C5C9D /* Pods-AzifaceMobileSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.release.xcconfig"; sourceTree = "<group>"; };
+		99757EF32A5A035229A3376B /* Pods-AzifaceMobileSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.release.xcconfig"; sourceTree = "<group>"; };
+		A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -51,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				247F089AB22530C1DB46BC5E /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */,
+				F127DBEAE8919188F46B7FB8 /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EBB414F5B4443B5D27B40CB /* libPods-AzifaceMobileSdkExample.a in Frameworks */,
+				608C39EA8F44A9084C392424 /* libPods-AzifaceMobileSdkExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +94,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				596821ABFDAFA1C5D3F7262F /* PrivacyInfo.xcprivacy */,
 			);
 			name = AzifaceMobileSdkExample;
 			sourceTree = "<group>";
@@ -100,8 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				1F83D6D7BA19CA446A61F40F /* libPods-AzifaceMobileSdkExample.a */,
-				ADC4772197DCED03368D4E9E /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */,
+				272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */,
+				A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,10 +143,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				00CEB308EFD90EB634406C74 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */,
-				C705CB4038A1FF10A88C5C9D /* Pods-AzifaceMobileSdkExample.release.xcconfig */,
-				69AA8473C7F1550B80E8D0F3 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */,
-				74BD28E6D2B4F2D1FB2E723A /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */,
+				3B8BD9EDCA027724454689B6 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */,
+				99757EF32A5A035229A3376B /* Pods-AzifaceMobileSdkExample.release.xcconfig */,
+				2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */,
+				3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -155,12 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AzifaceMobileSdkExampleTests" */;
 			buildPhases = (
-				0AD25F458B8F503320F9FC49 /* [CP] Check Pods Manifest.lock */,
+				9AFD482F1F1B8BD0B0D78C70 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				E000661927B249290E520171 /* [CP] Embed Pods Frameworks */,
-				06FBC355CA314BEA65598583 /* [CP] Copy Pods Resources */,
+				544445BC69456C4F2ACDB6D5 /* [CP] Embed Pods Frameworks */,
+				036CDB1A3A650F17C7A7DA2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,14 +179,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AzifaceMobileSdkExample" */;
 			buildPhases = (
-				9265056B7603D4FE81DCE93B /* [CP] Check Pods Manifest.lock */,
+				EA9AA065B10D26CBEDE3902E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				2A1B014C431F06DC2776A7EA /* [CP] Embed Pods Frameworks */,
-				1FA3CEB0278C7BB8FCFBA2E0 /* [CP] Copy Pods Resources */,
+				D7A1113D4FE8A23CDE8799F7 /* [CP] Embed Pods Frameworks */,
+				07F291940AAB54F762066CED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,6 +247,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				1DA4A8BC2C6277BF7BF3120B /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +256,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -264,9 +268,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "
+";
 		};
-		06FBC355CA314BEA65598583 /* [CP] Copy Pods Resources */ = {
+		036CDB1A3A650F17C7A7DA2C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -283,7 +288,41 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0AD25F458B8F503320F9FC49 /* [CP] Check Pods Manifest.lock */ = {
+		07F291940AAB54F762066CED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		544445BC69456C4F2ACDB6D5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9AFD482F1F1B8BD0B0D78C70 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -305,24 +344,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1FA3CEB0278C7BB8FCFBA2E0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2A1B014C431F06DC2776A7EA /* [CP] Embed Pods Frameworks */ = {
+		D7A1113D4FE8A23CDE8799F7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,7 +361,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9265056B7603D4FE81DCE93B /* [CP] Check Pods Manifest.lock */ = {
+		EA9AA065B10D26CBEDE3902E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -359,23 +381,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E000661927B249290E520171 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -430,7 +435,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69AA8473C7F1550B80E8D0F3 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */;
+			baseConfigurationReference = 2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -457,7 +462,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74BD28E6D2B4F2D1FB2E723A /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */;
+			baseConfigurationReference = 3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -481,7 +486,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00CEB308EFD90EB634406C74 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */;
+			baseConfigurationReference = 3B8BD9EDCA027724454689B6 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -509,7 +514,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C705CB4038A1FF10A88C5C9D /* Pods-AzifaceMobileSdkExample.release.xcconfig */;
+			baseConfigurationReference = 99757EF32A5A035229A3376B /* Pods-AzifaceMobileSdkExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -538,7 +543,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -601,8 +606,11 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -611,7 +619,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -666,8 +674,10 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
