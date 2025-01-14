@@ -1,17 +1,15 @@
 package com.azify.processors;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,107 +19,105 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
 public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanProcessor, FaceTecIDScanProcessor {
-  private final String key = "photoIdMatchMessage";
-  private final String exceptionJsonMessage = "Exception raised while attempting to parse JSON result.";
-  private final String exceptionHttpMessage = "Exception raised while attempting HTTPS call.";
+  private final String principalKey = "photoIdMatchMessage";
   private final String latestExternalDatabaseRefID;
   private final ReadableMap data;
-  private final AzifaceMobileSdkModule aziFaceModule;
-  private final ThemeUtils aziThemeUtils = new ThemeUtils();
+  private final AzifaceMobileSdkModule faceTecModule;
+  private final ThemeUtils FaceThemeUtils = new ThemeUtils();
   private boolean success = false;
   private boolean faceScanWasSuccessful = false;
 
-  public PhotoIDMatchProcessor(String sessionToken, Context context, AzifaceMobileSdkModule aziFaceModule,
+  public PhotoIDMatchProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
       ReadableMap data) {
-    this.aziFaceModule = aziFaceModule;
-    this.latestExternalDatabaseRefID = this.aziFaceModule.getLatestExternalDatabaseRefID();
+    this.faceTecModule = faceTecModule;
+    this.latestExternalDatabaseRefID = this.faceTecModule.getLatestExternalDatabaseRefID();
     this.data = data;
 
     FaceTecCustomization.setIDScanUploadMessageOverrides(
         // Upload of ID front-side has started.
-        aziThemeUtils.handleMessage(key, "frontSideUploadStarted", "Uploading\nEncrypted\nID Scan"),
+        FaceThemeUtils.handleMessage(principalKey, "frontSideUploadStarted", "Uploading\nEncrypted\nID Scan"),
         // Upload of ID front-side is still uploading to Server after an extended period
         // of time.
-        aziThemeUtils.handleMessage(key, "frontSideStillUploading",
+        FaceThemeUtils.handleMessage(principalKey, "frontSideStillUploading",
             "Still Uploading...\nSlow Connection"),
         // Upload of ID front-side to the Server is complete.
-        aziThemeUtils.handleMessage(key, "frontSideUploadCompleteAwaitingResponse",
+        FaceThemeUtils.handleMessage(principalKey, "frontSideUploadCompleteAwaitingResponse",
             "Upload Complete"),
         // Upload of ID front-side is complete and we are waiting for the Server to
         // finish processing and respond.
-        aziThemeUtils.handleMessage(key, "frontSideUploadCompleteAwaitingProcessing",
+        FaceThemeUtils.handleMessage(principalKey, "frontSideUploadCompleteAwaitingProcessing",
             "Processing ID Scan"),
         // Upload of ID back-side has started.
-        aziThemeUtils.handleMessage(key, "backSideUploadStarted",
+        FaceThemeUtils.handleMessage(principalKey, "backSideUploadStarted",
             "Uploading\nEncrypted\nBack of ID"),
         // Upload of ID back-side is still uploading to Server after an extended period
         // of time.
-        aziThemeUtils.handleMessage(key, "backSideStillUploading",
+        FaceThemeUtils.handleMessage(principalKey, "backSideStillUploading",
             "Still Uploading...\nSlow Connection"),
         // Upload of ID back-side to Server is complete.
-        aziThemeUtils.handleMessage(key, "backSideUploadCompleteAwaitingResponse",
+        FaceThemeUtils.handleMessage(principalKey, "backSideUploadCompleteAwaitingResponse",
             "Upload Complete"),
         // Upload of ID back-side is complete and we are waiting for the Server to
         // finish processing and respond.
-        aziThemeUtils.handleMessage(key, "backSideUploadCompleteAwaitingProcessing",
+        FaceThemeUtils.handleMessage(principalKey, "backSideUploadCompleteAwaitingProcessing",
             "Processing Back of ID"),
         // Upload of User Confirmed Info has started.
-        aziThemeUtils.handleMessage(key, "userConfirmedInfoUploadStarted",
+        FaceThemeUtils.handleMessage(principalKey, "userConfirmedInfoUploadStarted",
             "Uploading\nYour Confirmed Info"),
         // Upload of User Confirmed Info is still uploading to Server after an extended
         // period of time.
-        aziThemeUtils.handleMessage(key, "userConfirmedInfoStillUploading",
+        FaceThemeUtils.handleMessage(principalKey, "userConfirmedInfoStillUploading",
             "Still Uploading...\nSlow Connection"),
         // Upload of User Confirmed Info to the Server is complete.
-        aziThemeUtils.handleMessage(key, "userConfirmedInfoUploadCompleteAwaitingResponse",
+        FaceThemeUtils.handleMessage(principalKey, "userConfirmedInfoUploadCompleteAwaitingResponse",
             "Upload Complete"),
         // Upload of User Confirmed Info is complete and we are waiting for the Server
         // to finish processing and respond.
-        aziThemeUtils.handleMessage(key, "userConfirmedInfoUploadCompleteAwaitingProcessing",
+        FaceThemeUtils.handleMessage(principalKey, "userConfirmedInfoUploadCompleteAwaitingProcessing",
             "Processing"),
         // Upload of NFC Details has started.
-        aziThemeUtils.handleMessage(key, "nfcUploadStarted",
+        FaceThemeUtils.handleMessage(principalKey, "nfcUploadStarted",
             "Uploading Encrypted\nNFC Details"),
         // Upload of NFC Details is still uploading to Server after an extended period
         // of time.
-        aziThemeUtils.handleMessage(key, "nfcStillUploading",
+        FaceThemeUtils.handleMessage(principalKey, "nfcStillUploading",
             "Still Uploading...\nSlow Connection"),
         // Upload of NFC Details to the Server is complete.
-        aziThemeUtils.handleMessage(key, "nfcUploadCompleteAwaitingResponse",
+        FaceThemeUtils.handleMessage(principalKey, "nfcUploadCompleteAwaitingResponse",
             "Upload Complete"),
         // Upload of NFC Details is complete and we are waiting for the Server to finish
         // processing and respond.
-        aziThemeUtils.handleMessage(key, "nfcUploadCompleteAwaitingProcessing",
+        FaceThemeUtils.handleMessage(principalKey, "nfcUploadCompleteAwaitingProcessing",
             "Processing\nNFC Details"),
         // Upload of ID Details has started.
-        aziThemeUtils.handleMessage(key, "skippedNFCUploadStarted",
+        FaceThemeUtils.handleMessage(principalKey, "skippedNFCUploadStarted",
             "Uploading Encrypted\nID Details"),
         // Upload of ID Details is still uploading to Server after an extended period of
         // time.
-        aziThemeUtils.handleMessage(key, "skippedNFCStillUploading",
+        FaceThemeUtils.handleMessage(principalKey, "skippedNFCStillUploading",
             "Still Uploading...\nSlow Connection"),
         // Upload of ID Details to the Server is complete.
-        aziThemeUtils.handleMessage(key, "skippedNFCUploadCompleteAwaitingResponse",
+        FaceThemeUtils.handleMessage(principalKey, "skippedNFCUploadCompleteAwaitingResponse",
             "Upload Complete"),
         // Upload of ID Details is complete and we are waiting for the Server to finish
         // processing and respond.
-        aziThemeUtils.handleMessage(key, "skippedNFCUploadCompleteAwaitingProcessing",
+        FaceThemeUtils.handleMessage(principalKey, "skippedNFCUploadCompleteAwaitingProcessing",
             "Processing\nID Details"));
 
-    aziFaceModule.sendEvent("onCloseModal", true);
+    faceTecModule.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, PhotoIDMatchProcessor.this, PhotoIDMatchProcessor.this,
         sessionToken);
   }
 
   public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult,
       final FaceTecFaceScanResultCallback faceScanResultCallback) {
-    aziFaceModule.setLatestSessionResult(sessionResult);
+    faceTecModule.setLatestSessionResult(sessionResult);
 
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("The session status has not been completed!", "AziFaceInvalidSession");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
       return;
     }
 
@@ -136,13 +132,14 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       parameters.put("externalDatabaseRefID", this.latestExternalDatabaseRefID);
     } catch (JSONException e) {
       e.printStackTrace();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-
+    var route = "/Process/" + Config.ProcessId + "/Enrollment3d";
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + "/enrollment-3d")
+        .url(Config.BaseURL + route)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
@@ -162,46 +159,50 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
         response.body().close();
         try {
           JSONObject responseJSON = new JSONObject(responseString);
-          boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
-          String scanResultBlob = responseJSON.getString("scanResultBlob");
+          JSONObject responseJSONData = responseJSON.getJSONObject("data");
+          boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
-            FaceTecCustomization.overrideResultScreenSuccessMessage = aziThemeUtils.handleMessage(
-                key, "successMessage",
+            FaceTecCustomization.overrideResultScreenSuccessMessage = FaceThemeUtils.handleMessage(
+                principalKey, "successMessage",
                 "Liveness\nConfirmed");
             faceScanWasSuccessful = faceScanResultCallback.proceedToNextStep(scanResultBlob);
           } else {
             faceScanResultCallback.cancel();
-            aziFaceModule.sendEvent("onCloseModal", false);
-            aziFaceModule.processorPromise.reject("AziFace SDK wasn't have to liveness values processed!",
-                "AziFaceLivenessWasntProcessed");
+            faceTecModule.sendEvent("onCloseModal", false);
+            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to liveness values processed!",
+                "FaceTecLivenessWasntProcessed");
           }
         } catch (JSONException e) {
           e.printStackTrace();
+          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           faceScanResultCallback.cancel();
-          aziFaceModule.sendEvent("onCloseModal", false);
-          aziFaceModule.processorPromise.reject(exceptionJsonMessage, "JSONError");
+          faceTecModule.sendEvent("onCloseModal", false);
+          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+              "JSONError");
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         faceScanResultCallback.cancel();
-        aziFaceModule.sendEvent("onCloseModal", false);
-        aziFaceModule.processorPromise.reject(exceptionHttpMessage, "HTTPSError");
+        faceTecModule.sendEvent("onCloseModal", false);
+        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }
 
   public void processIDScanWhileFaceTecSDKWaits(final FaceTecIDScanResult idScanResult,
       final FaceTecIDScanResultCallback idScanResultCallback) {
-    aziFaceModule.setLatestIDScanResult(idScanResult);
+    faceTecModule.setLatestIDScanResult(idScanResult);
 
     if (idScanResult.getStatus() != FaceTecIDScanStatus.SUCCESS) {
       NetworkingHelpers.cancelPendingRequests();
       idScanResultCallback.cancel();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("The scan status has not been completed!", "AziFaceInvalidSession");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Status is not success!", "FaceTecDifferentStatus");
       return;
     }
 
@@ -223,12 +224,14 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       }
     } catch (JSONException e) {
       e.printStackTrace();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject(this.exceptionJsonMessage, "JSONError");
+      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          "JSONError");
     }
-
+    var route = "/Process/" + Config.ProcessId + "/Match3d2dIdScan";
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + "/match-3d-2d-idscan")
+        .url(Config.BaseURL + route)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
@@ -248,84 +251,87 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
         response.body().close();
         try {
           JSONObject responseJSON = new JSONObject(responseString);
-          boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
-          String scanResultBlob = responseJSON.getString("scanResultBlob");
+          JSONObject responseJSONData = responseJSON.getJSONObject("data");
+          boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
             FaceTecCustomization.setIDScanResultScreenMessageOverrides(
                 // Successful scan of ID front-side (ID Types with no back-side).
-                aziThemeUtils.handleMessage(key, "successFrontSide",
+                FaceThemeUtils.handleMessage(principalKey, "successFrontSide",
                     "ID Scan Complete"),
                 // Successful scan of ID front-side (ID Types that have a back-side).
-                aziThemeUtils.handleMessage(key, "successFrontSideBackNext",
+                FaceThemeUtils.handleMessage(principalKey, "successFrontSideBackNext",
                     "Front of ID\nScanned"),
                 // Successful scan of ID front-side (ID Types that do have NFC but do not have a
                 // back-side).
-                aziThemeUtils.handleMessage(key, "successFrontSideNFCNext",
+                FaceThemeUtils.handleMessage(principalKey, "successFrontSideNFCNext",
                     "Front of ID\nScanned"),
                 // Successful scan of the ID back-side (ID Types that do not have NFC).
-                aziThemeUtils.handleMessage(key, "successBackSide",
+                FaceThemeUtils.handleMessage(principalKey, "successBackSide",
                     "ID Scan Complete"),
                 // Successful scan of the ID back-side (ID Types that do have NFC).
-                aziThemeUtils.handleMessage(key, "successBackSideNFCNext",
+                FaceThemeUtils.handleMessage(principalKey, "successBackSideNFCNext",
                     "Back of ID\nScanned"),
                 // Successful scan of a Passport that does not have NFC.
-                aziThemeUtils.handleMessage(key, "successPassport",
+                FaceThemeUtils.handleMessage(principalKey, "successPassport",
                     "Passport Scan Complete"),
                 // Successful scan of a Passport that does have NFC.
-                aziThemeUtils.handleMessage(key, "successPassportNFCNext",
+                FaceThemeUtils.handleMessage(principalKey, "successPassportNFCNext",
                     "Passport Scanned"),
                 // Successful upload of final IDScan containing User-Confirmed ID Text.
-                aziThemeUtils.handleMessage(key, "successUserConfirmation",
+                FaceThemeUtils.handleMessage(principalKey, "successUserConfirmation",
                     "Photo ID Scan\nComplete"),
                 // Successful upload of the scanned NFC chip information.
-                aziThemeUtils.handleMessage(key, "successNFC",
+                FaceThemeUtils.handleMessage(principalKey, "successNFC",
                     "ID Scan Complete"),
                 // Case where a Retry is needed because the Face on the Photo ID did not Match
                 // the User's Face highly enough.
-                aziThemeUtils.handleMessage(key, "retryFaceDidNotMatch",
+                FaceThemeUtils.handleMessage(principalKey, "retryFaceDidNotMatch",
                     "Face Didn't Match\nHighly Enough"),
                 // Case where a Retry is needed because a Full ID was not detected with high
                 // enough confidence.
-                aziThemeUtils.handleMessage(key, "retryIDNotFullyVisible",
+                FaceThemeUtils.handleMessage(principalKey, "retryIDNotFullyVisible",
                     "ID Document\nNot Fully Visible"),
                 // Case where a Retry is needed because the OCR did not produce good enough
                 // results and the User should Retry with a better capture.
-                aziThemeUtils.handleMessage(key, "retryOCRResultsNotGoodEnough",
+                FaceThemeUtils.handleMessage(principalKey, "retryOCRResultsNotGoodEnough",
                     "ID Text Not Legible"),
                 // Case where there is likely no OCR Template installed for the document the
                 // User is attempting to scan.
-                aziThemeUtils.handleMessage(key, "retryIDTypeNotSupported",
+                FaceThemeUtils.handleMessage(principalKey, "retryIDTypeNotSupported",
                     "ID Type Mismatch\nPlease Try Again"),
                 // Case where NFC Scan was skipped due to the user's interaction or an
                 // unexpected error.
-                aziThemeUtils.handleMessage(key, "skipOrErrorNFC",
+                FaceThemeUtils.handleMessage(principalKey, "skipOrErrorNFC",
                     "ID Details\nUploaded"));
 
             success = idScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              aziFaceModule.sendEvent("onCloseModal", false);
-              aziFaceModule.processorPromise.resolve(true);
+              faceTecModule.processorPromise.resolve(true);
             }
           } else {
             idScanResultCallback.cancel();
-            aziFaceModule.sendEvent("onCloseModal", false);
-            aziFaceModule.processorPromise.reject("AziFace SDK wasn't have to scan values processed!",
-                "AziFaceScanWasntProcessed");
+            faceTecModule.sendEvent("onCloseModal", false);
+            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to scan values processed!",
+                "FaceTecScanWasntProcessed");
           }
         } catch (JSONException e) {
           e.printStackTrace();
+          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           idScanResultCallback.cancel();
-          aziFaceModule.sendEvent("onCloseModal", false);
-          aziFaceModule.processorPromise.reject(exceptionJsonMessage, "JSONError");
+          faceTecModule.sendEvent("onCloseModal", false);
+          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+              "JSONError");
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         idScanResultCallback.cancel();
-        aziFaceModule.sendEvent("onCloseModal", false);
-        aziFaceModule.processorPromise.reject(exceptionHttpMessage, "HTTPSError");
+        faceTecModule.sendEvent("onCloseModal", false);
+        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }

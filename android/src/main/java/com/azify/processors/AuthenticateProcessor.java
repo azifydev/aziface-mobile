@@ -1,6 +1,7 @@
 package com.azify.processors;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,65 +14,60 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Map;
 
 import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
+import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
-public class FaceProcessor extends Processor implements FaceTecFaceScanProcessor {
-  private final String key;
-  private final AzifaceMobileSdkModule aziFaceModule;
-  private final FaceConfig faceConfig;
-  private final ThemeUtils aziThemeUtils = new ThemeUtils();
+public class AuthenticateProcessor extends Processor implements FaceTecFaceScanProcessor {
   private boolean success = false;
+  private final String principalKey = "autheticanteMessage";
+  private final AzifaceMobileSdkModule faceTecModule;
+  private final ReadableMap data;
+  private final ThemeUtils FaceThemeUtils = new ThemeUtils();
 
-  public FaceProcessor(String sessionToken, Context context, AzifaceMobileSdkModule aziFaceModule,
-      FaceConfig faceConfig) {
-    this.aziFaceModule = aziFaceModule;
-    this.faceConfig = faceConfig;
-    this.key = faceConfig.getKey();
+  public AuthenticateProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
+      ReadableMap data) {
+    this.faceTecModule = faceTecModule;
+    this.data = data;
 
-    aziFaceModule.sendEvent("onCloseModal", true);
-    FaceTecSessionActivity.createAndLaunchSession(context, FaceProcessor.this, sessionToken);
+    faceTecModule.sendEvent("onCloseModal", true);
+    FaceTecSessionActivity.createAndLaunchSession(context, AuthenticateProcessor.this, sessionToken);
   }
 
   public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult,
       final FaceTecFaceScanResultCallback faceScanResultCallback) {
-    aziFaceModule.setLatestSessionResult(sessionResult);
+    faceTecModule.setLatestSessionResult(sessionResult);
 
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("The session status has not been completed!", "AziFaceInvalidSession");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
       return;
     }
 
     JSONObject parameters = new JSONObject();
     try {
-      final Map extraParameters = this.faceConfig.getParameters();
-      if (extraParameters != null) {
-        parameters.put("data", new JSONObject(extraParameters));
+      if (this.data != null) {
+        parameters.put("data", new JSONObject(this.data.toHashMap()));
       }
       parameters.put("faceScan", sessionResult.getFaceScanBase64());
       parameters.put("auditTrailImage", sessionResult.getAuditTrailCompressedBase64()[0]);
       parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
-
-      final boolean hasExternalDatabaseRefID = this.faceConfig.getHasExternalDatabaseRefID();
-      if (hasExternalDatabaseRefID) {
-        parameters.put("externalDatabaseRefID", aziFaceModule.getLatestExternalDatabaseRefID());
-      }
+      parameters.put("externalDatabaseRefID", faceTecModule.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
       e.printStackTrace();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
+      faceTecModule.sendEvent("onCloseModal", false);
+      faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
+    var route = "/Process/" + Config.ProcessId + "/Match3d3d";
 
-    final String endpoint = this.faceConfig.getEndpoint();
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + endpoint)
+        .url(Config.BaseURL + route)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
@@ -91,38 +87,39 @@ public class FaceProcessor extends Processor implements FaceTecFaceScanProcessor
         response.body().close();
         try {
           JSONObject responseJSON = new JSONObject(responseString);
-          boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
-          String scanResultBlob = responseJSON.getString("scanResultBlob");
+          JSONObject responseJSONData = responseJSON.getJSONObject("data");
+          boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
-            final String message = faceConfig.getSuccessMessage();
-            FaceTecCustomization.overrideResultScreenSuccessMessage = aziThemeUtils
-                .handleMessage(key, "successMessage", message);
+            FaceTecCustomization.overrideResultScreenSuccessMessage = FaceThemeUtils
+                .handleMessage(principalKey, "successMessage", "Authenticated");
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              aziFaceModule.sendEvent("onCloseModal", false);
-              aziFaceModule.processorPromise.resolve(true);
+              faceTecModule.processorPromise.resolve(true);
             }
           } else {
             faceScanResultCallback.cancel();
-            aziFaceModule.sendEvent("onCloseModal", false);
-            aziFaceModule.processorPromise.reject("AziFace SDK values were not processed!",
-                "AziFaceValuesWereNotProcessed");
+            faceTecModule.sendEvent("onCloseModal", false);
+            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to values processed!",
+                "FaceTecWasntProcessed");
           }
         } catch (JSONException e) {
           e.printStackTrace();
+          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           faceScanResultCallback.cancel();
-          aziFaceModule.sendEvent("onCloseModal", false);
-          aziFaceModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          faceTecModule.sendEvent("onCloseModal", false);
+          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, IOException e) {
+        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         faceScanResultCallback.cancel();
-        aziFaceModule.sendEvent("onCloseModal", false);
-        aziFaceModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        faceTecModule.sendEvent("onCloseModal", false);
+        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }
