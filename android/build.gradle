@@ -1,3 +1,8 @@
+def RN_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim());
+def RN_VERSION_STRING = RN_VERSION.toString();
+def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
+def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
+
 buildscript {
   def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceMobileSdk_kotlinVersion"]
 
@@ -10,11 +15,6 @@ buildscript {
     classpath "com.android.tools.build:gradle:7.4.2"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
-}
-
-def reactNativeArchitectures() {
-  def value = rootProject.getProperties().get("reactNativeArchitectures")
-  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
 def isNewArchitectureEnabled() {
@@ -89,7 +89,11 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 dependencies {
   // For < 0.71, this will be from the local maven repo
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-  implementation 'com.facebook.react:react-android:0.76.5'
+  if (USE_REACT_ANDROID) {
+    implementation "com.facebook.react:react-android:$RN_VERSION_STRING"
+  } else {
+    implementation 'com.facebook.react:react-native:+'
+  }
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.squareup.okhttp3:okhttp:3.12.13'
   implementation 'com.squareup.okio:okio:1.15.0'
