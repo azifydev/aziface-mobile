@@ -80,7 +80,7 @@ export default function App() {
       'user-agent': 'YOUR_USER_AGENT',
     };
     const params = {
-      isDeveloperMode: true
+      isDeveloperMode: true,
       device: 'YOUR_DEVICE',
       url: 'YOUR_BASE_URL',
       key: 'YOUR_KEY',
