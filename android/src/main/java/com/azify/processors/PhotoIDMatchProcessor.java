@@ -137,7 +137,7 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-    var route = "/Process/" + Config.ProcessId + "/Enrollment3d";
+    String route = "/Process/" + Config.ProcessId + "/Enrollment3d";
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + route)
         .headers(Config.getHeaders("POST"))
@@ -229,7 +229,7 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
           "JSONError");
     }
-    var route = "/Process/" + Config.ProcessId + "/Match3d2dIdScan";
+    String route = "/Process/" + Config.ProcessId + "/Match3d2dIdScan";
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + route)
         .headers(Config.getHeaders("POST"))

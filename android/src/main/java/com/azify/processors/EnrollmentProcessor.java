@@ -44,7 +44,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
             faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
             return;
         }
-       var route = "/Process/" + Config.ProcessId + "/Enrollment3d";
+        String route = "/Process/" + Config.ProcessId + "/Enrollment3d";
 
         JSONObject parameters = new JSONObject();
         try {
@@ -59,7 +59,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
         catch(JSONException e) {
             e.printStackTrace();
             Log.d("Aziface", "Exception raised while attempting to create JSON payload for upload.");
-              faceTecModule.sendEvent("onCloseModal", false);
+            faceTecModule.sendEvent("onCloseModal", false);
             faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
                 "JSONError");
         }
@@ -112,6 +112,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
                 catch(JSONException e) {
                     e.printStackTrace();
                     Log.d("Aziface", "Exception raised while attempting to parse JSON result.");
+                    faceTecModule.sendEvent("onCloseModal", false);
                     faceScanResultCallback.cancel();
                 }
             }

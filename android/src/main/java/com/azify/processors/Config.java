@@ -17,7 +17,7 @@ public class Config {
 	private static final ThemeUtils AziThemeUtils = new ThemeUtils();
 	public static String DeviceKeyIdentifier;
 	public static String BaseURL;
-    public static String ProcessId;
+  public static String ProcessId;
 	public static String PublicFaceScanEncryptionKey;
 	public static String ProductionKeyText;
 	public static ReadableMap Theme;
