@@ -37,6 +37,14 @@ Azify SDK adapter to react native. 📱
 
 ```sh
 npm install @azify/aziface-mobile
+# or
+yarn add @azify/aziface-mobile
+```
+
+Only iOS:
+
+```sh
+cd ios && pod install
 ```
 
 <hr/>
