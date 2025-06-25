@@ -748,7 +748,7 @@ export declare namespace AzifaceSdk {
     /**
      * @description Option to select production or developement mode for initialize Aziface SDK.
      */
-    isDeveloperMode?: boolean;
+    isDeveloperMode: boolean;
 
     /**
      * @description The id of the user process.
