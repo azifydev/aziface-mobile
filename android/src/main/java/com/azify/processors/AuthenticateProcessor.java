@@ -44,7 +44,8 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
       faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
+      faceTecModule.processorPromise.reject("Status is not session completed successfully!",
+          "AziFaceTecDifferentStatus");
       return;
     }
 
@@ -102,7 +103,7 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
             faceScanResultCallback.cancel();
             faceTecModule.sendEvent("onCloseModal", false);
             faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to values processed!",
-                "FaceTecWasntProcessed");
+                "AziFaceValuesWereNotProcessed");
           }
         } catch (JSONException e) {
           e.printStackTrace();
