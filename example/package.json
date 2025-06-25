@@ -32,6 +32,6 @@
     "react-native-device-info": "^14.0.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=21"
   }
 }
