@@ -887,7 +887,7 @@ export declare namespace AzifaceSdk {
  * emitter.addListener('onCloseModal', (event: boolean) => console.log('onCloseModal', event));
  */
 export const AzifaceMobileSdk: AzifaceSdk.Methods =
-  NativeModules.AzifaceMobileSdk
+  NativeModules?.AzifaceMobileSdk
     ? NativeModules.AzifaceMobileSdk
     : new Proxy(
         {},
