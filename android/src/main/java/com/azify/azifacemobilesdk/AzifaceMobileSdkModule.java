@@ -89,7 +89,6 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
               callback.invoke(successful);
               if (!successful) {
                 String status = FaceTecSDK.getStatus(reactContext).toString();
-                Log.d("Aziface - Status", status);
                 Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
               } else {
                 Log.d("Aziface - SDK", "FaceTecSDK initialized!");

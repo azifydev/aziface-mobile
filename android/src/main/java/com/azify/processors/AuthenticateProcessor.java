@@ -60,7 +60,6 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       parameters.put("externalDatabaseRefID", faceTecModule.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
       e.printStackTrace();
-      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
       faceTecModule.sendEvent("onCloseModal", false);
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
@@ -107,7 +106,6 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
           }
         } catch (JSONException e) {
           e.printStackTrace();
-          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           faceScanResultCallback.cancel();
           faceTecModule.sendEvent("onCloseModal", false);
           faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
@@ -117,7 +115,6 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
 
       @Override
       public void onFailure(@NonNull Call call, IOException e) {
-        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         faceScanResultCallback.cancel();
         faceTecModule.sendEvent("onCloseModal", false);
         faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");

@@ -59,7 +59,6 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
       parameters.put("externalDatabaseRefID", faceTecModule.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
       e.printStackTrace();
-      Log.d("Aziface", "Exception raised while attempting to create JSON payload for upload.");
       faceTecModule.sendEvent("onCloseModal", false);
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
