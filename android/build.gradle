@@ -3,6 +3,9 @@ def RN_VERSION_STRING = RN_VERSION.toString();
 def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
 def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
 
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
 buildscript {
   def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceMobileSdk_kotlinVersion"]
 
@@ -84,6 +87,10 @@ android {
 repositories {
   mavenCentral()
   google()
+  mavenLocal()
+  flatDir {
+    dirs "libs"
+  }
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -102,6 +109,5 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.6.1'
   implementation 'com.google.code.gson:gson:2.10'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-
-  compileOnly files("libs/facetec-sdk-9.7.47.aar")
+  implementation 'com.facetec:facetec:1.0.0'
 }
