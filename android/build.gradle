@@ -90,9 +90,6 @@ repositories {
   mavenCentral()
   google()
   mavenLocal()
-  flatDir {
-    dirs "libs"
-  }
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
