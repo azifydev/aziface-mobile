@@ -112,8 +112,6 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             guard let data = data else {
-                print("Exception raised while attempting HTTPS call.")
-
                 if self.processorRejecter != nil {
                     self.processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil);
                 }
@@ -133,7 +131,6 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
                         print("Data object not found.")
                     }
 
-                    print("Exception raised while attempting HTTPS call.")
                     if let processorRejecter = self.processorRejecter {
                         processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
                     }
