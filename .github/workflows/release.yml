@@ -7,6 +7,10 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,11 +20,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 21
-          cache: 'npm'
-          cache-dependency-path: ./package-lock.json
-
-      - name: NPM Cache
-        uses: c-hive/gha-npm-cache@v1
 
       - name: Install dependencies
         run: |
@@ -29,9 +28,6 @@ jobs:
 
       - name: Publish Release
         run: npm run release
-        
+
       - name: Release
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: npx semantic-release --ci
