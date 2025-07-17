@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/azifydev/aziface-mobile/compare/v1.0.3...v1.0.4) (2025-07-17)
+
+
+### Bug Fixes
+
+* adjust worklfows ([7c8efe0](https://github.com/azifydev/aziface-mobile/commit/7c8efe0c59db9c4eaadb7f03bdf1c455d780d0fc))
+
 ## [1.0.3](https://github.com/azifydev/aziface-mobile/compare/v1.0.2...v1.0.3) (2025-07-17)
 
 
