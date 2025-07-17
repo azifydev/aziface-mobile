@@ -51,7 +51,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/azifydev/aziface-mobile",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azifydev/aziface-mobile.git"
+  },
   "author": "Azify <nayaradias743@gmail.com> (https://github.com/azifydev)",
   "license": "MIT",
   "bugs": {
