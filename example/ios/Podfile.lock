@@ -1,5 +1,5 @@
 PODS:
-  - aziface-mobile-sdk (1.0.3):
+  - aziface-mobile-sdk (1.0.4):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1778,7 +1778,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  aziface-mobile-sdk: 731c0e9c7af7bcf7b27c53d54d1536720d4fd4b8
+  aziface-mobile-sdk: d52b4fedcac0afd3ca8479dfc8789173213567fa
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa
@@ -1814,6 +1814,9 @@ SPEC CHECKSUMS:
   React-logger: ae95f0effa7e1791bd6f7283caddca323d4fbc1e
   React-Mapbuffer: 7eb5d69e1154e7743487ef0c8d7261e5b59afb32
   React-microtasksnativemodule: 01dd998649ff5f8814846b7eee84c4d57f5d3671
+  react-native-config: 644074ab88db883fcfaa584f03520ec29589d7df
+  react-native-mmkv: d9af389b132ca3a56f93eb4225c92f397f435f33
+  react-native-user-agent: 1085b87cfc237fea6440a217f9d9593a0ae0e833
   React-nativeconfig: f7ab6c152e780b99a8c17448f2d99cf5f69a2311
   React-NativeModulesApple: 9aeb901b9bfcc9235e912445fb3cf4780a99baf4
   React-perflogger: 16e049953d21b37e9871ddf0b02f414e12ff14ba
