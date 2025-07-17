@@ -1,3 +1,27 @@
+## [1.0.4](https://github.com/azifydev/aziface-mobile/compare/v1.0.3...v1.0.4) (2025-07-17)
+
+
+### Bug Fixes
+
+* adjust worklfows ([7c8efe0](https://github.com/azifydev/aziface-mobile/commit/7c8efe0c59db9c4eaadb7f03bdf1c455d780d0fc))
+
+## [1.0.3](https://github.com/azifydev/aziface-mobile/compare/v1.0.2...v1.0.3) (2025-07-17)
+
+
+### Bug Fixes
+
+* adjust package url ([a28de74](https://github.com/azifydev/aziface-mobile/commit/a28de7480d801e9eff00ea63071b1cbbfa817081))
+
+## [1.0.2](https://github.com/azifydev/aziface-mobile/compare/v1.0.1...v1.0.2) (2025-07-17)
+
+
+### Bug Fixes
+
+* adjust release workflow ([0eda851](https://github.com/azifydev/aziface-mobile/commit/0eda85177ae563b4c47b073929b841e937497541))
+* adjust release workflow ([c0ba01b](https://github.com/azifydev/aziface-mobile/commit/c0ba01b9887bc53ea923b668511cb8c0ebac9488))
+* adjust workflow ([1e32b00](https://github.com/azifydev/aziface-mobile/commit/1e32b00acca75f6e3f1df037d0a89b0d5d5d298d))
+* adjust workflow - release ([0902397](https://github.com/azifydev/aziface-mobile/commit/090239755b6bee7cad08933b925c02a1633dd198))
+
 ## [1.0.1](https://github.com/azifydev/aziface-mobile/compare/v1.0.0...v1.0.1) (2024-04-18)
 
 

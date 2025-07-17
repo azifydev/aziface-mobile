@@ -1,6 +1,6 @@
 {
   "name": "@azify/aziface-mobile",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Aziface sdk adapter to react native. 📱",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -51,7 +51,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/azifydev/aziface-mobile",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azifydev/aziface-mobile.git"
+  },
   "author": "Azify <nayaradias743@gmail.com> (https://github.com/azifydev)",
   "license": "MIT",
   "bugs": {
@@ -93,7 +96,7 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 21.0.0"
+    "node": ">=22"
   },
   "packageManager": "^npm@9.0.0",
   "jest": {
