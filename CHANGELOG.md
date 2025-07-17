@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/azifydev/aziface-mobile/compare/v1.0.2...v1.0.3) (2025-07-17)
+
+
+### Bug Fixes
+
+* adjust package url ([a28de74](https://github.com/azifydev/aziface-mobile/commit/a28de7480d801e9eff00ea63071b1cbbfa817081))
+
 ## [1.0.2](https://github.com/azifydev/aziface-mobile/compare/v1.0.1...v1.0.2) (2025-07-17)
 
 
