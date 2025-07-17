@@ -64,7 +64,7 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-    var route = "/Process/" + Config.ProcessId + "/Match3d3d";
+    String route = "/Process/" + Config.ProcessId + "/Match3d3d";
 
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + route)

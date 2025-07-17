@@ -15,6 +15,7 @@ if linkage != nil
 end
 
 target 'AzifaceMobileSdkExample' do
+    project 'AzifaceMobileSdkExample.xcodeproj'
   config = use_native_modules!
 
   use_react_native!(
@@ -23,11 +24,11 @@ target 'AzifaceMobileSdkExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'AzifaceMobileSdkExampleTests' do
-    project 'AzifaceMobileSdkExample.xcodeproj'
-    inherit! :complete
-    # Pods for testing
-  end
+  # target 'AzifaceMobileSdkExampleTests' do
+  #   project 'AzifaceMobileSdkExample.xcodeproj'
+  #   inherit! :complete
+  #   # Pods for testing
+  # end
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202

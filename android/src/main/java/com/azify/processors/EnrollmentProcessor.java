@@ -44,7 +44,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
             faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
             return;
         }
-       var route = "/Process/" + Config.ProcessId + "/Enrollment3d";
+       String route = "/Process/" + Config.ProcessId + "/Enrollment3d";
 
         JSONObject parameters = new JSONObject();
         try {
