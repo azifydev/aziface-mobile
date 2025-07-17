@@ -17,6 +17,8 @@ jobs:
   common:
     name: Lint and Tests
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
     steps:
       - name: Checkout
