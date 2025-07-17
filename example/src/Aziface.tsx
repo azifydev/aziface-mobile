@@ -59,7 +59,7 @@ export default function Aziface() {
       'x-only-raw-analysis': '1',
     };
     const params = {
-      isDeveloperMode: false,
+      isDeveloperMode: true,
       processId: processId,
       device: configs?.device || '',
       url: azifaceBaseURL,
