@@ -29,8 +29,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
 
       - name: PR Semantic Release Check
         uses: amannn/action-semantic-pull-request@v3.1.0
