@@ -9,7 +9,7 @@ import {
   type DevResponseData,
   useCreateBiometricSession,
   useCreateBiometricId,
-} from './services/symphony.service';
+} from './services/azify.service';
 
 export default function Login() {
   const [username, setUsername] = useState('');
