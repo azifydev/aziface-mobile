@@ -28,17 +28,18 @@ import md5 from 'md5';
 import { useConfigs, useCreateProcess } from './services/aziface.service';
 import { azifaceBaseURL } from './services/azifaceApi';
 import { styles } from './Style';
+import { useEffect } from 'react';
 
 export default function Aziface() {
   const { tokenBiometric, processId, isInitialized, setIsInitialized } =
     useUser();
   const { data: configs } = useConfigs();
-  const { mutateAsync: createProcess } = useCreateProcess();
+  const { mutateAsync: createProcess, isPending } = useCreateProcess();
+
+  const isDisabledActions =
+    !isInitialized || !processId || !tokenBiometric || isPending;
+
   const onPressInit = async () => {
-    console.log('onPressInit');
-    if (!processId) {
-      await createProcess();
-    }
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
     const isAndroid = Platform.OS === 'android';
     const userAgent = await getUserAgent?.();
@@ -104,11 +105,18 @@ export default function Aziface() {
       console.error('ERROR onPressEnroll', error.message);
     }
   };
+
+  useEffect(() => {
+    if (!processId) createProcess();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [processId]);
+
   return (
     <View style={styles.azifaceContent}>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
+        disabled={isPending}
         onPress={onPressInit}
       >
         <Text style={styles.buttonText}>Init Aziface sdk</Text>
@@ -117,7 +125,7 @@ export default function Aziface() {
         style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressEnroll}
-        disabled={!isInitialized}
+        disabled={isDisabledActions}
       >
         <Text style={styles.buttonText}>Enrollment</Text>
       </TouchableOpacity>
@@ -125,7 +133,7 @@ export default function Aziface() {
         style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressPhotoMatch}
-        disabled={!isInitialized}
+        disabled={isDisabledActions}
       >
         <Text style={styles.buttonText}>Photo Match</Text>
       </TouchableOpacity>
