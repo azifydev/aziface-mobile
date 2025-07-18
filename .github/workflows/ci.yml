@@ -17,8 +17,6 @@ jobs:
   common:
     name: Lint and Tests
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN_V2: ${{ secrets.GH_TOKEN_V2 }}
 
     steps:
       - name: Checkout
@@ -35,6 +33,7 @@ jobs:
       - name: PR Semantic Release Check
         uses: amannn/action-semantic-pull-request@v3.1.0
         with:
+          GH_TOKEN_V2: ${{ secrets.GH_TOKEN_V2 }}
           types: |
             fix
             feat
