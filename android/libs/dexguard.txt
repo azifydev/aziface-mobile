@@ -1,9 +1,0 @@
-
-
-
--stripnativelibrarysections !jni/arm64-v8a/libcceb.so,!jni/armeabi-v7a/libcceb.so,!lib/arm64-v8a/libcceb.so,!lib/armeabi-v7a/libcceb.so,dummyfile
--encryptassetfiles !assets/com/facetec/sdk/6372a479a5c2fa38b-,!assets/com/facetec/sdk/477039c139cb6a7ca-,dummyfile
-
-
--keepresourcefiles assets/com/facetec/sdk/477039c139cb6a7ca-,assets/com/facetec/sdk/6372a479a5c2fa38b-,jni/arm64-v8a/libcceb.so,jni/armeabi-v7a/libcceb.so,jni/*/libPhoenixAndroid.so,jni/*/libcceb.so,lib/arm64-v8a/libcceb.so,lib/armeabi-v7a/libcceb.so,lib/*/libPhoenixAndroid.so,lib/*/libcceb.so
-
