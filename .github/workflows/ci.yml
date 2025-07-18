@@ -13,6 +13,9 @@ on:
       - edited
       - synchronize
 
+permissions:
+  pull-requests: read
+
 jobs:
   common:
     name: Lint and Tests
@@ -32,8 +35,10 @@ jobs:
 
       - name: PR Semantic Release Check
         uses: amannn/action-semantic-pull-request@v3.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
+
         with:
-          GH_TOKEN_V2: ${{ secrets.GH_TOKEN_V2 }}
           types: |
             fix
             feat
