@@ -92,17 +92,17 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         do {
             var request = Config.makeRequest(url: route, httpMethod: "POST")
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            
+
             let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
             latestNetworkRequest = session.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
-                
-                if let error = error {
-                    print("Network error")
-                    self.faceScanResultCallback.onFaceScanResultCancel()
-                    return
+
+            if let error = error {
+                print("Network error")
+                self.faceScanResultCallback.onFaceScanResultCancel()
+                return
             }
-                
+
             guard let data = data else {
                     print("No data received from server.")
                     self.faceScanResultCallback.onFaceScanResultCancel()
@@ -111,7 +111,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
 
             // decode response
             do {
-              
+
                 guard let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {
                     print("Invalid JSON response.")
                     self.faceScanResultCallback.onFaceScanResultCancel()
@@ -155,7 +155,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
                 print("Error creating request")
                 faceScanResultCallback.onFaceScanResultCancel()
             }
-        
+
         // show loading message
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
             if self.latestNetworkRequest.state == .completed { return }
@@ -218,6 +218,12 @@ func processIDScanWhileFaceTecSDKWaits(idScanResult: FaceTecIDScanResult, idScan
             idScanResultCallback.onIDScanResultCancel()
             return
         }
+      
+        guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
+            print("Missing 'data' in response.")
+            idScanResultCallback.onIDScanResultCancel()
+            return
+        }
 
         if let error = responseJSON["error"] as? Bool, error {
             let errorMessage = responseJSON["errorMessage"] as? String ?? "Erro desconhecido"
@@ -226,8 +232,8 @@ func processIDScanWhileFaceTecSDKWaits(idScanResult: FaceTecIDScanResult, idScan
             return
         }
 
-        guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-              let wasProcessed = responseJSON["wasProcessed"] as? Bool else {
+        guard let scanResultBlob = responseData["scanResultBlob"] as? String,
+            let wasProcessed = responseData["wasProcessed"] as? Bool else {
             print("Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
             idScanResultCallback.onIDScanResultCancel()
             return

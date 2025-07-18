@@ -5,7 +5,5 @@ import Login from './Login';
 
 export default function App() {
   const { token, tokenBiometric } = useUser();
-  // console.log('App token:', token);
-  // console.log('App tokenBiometric:', tokenBiometric);
   return token && tokenBiometric ? <Aziface /> : <Login />;
 }

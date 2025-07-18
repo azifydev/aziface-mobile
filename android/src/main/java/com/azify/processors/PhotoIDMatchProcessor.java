@@ -117,7 +117,8 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
       faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not session completed successfully!", "FaceTecDifferentStatus");
+      faceTecModule.processorPromise.reject("Status is not session completed successfully!",
+          "AziFaceTecDifferentStatus");
       return;
     }
 
@@ -132,7 +133,6 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       parameters.put("externalDatabaseRefID", this.latestExternalDatabaseRefID);
     } catch (JSONException e) {
       e.printStackTrace();
-      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
       faceTecModule.sendEvent("onCloseModal", false);
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
@@ -176,7 +176,6 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
           }
         } catch (JSONException e) {
           e.printStackTrace();
-          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           faceScanResultCallback.cancel();
           faceTecModule.sendEvent("onCloseModal", false);
           faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
@@ -186,7 +185,6 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         faceScanResultCallback.cancel();
         faceTecModule.sendEvent("onCloseModal", false);
         faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
@@ -202,7 +200,7 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       NetworkingHelpers.cancelPendingRequests();
       idScanResultCallback.cancel();
       faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not success!", "FaceTecDifferentStatus");
+      faceTecModule.processorPromise.reject("Status is not success!", "AziFaceTecDifferentStatus");
       return;
     }
 
@@ -224,7 +222,6 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       }
     } catch (JSONException e) {
       e.printStackTrace();
-      Log.d("Aziface - JSON", "Exception raised while attempting to create JSON payload for upload.");
       faceTecModule.sendEvent("onCloseModal", false);
       faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
           "JSONError");
@@ -314,11 +311,10 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
             idScanResultCallback.cancel();
             faceTecModule.sendEvent("onCloseModal", false);
             faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to scan values processed!",
-                "FaceTecScanWasntProcessed");
+                "AziFaceScanValuesWereNotProcessed");
           }
         } catch (JSONException e) {
           e.printStackTrace();
-          Log.d("Aziface - JSON", "Exception raised while attempting to parse JSON result.");
           idScanResultCallback.cancel();
           faceTecModule.sendEvent("onCloseModal", false);
           faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
@@ -328,7 +324,6 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
         idScanResultCallback.cancel();
         faceTecModule.sendEvent("onCloseModal", false);
         faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");

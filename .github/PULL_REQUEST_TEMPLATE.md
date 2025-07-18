@@ -1,10 +1,13 @@
-## Resumo
+## Summary
 
-Descreva resumidamente o que este PR faz.
+Briefly describe what this PR does.
 
-### Testes Manuais de Cenários
+### Manual Testing Scenarios
 
-- [ ] Cenário 1 **[Android]**
-- [ ] Cenário 1 **[iOS]**
+- [ ] Scenario 1 [**Android**]
 
-## Evidências (fotos/gifs/links)
+- [ ] Scenario 1 [**iOS**]
+
+### Evidences (photos/gifs/links)
+
+Add evidences here.

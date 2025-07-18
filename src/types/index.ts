@@ -723,7 +723,7 @@ export declare namespace AzifaceSdk {
    */
   interface Params {
     /**
-     * @description Your device to will be used to initialize AzifaceSDK.
+     * @description Your device to will be used to initialize Aziface SDK.
      * Available in your Aziface account.
      */
     device: string;
@@ -734,7 +734,7 @@ export declare namespace AzifaceSdk {
     url: string;
 
     /**
-     * @description Your public key to will be used to initialize AzifaceSDK.
+     * @description Your public key to will be used to initialize Aziface SDK.
      * Available in your Aziface account.
      */
     key: string;
@@ -746,9 +746,9 @@ export declare namespace AzifaceSdk {
     productionKey: string;
 
     /**
-     * @description Option to select production or developement mode for initialize AzifaceSDK.
+     * @description Option to select production or developement mode for initialize Aziface SDK.
      */
-    isDeveloperMode?: boolean;
+    isDeveloperMode: boolean;
 
     /**
      * @description The id of the user process.
@@ -763,7 +763,7 @@ export declare namespace AzifaceSdk {
    */
   enum Errors {
     /**
-     * @description When some processors method is runned, but AzifaceSDK
+     * @description When some processors method is running, but Aziface SDK
      * **has not been initialized!**.
      */
     AziFaceHasNotBeenInitialized = 'AziFaceHasNotBeenInitialized',
@@ -791,16 +791,14 @@ export declare namespace AzifaceSdk {
     AziFaceInvalidSession = 'AziFaceInvalidSession',
 
     /**
-     * @description When the image user sent to the processors cannot be
-     * processed due to inconsistency. Only Android.
+     * @description When session status is different of success. Only Android.
      */
-    AzifaceLivenessWasntProcessed = 'AzifaceLivenessWasntProcessed',
+    AziFaceTecDifferentStatus = 'AziFaceTecDifferentStatus',
 
     /**
-     * @description When the image ID sent to the processors cannot be processed
-     * due to inconsistency. Only Android.
+     * @description When the image ID sent to the processors cannot be processed due to inconsistency. Only Android.
      */
-    AzifaceScanWasntProcessed = 'AzifaceScanWasntProcessed',
+    AziFaceScanValuesWereNotProcessed = 'AziFaceScanValuesWereNotProcessed',
   }
 
   /**
@@ -878,7 +876,7 @@ export declare namespace AzifaceSdk {
 }
 
 /**
- * @description Native module AzifaceSDK, it's recommended use it with event
+ * @description Native module Aziface SDK, it's recommended use it with event
  * types.
  *
  * @example
@@ -889,7 +887,7 @@ export declare namespace AzifaceSdk {
  * emitter.addListener('onCloseModal', (event: boolean) => console.log('onCloseModal', event));
  */
 export const AzifaceMobileSdk: AzifaceSdk.Methods =
-  NativeModules.AzifaceMobileSdk
+  NativeModules?.AzifaceMobileSdk
     ? NativeModules.AzifaceMobileSdk
     : new Proxy(
         {},

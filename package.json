@@ -96,7 +96,7 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 21.0.0"
+    "node": ">=22"
   },
   "packageManager": "^npm@9.0.0",
   "jest": {
