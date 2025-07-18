@@ -106,10 +106,12 @@ export default function Aziface() {
   };
   return (
     <View style={styles.azifaceContent}>
-      <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-        <Text style={styles.buttonText} onPress={onPressInit}>
-          Init Aziface sdk
-        </Text>
+      <TouchableOpacity
+        style={styles.button}
+        activeOpacity={0.8}
+        onPress={onPressInit}
+      >
+        <Text style={styles.buttonText}>Init Aziface sdk</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
