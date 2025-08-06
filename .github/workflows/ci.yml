@@ -28,6 +28,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           submodules: recursive
+          token: ${{ secrets.GH_TOKEN_V2 }}
 
       - name: Setup JDK
         uses: actions/setup-java@v3

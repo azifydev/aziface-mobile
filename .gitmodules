@@ -1,3 +1,3 @@
 [submodule "external/facetec-aar"]
 	path = external/facetec-aar
-	url = git@github.com:azifydev/facetec-aar.git
+	url = https://github.com/azifydev/facetec-aar.git
