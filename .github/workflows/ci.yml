@@ -31,13 +31,9 @@ jobs:
           node-version: 22
 
       - name: PR Semantic Release Check
-        uses: amannn/action-semantic-pull-request@v3.1.0
-        with:
-          types: |
-            fix
-            feat
-            ci
-            chore
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
 
       - name: Installing dependencies
         run: |
