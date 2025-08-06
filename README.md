@@ -1,5 +1,7 @@
 # @azify/aziface-mobile
 
+![Version](https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen)
+
 Azify SDK adapter to react native. 📱
 
 - [Installation](#installation)
