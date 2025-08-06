@@ -68,3 +68,6 @@ jobs:
 
       - name: Run build
         run: npm run prepack
+
+      - name: Run example
+        run: cd example && npm install && cd android && ./gradlew assembleRelease
