@@ -64,10 +64,10 @@ jobs:
       #       ci
       #       chore
 
-      # - name: Installing dependencies
-      #   run: |
-      #     npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-      #     npm ci
+      - name: Installing dependencies
+        run: |
+          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          npm ci
 
       - name: Run build
         run: npm run prepack
