@@ -36,10 +36,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 22
+
+      - name: Build and Publish facetec-aar
+        run: |
+          cd external/facetec-aar
+          gradle publish
 
       - name: PR Semantic Release Check
         uses: amannn/action-semantic-pull-request@v3.1.0
@@ -52,11 +60,6 @@ jobs:
             feat
             ci
             chore
-
-      - name: Build and Publish facetec-aar
-        run: |
-          cd external/facetec-aar
-          ./gradlew publish
 
       - name: Installing dependencies
         run: |
