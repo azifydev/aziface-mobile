@@ -86,7 +86,7 @@ android {
 }
 
 repositories {
-   maven{
+  maven {
     url = uri("../external/facetec-aar/build/repo")
   }
   mavenCentral()
