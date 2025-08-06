@@ -50,6 +50,7 @@ def supportsNamespace() {
   return (major == 7 && minor >= 3) || major >= 8
 }
 
+
 android {
   if (supportsNamespace()) {
     namespace "com.azify.azifacemobilesdk"
@@ -85,6 +86,9 @@ android {
 }
 
 repositories {
+   maven{
+    url = uri("../external/facetec-aar/build/repo")
+  }
   mavenCentral()
   google()
   mavenLocal()
@@ -106,5 +110,5 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.6.1'
   implementation 'com.google.code.gson:gson:2.10'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-  implementation 'com.facetec:facetec:1.0.0'
+  implementation 'com.azify.facetec:facetec-sdk:9.7.47'
 }
