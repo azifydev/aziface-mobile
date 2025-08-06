@@ -27,6 +27,13 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+          submodules: recursive
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -45,7 +52,15 @@ jobs:
             ci
             chore
 
+      - name: Build and Publish facetec-aar
+        run: |
+          cd external/facetec-aar
+          ./gradlew publish
+
       - name: Installing dependencies
         run: |
           npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
           npm ci
+
+      - name: Run build
+        run: npm run prepack
