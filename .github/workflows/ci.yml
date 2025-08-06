@@ -52,25 +52,25 @@ jobs:
         run: |
           ls -R external/facetec-aar/build/repo/com/azify/facetec/facetec-sdk/9.7.47 || echo "Not found"
 
-    # - name: PR Semantic Release Check
-    #   uses: amannn/action-semantic-pull-request@v3.1.0
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
+      # - name: PR Semantic Release Check
+      #   uses: amannn/action-semantic-pull-request@v3.1.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
 
-    #   with:
-    #     types: |
-    #       fix
-    #       feat
-    #       ci
-    #       chore
+      #   with:
+      #     types: |
+      #       fix
+      #       feat
+      #       ci
+      #       chore
 
-    # - name: Installing dependencies
-    #   run: |
-    #     npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-    #     npm ci
+      # - name: Installing dependencies
+      #   run: |
+      #     npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      #     npm ci
 
-    # - name: Run build
-    #   run: npm run prepack
+      - name: Run build
+        run: npm run prepack
 
-    # - name: Run example
-    #   run: cd example && npm install && cd android && ./gradlew assembleRelease
+      - name: Run example
+        run: cd example && npm install && cd android && ./gradlew assembleRelease
