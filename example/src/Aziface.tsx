@@ -57,7 +57,7 @@ export default function Aziface() {
     };
 
     const params = {
-      isDeveloperMode: true,
+      isDeveloperMode: false,
       processId: processId,
       device: configs?.device || '',
       url: Config.API_URL_AZTECH,
