@@ -3,8 +3,6 @@ def RN_VERSION_STRING = RN_VERSION.toString();
 def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
 def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
 
-String rootExternalPath = new File(rootDir, "..").canonicalFile.absolutePath + "/external/facetec-aar/build/repo"
-
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
@@ -87,9 +85,7 @@ android {
 }
 
 repositories {
-  maven {
-    url = uri(rootExternalPath)
-  }
+  maven { url 'https://jitpack.io' }
   mavenCentral()
   google()
   mavenLocal()
@@ -111,5 +107,5 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.6.1'
   implementation 'com.google.code.gson:gson:2.10'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-  implementation 'com.azify.facetec:facetec-sdk:9.7.47'
+  implementation 'com.github.azifydev:facetec-aar:v1.0.5'
 }
