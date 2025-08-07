@@ -3,6 +3,8 @@ def RN_VERSION_STRING = RN_VERSION.toString();
 def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
 def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
 
+String rootExternalPath = new File(rootDir, "..").canonicalFile.absolutePath + "/external/facetec-aar/build/repo"
+
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
@@ -19,7 +21,6 @@ buildscript {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
-
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
@@ -87,7 +88,7 @@ android {
 
 repositories {
   maven {
-    url = uri("../external/facetec-aar/build/repo")
+    url = uri(rootExternalPath)
   }
   mavenCentral()
   google()

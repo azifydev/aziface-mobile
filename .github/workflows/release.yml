@@ -45,14 +45,14 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle-
 
-      - name: Create custom settings.xml
-        run: |
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml <<EOF
-          <settings>
-            <localRepository>${{ github.workspace }}/external/facetec-aar/build/repo</localRepository>
-          </settings>
-          EOF
+      # - name: Create custom settings.xml
+      #   run: |
+      #     mkdir -p ~/.m2
+      #     cat > ~/.m2/settings.xml <<EOF
+      #     <settings>
+      #       <localRepository>${{ github.workspace }}/external/facetec-aar/build/repo</localRepository>
+      #     </settings>
+      #     EOF
 
       - name: Build and Publish facetec-aar if needed
         run: |
