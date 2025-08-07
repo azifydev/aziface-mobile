@@ -7,6 +7,7 @@ import {
   NativeEventEmitter,
   type NativeModule,
   Platform,
+  TextInput,
 } from 'react-native';
 import {
   AzifaceMobileSdk,
@@ -14,7 +15,6 @@ import {
   initialize,
   photoMatch,
 } from '@azify/aziface-mobile';
-import { useUser } from './hooks/useuser.hook';
 import * as pkg from '../package.json';
 import {
   getDeviceId,
@@ -25,19 +25,16 @@ import {
   syncUniqueId,
 } from 'react-native-device-info';
 import md5 from 'md5';
-import { useConfigs, useCreateProcess } from './services/aziface.service';
-import { azifaceBaseURL } from './services/azifaceApi';
+import { useBiometricConfigs } from './services/assemble.service';
 import { styles } from './Style';
-import { useEffect } from 'react';
+import Config from 'react-native-config';
+import { useState } from 'react';
 
 export default function Aziface() {
-  const { tokenBiometric, processId, isInitialized, setIsInitialized } =
-    useUser();
-  const { data: configs } = useConfigs();
-  const { mutateAsync: createProcess, isPending } = useCreateProcess();
-
-  const isDisabledActions =
-    !isInitialized || !processId || !tokenBiometric || isPending;
+  const { data: configs } = useBiometricConfigs();
+  const [processId, setProcessId] = useState('');
+  const [isInitialized, setIsInitialized] = useState(false);
+  const isDisabledActions = !isInitialized || !processId;
 
   const onPressInit = async () => {
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
@@ -45,8 +42,7 @@ export default function Aziface() {
     const userAgent = await getUserAgent?.();
     const xForwardedFor = await getIpAddressSync?.();
     const headers = {
-      'authorization': tokenBiometric,
-      'x-token-bearer': tokenBiometric,
+      'x-api-key': Config.X_API_KEY,
       'clientInfo': clientInfo,
       'contentType': 'application/json',
       'device': md5(
@@ -59,11 +55,12 @@ export default function Aziface() {
       'user-agent': userAgent,
       'x-only-raw-analysis': '1',
     };
+
     const params = {
       isDeveloperMode: true,
       processId: processId,
       device: configs?.device || '',
-      url: azifaceBaseURL,
+      url: Config.API_URL_AZTECH,
       key: configs?.key || '',
       productionKey: configs?.productionKey || '',
     };
@@ -106,23 +103,26 @@ export default function Aziface() {
     }
   };
 
-  useEffect(() => {
-    if (!processId) createProcess();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [processId]);
-
   return (
     <View style={styles.azifaceContent}>
+      <TextInput
+        placeholder="Process ID"
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.loginInput}
+        value={processId}
+        onChangeText={setProcessId}
+      />
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
         activeOpacity={0.8}
-        disabled={isPending}
+        disabled={!processId}
         onPress={onPressInit}
       >
         <Text style={styles.buttonText}>Init Aziface sdk</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
+        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressEnroll}
         disabled={isDisabledActions}
@@ -130,7 +130,7 @@ export default function Aziface() {
         <Text style={styles.buttonText}>Enrollment</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
+        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressPhotoMatch}
         disabled={isDisabledActions}

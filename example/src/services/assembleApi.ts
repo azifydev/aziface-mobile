@@ -1,14 +1,18 @@
 import Config from 'react-native-config';
-export const azifaceBaseURL = Config.API_URL_AZTECH;
+export const assembleBaseURL = Config.API_URL_ASSEMBLE;
 import axios from 'axios';
 import { useUserStore } from '../hooks/useuser.hook';
 
-export const azifaceApi = axios.create({
-  baseURL: azifaceBaseURL,
+export const assembleApi = axios.create({
+  baseURL: assembleBaseURL,
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': Config.X_API_KEY,
+  },
 });
-azifaceApi.interceptors.request.use(
+assembleApi.interceptors.request.use(
   async (config) => {
-    const token = useUserStore.getState()?.tokenBiometric || '';
+    const token = useUserStore.getState()?.token || '';
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
       config.headers['x-token-bearer'] = token;
@@ -26,7 +30,7 @@ azifaceApi.interceptors.request.use(
   }
 );
 
-azifaceApi.interceptors.response.use(
+assembleApi.interceptors.response.use(
   (res) => res,
   (error) => {
     return Promise.reject(error);

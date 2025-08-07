@@ -80,6 +80,7 @@ export default function App() {
      *
      * */
     const headers = {
+      'x-api-key': 'YOUR_X_API_KEY',
       'clientInfo': 'YUOR_CLIENT_INFO',
       'contentType': 'YOUR_CONTENT_TYPE',
       'device': 'YOUR_DEVICE',
@@ -88,9 +89,10 @@ export default function App() {
       'locale': 'YOUR_LOCALE',
       'xForwardedFor': 'YOUR_X_FORWARDED_FOR',
       'user-agent': 'YOUR_USER_AGENT',
+      'x-only-raw-analysis': '1',
     };
     const params = {
-      isDeveloperMode: true,
+      isDeveloperMode: false,
       device: 'YOUR_DEVICE',
       url: 'YOUR_BASE_URL',
       key: 'YOUR_KEY',
