@@ -761,7 +761,7 @@ export declare namespace AzifaceSdk {
    *
    * @description This is the parameters for the session.
    */
-  interface CommonSessionParams<T = CommonSessionPathUrl> {
+  interface CommonSessionParams<T = 'base'> {
     /**
      * @description The object URL path for the session.
      *
