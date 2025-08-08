@@ -24,7 +24,7 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
-import com.azify.processors.utils.DynamicRoute;
+import com.azify.utils.DynamicRoute;
 import com.azify.processors.helpers.ThemeUtils;
 
 public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProcessor {

@@ -1,4 +1,4 @@
-package com.azify.processors.utils;
+package com.azify.utils;
 
 import android.util.Log;
 

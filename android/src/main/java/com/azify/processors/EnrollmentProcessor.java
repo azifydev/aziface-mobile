@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-import com.azify.processors.utils.DynamicRoute;
+import com.azify.utils.DynamicRoute;
 import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
