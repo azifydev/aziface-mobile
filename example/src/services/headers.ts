@@ -22,7 +22,7 @@ export function getAzifyHeaders() {
     'x-deviceid': deviceId,
     'x-user-agent': userAgent,
     'x-locale': 'pt-BR',
-    'x-client-id': Config.X_CLIENT_ID,
+    'x-client-id': Config.X_CLIENT_ID, // Replace with dynamic user Client ID
   };
   return result;
 }

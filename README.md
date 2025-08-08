@@ -80,6 +80,7 @@ export default function App() {
      *
      * */
     const headers = {
+      'Authorization': `YOUR_BASIC_AUTHORIZATION`,
       'x-api-key': 'YOUR_X_API_KEY',
       'clientInfo': 'YUOR_CLIENT_INFO',
       'contentType': 'YOUR_CONTENT_TYPE',

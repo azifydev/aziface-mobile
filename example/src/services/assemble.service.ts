@@ -23,7 +23,7 @@ export function useProcess() {
       const response = await assembleApi.post('/biometric/process', {
         userId,
       });
-      return response?.data?.data;
+      return response?.data?.processId;
     },
   });
 }
