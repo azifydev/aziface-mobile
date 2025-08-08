@@ -757,6 +757,52 @@ export declare namespace AzifaceSdk {
   }
 
   /**
+   * @interface SessionParams
+   *
+   * @description This is the parameters for the session.
+   */
+  interface CommonSessionParams<T = CommonSessionPathUrl> {
+    /**
+     * @description The object URL path for the session.
+     *
+     * @default undefined
+     */
+    pathUrl?: T extends 'base' ? CommonSessionPathUrl : MultipleSessionPathUrl;
+
+    [key: string]: any;
+  }
+
+  /**
+   * @interface CommonSessionPathUrl
+   *
+   * @description This is common target properties of the path session.
+   */
+  interface CommonSessionPathUrl {
+    /**
+     * @description The base URL used for the session.
+     *
+     * @default undefined
+     */
+    base?: string;
+  }
+
+  /**
+   * @interface MultipleSessionPathUrl
+   *
+   * @description This is target properties of the session with multiple path
+   * urls.
+   */
+  interface MultipleSessionPathUrl extends CommonSessionPathUrl {
+    /**
+     * @description The match URL used for the session with multiple
+     * verifications.
+     *
+     * @default undefined
+     */
+    match?: string;
+  }
+
+  /**
    * @enum
    *
    * @description This is the enum Errors that can be throws by Aziface SDK.
