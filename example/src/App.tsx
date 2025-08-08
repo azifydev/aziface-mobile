@@ -4,8 +4,6 @@ import Aziface from './Aziface';
 import Login from './Login';
 
 export default function App() {
-  const { token, tokenBiometric } = useUser();
-  // console.log('App token:', token);
-  // console.log('App tokenBiometric:', tokenBiometric);
-  return token && tokenBiometric ? <Aziface /> : <Login />;
+  const { token } = useUser();
+  return token ? <Aziface /> : <Login />;
 }

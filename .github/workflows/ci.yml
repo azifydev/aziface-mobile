@@ -29,20 +29,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
-
-      - name: NPM Cache
-        uses: c-hive/gha-npm-cache@v1
 
       - name: PR Semantic Release Check
-        uses: amannn/action-semantic-pull-request@v3.1.0
-        with:
-          types: |
-            fix
-            feat
-            ci
-            chore
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
 
       - name: Installing dependencies
         run: |

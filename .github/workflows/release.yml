@@ -7,12 +7,9 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -31,3 +28,5 @@ jobs:
 
       - name: Publish Release
         run: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}

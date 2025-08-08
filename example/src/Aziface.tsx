@@ -7,6 +7,7 @@ import {
   NativeEventEmitter,
   type NativeModule,
   Platform,
+  TextInput,
 } from 'react-native';
 import {
   AzifaceMobileSdk,
@@ -14,7 +15,6 @@ import {
   initialize,
   photoMatch,
 } from '@azify/aziface-mobile';
-import { useUser } from './hooks/useuser.hook';
 import * as pkg from '../package.json';
 import {
   getDeviceId,
@@ -24,28 +24,32 @@ import {
   getUserAgent,
   syncUniqueId,
 } from 'react-native-device-info';
+import { Buffer } from 'buffer';
 import md5 from 'md5';
-import { useConfigs, useCreateProcess } from './services/aziface.service';
-import { azifaceBaseURL } from './services/azifaceApi';
+import { useBiometricConfigs } from './services/assemble.service';
 import { styles } from './Style';
+import Config from 'react-native-config';
+import { useState } from 'react';
 
 export default function Aziface() {
-  const { tokenBiometric, processId, isInitialized, setIsInitialized } =
-    useUser();
-  const { data: configs } = useConfigs();
-  const { mutateAsync: createProcess } = useCreateProcess();
+  const { data: configs } = useBiometricConfigs();
+  const [processId, setProcessId] = useState('');
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  const isDisabledActions = !isInitialized || !processId;
+
   const onPressInit = async () => {
-    console.log('onPressInit');
-    if (!processId) {
-      await createProcess();
-    }
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
     const isAndroid = Platform.OS === 'android';
     const userAgent = await getUserAgent?.();
-    const xForwardedFor = await getIpAddressSync?.();
+    const xForwardedFor = getIpAddressSync?.();
+    // Replace with dynamic user Client ID and Client Secret
+    const credentials = `${Config.X_CLIENT_ID}:${Config.X_CLIENT_SECRET}`;
+    const encoded = Buffer.from(credentials, 'utf8').toString('base64');
+
     const headers = {
-      'authorization': tokenBiometric,
-      'x-token-bearer': tokenBiometric,
+      'Authorization': `Basic ${encoded}`,
+      'x-api-key': Config.X_API_KEY,
       'clientInfo': clientInfo,
       'contentType': 'application/json',
       'device': md5(
@@ -58,11 +62,12 @@ export default function Aziface() {
       'user-agent': userAgent,
       'x-only-raw-analysis': '1',
     };
+
     const params = {
-      isDeveloperMode: false,
+      isDeveloperMode: true,
       processId: processId,
       device: configs?.device || '',
-      url: azifaceBaseURL,
+      url: Config.API_URL_AZTECH,
       key: configs?.key || '',
       productionKey: configs?.productionKey || '',
     };
@@ -104,26 +109,38 @@ export default function Aziface() {
       console.error('ERROR onPressEnroll', error.message);
     }
   };
+
   return (
     <View style={styles.azifaceContent}>
-      <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-        <Text style={styles.buttonText} onPress={onPressInit}>
-          Init Aziface sdk
-        </Text>
+      <TextInput
+        placeholder="Process ID"
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.loginInput}
+        value={processId}
+        onChangeText={setProcessId}
+      />
+      <TouchableOpacity
+        style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
+        activeOpacity={0.8}
+        disabled={!processId}
+        onPress={onPressInit}
+      >
+        <Text style={styles.buttonText}>Init Aziface sdk</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
+        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressEnroll}
-        disabled={!isInitialized}
+        disabled={isDisabledActions}
       >
         <Text style={styles.buttonText}>Enrollment</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { opacity: isInitialized ? 1 : 0.5 }]}
+        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
         activeOpacity={0.8}
         onPress={onPressPhotoMatch}
-        disabled={!isInitialized}
+        disabled={isDisabledActions}
       >
         <Text style={styles.buttonText}>Photo Match</Text>
       </TouchableOpacity>

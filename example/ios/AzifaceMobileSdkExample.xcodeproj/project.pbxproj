@@ -14,7 +14,7 @@
 		1DA4A8BC2C6277BF7BF3120B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 596821ABFDAFA1C5D3F7262F /* PrivacyInfo.xcprivacy */; };
 		608C39EA8F44A9084C392424 /* libPods-AzifaceMobileSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F127DBEAE8919188F46B7FB8 /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */; };
+		C04496F65F864BEEB29B0AE6 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C8B89421CA4841AE91B8BCBC /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,14 +38,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AzifaceMobileSdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AzifaceMobileSdkExample/main.m; sourceTree = "<group>"; };
 		272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B8BD9EDCA027724454689B6 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		596821ABFDAFA1C5D3F7262F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = AzifaceMobileSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AzifaceMobileSdkExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		99757EF32A5A035229A3376B /* Pods-AzifaceMobileSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzifaceMobileSdkExample.release.xcconfig"; path = "Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample.release.xcconfig"; sourceTree = "<group>"; };
-		A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C8B89421CA4841AE91B8BCBC /* Config.xcconfig */ = {isa = PBXFileReference; name = "Config.xcconfig"; path = "Config.xcconfig"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.xcconfig; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F127DBEAE8919188F46B7FB8 /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,7 +101,6 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				272DBA3140DDF9D955BFCC6E /* libPods-AzifaceMobileSdkExample.a */,
-				A1D9081F0B048FE96383ECFF /* libPods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,6 +115,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C8B89421CA4841AE91B8BCBC /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* AzifaceMobileSdkExample */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AzifaceMobileSdkExampleTests */,
@@ -145,8 +142,6 @@
 			children = (
 				3B8BD9EDCA027724454689B6 /* Pods-AzifaceMobileSdkExample.debug.xcconfig */,
 				99757EF32A5A035229A3376B /* Pods-AzifaceMobileSdkExample.release.xcconfig */,
-				2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */,
-				3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -158,12 +153,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AzifaceMobileSdkExampleTests" */;
 			buildPhases = (
-				9AFD482F1F1B8BD0B0D78C70 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				544445BC69456C4F2ACDB6D5 /* [CP] Embed Pods Frameworks */,
-				036CDB1A3A650F17C7A7DA2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -245,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04496F65F864BEEB29B0AE6 /* Config.xcconfig in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				1DA4A8BC2C6277BF7BF3120B /* PrivacyInfo.xcprivacy in Resources */,
@@ -268,25 +261,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
-		};
-		036CDB1A3A650F17C7A7DA2C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n\n";
 		};
 		07F291940AAB54F762066CED /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -303,45 +278,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample/Pods-AzifaceMobileSdkExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		544445BC69456C4F2ACDB6D5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9AFD482F1F1B8BD0B0D78C70 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D7A1113D4FE8A23CDE8799F7 /* [CP] Embed Pods Frameworks */ = {
@@ -435,7 +371,6 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B705814E9C0F555880B3E35 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -462,7 +397,6 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3835A177B40CD570D485AAD0 /* Pods-AzifaceMobileSdkExample-AzifaceMobileSdkExampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -491,7 +425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 82R3A6FRCD;
+				DEVELOPMENT_TEAM = X9CJT5ZXLN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AzifaceMobileSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -519,7 +453,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 82R3A6FRCD;
+				DEVELOPMENT_TEAM = X9CJT5ZXLN;
 				INFOPLIST_FILE = AzifaceMobileSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -606,13 +540,17 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				USE_HERMES = true;
 			};
 			name = Debug;
+			baseConfigurationReference = C8B89421CA4841AE91B8BCBC /* Config.xcconfig */;
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -674,13 +612,17 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+			baseConfigurationReference = C8B89421CA4841AE91B8BCBC /* Config.xcconfig */;
 		};
 /* End XCBuildConfiguration section */
 

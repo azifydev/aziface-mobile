@@ -1,3 +1,11 @@
+def RN_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim());
+def RN_VERSION_STRING = RN_VERSION.toString();
+def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
+def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
 buildscript {
   def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceMobileSdk_kotlinVersion"]
 
@@ -7,26 +15,22 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:7.4.2"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
-}
-
-def reactNativeArchitectures() {
-  def value = rootProject.getProperties().get("reactNativeArchitectures")
-  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
-}
-
-def isNewArchitectureEnabled() {
-  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
 }
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
-if (isNewArchitectureEnabled()) {
-  apply plugin: "com.facebook.react"
-}
+// Commenting out the react plugin for now, as it is not needed for the current setup.
+// https://github.com/callstack/react-native-builder-bob/issues/774
+// def isNewArchitectureEnabled() {
+//   return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+// }
+// if (isNewArchitectureEnabled()) {
+//   apply plugin: "com.facebook.react"
+// }
 
 def getExtOrDefault(name) {
   return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["AzifaceMobileSdk_" + name]
@@ -45,13 +49,14 @@ def supportsNamespace() {
   return (major == 7 && minor >= 3) || major >= 8
 }
 
+
 android {
   if (supportsNamespace()) {
     namespace "com.azify.azifacemobilesdk"
 
     sourceSets {
       main {
-        manifest.srcFile "src/main/AndroidManifestNew.xml"
+        manifest.srcFile "src/main/AndroidManifest.xml"
       }
     }
   }
@@ -80,8 +85,10 @@ android {
 }
 
 repositories {
+  maven { url 'https://jitpack.io' }
   mavenCentral()
   google()
+  mavenLocal()
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -89,13 +96,16 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 dependencies {
   // For < 0.71, this will be from the local maven repo
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-  implementation "com.facebook.react:react-native:+"
+  if (USE_REACT_ANDROID) {
+    implementation "com.facebook.react:react-android:$RN_VERSION_STRING"
+  } else {
+    implementation 'com.facebook.react:react-native:+'
+  }
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.squareup.okhttp3:okhttp:3.12.13'
   implementation 'com.squareup.okio:okio:1.15.0'
   implementation 'androidx.appcompat:appcompat:1.6.1'
   implementation 'com.google.code.gson:gson:2.10'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-  implementation files("libs/facetec-sdk-9.7.47.aar")
-  implementation fileTree(dir: 'libs', include: ['*.aar'])
+  implementation 'com.github.azifydev:facetec-aar:v1.0.6'
 }
