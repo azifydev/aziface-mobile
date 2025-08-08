@@ -1,3 +1,11 @@
+## [1.0.5](https://github.com/azifydev/aziface-mobile/compare/v1.0.4...v1.0.5) (2025-08-08)
+
+
+### Bug Fixes
+
+* adjust action release ([1e2b9ad](https://github.com/azifydev/aziface-mobile/commit/1e2b9ad5f26fe398dbe4138f7809e1d61597bfef))
+* minimal adjusts in processors ([#3](https://github.com/azifydev/aziface-mobile/issues/3)) ([a1b27ce](https://github.com/azifydev/aziface-mobile/commit/a1b27ce45ed3cebc83e9f9e9289896fdd646a179))
+
 ## [1.0.4](https://github.com/azifydev/aziface-mobile/compare/v1.0.3...v1.0.4) (2025-07-17)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@azify/aziface-mobile",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Aziface sdk adapter to react native. 📱",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
