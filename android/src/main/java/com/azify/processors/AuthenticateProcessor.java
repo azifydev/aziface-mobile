@@ -1,7 +1,6 @@
 package com.azify.processors;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -15,17 +14,18 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import com.azify.processors.utils.DynamicRoute;
 import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
 public class AuthenticateProcessor extends Processor implements FaceTecFaceScanProcessor {
-  private boolean success = false;
   private final String principalKey = "autheticanteMessage";
   private final AzifaceMobileSdkModule faceTecModule;
   private final ReadableMap data;
   private final ThemeUtils FaceThemeUtils = new ThemeUtils();
+  private boolean success = false;
 
   public AuthenticateProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
       ReadableMap data) {
@@ -64,10 +64,12 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-    String route = "/Process/" + Config.ProcessId + "/Match3d3d";
+
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrl("base", "/Process/" + Config.ProcessId + "/Match3d3d");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + route)
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
