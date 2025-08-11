@@ -139,7 +139,7 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
     }
 
     DynamicRoute dynamicRoute = new DynamicRoute();
-    String pathUrl = dynamicRoute.getPathUrl("base", "/Process/" + Config.ProcessId + "/Enrollment3d");
+    String pathUrl = dynamicRoute.getPathUrlEnrollment3d("base");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + pathUrl)
@@ -231,7 +231,7 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
     }
 
     DynamicRoute dynamicRoute = new DynamicRoute();
-    String pathUrl = dynamicRoute.getPathUrl("match", "/Process/" + Config.ProcessId + "/Match3d2dIdScan");
+    String pathUrl = dynamicRoute.getPathUrlMatch3d2dIdScan("match");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + pathUrl)

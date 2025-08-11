@@ -66,7 +66,7 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
     }
 
     DynamicRoute dynamicRoute = new DynamicRoute();
-    String pathUrl = dynamicRoute.getPathUrl("base", "/Process/" + Config.ProcessId + "/Match3d3d");
+    String pathUrl = dynamicRoute.getPathUrlMatch3d3d("base");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + pathUrl)

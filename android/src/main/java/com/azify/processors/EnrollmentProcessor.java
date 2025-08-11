@@ -49,7 +49,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
     }
 
     DynamicRoute dynamicRoute = new DynamicRoute();
-    String pathUrl = dynamicRoute.getPathUrl("base", "/Process/" + Config.ProcessId + "/Enrollment3d");
+    String pathUrl = dynamicRoute.getPathUrlEnrollment3d("base");
 
     JSONObject parameters = new JSONObject();
     try {

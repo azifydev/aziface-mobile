@@ -149,7 +149,7 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
     }
 
     DynamicRoute dynamicRoute = new DynamicRoute();
-    String pathUrl = dynamicRoute.getPathUrl("base", "/idscan-only");
+    String pathUrl = dynamicRoute.getPathUrlIdScanOnly("base");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
         .url(Config.BaseURL + pathUrl)
