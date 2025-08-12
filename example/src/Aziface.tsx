@@ -92,7 +92,7 @@ export default function Aziface() {
 
   const onPressPhotoMatch = async () => {
     try {
-      const isSuccess = await photoMatch({});
+      const isSuccess = await photoMatch();
       console.log('onPressPhotoMatch', isSuccess);
       console.log(isSuccess);
     } catch (error: any) {
@@ -103,7 +103,7 @@ export default function Aziface() {
 
   const onPressEnroll = async () => {
     try {
-      const isSuccess = await enroll({});
+      const isSuccess = await enroll();
       console.log('onPressEnroll', isSuccess);
     } catch (error: any) {
       console.error('ERROR onPressEnroll', error.message);
