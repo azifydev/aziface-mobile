@@ -7,11 +7,11 @@ Azify SDK adapter to react native. 📱
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
-  - [`initialize(init: AzifaceSdk.Initialize)`](#initializeinit-azifacesdkinitialize)
-  - [`enroll(data?: Object)`](#enrolldata-object)
-  - [`authenticate(data?: Object)`](#authenticatedata-object)
-  - [`photoMatch(data?: Object)`](#photomatchdata-object)
-  - [`setTheme(options?: AzifaceSdk.Theme)`](#setthemeoptions-azifacesdktheme)
+  - [`initialize`](#initializeinit-azifacesdkinitialize)
+  - [`enroll`](#enrolldata-object)
+  - [`authenticate`](#authenticatedata-object)
+  - [`photoMatch`](#photomatchdata-object)
+  - [`setTheme`](#setthemeoptions-azifacesdktheme)
 - [Types](#types)
   - [`AzifaceSdk.Params`](#azifacesdkparams)
   - [`AzifaceSdk.Headers`](#azifacesdkheaders)
@@ -222,33 +222,33 @@ This is the **principal** method to be called, he must be **called first** to in
 
 This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
 
-| `Object` | type                                                                       | Required | Default     |
-| -------- | -------------------------------------------------------------------------- | -------- | ----------- |
-| `data`   | [`AzifaceSdk.CommonSessionParams<"base">`](#azifacesdkcommonsessionparams) | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"base">` | type                                                                 | Required | Default     |
+| ---------------------------------------- | -------------------------------------------------------------------- | -------- | ----------- |
+| `data`                                   | [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl) | ❌       | `undefined` |
 
 ### `authenticate`
 
 This method makes a 3D reading of the user's face. But, you must use to **authenticate** user in Aziface SDK or in your server.
 
-| `Object` | type                                                                       | Required | Default     |
-| -------- | -------------------------------------------------------------------------- | -------- | ----------- |
-| `data`   | [`AzifaceSdk.CommonSessionParams<"base">`](#azifacesdkcommonsessionparams) | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"base">` | type                                                                 | Required | Default     |
+| ---------------------------------------- | -------------------------------------------------------------------- | -------- | ----------- |
+| `data`                                   | [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl) | ❌       | `undefined` |
 
 ### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
 
-| `Object` | type                                                                        | Required | Default     |
-| -------- | --------------------------------------------------------------------------- | -------- | ----------- |
-| `data`   | [`AzifaceSdk.CommonSessionParams<"match">`](#azifacesdkcommonsessionparams) | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"match">` | type                                                                     | Required | Default     |
+| ----------------------------------------- | ------------------------------------------------------------------------ | -------- | ----------- |
+| `data`                                    | [`AzifaceSdk.MultipleSessionPathUrl`](#azifacesdkmultiplesessionpathurl) | ❌       | `undefined` |
 
 ### `setTheme`
 
 This method must be used to **set** the **theme** of the Aziface SDK screen.
 
-| `AzifaceSdk.Theme` | type                                   | Required | Default     |
-| ------------------ | -------------------------------------- | -------- | ----------- |
-| `options`          | [`AzifaceSdk.Theme`](#azifacesdktheme) | ❌       | `undefined` |
+| Property  | type                                   | Required | Default     |
+| --------- | -------------------------------------- | -------- | ----------- |
+| `options` | [`AzifaceSdk.Theme`](#azifacesdktheme) | ❌       | `undefined` |
 
 <hr/>
 
