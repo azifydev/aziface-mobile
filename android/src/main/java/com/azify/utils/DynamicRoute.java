@@ -35,4 +35,8 @@ public class DynamicRoute {
   public String getPathUrlMatch3d3d(String target) {
     return this.getPathUrl(target, "/Process/" + Config.ProcessId + "/Match3d3d");
   }
+
+  public String getPathUrlLiveness3d(String target) {
+    return this.getPathUrl(target, "/liveness-3d");
+  }
 }
