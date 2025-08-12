@@ -10,7 +10,7 @@ import Foundation
 class DynamicRoute: NSObject {
 
   private func getPathUrl(target: String, defaultPathUrl: String) -> String {
-    guard let processorPathUrl = (Config.ProcessorPathURL.value(forKey: target) as? String) else {
+    guard let processorPathUrl = (Config.ProcessorPathURL[target]) else {
       return defaultPathUrl
     }
 
@@ -29,7 +29,7 @@ class DynamicRoute: NSObject {
         in: processorPathUrl,
         options: [],
         range: range,
-        withTemplate: "/\(String(describing: Config.ProcessId))"
+        withTemplate: "/\(Config.ProcessId ?? "")"
       )
     }
 
@@ -39,17 +39,17 @@ class DynamicRoute: NSObject {
   func getPathUrlEnrollment3d(target: String) -> String {
     return getPathUrl(
       target: target,
-      defaultPathUrl: "/Process/\(String(describing: Config.ProcessId))/Enrollment3d")
+      defaultPathUrl: "/Process/\(Config.ProcessId ?? "")/Enrollment3d")
   }
 
   func getPathUrlMatch3d2dIdScan(target: String) -> String {
     return getPathUrl(
       target: target,
-      defaultPathUrl: "/Process/\(String(describing: Config.ProcessId))/Match3d2dIdScan")
+      defaultPathUrl: "/Process/\(Config.ProcessId ?? "")/Match3d2dIdScan")
   }
 
   func getPathUrlMatch3d3d(target: String) -> String {
     return getPathUrl(
-      target: target, defaultPathUrl: "/Process/\(String(describing: Config.ProcessId))/Match3d3d")
+      target: target, defaultPathUrl: "/Process/\(Config.ProcessId ?? "")/Match3d3d")
   }
 }
