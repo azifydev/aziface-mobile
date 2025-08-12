@@ -52,4 +52,12 @@ class DynamicRoute: NSObject {
     return getPathUrl(
       target: target, defaultPathUrl: "/Process/\(Config.ProcessId ?? "")/Match3d3d")
   }
+
+  func getPathUrlIdScanOnly(target: String) -> String {
+    return getPathUrl(target: target, defaultPathUrl: "/idscan-only")
+  }
+
+  func getPathUrlLiveness3d(target: String) -> String {
+    return getPathUrl(target: target, defaultPathUrl: "/liveness-3d")
+  }
 }

@@ -127,7 +127,10 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
       parameters["idScanBackImage"] = idScanResult.backImagesCompressedBase64![0]
     }
 
-    var request = Config.makeRequest(url: "/idscan-only", httpMethod: "POST")
+    let dynamicRoute = DynamicRoute()
+    let route = dynamicRoute.getPathUrlIdScanOnly(target: "base")
+    var request = Config.makeRequest(url: route, httpMethod: "POST")
+
     request.httpBody = try! JSONSerialization.data(
       withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
 

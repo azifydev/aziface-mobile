@@ -60,7 +60,10 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
     parameters["auditTrailImage"] = sessionResult.auditTrailCompressedBase64![0]
     parameters["lowQualityAuditTrailImage"] = sessionResult.lowQualityAuditTrailCompressedBase64![0]
 
-    var request = Config.makeRequest(url: "/liveness-3d", httpMethod: "POST")
+    let dynamicRoute = DynamicRoute()
+    let route = dynamicRoute.getPathUrlLiveness3d(target: "base")
+    var request = Config.makeRequest(url: route, httpMethod: "POST")
+
     request.httpBody = try! JSONSerialization.data(
       withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
 
