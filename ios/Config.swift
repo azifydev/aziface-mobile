@@ -16,7 +16,7 @@ public class Config {
   public static var ProcessId: String!
   public static var PublicFaceScanEncryptionKey: String!
   public static var ProductionKeyText: String!
-  public static var ProcessorPathURL: NSDictionary! = [:]
+  public static var ProcessorPathURL: [String: String]! = [:]
   public static var Headers: NSDictionary?
   public static var Theme: NSDictionary?
   private static let AziThemeUtils: ThemeUtils! = ThemeUtils()
@@ -42,7 +42,7 @@ public class Config {
   }
 
   public static func setProcessorPathURL(_ key: String, pathUrl: String) {
-    Config.ProcessorPathURL.setValue(pathUrl, forKey: key)
+    Config.ProcessorPathURL[key] = pathUrl
   }
 
   public static func setHeaders(_ headers: NSDictionary?) {
@@ -82,7 +82,6 @@ public class Config {
 
   static func initialize(_ isDeveloper: Bool, completion: @escaping (Bool) -> Void) {
     if isDeveloper {
-      print("if isDeveloper")
       FaceTec.sdk.initializeInDevelopmentMode(
         deviceKeyIdentifier: DeviceKeyIdentifier,
         faceScanEncryptionKey: PublicFaceScanEncryptionKey,
@@ -90,7 +89,6 @@ public class Config {
           completion(initializationSuccessful)
         })
     } else {
-      print("else isDeveloper")
       FaceTec.sdk.initializeInProductionMode(
         productionKeyText: ProductionKeyText, deviceKeyIdentifier: DeviceKeyIdentifier,
         faceScanEncryptionKey: PublicFaceScanEncryptionKey,

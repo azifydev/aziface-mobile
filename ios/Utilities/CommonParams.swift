@@ -22,11 +22,11 @@ class CommonParams {
   }
 
   private func getParam(parent: String, key: String) -> String? {
-    guard let parentValue = params.value(forKey: parent) as? NSDictionary else {
+    guard let parentValue = params.value(forKey: parent) as? [String: String] else {
       return nil
     }
 
-    return parentValue.value(forKey: key) as! String?
+    return parentValue[key]
   }
 
   func isDeveloper() -> Bool {
