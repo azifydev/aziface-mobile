@@ -746,7 +746,8 @@ export declare namespace AzifaceSdk {
     productionKey: string;
 
     /**
-     * @description Option to select production or developement mode for initialize Aziface SDK.
+     * @description Option to select production or development mode for initialize
+     * Aziface SDK.
      */
     isDeveloperMode: boolean;
 
@@ -763,7 +764,7 @@ export declare namespace AzifaceSdk {
    */
   interface CommonSessionParams<T = 'base'> {
     /**
-     * @description The object URL path for the session.
+     * @description The object path URL for the session.
      *
      * @default undefined
      */
