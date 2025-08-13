@@ -3,7 +3,7 @@ package com.azify.azifacemobilesdk;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.azify.processors.helpers.ThemeUtils;
+import com.azify.theme.Theme;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import com.azify.processors.*;
 import static java.util.UUID.randomUUID;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -24,11 +27,11 @@ import com.facetec.sdk.*;
 
 @ReactModule(name = AzifaceMobileSdkModule.NAME)
 public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
-  private static final ThemeUtils aziThemeUtils = new ThemeUtils();
   public static final String NAME = "AzifaceMobileSdk";
   private final ReactApplicationContext reactContext;
   private boolean isInitialized = false;
   private boolean isSessionPreparingToLaunch = false;
+  public static Theme AziTheme;
   private String latestExternalDatabaseRefID = "";
   public Promise processorPromise;
   public Processor latestProcessor;
@@ -38,7 +41,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public AzifaceMobileSdkModule(ReactApplicationContext context) {
     super(context);
     reactContext = context;
-    aziThemeUtils.setReactContext(context);
+    AziTheme = new Theme();
   }
 
   @Override
@@ -108,7 +111,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   }
 
   public void getSessionToken(final SessionTokenCallback sessionTokenCallback) {
-    okhttp3.Request request = new okhttp3.Request.Builder()
+    Request request = new Request.Builder()
         .headers(Config.getHeaders("GET"))
         .url(Config.BaseURL + "/Process/Session/Token")
         .get()
@@ -125,7 +128,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       }
 
       @Override
-      public void onResponse(Call call, okhttp3.Response response) throws IOException {
+      public void onResponse(Call call, Response response) throws IOException {
         String responseString = response.body().string();
         response.body().close();
         try {
@@ -192,8 +195,8 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void handleTheme(ReadableMap options) {
-    ThemeHelpers.setAppTheme(options);
+  public void handleTheme(ReadableMap theme) {
+    Theme.setTheme(theme);
   }
 
   @ReactMethod

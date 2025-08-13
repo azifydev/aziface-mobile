@@ -14,22 +14,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
 public class EnrollmentProcessor extends Processor implements FaceTecFaceScanProcessor {
   private boolean success = false;
-  private final String principalKey = "enrollMessage";
   private final AzifaceMobileSdkModule faceTecModule;
   private final ReadableMap data;
-  private final ThemeUtils FaceThemeUtils = new ThemeUtils();
 
   public EnrollmentProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
       ReadableMap data) {
     this.faceTecModule = faceTecModule;
     this.data = data;
+
     faceTecModule.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, EnrollmentProcessor.this, sessionToken);
   }
@@ -100,8 +98,9 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
           String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
+            FaceTecCustomization.overrideResultScreenSuccessMessage = AzifaceMobileSdkModule.AziTheme
+              .getEnrollmentMessage("successMessage", "Face Scanned\n3D Liveness Proven");
 
-            FaceTecCustomization.overrideResultScreenSuccessMessage = "Face Scanned\n3D Liveness Proven";
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
           } else {
             faceScanResultCallback.cancel();

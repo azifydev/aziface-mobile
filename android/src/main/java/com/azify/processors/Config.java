@@ -2,9 +2,11 @@ package com.azify.processors;
 
 import android.content.Context;
 
+import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
+import com.azify.theme.Frame;
+import com.azify.theme.Theme;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
-import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.R;
 
 import java.util.HashMap;
@@ -14,7 +16,6 @@ import okhttp3.Headers;
 import okhttp3.Request;
 
 public class Config {
-	private static final ThemeUtils AziThemeUtils = new ThemeUtils();
 	public static String DeviceKeyIdentifier;
 	public static String BaseURL;
   public static String ProcessId;
@@ -24,7 +25,7 @@ public class Config {
 	public static ReadableMap RequestHeaders;
 
 	private static Map<String, String> parseReadableMapToMap() {
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
 		if (RequestHeaders == null) {
 			return headers;
@@ -60,8 +61,7 @@ public class Config {
 
 	public static Headers getHeaders(String httpMethod) {
 		Map<String, String> headersMap = parseReadableMapToMap();
-		okhttp3.Headers headers = parseHeadersMapToHeaders(headersMap, httpMethod.toUpperCase());
-		return headers;
+		return parseHeadersMapToHeaders(headersMap, httpMethod.toUpperCase());
 	}
 
 	public static void setTheme(ReadableMap theme) {
@@ -111,16 +111,19 @@ public class Config {
 	}
 
 	public static FaceTecCustomization retrieveConfigurationWizardCustomization() {
-		FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = AziThemeUtils
-				.handleButtonLocation("cancelButtonLocation");
+    Theme theme = AzifaceMobileSdkModule.AziTheme;
+    Frame frame = new Frame();
+
+		FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme
+        .getButtonLocation("cancelButtonLocation");
 
 		FaceTecSecurityWatermarkImage securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
 
 		FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
-		defaultCustomization.getFrameCustomization().cornerRadius = AziThemeUtils.handleBorderRadius("frameCornerRadius");
-		defaultCustomization.getFrameCustomization().backgroundColor = AziThemeUtils.handleColor("frameBackgroundColor");
-		defaultCustomization.getFrameCustomization().borderColor = AziThemeUtils.handleColor("frameBorderColor");
+		defaultCustomization.getFrameCustomization().cornerRadius = frame.getCornerRadius();
+		defaultCustomization.getFrameCustomization().backgroundColor = frame.getBackgroundColor();
+		defaultCustomization.getFrameCustomization().borderColor = frame.getBorderColor();
 
 		defaultCustomization.getOverlayCustomization().brandingImage = AziThemeUtils.handleImage("logoImage",
 				R.drawable.facetec_your_app_logo);

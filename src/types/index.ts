@@ -96,11 +96,17 @@ export interface DefaultMessage {
   /**
    * @description Success message when the process is completed successfully.
    *
+   * @description For Liveness flow.
+   *
    * @default "Liveness Confirmed"
    *
-   * @description Exception to `authenticate` method.
+   * @description For Enrollment flow.
    *
-   * @default "Autheticated"
+   * @default "Face Scanned\n3D Liveness Proven"
+   *
+   * @description For Authenticate flow.
+   *
+   * @default "Authenticated"
    */
   successMessage?: string;
 
@@ -543,14 +549,14 @@ export interface ThemeFrame {
   /**
    * @description Represents the border radius style of the frame view.
    *
-   * @default undefined
+   * @default 20
    */
   cornerRadius?: number;
 
   /**
    * @description Represents the border color style of the frame view.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   borderColor?: string;
 
@@ -558,7 +564,7 @@ export interface ThemeFrame {
    * @description Represents the background color style of the frame view
    * during to check face or scan ID of the user.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   backgroundColor?: string;
 }
@@ -982,6 +988,13 @@ export interface ThemeIdScan {
  */
 export interface Theme {
   /**
+   * @description Represents the background color style of the main view.
+   *
+   * @default undefined
+   */
+  overlayBackgroundColor?: string;
+
+  /**
    * @description The button location in Aziface SDK screen.
    *
    * @default "TOP_RIGHT"
@@ -997,13 +1010,6 @@ export interface Theme {
    * @platform iOS
    */
   defaultStatusBarColor?: StatusBarColor;
-
-  /**
-   * @description Represents the background color style of the main view.
-   *
-   * @default undefined
-   */
-  overlayBackgroundColor?: string;
 
   /**
    * @description An object with all messages to will be used the during the
@@ -1035,7 +1041,7 @@ export interface Theme {
    *
    * @default undefined
    */
-  photoIdScanMessage?: DefaultScanMessage;
+  scanMessage?: DefaultScanMessage;
 
   /**
    * @description An object with all messages to will be used the during the
@@ -1043,7 +1049,7 @@ export interface Theme {
    *
    * @default undefined
    */
-  photoIdMatchMessage?: DefaultScanMessage & DefaultMessage;
+  matchMessage?: DefaultScanMessage & DefaultMessage;
 
   /**
    * @description An object containing the image assets used in the Aziface

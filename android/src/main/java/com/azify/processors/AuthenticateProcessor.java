@@ -1,7 +1,6 @@
 package com.azify.processors;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -15,17 +14,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
 public class AuthenticateProcessor extends Processor implements FaceTecFaceScanProcessor {
   private boolean success = false;
-  private final String principalKey = "autheticanteMessage";
   private final AzifaceMobileSdkModule faceTecModule;
   private final ReadableMap data;
-  private final ThemeUtils FaceThemeUtils = new ThemeUtils();
 
   public AuthenticateProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
       ReadableMap data) {
@@ -92,8 +88,9 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
           String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
-            FaceTecCustomization.overrideResultScreenSuccessMessage = FaceThemeUtils
-                .handleMessage(principalKey, "successMessage", "Authenticated");
+            FaceTecCustomization.overrideResultScreenSuccessMessage = AzifaceMobileSdkModule.AziTheme
+                .getAuthenticateMessage("successMessage", "Authenticated");
+
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
               faceTecModule.processorPromise.resolve(true);
