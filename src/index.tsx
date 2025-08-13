@@ -1,24 +1,20 @@
-import { AzifaceSdk, AzifaceMobileSdk } from './types';
+import { AzifaceMobileSdk, type Initialize, type Theme } from './types';
 
 /**
  * @description This is the **principal** method to be called, he must be
- * **called first** to initialize the Aziface SDK. If he doens't be called the
+ * **called first** to initialize the Aziface SDK. If he doesn't be called the
  * other methods **don't works!**
  *
- * @param {AzifaceSdk.Initialize} initialize - Initialize the Aziface SDK with
+ * @param {Initialize} initialize - Initialize the Aziface SDK with
  * especific parameters and an optional headers.
  *
  * @return {Promise<boolean>} Represents if Aziface SDK initialized with
  * successful.
  */
-export function initialize({
-  params,
-  headers,
-}: AzifaceSdk.Initialize): Promise<boolean> {
+export function initialize({ params, headers }: Initialize): Promise<boolean> {
   return new Promise((resolve, reject) => {
     AzifaceMobileSdk.initializeSdk(params, headers, (successful: boolean) => {
-      if (successful) resolve(true);
-      else reject(false);
+      successful ? resolve(true) : reject(false);
     });
   });
 }
@@ -81,12 +77,12 @@ export async function authenticate(data?: Object): Promise<boolean> {
  * @description This method must be used to **set** the **theme** of the Aziface
  * SDK screen.
  *
- * @param {AzifaceSdk.Theme|undefined} options - The object theme options. All
+ * @param {Theme|undefined} options - The object theme options. All
  * options are optional.
  *
  * @return {void}
  */
-export function setTheme(options?: AzifaceSdk.Theme): void {
+export function setTheme(options?: Theme): void {
   AzifaceMobileSdk.handleTheme(options);
 }
 
