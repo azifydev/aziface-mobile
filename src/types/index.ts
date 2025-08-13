@@ -643,7 +643,9 @@ export interface ThemeButton {
   /**
    * @description Represents the background color style of the button.
    *
-   * @default undefined
+   * @description In **guidance** object default value is:
+   *
+   * @default '#026ff4'
    */
   backgroundNormalColor?: string;
 
@@ -651,7 +653,9 @@ export interface ThemeButton {
    * @description Represents the background color style of the button when it's
    * disabled.
    *
-   * @default undefined
+   * @description In **guidance** object default value is:
+   *
+   * @default '#b3d4fc'
    */
   backgroundDisabledColor?: string;
 
@@ -659,14 +663,16 @@ export interface ThemeButton {
    * @description Represents the background color style of the button when it's
    * on press effect.
    *
-   * @default undefined
+   * @description In **guidance** object default value is:
+   *
+   * @default '#0264dc'
    */
   backgroundHighlightColor?: string;
 
   /**
    * @description Represents the color style of the button text.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   textNormalColor?: string;
 
@@ -674,7 +680,7 @@ export interface ThemeButton {
    * @description Represents the color style of the button text when it's
    * disabled.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   textDisabledColor?: string;
 
@@ -682,7 +688,7 @@ export interface ThemeButton {
    * @description Represents the color style of the button text when it's on
    * press effect.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   textHighlightColor?: string;
 }

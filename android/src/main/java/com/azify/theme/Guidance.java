@@ -12,10 +12,12 @@ import java.util.Objects;
 public class Guidance {
   private final JSONObject target;
   private final Color color;
+  private final Button button;
 
   public Guidance() {
     this.target = this.getTarget();
     this.color = new Color();
+    this.button = new Button(this.target);
   }
 
   private JSONObject getTarget() {
@@ -34,5 +36,9 @@ public class Guidance {
 
   public int getForegroundColor() {
     return this.color.getColor(this.target, "foregroundColor", "#272937");
+  }
+
+  public Button getButton() {
+    return this.button;
   }
 }
