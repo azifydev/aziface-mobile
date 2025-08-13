@@ -28,10 +28,10 @@ import com.facetec.sdk.*;
 @ReactModule(name = AzifaceMobileSdkModule.NAME)
 public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public static final String NAME = "AzifaceMobileSdk";
+  public static Theme AziTheme;
   private final ReactApplicationContext reactContext;
   private boolean isInitialized = false;
   private boolean isSessionPreparingToLaunch = false;
-  public static Theme AziTheme;
   private String latestExternalDatabaseRefID = "";
   public Promise processorPromise;
   public Processor latestProcessor;
@@ -41,7 +41,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public AzifaceMobileSdkModule(ReactApplicationContext context) {
     super(context);
     reactContext = context;
-    AziTheme = new Theme();
+    AziTheme = new Theme(context);
   }
 
   @Override

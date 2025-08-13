@@ -746,7 +746,7 @@ export interface ThemeGuidance {
    * The guidance view is above the frame view and it's showed to before
    * check face or scan ID of the user.
    *
-   * @default undefined
+   * @default '#ffffff'
    *
    * @platform Android
    */
@@ -766,7 +766,7 @@ export interface ThemeGuidance {
   /**
    * @description Represents the foreground color style of the guidance text.
    *
-   * @default undefined
+   * @default '#272937'
    */
   foregroundColor?: string;
 
@@ -990,7 +990,7 @@ export interface Theme {
   /**
    * @description Represents the background color style of the main view.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   overlayBackgroundColor?: string;
 

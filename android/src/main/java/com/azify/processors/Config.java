@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.azify.theme.Frame;
+import com.azify.theme.Guidance;
+import com.azify.theme.Image;
 import com.azify.theme.Theme;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
@@ -113,6 +115,8 @@ public class Config {
 	public static FaceTecCustomization retrieveConfigurationWizardCustomization() {
     Theme theme = AzifaceMobileSdkModule.AziTheme;
     Frame frame = new Frame();
+    Guidance guidance = new Guidance();
+    Image image = new Image(theme.getContext());
 
 		FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme
         .getButtonLocation("cancelButtonLocation");
@@ -125,16 +129,12 @@ public class Config {
 		defaultCustomization.getFrameCustomization().backgroundColor = frame.getBackgroundColor();
 		defaultCustomization.getFrameCustomization().borderColor = frame.getBorderColor();
 
-		defaultCustomization.getOverlayCustomization().brandingImage = AziThemeUtils.handleImage("logoImage",
-				R.drawable.facetec_your_app_logo);
-		defaultCustomization.getOverlayCustomization().backgroundColor = AziThemeUtils
-				.handleColor("overlayBackgroundColor");
+		defaultCustomization.getOverlayCustomization().brandingImage = image
+      .getImage("logo", R.drawable.facetec_your_app_logo);
+		defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
 
-		defaultCustomization.getGuidanceCustomization().backgroundColors = AziThemeUtils.handleColor(
-				"guidanceBackgroundColorsAndroid");
-		defaultCustomization.getGuidanceCustomization().foregroundColor = AziThemeUtils.handleColor(
-				"guidanceForegroundColor",
-				"#272937");
+		defaultCustomization.getGuidanceCustomization().backgroundColors = guidance.getBackgroundColor();
+		defaultCustomization.getGuidanceCustomization().foregroundColor = guidance.getForegroundColor();
 		defaultCustomization.getGuidanceCustomization().buttonBackgroundNormalColor = AziThemeUtils.handleColor(
 				"guidanceButtonBackgroundNormalColor", "#026ff4");
 		defaultCustomization.getGuidanceCustomization().buttonBackgroundDisabledColor = AziThemeUtils.handleColor(
@@ -163,8 +163,8 @@ public class Config {
 				"#026ff4");
 		defaultCustomization.getFeedbackCustomization().textColor = AziThemeUtils.handleColor("feedbackTextColor");
 
-		defaultCustomization.getCancelButtonCustomization().customImage = AziThemeUtils.handleImage("cancelImage",
-				R.drawable.facetec_cancel);
+		defaultCustomization.getCancelButtonCustomization().customImage = image
+      .getImage("cancel", R.drawable.facetec_cancel);
 		defaultCustomization.getCancelButtonCustomization().setLocation(cancelButtonLocation);
 
 		defaultCustomization.getResultScreenCustomization().backgroundColors = AziThemeUtils.handleColor(
