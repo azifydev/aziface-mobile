@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
     borderRadius: borderRadius,
     padding: padding,
     fontSize: fontSize,
+    color: 'black',
   },
   azifaceContent: {
     flex: 1,
