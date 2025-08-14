@@ -3,6 +3,7 @@ package com.azify.theme;
 import android.util.Log;
 
 import com.azify.processors.Config;
+import com.azify.utils.Theme;
 import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 
 import org.json.JSONException;
@@ -11,19 +12,16 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 public class FaceTec {
+  private final Theme theme;
 
-  private Boolean exists(String key) {
-    return Config.Theme == null || !Config.Theme.hasKey(key) || Config.Theme.isNull(key);
-  }
-
-  private Boolean exists(JSONObject theme, String key) {
-    return theme == null || !theme.has(key) || theme.isNull(key);
+  public FaceTec() {
+    this.theme = new Theme();
   }
 
   public int getBorderRadius(JSONObject theme, String key) {
     final int defaultBorderRadius = 20;
     try {
-      if (this.exists(theme, key)) {
+      if (this.theme.exists(theme, key)) {
         return defaultBorderRadius;
       }
 
@@ -37,7 +35,7 @@ public class FaceTec {
 
   public ButtonLocation getButtonLocation(String key) {
     final ButtonLocation defaultLocation = ButtonLocation.TOP_RIGHT;
-    if (this.exists(key)) {
+    if (this.theme.exists(key)) {
       return defaultLocation;
     }
 

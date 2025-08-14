@@ -1,35 +1,23 @@
 package com.azify.theme;
 
-import android.util.Log;
+import com.azify.utils.Theme;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public class RetryScreen {
-  private final JSONObject target;
+  private final JSONObject theme;
   private final Color color;
 
-  public RetryScreen(JSONObject target) {
-    this.target = this.getTarget(target);
+  public RetryScreen(JSONObject theme) {
+    this.theme = new Theme().getTarget(theme, "retryScreen");
     this.color = new Color();
   }
 
-  private JSONObject getTarget(JSONObject target) {
-    try {
-      return target.getJSONObject("retryScreen");
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
-  }
-
   public int getImageBorderColor() {
-    return this.color.getColor(this.target, "imageBorderColor");
+    return this.color.getColor(this.theme, "imageBorderColor");
   }
 
   public int getOvalStrokeColor() {
-    return this.color.getColor(this.target, "ovalStrokeColor");
+    return this.color.getColor(this.theme, "ovalStrokeColor");
   }
 }

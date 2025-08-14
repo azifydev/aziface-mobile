@@ -3,6 +3,7 @@ package com.azify.theme;
 import android.util.Log;
 
 import com.azify.processors.Config;
+import com.azify.utils.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,21 +17,12 @@ public class IdScan {
   private final ReviewScreen reviewScreen;
 
   public IdScan() {
-    JSONObject target = this.getTarget();
-    this.button = new Button(target);
-    this.selectionScreen = new SelectionScreen(target);
-    this.captureScreen = new CaptureScreen(target);
-    this.reviewScreen = new ReviewScreen(target);
-  }
+    final JSONObject theme = new Theme().getTarget("idScan");
 
-  private JSONObject getTarget() {
-    try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      return theme.getJSONObject("idScan");
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
+    this.button = new Button(theme);
+    this.selectionScreen = new SelectionScreen(theme);
+    this.captureScreen = new CaptureScreen(theme);
+    this.reviewScreen = new ReviewScreen(theme);
   }
 
   public Button getButton() {

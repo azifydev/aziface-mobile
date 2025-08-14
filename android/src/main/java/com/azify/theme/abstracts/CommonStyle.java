@@ -1,49 +1,36 @@
 package com.azify.theme.abstracts;
 
-import android.util.Log;
-
 import com.azify.theme.Color;
+import com.azify.utils.Theme;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public abstract class CommonStyle {
-  private final JSONObject target;
+  private final JSONObject theme;
   private final Color color;
 
-  public CommonStyle(JSONObject target, String key) {
-    this.target = this.getTarget(target, key);
+  public CommonStyle(JSONObject theme, String key) {
+    this.theme = new Theme().getTarget(theme, key);
     this.color = new Color();
   }
 
-  private JSONObject getTarget(JSONObject target, String key) {
-    try {
-      return target.getJSONObject(key);
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
-  }
-
   public int getBackgroundColor() {
-    return this.color.getColor(this.target, "backgroundColor");
+    return this.color.getColor(this.theme, "backgroundColor");
   }
 
   public int getBackgroundColor(String defaultColor) {
-    return this.color.getColor(this.target, "backgroundColor", defaultColor);
+    return this.color.getColor(this.theme, "backgroundColor", defaultColor);
   }
 
   public int getForegroundColor() {
-    return this.color.getColor(this.target, "foregroundColor");
+    return this.color.getColor(this.theme, "foregroundColor");
   }
 
   public int getForegroundColor(String defaultColor) {
-    return this.color.getColor(this.target, "foregroundColor", defaultColor);
+    return this.color.getColor(this.theme, "foregroundColor", defaultColor);
   }
 
   public int getTextBackgroundColor() {
-    return this.color.getColor(this.target, "textBackgroundColor", "#026ff4");
+    return this.color.getColor(this.theme, "textBackgroundColor", "#026ff4");
   }
 }

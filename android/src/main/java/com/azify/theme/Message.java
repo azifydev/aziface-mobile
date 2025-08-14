@@ -2,26 +2,26 @@ package com.azify.theme;
 
 import android.util.Log;
 
-import com.azify.processors.Config;
+import com.azify.utils.Theme;
 
 import org.json.JSONObject;
 
 import java.util.Objects;
 
 public class Message {
-  private JSONObject target;
+  private final Theme theme;
 
-  private Boolean exists(String key) {
-    return this.target == null || !this.target.has(key) || this.target.isNull(key);
+  public Message() {
+    this.theme = new Theme();
   }
 
-  private String getMessage(String key, String defaultMessage) {
+  private String getMessage(JSONObject theme, String key, String defaultMessage) {
     try {
-      if (this.exists(key)) {
+      if (this.theme.exists(theme, key)) {
         return defaultMessage;
       }
 
-      return this.target.getString(key);
+      return theme.getString(key);
     } catch (Exception error) {
       Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
       return defaultMessage;
@@ -30,10 +30,9 @@ public class Message {
 
   public String getMessage(String target, String key, String defaultMessage) {
     try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      this.target = theme.getJSONObject(target);
+      final JSONObject theme = this.theme.getTarget(target);
 
-      return this.getMessage(key, defaultMessage);
+      return this.getMessage(theme, key, defaultMessage);
     } catch (Exception error) {
       Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
       return defaultMessage;
@@ -42,11 +41,10 @@ public class Message {
 
   public String getMessage(String target, String parent, String key, String defaultMessage) {
     try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      final JSONObject targetTheme = theme.getJSONObject(target);
-      this.target = targetTheme.getJSONObject(parent);
+      final JSONObject targetTheme = this.theme.getTarget(target);
+      final JSONObject parentTheme = this.theme.getTarget(targetTheme, parent);
 
-      return this.getMessage(key, defaultMessage);
+      return this.getMessage(parentTheme, key, defaultMessage);
     } catch (Exception error) {
       Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
       return defaultMessage;

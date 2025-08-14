@@ -2,7 +2,7 @@ package com.azify.theme;
 
 import android.util.Log;
 
-import com.azify.processors.Config;
+import com.azify.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONException;
@@ -12,34 +12,23 @@ import java.util.Objects;
 
 public class Image {
   private static ReactApplicationContext reactContext;
-  private JSONObject target;
+  private final Theme theme;
 
   public Image(ReactApplicationContext context) {
     reactContext = context;
-    this.target = this.getTarget();
-  }
 
-  private Boolean exists(String key) {
-    return this.target == null || !this.target.has(key) || this.target.isNull(key);
-  }
-
-  private JSONObject getTarget() {
-    try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      return theme.getJSONObject("image");
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
+    this.theme = new Theme();
   }
 
   public int getImage(String key, int defaultImage) {
     try {
-      if (this.exists(key) || reactContext == null) {
+      final JSONObject theme = this.theme.getTarget("image");
+
+      if (this.theme.exists(theme, key) || reactContext == null) {
         return defaultImage;
       }
 
-      final String imageName = this.target.getString(key);
+      final String imageName = theme.getString(key);
 
       if (imageName.isEmpty()) {
         return defaultImage;

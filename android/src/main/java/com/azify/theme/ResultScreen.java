@@ -1,36 +1,22 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
+import com.azify.utils.Theme;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class ResultScreen extends CommonStyle {
   private static final String KEY = "resultScreen";
-  private final JSONObject target;
+  private final JSONObject theme;
   private final Color color;
   private final ResultAnimation resultAnimation;
 
   public ResultScreen() {
     super(new JSONObject(Config.Theme.toHashMap()), KEY);
-    this.target = this.getTarget();
+    this.theme = new Theme().getTarget(KEY);
     this.color = new Color();
-    this.resultAnimation = new ResultAnimation(target);
-  }
-
-  private JSONObject getTarget() {
-    try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      return theme.getJSONObject(KEY);
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
+    this.resultAnimation = new ResultAnimation(this.theme);
   }
 
   @Override
@@ -39,11 +25,11 @@ public class ResultScreen extends CommonStyle {
   }
 
   public int getActivityIndicatorColor() {
-    return this.color.getColor(this.target, "activityIndicatorColor", "#026ff4");
+    return this.color.getColor(this.theme, "activityIndicatorColor", "#026ff4");
   }
 
   public int getUploadProgressFillColor() {
-    return this.color.getColor(this.target, "uploadProgressFillColor", "#026ff4");
+    return this.color.getColor(this.theme, "uploadProgressFillColor", "#026ff4");
   }
 
   public ResultAnimation getResultAnimation() {

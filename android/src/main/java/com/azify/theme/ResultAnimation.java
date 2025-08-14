@@ -5,10 +5,9 @@ import com.azify.theme.abstracts.CommonStyle;
 import org.json.JSONObject;
 
 public class ResultAnimation extends CommonStyle {
-  private static final String KEY = "resultAnimation";
 
   public ResultAnimation(JSONObject target) {
-    super(target, KEY);
+    super(target, "resultAnimation");
   }
 
   @Override

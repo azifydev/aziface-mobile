@@ -1,14 +1,10 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
+import com.azify.utils.Theme;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class Guidance extends CommonStyle {
   private static final String KEY = "guidance";
@@ -18,19 +14,10 @@ public class Guidance extends CommonStyle {
   public Guidance() {
     super(new JSONObject(Config.Theme.toHashMap()), KEY);
 
-    final JSONObject target = this.getTarget();
-    this.button = new Button(target);
-    this.retryScreen = new RetryScreen(target);
-  }
+    final JSONObject theme = new Theme().getTarget(KEY);
 
-  private JSONObject getTarget() {
-    try {
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      return theme.getJSONObject(KEY);
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return null;
-    }
+    this.button = new Button(theme);
+    this.retryScreen = new RetryScreen(theme);
   }
 
   @Override

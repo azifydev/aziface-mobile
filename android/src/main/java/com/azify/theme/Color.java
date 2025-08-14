@@ -3,6 +3,7 @@ package com.azify.theme;
 import android.util.Log;
 
 import com.azify.processors.Config;
+import com.azify.utils.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,14 +11,11 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 public class Color {
-  private final String DEFAULT_COLOR = "#ffffff";
+  private static final String DEFAULT_COLOR = "#ffffff";
+  private final Theme theme;
 
-  private Boolean exists(String key) {
-    return Config.Theme == null || !Config.Theme.hasKey(key) || Config.Theme.isNull(key);
-  }
-
-  private Boolean exists(JSONObject theme, String key) {
-    return theme == null || !theme.has(key) || theme.isNull(key);
+  public Color() {
+    this.theme = new Theme();
   }
 
   private int parseColor(String key, int defaultColor) {
@@ -49,8 +47,8 @@ public class Color {
   }
 
   public int getColor(String key) {
-    final int defaultColor = android.graphics.Color.parseColor(this.DEFAULT_COLOR);
-    if (this.exists(key)) {
+    final int defaultColor = android.graphics.Color.parseColor(DEFAULT_COLOR);
+    if (this.theme.exists(key)) {
       return defaultColor;
     }
 
@@ -58,8 +56,8 @@ public class Color {
   }
 
   public int getColor(JSONObject theme, String key) {
-    final int defaultColor = android.graphics.Color.parseColor(this.DEFAULT_COLOR);
-    if (this.exists(theme, key)) {
+    final int defaultColor = android.graphics.Color.parseColor(DEFAULT_COLOR);
+    if (this.theme.exists(theme, key)) {
       return defaultColor;
     }
 
@@ -68,7 +66,7 @@ public class Color {
 
   public int getColor(String key, String defaultColor) {
     final int color = android.graphics.Color.parseColor(defaultColor);
-    if (this.exists(key)) {
+    if (this.theme.exists(key)) {
       return color;
     }
 
@@ -77,7 +75,7 @@ public class Color {
 
   public int getColor(JSONObject theme, String key, String defaultColor) {
     final int color = android.graphics.Color.parseColor(defaultColor);
-    if (this.exists(theme, key)) {
+    if (this.theme.exists(theme, key)) {
       return color;
     }
 
