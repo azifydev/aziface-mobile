@@ -40,6 +40,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
   public AzifaceMobileSdkModule(ReactApplicationContext context) {
     super(context);
+
     reactContext = context;
     AziTheme = new Theme(context);
   }
@@ -66,7 +67,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       Config.setProductionKeyText(params.get("productionKey").toString());
       Config.setHeaders(headers);
     } catch (Exception error) {
-      Log.d("Aziface - SDK", "Error while setting FaceTecSDK configuration!");
+      Log.d("Aziface", "Error while setting FaceTecSDK configuration!");
     }
   }
 
@@ -75,7 +76,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
     if (params == null) {
       isInitialized = false;
       callback.invoke(false);
-      Log.d("Aziface - SDK", "No parameters provided!");
+      Log.d("Aziface", "No parameters provided!");
       return;
     }
 
@@ -91,16 +92,16 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
               isInitialized = successful;
               callback.invoke(successful);
               if (!successful) {
-                Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
+                Log.d("Aziface", "FaceTecSDK doesn't initialized!");
               } else {
-                Log.d("Aziface - SDK", "FaceTecSDK initialized!");
+                Log.d("Aziface", "FaceTecSDK initialized!");
               }
             }
           });
     } else {
       isInitialized = false;
       callback.invoke(false);
-      Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
+      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
     }
 
     this.handleTheme(Config.Theme);
@@ -203,7 +204,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public void handleEnrollUser(ReadableMap data, Promise promise) {
     setProcessorPromise(promise);
     if (!isInitialized) {
-      Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
+      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
       this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
       return;
     }
@@ -226,7 +227,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public void handleAuthenticateUser(ReadableMap data, Promise promise) {
     setProcessorPromise(promise);
     if (!isInitialized) {
-      Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
+      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
       this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
       return;
     }
@@ -248,7 +249,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   public void handlePhotoIDMatch(ReadableMap data, Promise promise) {
     setProcessorPromise(promise);
     if (!isInitialized) {
-      Log.d("Aziface - SDK", "FaceTecSDK doesn't initialized!");
+      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
       this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
       return;
     }
