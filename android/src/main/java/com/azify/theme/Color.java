@@ -48,7 +48,7 @@ public class Color {
 
   public int getColor(String key) {
     final int defaultColor = android.graphics.Color.parseColor(DEFAULT_COLOR);
-    if (this.theme.exists(key)) {
+    if (!this.theme.exists(key)) {
       return defaultColor;
     }
 
@@ -57,7 +57,7 @@ public class Color {
 
   public int getColor(JSONObject theme, String key) {
     final int defaultColor = android.graphics.Color.parseColor(DEFAULT_COLOR);
-    if (this.theme.exists(theme, key)) {
+    if (!this.theme.exists(theme, key)) {
       return defaultColor;
     }
 
@@ -66,7 +66,7 @@ public class Color {
 
   public int getColor(String key, String defaultColor) {
     final int color = android.graphics.Color.parseColor(defaultColor);
-    if (this.theme.exists(key)) {
+    if (!this.theme.exists(key)) {
       return color;
     }
 
@@ -75,7 +75,7 @@ public class Color {
 
   public int getColor(JSONObject theme, String key, String defaultColor) {
     final int color = android.graphics.Color.parseColor(defaultColor);
-    if (this.theme.exists(theme, key)) {
+    if (!this.theme.exists(theme, key)) {
       return color;
     }
 

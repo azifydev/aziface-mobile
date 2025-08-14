@@ -24,7 +24,7 @@ public class Image {
     try {
       final JSONObject theme = this.theme.getTarget("image");
 
-      if (this.theme.exists(theme, key) || reactContext == null) {
+      if (!this.theme.exists(theme, key) || reactContext == null) {
         return defaultImage;
       }
 

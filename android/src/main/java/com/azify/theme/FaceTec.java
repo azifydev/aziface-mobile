@@ -21,7 +21,7 @@ public class FaceTec {
   public int getBorderRadius(JSONObject theme, String key) {
     final int defaultBorderRadius = 20;
     try {
-      if (this.theme.exists(theme, key)) {
+      if (!this.theme.exists(theme, key)) {
         return defaultBorderRadius;
       }
 
@@ -35,7 +35,7 @@ public class FaceTec {
 
   public ButtonLocation getButtonLocation(String key) {
     final ButtonLocation defaultLocation = ButtonLocation.TOP_RIGHT;
-    if (this.theme.exists(key)) {
+    if (!this.theme.exists(key)) {
       return defaultLocation;
     }
 

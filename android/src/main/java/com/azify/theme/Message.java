@@ -17,7 +17,7 @@ public class Message {
 
   private String getMessage(JSONObject theme, String key, String defaultMessage) {
     try {
-      if (this.theme.exists(theme, key)) {
+      if (!this.theme.exists(theme, key)) {
         return defaultMessage;
       }
 
@@ -29,25 +29,13 @@ public class Message {
   }
 
   public String getMessage(String target, String key, String defaultMessage) {
-    try {
-      final JSONObject theme = this.theme.getTarget(target);
-
-      return this.getMessage(theme, key, defaultMessage);
-    } catch (Exception error) {
-      Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
-      return defaultMessage;
-    }
+    final JSONObject theme = this.theme.getTarget(target);
+    return this.getMessage(theme, key, defaultMessage);
   }
 
   public String getMessage(String target, String parent, String key, String defaultMessage) {
-    try {
-      final JSONObject targetTheme = this.theme.getTarget(target);
-      final JSONObject parentTheme = this.theme.getTarget(targetTheme, parent);
-
-      return this.getMessage(parentTheme, key, defaultMessage);
-    } catch (Exception error) {
-      Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
-      return defaultMessage;
-    }
+    final JSONObject targetTheme = this.theme.getTarget(target);
+    final JSONObject parentTheme = this.theme.getTarget(targetTheme, parent);
+    return this.getMessage(parentTheme, key, defaultMessage);
   }
 }
