@@ -17,35 +17,35 @@ public class ThemeHelpers {
     Config.currentCustomization = getCustomizationForTheme()
     Config.currentLowLightCustomization = getLowLightCustomizationForTheme()
     Config.currentDynamicDimmingCustomization = getDynamicDimmingCustomizationForTheme()
-
+    
     FaceTec.sdk.setCustomization(Config.currentCustomization)
     FaceTec.sdk.setLowLightCustomization(Config.currentLowLightCustomization)
     FaceTec.sdk.setDynamicDimmingCustomization(Config.currentDynamicDimmingCustomization)
   }
-
+  
   @available(iOS 8.2, *)
   class func getCustomizationForTheme() -> FaceTecCustomization {
     var currentCustomization = FaceTecCustomization()
     currentCustomization = Config.retrieveConfigurationWizardCustomization()
-
+    
     return currentCustomization
   }
-
+  
   @available(iOS 8.2, *)
   class func getLowLightCustomizationForTheme() -> FaceTecCustomization {
     var currentLowLightCustomization: FaceTecCustomization = getCustomizationForTheme()
     currentLowLightCustomization = Config.retrieveLowLightConfigurationWizardCustomization()
-
+    
     return currentLowLightCustomization
   }
-
+  
   // Configure UX Color Scheme For Low Light Mode
   @available(iOS 8.2, *)
   class func getDynamicDimmingCustomizationForTheme() -> FaceTecCustomization {
     var currentDynamicDimmingCustomization: FaceTecCustomization = getCustomizationForTheme()
     currentDynamicDimmingCustomization =
-      Config.retrieveDynamicDimmingConfigurationWizardCustomization()
-
+    Config.retrieveDynamicDimmingConfigurationWizardCustomization()
+    
     return currentDynamicDimmingCustomization
   }
 }

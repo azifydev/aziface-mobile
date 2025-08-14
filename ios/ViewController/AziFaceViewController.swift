@@ -135,7 +135,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         }
       }
     })
-
+    
     task.resume()
   }
 }

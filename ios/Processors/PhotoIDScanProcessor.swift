@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
-  URLSessionTaskDelegate
+                            URLSessionTaskDelegate
 {
   var success = false
   var data: NSDictionary!
@@ -20,12 +20,12 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
   var idScanResultCallback: FaceTecIDScanResultCallback!
   private let principalKey = "photoIdScanMessage"
   private let AziThemeUtils: ThemeUtils! = ThemeUtils()
-
+  
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController
     self.data = data
     super.init()
-
+    
     FaceTecCustomization.setIDScanUploadMessageOverrides(
       frontSideUploadStarted: self.AziThemeUtils.handleMessage(
         self.principalKey, child: "frontSideUploadStarted",
@@ -88,33 +88,33 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
         self.principalKey, child: "skippedNFCUploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nID Details")  // Upload of ID Details is complete and we are waiting for the Server to finish processing and respond.
     )
-
+    
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
-
+    
     let idScanViewController = FaceTec.sdk.createSessionVC(
       idScanProcessorDelegate: self, sessionToken: sessionToken)
-
+    
     FaceTecUtilities.getTopMostViewController()?.present(
       idScanViewController, animated: true, completion: nil)
   }
-
+  
   func processIDScanWhileFaceTecSDKWaits(
     idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback
   ) {
     fromViewController.setLatestIDScanResult(idScanResult: idScanResult)
-
+    
     self.idScanResultCallback = idScanResultCallback
-
+    
     if idScanResult.status != FaceTecIDScanStatus.success {
       if latestNetworkRequest != nil {
         latestNetworkRequest.cancel()
       }
-
+      
       AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
       idScanResultCallback.onIDScanResultCancel()
       return
     }
-
+    
     var parameters: [String: Any] = [:]
     if self.data != nil {
       parameters["data"] = self.data
@@ -126,14 +126,14 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
     if idScanResult.backImagesCompressedBase64?.isEmpty == false {
       parameters["idScanBackImage"] = idScanResult.backImagesCompressedBase64![0]
     }
-
+    
     let dynamicRoute = DynamicRoute()
     let route = dynamicRoute.getPathUrlIdScanOnly(target: "base")
     var request = Config.makeRequest(url: route, httpMethod: "POST")
-
+    
     request.httpBody = try! JSONSerialization.data(
       withJSONObject: parameters, options: JSONSerialization.WritingOptions(rawValue: 0))
-
+    
     let session = URLSession(
       configuration: URLSessionConfiguration.default, delegate: self,
       delegateQueue: OperationQueue.main)
@@ -150,20 +150,20 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
             return
           }
         }
-
+        
         if let error = error {
           print("Exception raised while attempting HTTPS call.")
           AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
           idScanResultCallback.onIDScanResultCancel()
           return
         }
-
+        
         guard let data = data else {
           AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
           idScanResultCallback.onIDScanResultCancel()
           return
         }
-
+        
         guard
           let responseJSON = try? JSONSerialization.jsonObject(
             with: data, options: JSONSerialization.ReadingOptions.allowFragments)
@@ -173,15 +173,15 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
           idScanResultCallback.onIDScanResultCancel()
           return
         }
-
+        
         guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-          let wasProcessed = responseJSON["wasProcessed"] as? Bool
+              let wasProcessed = responseJSON["wasProcessed"] as? Bool
         else {
           AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
           idScanResultCallback.onIDScanResultCancel()
           return
         }
-
+        
         if wasProcessed == true {
           FaceTecCustomization.setIDScanResultScreenMessageOverrides(
             successFrontSide: self.AziThemeUtils.handleMessage(
@@ -222,7 +222,7 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
             skipOrErrorNFC: self.AziThemeUtils.handleMessage(
               self.principalKey, child: "skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")  // Case where NFC Scan was skipped due to the user's interaction or an unexpected error.
           )
-
+          
           self.success = idScanResultCallback.onIDScanResultProceedToNextStep(
             scanResultBlob: scanResultBlob)
         } else {
@@ -230,10 +230,10 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
           idScanResultCallback.onIDScanResultCancel()
         }
       })
-
+    
     latestNetworkRequest.resume()
   }
-
+  
   func urlSession(
     _ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64,
     totalBytesSent: Int64, totalBytesExpectedToSend: Int64
@@ -243,11 +243,11 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
       idScanResultCallback.onIDScanUploadProgress(uploadedPercent: uploadProgress)
     }
   }
-
+  
   func onFaceTecSDKCompletelyDone() {
     self.fromViewController.onComplete()
   }
-
+  
   func isSuccess() -> Bool {
     return success
   }
