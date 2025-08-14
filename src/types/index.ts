@@ -1175,6 +1175,52 @@ export interface Params {
 }
 
 /**
+ * @interface SessionBasePathUrl
+ *
+ * @description This is target properties of the path session.
+ */
+interface SessionBasePathUrl {
+  /**
+   * @description The base URL used for the session.
+   *
+   * @default undefined
+   */
+  base?: string;
+}
+
+/**
+ * @interface SessionMatchPathUrl
+ *
+ * @description This is target properties of the session with multiple path
+ * urls.
+ */
+interface SessionMatchPathUrl extends SessionParams {
+  /**
+   * @description The match URL used for the session with multiple
+   * verifications.
+   *
+   * @default undefined
+   */
+  match?: string;
+}
+
+/**
+ * @interface SessionParams
+ *
+ * @description This is the parameters for the session.
+ */
+export interface SessionParams<T = 'base'> {
+  /**
+   * @description The object path URL for the session.
+   *
+   * @default undefined
+   */
+  pathUrl?: T extends 'base' ? SessionBasePathUrl : SessionMatchPathUrl;
+
+  [key: string]: any;
+}
+
+/**
  * @enum
  *
  * @description This is the enum Errors that can be throws by Aziface SDK.

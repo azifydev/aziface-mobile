@@ -1,4 +1,9 @@
-import { AzifaceMobileSdk, type Initialize, type Theme } from './types';
+import {
+  AzifaceMobileSdk,
+  type Initialize,
+  type SessionParams,
+  type Theme,
+} from './types';
 
 /**
  * @description This is the **principal** method to be called, he must be
@@ -23,14 +28,14 @@ export function initialize({ params, headers }: Initialize): Promise<boolean> {
  * @description This method make to read from face and documents for user,
  * after comparate face and face documents from user to check veracity.
  *
- * @param {AzifaceSdk.CommonSessionParams<'match'>|undefined} data - The object
+ * @param {SessionParams<'match'>|undefined} data - The object
  * with data to be will send on photo ID match. The data is optional.
  *
  * @return {Promise<boolean>} Represents if photo match was a successful.
  * @throws If photo ID match was a unsuccessful or occurred some interference.
  */
 export async function photoMatch(
-  data?: AzifaceSdk.CommonSessionParams<'match'>
+  data?: SessionParams<'match'>
 ): Promise<boolean> {
   return await AzifaceMobileSdk.handlePhotoIDMatch(data)
     .then((successful: boolean) => successful)
@@ -43,15 +48,13 @@ export async function photoMatch(
  * @description This method makes a 3D reading of the user's face. But, you must
  * use to **subscribe** user in Aziface SDK or in your server.
  *
- * @param {AzifaceSdk.CommonSessionParams<'base'>|undefined} data - The object
+ * @param {SessionParams<'base'>|undefined} data - The object
  * with data to be will send on enrollment. The data is optional.
  *
  * @return {Promise<boolean>} Represents if enrollment was a successful.
  * @throws If enrollment was a unsuccessful or occurred some interference.
  */
-export async function enroll(
-  data?: AzifaceSdk.CommonSessionParams<'base'>
-): Promise<boolean> {
+export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
   return await AzifaceMobileSdk.handleEnrollUser(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
@@ -63,14 +66,14 @@ export async function enroll(
  * @description This method makes a 3D reading of the user's face. But, you must
  * use to **authenticate** user in Aziface SDK or in your server.
  *
- * @param {AzifaceSdk.CommonSessionParams<'base'>|undefined} data - The object
+ * @param {SessionParams<'base'>|undefined} data - The object
  * with data to be will send on authentication. The data is optional.
  *
  * @return {Promise<boolean>} Represents if authentication was a successful.
  * @throws If authenticate was a unsuccessful or occurred some interference.
  */
 export async function authenticate(
-  data?: AzifaceSdk.CommonSessionParams<'base'>
+  data?: SessionParams<'base'>
 ): Promise<boolean> {
   return await AzifaceMobileSdk.handleAuthenticateUser(data)
     .then((successful: boolean) => successful)
