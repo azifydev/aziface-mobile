@@ -196,8 +196,10 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
         isSessionPreparingToLaunch = false;
         setLatestExternalDatabaseRefID("android_azify_app_" + randomUUID());
 
-        CommonParams parameters = new CommonParams(data.toHashMap());
-        parameters.buildProcessorPathURL();
+        if(data != null) {
+          CommonParams parameters = new CommonParams(data.toHashMap());
+          parameters.buildProcessorPathURL();
+        }
 
         latestProcessor = new EnrollmentProcessor(sessionToken, reactContext.getCurrentActivity(),
             AzifaceMobileSdkModule.this, data);
@@ -222,8 +224,11 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
         resetLatestResults();
         isSessionPreparingToLaunch = false;
 
-        CommonParams parameters = new CommonParams(data.toHashMap());
-        parameters.buildProcessorPathURL();
+
+        if(data != null) {
+          CommonParams parameters = new CommonParams(data.toHashMap());
+          parameters.buildProcessorPathURL();
+        }
 
         latestProcessor = new AuthenticateProcessor(sessionToken, reactContext.getCurrentActivity(),
             AzifaceMobileSdkModule.this, data);
@@ -249,8 +254,11 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
         isSessionPreparingToLaunch = false;
         setLatestExternalDatabaseRefID("android_azify_app_" + randomUUID());
 
-        CommonParams parameters = new CommonParams(data.toHashMap());
-        parameters.buildProcessorPathURL();
+
+        if(data != null) {
+          CommonParams parameters = new CommonParams(data.toHashMap());
+          parameters.buildProcessorPathURL();
+        }
 
         latestProcessor = new PhotoIDMatchProcessor(sessionToken, reactContext.getCurrentActivity(),
             AzifaceMobileSdkModule.this, data);
