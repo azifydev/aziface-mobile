@@ -83,7 +83,7 @@ export async function authenticate(data?: Object): Promise<boolean> {
  * @return {void}
  */
 export function setTheme(options?: Theme): void {
-  AzifaceMobileSdk.handleTheme(options);
+  AzifaceMobileSdk.setTheme(options);
 }
 
 export * from './types';

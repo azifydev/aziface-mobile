@@ -21,7 +21,6 @@ public class Config {
   public static String PublicFaceScanEncryptionKey;
   public static String ProductionKeyText;
   public static ReadableMap RequestHeaders;
-  public static ReadableMap Theme;
 
   private static Map<String, String> parseReadableMapToMap() {
     Map<String, String> headers = new HashMap<>();
@@ -61,10 +60,6 @@ public class Config {
   public static Headers getHeaders(String httpMethod) {
     Map<String, String> headersMap = parseReadableMapToMap();
     return parseHeadersMapToHeaders(headersMap, httpMethod.toUpperCase());
-  }
-
-  public static void setTheme(ReadableMap theme) {
-    Theme = theme;
   }
 
   public static void setDevice(String device) {

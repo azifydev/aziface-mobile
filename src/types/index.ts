@@ -1299,7 +1299,7 @@ export interface Methods {
    *
    * @return {void}
    */
-  handleTheme(options?: Theme): void;
+  setTheme(options?: Theme): void;
 }
 
 /**

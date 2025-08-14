@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.utils.Theme;
 import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 
@@ -23,7 +22,7 @@ public class FaceTec {
 
       final int borderRadius = theme.getInt(key);
       return borderRadius < 0 ? defaultBorderRadius : borderRadius;
-    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
+    } catch (JSONException e) {
       return defaultBorderRadius;
     }
   }
@@ -34,7 +33,7 @@ public class FaceTec {
       return defaultLocation;
     }
 
-    final String buttonLocation = Config.Theme.getString(key);
+    final String buttonLocation = com.azify.theme.Theme.Style.getString(key);
     if (buttonLocation == null) {
       return defaultLocation;
     }

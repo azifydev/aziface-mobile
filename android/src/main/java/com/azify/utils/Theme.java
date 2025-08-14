@@ -1,6 +1,6 @@
 package com.azify.utils;
 
-import com.azify.processors.Config;
+import com.facebook.react.bridge.ReadableMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +8,8 @@ import org.json.JSONObject;
 public class Theme {
 
   public Boolean exists(String key) {
-    return Config.Theme != null && Config.Theme.hasKey(key) && !Config.Theme.isNull(key);
+    final ReadableMap style = com.azify.theme.Theme.Style;
+    return style != null && style.hasKey(key) && !style.isNull(key);
   }
 
   public Boolean exists(JSONObject theme, String key) {
@@ -20,10 +21,10 @@ public class Theme {
       if (!this.exists(key)) {
         return null;
       }
-      
-      final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
+
+      final JSONObject theme = new JSONObject(com.azify.theme.Theme.Style.toHashMap());
       return theme.getJSONObject(key);
-    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
+    } catch (JSONException e) {
       return null;
     }
   }
@@ -35,7 +36,7 @@ public class Theme {
       }
 
       return theme.getJSONObject(key);
-    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
+    } catch (JSONException e) {
       return null;
     }
   }

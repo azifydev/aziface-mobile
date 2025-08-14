@@ -104,7 +104,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       Log.d("Aziface", "FaceTecSDK doesn't initialized!");
     }
 
-    this.handleTheme(Config.Theme);
+    this.setTheme(Theme.Style);
   }
 
   interface SessionTokenCallback {
@@ -196,7 +196,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void handleTheme(ReadableMap theme) {
+  public void setTheme(ReadableMap theme) {
     Theme.setTheme(theme);
   }
 

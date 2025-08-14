@@ -33,7 +33,7 @@ public class Image {
       final String packageName = reactContext.getPackageName();
       final int resourceId = reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
       return resourceId == 0 ? defaultImage : resourceId;
-    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
+    } catch (JSONException e) {
       return defaultImage;
     }
   }

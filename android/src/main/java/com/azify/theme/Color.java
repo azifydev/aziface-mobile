@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.utils.Theme;
 
 import org.json.JSONException;
@@ -16,7 +15,7 @@ public class Color {
 
   private int parseColor(String key, int defaultColor) {
     final int hasAlpha = 9;
-    String color = Config.Theme.getString(key);
+    String color = com.azify.theme.Theme.Style.getString(key);
 
     if (color == null) {
       return defaultColor;
@@ -36,7 +35,7 @@ public class Color {
         color = "#" + color.substring(hasAlpha - 2) + color.substring(1, hasAlpha - 2);
       }
       return color.isEmpty() ? defaultColor : android.graphics.Color.parseColor(color);
-    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
+    } catch (JSONException e) {
       return defaultColor;
     }
   }

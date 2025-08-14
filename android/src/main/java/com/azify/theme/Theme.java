@@ -18,6 +18,7 @@ public class Theme {
   private final Feedback feedback;
   private final ResultScreen resultScreen;
   private final IdScan idScan;
+  public static ReadableMap Style;
 
   public Theme(ReactApplicationContext context) {
     this.color = new Color();
@@ -61,8 +62,8 @@ public class Theme {
     return currentDynamicDimmingCustomization;
   }
 
-  public static void setTheme(ReadableMap theme) {
-    Config.setTheme(theme);
+  public static void setTheme(ReadableMap style) {
+    Style = style;
 
     Config.currentCustomization = getCustomizationForTheme();
     Config.currentLowLightCustomization = getLowLightCustomizationForTheme();
