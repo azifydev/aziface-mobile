@@ -469,6 +469,8 @@ The `logoImage` and `cancelImage` properties represents your logo and icon of th
 
 To add your images in `Android`, you must go to your project's `android/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
 
+**Important**: The filename of the image can't have uppercase letters, Android doesn't accept these characters in the image name.
+
 ### How to add images in iOS?
 
 In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Images.xcassets` directory. Open the `Images.xcassets` folder and only put your images inside there.
@@ -542,7 +544,7 @@ export default function App() {
 
 ## Limitations, Features or Camera Problems
 
-See the [native implementation](./NATIVE_IMPLEMENTATION.md) to learn more about the limitations and features that will need improving in the `react-native-aziface-sdk`.
+See the [native implementation](./NATIVE_IMPLEMENTATION.md) to learn more about the limitations and features that will need improving in the `@azify/aziface-mobile`.
 
 <hr/>
 
