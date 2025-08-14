@@ -578,7 +578,7 @@ export interface ThemeOval {
   /**
    * @description Represents the border color style of the oval view border.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   strokeColor?: string;
 
@@ -587,7 +587,7 @@ export interface ThemeOval {
    * face or scan ID of the user. It's localize inside over view when the
    * user is making check face or scan ID.
    *
-   * @default undefined
+   * @default '#0264dc'
    */
   firstProgressColor?: string;
 
@@ -596,7 +596,7 @@ export interface ThemeOval {
    * face or scan ID of the user. It's localize inside over view when the
    * user is making check face or scan ID.
    *
-   * @default undefined
+   * @default '#0264dc'
    */
   secondProgressColor?: string;
 }
@@ -611,7 +611,7 @@ export interface ThemeFeedback {
   /**
    * @description Represents the background color style of the feedback view.
    *
-   * @default undefined
+   * @default '#026ff4'
    *
    * @platform Android
    */
@@ -629,7 +629,7 @@ export interface ThemeFeedback {
   /**
    * @description Represents the color style of the feedback box text.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   textColor?: string;
 }
@@ -643,8 +643,6 @@ export interface ThemeButton {
   /**
    * @description Represents the background color style of the button.
    *
-   * @description In **guidance** object default value is:
-   *
    * @default '#026ff4'
    */
   backgroundNormalColor?: string;
@@ -653,8 +651,6 @@ export interface ThemeButton {
    * @description Represents the background color style of the button when it's
    * disabled.
    *
-   * @description In **guidance** object default value is:
-   *
    * @default '#b3d4fc'
    */
   backgroundDisabledColor?: string;
@@ -662,8 +658,6 @@ export interface ThemeButton {
   /**
    * @description Represents the background color style of the button when it's
    * on press effect.
-   *
-   * @description In **guidance** object default value is:
    *
    * @default '#0264dc'
    */
@@ -704,7 +698,7 @@ export interface ThemeResultAnimation {
    * @description Represents the indicator background color style of the
    * result animation on finishing of the loading.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   backgroundColor?: string;
 
@@ -712,7 +706,7 @@ export interface ThemeResultAnimation {
    * @description Represents the icon color style of the check icon on the
    * result animation.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   foregroundColor?: string;
 }
@@ -728,7 +722,7 @@ export interface ThemeGuidanceRetryScreen {
    * @description Represents the border color style of the guidance retry
    * screen.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   imageBorderColor?: string;
 
@@ -736,7 +730,7 @@ export interface ThemeGuidanceRetryScreen {
    * @description Represents the border color style of the oval view row
    * of the guidance retry.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   ovalStrokeColor?: string;
 }
@@ -802,7 +796,7 @@ export interface ThemeResultScreen {
    * @description Represents the background color style of the feedback view
    * that's shown on the finish to check face or scan ID.
    *
-   * @default undefined
+   * @default '#ffffff'
    *
    * @platform Android
    */
@@ -822,7 +816,7 @@ export interface ThemeResultScreen {
    * @description Represents the foreground color style of the result screen
    * text.
    *
-   * @default undefined
+   * @default '#272937'
    */
   foregroundColor?: string;
 
@@ -830,7 +824,7 @@ export interface ThemeResultScreen {
    * @description Represents the indicator background color style of the
    * result screen during loading.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   activityIndicatorColor?: string;
 
@@ -838,7 +832,7 @@ export interface ThemeResultScreen {
    * @description Represents the progress bar fill color style of the result
    * screen during loading.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   uploadProgressFillColor?: string;
 
@@ -861,7 +855,7 @@ export interface ThemeIdScanCaptureScreen {
    * @description Represents the foreground color style of the ID scan
    * capture text.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   foregroundColor?: string;
 
@@ -869,7 +863,7 @@ export interface ThemeIdScanCaptureScreen {
    * @description Represents the background color style of the ID scan
    * capture view.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   textBackgroundColor?: string;
 
@@ -877,7 +871,7 @@ export interface ThemeIdScanCaptureScreen {
    * @description Represents the background color style of the ID scan
    * capture view.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   backgroundColor?: string;
 
@@ -885,7 +879,7 @@ export interface ThemeIdScanCaptureScreen {
    * @description Represents the border color style of the ID scan capture
    * camera.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   frameStrokeColor?: string;
 }
@@ -900,7 +894,7 @@ export interface ThemeIdScanReviewScreen {
   /**
    * @description Represents the color style of the ID scan review text.
    *
-   * @default undefined
+   * @default '#ffffff'
    */
   foregroundColor?: string;
 
@@ -908,7 +902,7 @@ export interface ThemeIdScanReviewScreen {
    * @description Represents the background color style of the ID scan
    * review label.
    *
-   * @default undefined
+   * @default '#026ff4'
    */
   textBackgroundColor?: string;
 }
@@ -924,7 +918,7 @@ export interface ThemeIdScanSelectionScreen {
    * @description Represents the background color style of the ID scan
    * selection view.
    *
-   * @default undefined
+   * @default '#ffffff'
    *
    * @platform Android
    */
@@ -943,7 +937,7 @@ export interface ThemeIdScanSelectionScreen {
   /**
    * @description Represents the color style of the ID scan selection text.
    *
-   * @default undefined
+   * @default '#272937'
    */
   foregroundColor?: string;
 }
