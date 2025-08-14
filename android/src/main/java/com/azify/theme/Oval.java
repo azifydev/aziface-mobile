@@ -3,42 +3,40 @@ package com.azify.theme;
 import android.util.Log;
 
 import com.azify.processors.Config;
-import com.azify.theme.abstracts.CommonStyle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class Frame extends CommonStyle {
-  private static final String KEY = "frame";
+public class Oval {
   private final JSONObject target;
   private final Color color;
-  private final FaceTec faceTec;
 
-  public Frame() {
-    super(new JSONObject(Config.Theme.toHashMap()), KEY);
-
+  public Oval() {
     this.target = this.getTarget();
     this.color = new Color();
-    this.faceTec = new FaceTec();
   }
 
   private JSONObject getTarget() {
     try {
       final JSONObject theme = new JSONObject(Config.Theme.toHashMap());
-      return theme.getJSONObject("frame");
+      return theme.getJSONObject("oval");
     } catch (JSONException e) {
       Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
       return null;
     }
   }
 
-  public int getCornerRadius() {
-    return faceTec.getBorderRadius(this.target, "cornerRadius");
+  public int getStrokeColor() {
+    return this.color.getColor(this.target, "strokeColor", "#026ff4");
   }
 
-  public int getBorderColor() {
-    return this.color.getColor(this.target, "borderColor");
+  public int getFirstProgressColor() {
+    return this.color.getColor(this.target, "firstProgressColor", "#0264dc");
+  }
+
+  public int getSecondProgressColor() {
+    return this.color.getColor(this.target, "secondProgressColor", "#0264dc");
   }
 }

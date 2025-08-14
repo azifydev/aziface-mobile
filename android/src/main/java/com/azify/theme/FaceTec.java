@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 public class FaceTec {
-  private final int DEFAULT_RADIUS = 20;
 
   private Boolean exists(String key) {
     return Config.Theme == null || !Config.Theme.hasKey(key) || Config.Theme.isNull(key);
@@ -21,26 +20,18 @@ public class FaceTec {
     return theme == null || !theme.has(key) || theme.isNull(key);
   }
 
-  public int getBorderRadius(String key) {
-    if (this.exists(key)) {
-      return this.DEFAULT_RADIUS;
-    }
-
-    final int borderRadius = Config.Theme.getInt(key);
-    return borderRadius < 0 ? this.DEFAULT_RADIUS : borderRadius;
-  }
-
   public int getBorderRadius(JSONObject theme, String key) {
+    final int defaultBorderRadius = 20;
     try {
       if (this.exists(theme, key)) {
-        return this.DEFAULT_RADIUS;
+        return defaultBorderRadius;
       }
 
       final int borderRadius = theme.getInt(key);
-      return borderRadius < 0 ? this.DEFAULT_RADIUS : borderRadius;
+      return borderRadius < 0 ? defaultBorderRadius : borderRadius;
     } catch (JSONException e) {
       Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
-      return this.DEFAULT_RADIUS;
+      return defaultBorderRadius;
     }
   }
 

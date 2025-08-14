@@ -4,7 +4,6 @@ import com.azify.azifacemobilesdk.R;
 import com.azify.processors.Config;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
-import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 import com.facetec.sdk.FaceTecCustomization;
 import com.facetec.sdk.FaceTecSDK;
 
@@ -12,14 +11,25 @@ public class Theme {
   private final Color color;
   private final FaceTec faceTec;
   private final Message message;
-  private final ReactApplicationContext context;
+  private final Image image;
+  private final Frame frame;
+  private final Guidance guidance;
+  private final Oval oval;
+  private final Feedback feedback;
+  private final ResultScreen resultScreen;
+  private final IdScan idScan;
 
   public Theme(ReactApplicationContext context) {
-    this.context = context;
-
     this.color = new Color();
     this.faceTec = new FaceTec();
     this.message = new Message();
+    this.frame = new Frame();
+    this.guidance = new Guidance();
+    this.oval = new Oval();
+    this.feedback = new Feedback();
+    this.resultScreen = new ResultScreen();
+    this.idScan = new IdScan();
+    this.image = new Image(context);
   }
 
   public static FaceTecCustomization getCustomizationForTheme() {
@@ -91,11 +101,35 @@ public class Theme {
     return this.message.getMessage("matchMessage", parent, key, defaultMessage);
   }
 
-  public ButtonLocation getButtonLocation(String key) {
-    return this.faceTec.getButtonLocation(key);
+  public int getImage(String key, int defaultImage) {
+    return this.image.getImage(key, defaultImage);
   }
 
-  public ReactApplicationContext getContext() {
-    return this.context;
+  public FaceTec getFaceTec() {
+    return this.faceTec;
+  }
+
+  public Frame getFrame() {
+    return this.frame;
+  }
+
+  public Guidance getGuidance() {
+    return this.guidance;
+  }
+
+  public Oval getOval() {
+    return this.oval;
+  }
+
+  public Feedback getFeedback() {
+    return this.feedback;
+  }
+
+  public ResultScreen getResultScreen() {
+    return this.resultScreen;
+  }
+
+  public IdScan getIdScan() {
+    return this.idScan;
   }
 }

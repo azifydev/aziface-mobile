@@ -29,24 +29,12 @@ public class Button {
     return this.color.getColor(this.target, "backgroundNormalColor", "#026ff4");
   }
 
-  public int getBackgroundNormalColor(String defaultColor) {
-    return this.color.getColor(this.target, "backgroundNormalColor", defaultColor);
-  }
-
   public int getBackgroundDisabledColor() {
     return this.color.getColor(this.target, "backgroundDisabledColor", "#b3d4fc");
   }
 
-  public int getBackgroundDisabledColor(String defaultColor) {
-    return this.color.getColor(this.target, "backgroundDisabledColor", defaultColor);
-  }
-
   public int getBackgroundHighlightColor() {
     return this.color.getColor(this.target, "backgroundHighlightColor", "#0264dc");
-  }
-
-  public int getBackgroundHighlightColor(String defaultColor) {
-    return this.color.getColor(this.target, "backgroundHighlightColor", defaultColor);
   }
 
   public int getTextNormalColor() {

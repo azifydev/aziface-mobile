@@ -10,17 +10,16 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class Guidance extends CommonStyle {
-  private static final String KEY = "guidance";
-  private final Button button;
-  private final RetryScreen retryScreen;
+public class Feedback extends CommonStyle {
+  private static final String KEY = "feedback";
+  private final JSONObject target;
+  private final Color color;
 
-  public Guidance() {
+  public Feedback() {
     super(new JSONObject(Config.Theme.toHashMap()), KEY);
 
-    final JSONObject target = this.getTarget();
-    this.button = new Button(target);
-    this.retryScreen = new RetryScreen(target);
+    this.target = this.getTarget();
+    this.color = new Color();
   }
 
   private JSONObject getTarget() {
@@ -34,15 +33,11 @@ public class Guidance extends CommonStyle {
   }
 
   @Override
-  public int getForegroundColor() {
-    return this.getForegroundColor("#272937");
+  public int getBackgroundColor() {
+    return this.getBackgroundColor("#026ff4");
   }
 
-  public Button getButton() {
-    return this.button;
-  }
-
-  public RetryScreen getRetryScreen() {
-    return this.retryScreen;
+  public int getTextColor() {
+    return this.color.getColor(this.target, "textColor");
   }
 }
