@@ -20,8 +20,8 @@ public class Config {
   public static String ProcessId;
   public static String PublicFaceScanEncryptionKey;
   public static String ProductionKeyText;
-  public static ReadableMap Theme;
   public static ReadableMap RequestHeaders;
+  public static ReadableMap Theme;
 
   private static Map<String, String> parseReadableMapToMap() {
     Map<String, String> headers = new HashMap<>();

@@ -1,14 +1,8 @@
 package com.azify.theme;
 
-import android.util.Log;
-
-import com.azify.processors.Config;
 import com.azify.utils.Theme;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class IdScan {
   private final Button button;

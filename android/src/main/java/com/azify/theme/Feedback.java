@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
 import com.azify.utils.Theme;
 
@@ -12,7 +11,7 @@ public class Feedback extends CommonStyle {
   private final Color color;
 
   public Feedback() {
-    super(new JSONObject(Config.Theme.toHashMap()), KEY);
+    super(KEY);
 
     this.theme = new Theme().getTarget(KEY);
     this.color = new Color();

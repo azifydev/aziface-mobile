@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
 import com.azify.utils.Theme;
 
@@ -12,7 +11,7 @@ public class Guidance extends CommonStyle {
   private final RetryScreen retryScreen;
 
   public Guidance() {
-    super(new JSONObject(Config.Theme.toHashMap()), KEY);
+    super(KEY);
 
     final JSONObject theme = new Theme().getTarget(KEY);
 

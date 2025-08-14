@@ -1,14 +1,10 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.processors.Config;
 import com.azify.utils.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class Color {
   private static final String DEFAULT_COLOR = "#ffffff";
@@ -40,8 +36,7 @@ public class Color {
         color = "#" + color.substring(hasAlpha - 2) + color.substring(1, hasAlpha - 2);
       }
       return color.isEmpty() ? defaultColor : android.graphics.Color.parseColor(color);
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
+    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
       return defaultColor;
     }
   }

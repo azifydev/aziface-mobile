@@ -9,6 +9,11 @@ public abstract class CommonStyle {
   private final JSONObject theme;
   private final Color color;
 
+  public CommonStyle(String key) {
+    this.theme = new Theme().getTarget(key);
+    this.color = new Color();
+  }
+
   public CommonStyle(JSONObject theme, String key) {
     this.theme = new Theme().getTarget(theme, key);
     this.color = new Color();

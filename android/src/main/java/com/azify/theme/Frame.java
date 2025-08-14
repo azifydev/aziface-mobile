@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
 import com.azify.utils.Theme;
 
@@ -13,7 +12,7 @@ public class Frame extends CommonStyle {
   private final FaceTec faceTec;
 
   public Frame() {
-    super(new JSONObject(Config.Theme.toHashMap()), KEY);
+    super(KEY);
 
     this.theme = new Theme().getTarget(KEY);
     this.color = new Color();

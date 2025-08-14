@@ -1,6 +1,5 @@
 package com.azify.theme;
 
-import com.azify.processors.Config;
 import com.azify.theme.abstracts.CommonStyle;
 import com.azify.utils.Theme;
 
@@ -13,7 +12,8 @@ public class ResultScreen extends CommonStyle {
   private final ResultAnimation resultAnimation;
 
   public ResultScreen() {
-    super(new JSONObject(Config.Theme.toHashMap()), KEY);
+    super(KEY);
+
     this.theme = new Theme().getTarget(KEY);
     this.color = new Color();
     this.resultAnimation = new ResultAnimation(this.theme);

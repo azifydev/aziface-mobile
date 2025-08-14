@@ -1,15 +1,11 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.processors.Config;
 import com.azify.utils.Theme;
 import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class FaceTec {
   private final Theme theme;
@@ -27,8 +23,7 @@ public class FaceTec {
 
       final int borderRadius = theme.getInt(key);
       return borderRadius < 0 ? defaultBorderRadius : borderRadius;
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
+    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
       return defaultBorderRadius;
     }
   }

@@ -1,14 +1,10 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class Image {
   private static ReactApplicationContext reactContext;
@@ -37,8 +33,7 @@ public class Image {
       final String packageName = reactContext.getPackageName();
       final int resourceId = reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
       return resourceId == 0 ? defaultImage : resourceId;
-    } catch (JSONException e) {
-      Log.d("Aziface", Objects.requireNonNull(e.getMessage()));
+    } catch (JSONException | ExceptionInInitializerError | NoClassDefFoundError e) {
       return defaultImage;
     }
   }
