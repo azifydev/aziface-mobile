@@ -11,10 +11,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      await login({
-        assembleUserId: Config.ID, // Replace with dynamic user ID
-        externalSecret: password,
-      });
+      await login(Config.ID);
     } catch (error) {
       Alert.alert(
         'Login Error',

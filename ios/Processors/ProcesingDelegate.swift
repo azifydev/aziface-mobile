@@ -9,5 +9,5 @@
 import FaceTecSDK
 
 protocol Processor: AnyObject {
-    func isSuccess() -> Bool
+  func isSuccess() -> Bool
 }

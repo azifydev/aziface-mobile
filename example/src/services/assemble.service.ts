@@ -2,11 +2,6 @@ import { useUserStore } from '../hooks/useuser.hook';
 import { assembleApi } from './assembleApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-interface LoginRequestData {
-  assembleUserId?: string;
-  externalSecret?: string;
-}
-
 interface ConfigsResponseData {
   device: string;
   productionKey: string;
@@ -28,29 +23,15 @@ export function useProcess() {
   });
 }
 
-export function useOnboardingProcess() {
-  return useMutation({
-    mutationKey: ['biometric-process'],
-    mutationFn: async (biometricProcess: string) => {
-      const response = await assembleApi.post(
-        '/onboardings/biometric-process',
-        {
-          biometricProcess,
-          userType: 'INDIVIDUAL',
-        }
-      );
-      return response?.data?.data;
-    },
-  });
-}
-
 export function useBiometricLogin() {
   return useMutation({
     mutationKey: ['login'],
-    mutationFn: async (params: LoginRequestData) => {
-      const response = await assembleApi.post('/auth/login', { ...params });
-      if (response?.data?.accessToken) {
-        useUserStore.getState().setToken(response?.data?.accessToken);
+    mutationFn: async (userId: string) => {
+      const response = await assembleApi.post('/biometric/sessions', {
+        userId,
+      });
+      if (response?.data?.token) {
+        useUserStore.getState().setToken(response?.data?.token);
       }
       return response?.data?.data;
     },

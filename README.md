@@ -7,14 +7,17 @@ Azify SDK adapter to react native. 📱
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
-  - [`initialize(init: AzifaceSdk.Initialize)`](#initializeinit-azifacesdkinitialize)
-  - [`enroll(data?: Object)`](#enrolldata-object)
-  - [`authenticate(data?: Object)`](#authenticatedata-object)
-  - [`photoMatch(data?: Object)`](#photomatchdata-object)
-  - [`setTheme(options?: AzifaceSdk.Theme)`](#setthemeoptions-azifacesdktheme)
+  - [`initialize`](#initializeinit-azifacesdkinitialize)
+  - [`enroll`](#enrolldata-object)
+  - [`authenticate`](#authenticatedata-object)
+  - [`photoMatch`](#photomatchdata-object)
+  - [`setTheme`](#setthemeoptions-azifacesdktheme)
 - [Types](#types)
   - [`AzifaceSdk.Params`](#azifacesdkparams)
   - [`AzifaceSdk.Headers`](#azifacesdkheaders)
+  - [`AzifaceSdk.CommonSessionParams`](#azifacesdkcommonsessionparams)
+    - [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl)
+    - [`AzifaceSdk.MultipleSessionPathUrl`](#azifacesdkmultiplesessionpathurl)
   - [`AzifaceSdk.Theme`](#azifacesdktheme)
   - [`AzifaceSdk.ButtonLocation`](#azifacesdkbuttonlocation)
   - [`AzifaceSdk.StatusBarColor`](#azifacesdkstatusbarcolor-ios-only)
@@ -198,15 +201,15 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods                                                                           | Return Type        | iOS | Android |
-| --------------------------------------------------------------------------------- | ------------------ | --- | ------- |
-| [`initialize(init: AzifaceSdk.Initialize)`](#initializeinit-azifacesdkinitialize) | `Promise<boolean>` | ✅  | ✅      |
-| [`enroll(data?: Object)`](#enrolldata-object)                                     | `Promise<boolean>` | ✅  | ✅      |
-| [`authenticate(data?: Object)`](#authenticatedata-object)                         | `Promise<boolean>` | ✅  | ✅      |
-| [`photoMatch(data?: Object)`](#photomatchdata-object)                             | `Promise<boolean>` | ✅  | ✅      |
-| [`setTheme(options?: AzifaceSdk.Theme)`](#setthemeoptions-azifacesdktheme)        | `void`             | ✅  | ✅      |
+| Methods        | Return Type        | iOS | Android |
+| -------------- | ------------------ | --- | ------- |
+| `initialize`   | `Promise<boolean>` | ✅  | ✅      |
+| `enroll`       | `Promise<boolean>` | ✅  | ✅      |
+| `authenticate` | `Promise<boolean>` | ✅  | ✅      |
+| `photoMatch`   | `Promise<boolean>` | ✅  | ✅      |
+| `setTheme`     | `void`             | ✅  | ✅      |
 
-### `initialize(init: AzifaceSdk.Initialize)`
+### `initialize`
 
 This is the **principal** method to be called, he must be **called first** to initialize the Aziface SDK. If he doens't be called the other methods **don't works!**
 
@@ -215,37 +218,37 @@ This is the **principal** method to be called, he must be **called first** to in
 | `params`                | [`AzifaceSdk.Params`](#azifacesdkparams)   | ✅       | -           |
 | `headers`               | [`AzifaceSdk.Headers`](#azifacesdkheaders) | ❌       | `undefined` |
 
-### `enroll(data?: Object)`
+### `enroll`
 
 This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
 
-| `Object` | type     | Required | Default     |
-| -------- | -------- | -------- | ----------- |
-| `data`   | `Object` | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"base">` | type                                                                 | Required | Default     |
+| ---------------------------------------- | -------------------------------------------------------------------- | -------- | ----------- |
+| `data`                                   | [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl) | ❌       | `undefined` |
 
-### `authenticate(data?: Object)`
+### `authenticate`
 
 This method makes a 3D reading of the user's face. But, you must use to **authenticate** user in Aziface SDK or in your server.
 
-| `Object` | type     | Required | Default     |
-| -------- | -------- | -------- | ----------- |
-| `data`   | `Object` | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"base">` | type                                                                 | Required | Default     |
+| ---------------------------------------- | -------------------------------------------------------------------- | -------- | ----------- |
+| `data`                                   | [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl) | ❌       | `undefined` |
 
-### `photoMatch(data?: Object)`
+### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
 
-| `Object` | type     | Required | Default     |
-| -------- | -------- | -------- | ----------- |
-| `data`   | `Object` | ❌       | `undefined` |
+| `AzifaceSdk.CommonSessionParams<"match">` | type                                                                     | Required | Default     |
+| ----------------------------------------- | ------------------------------------------------------------------------ | -------- | ----------- |
+| `data`                                    | [`AzifaceSdk.MultipleSessionPathUrl`](#azifacesdkmultiplesessionpathurl) | ❌       | `undefined` |
 
-### `setTheme(options?: AzifaceSdk.Theme)`
+### `setTheme`
 
 This method must be used to **set** the **theme** of the Aziface SDK screen.
 
-| `AzifaceSdk.Theme` | type                                   | Required | Default     |
-| ------------------ | -------------------------------------- | -------- | ----------- |
-| `options`          | [`AzifaceSdk.Theme`](#azifacesdktheme) | ❌       | `undefined` |
+| Property  | type                                   | Required | Default     |
+| --------- | -------------------------------------- | -------- | ----------- |
+| `options` | [`AzifaceSdk.Theme`](#azifacesdktheme) | ❌       | `undefined` |
 
 <hr/>
 
@@ -255,6 +258,9 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 | ----------------------------------------------------------------------------------- | --- | ------- |
 | [`AzifaceSdk.Params`](#azifacesdkparams)                                            | ✅  | ✅      |
 | [`AzifaceSdk.Headers`](#azifacesdkheaders)                                          | ✅  | ✅      |
+| [`AzifaceSdk.CommonSessionParams`](#azifacesdkcommonsessionparams)                  | ✅  | ✅      |
+| [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl)                | ✅  | ✅      |
+| [`AzifaceSdk.MultipleSessionPathUrl`](#azifacesdkmultiplesessionpathurl)            | ✅  | ✅      |
 | [`AzifaceSdk.Theme`](#azifacesdktheme)                                              | ✅  | ✅      |
 | [`AzifaceSdk.ButtonLocation`](#azifacesdkbuttonlocation)                            | ✅  | ✅      |
 | [`AzifaceSdk.StatusBarColor`](#azifacesdkstatusbarcolor-ios-only)                   | ✅  | ❌      |
@@ -282,6 +288,38 @@ Here you can add your headers to send request when some method is called. Only v
 | `AzifaceSdk.Headers` | type                            | Required | Default     |
 | -------------------- | ------------------------------- | -------- | ----------- |
 | `[key: string]`      | `string`, `null` or `undefined` | ❌       | `undefined` |
+
+### `AzifaceSdk.CommonSessionParams<T>`
+
+This type is related to the data that will be sent by the SDK methods. It accepts any key, but has a property called `pathUrl`. The `pathUrl` is an object of URLs that will be passed in requests instead of the SDK's default URLs.
+
+| `AzifaceSdk.CommonSessionParams<T>` | type                                                                                                                                             | Required | Default     |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
+| `pathUrl`                           | [`AzifaceSdk.CommonSessionPathUrl`](#azifacesdkcommonsessionpathurl) or [`AzifaceSdk.MultipleSessionPathUrl`](#azifacesdkmultiplesessionpathurl) | ❌       | `undefined` |
+| `[key: string]`                     | `any`                                                                                                                                            | ❌       | `undefined` |
+
+#### `AzifaceSdk.CommonSessionPathUrl`
+
+This type is only for SDK methods that perform a single request. It contains the `base` property, where you can specify the URL you want the request to be made natively. If not specified, the default URL will be used for the request.
+
+If the **URL is different** from the default and requires passing the `processId` parameter, you can enter the URL in this style `/my-url/:my-id/my-final-url`. Internally, our native module will identify the slug `/:my-id` and replace it with the `processId` in the parameters.
+
+| `AzifaceSdk.CommonSessionPathUrl` | type     | Required | Default     |
+| --------------------------------- | -------- | -------- | ----------- |
+| `base`                            | `string` | ❌       | `undefined` |
+
+#### `AzifaceSdk.MultipleSessionPathUrl`
+
+This type is only for SDK methods that perform a single request. It contains the `base` and `match` properties, where you can specify the URL you want the request to be made natively. If not specified, the default URL will be used for the request.
+
+If the **URL is different** from the default and requires passing the `processId` parameter, you can enter the URL in this style `/my-url/:my-id/my-final-url`. Internally, our native module will identify the slug `/:my-id` and replace it with the `processId` in the parameters.
+
+This type is specify of the `photoMatch` method.
+
+| `AzifaceSdk.MultipleSessionPathUrl` | type     | Required | Default     |
+| ----------------------------------- | -------- | -------- | ----------- |
+| `base`                              | `string` | ❌       | `undefined` |
+| `match`                             | `string` | ❌       | `undefined` |
 
 ### `AzifaceSdk.Theme`
 

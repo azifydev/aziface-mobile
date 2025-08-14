@@ -746,7 +746,8 @@ export declare namespace AzifaceSdk {
     productionKey: string;
 
     /**
-     * @description Option to select production or developement mode for initialize Aziface SDK.
+     * @description Option to select production or development mode for initialize
+     * Aziface SDK.
      */
     isDeveloperMode: boolean;
 
@@ -754,6 +755,52 @@ export declare namespace AzifaceSdk {
      * @description The id of the user process.
      */
     processId: string;
+  }
+
+  /**
+   * @interface SessionParams
+   *
+   * @description This is the parameters for the session.
+   */
+  interface CommonSessionParams<T = 'base'> {
+    /**
+     * @description The object path URL for the session.
+     *
+     * @default undefined
+     */
+    pathUrl?: T extends 'base' ? CommonSessionPathUrl : MultipleSessionPathUrl;
+
+    [key: string]: any;
+  }
+
+  /**
+   * @interface CommonSessionPathUrl
+   *
+   * @description This is common target properties of the path session.
+   */
+  interface CommonSessionPathUrl {
+    /**
+     * @description The base URL used for the session.
+     *
+     * @default undefined
+     */
+    base?: string;
+  }
+
+  /**
+   * @interface MultipleSessionPathUrl
+   *
+   * @description This is target properties of the session with multiple path
+   * urls.
+   */
+  interface MultipleSessionPathUrl extends CommonSessionPathUrl {
+    /**
+     * @description The match URL used for the session with multiple
+     * verifications.
+     *
+     * @default undefined
+     */
+    match?: string;
   }
 
   /**

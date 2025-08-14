@@ -14,17 +14,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
+import com.azify.utils.DynamicRoute;
 import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
 public class EnrollmentProcessor extends Processor implements FaceTecFaceScanProcessor {
-  private boolean success = false;
   private final String principalKey = "enrollMessage";
   private final AzifaceMobileSdkModule faceTecModule;
   private final ReadableMap data;
   private final ThemeUtils FaceThemeUtils = new ThemeUtils();
+  private boolean success = false;
 
   public EnrollmentProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
       ReadableMap data) {
@@ -46,7 +47,9 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
           "AziFaceTecDifferentStatus");
       return;
     }
-    String route = "/Process/" + Config.ProcessId + "/Enrollment3d";
+
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrlEnrollment3d("base");
 
     JSONObject parameters = new JSONObject();
     try {
@@ -65,7 +68,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
     }
 
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + route)
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
