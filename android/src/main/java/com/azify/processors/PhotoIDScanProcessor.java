@@ -24,6 +24,8 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+import com.azify.utils.DynamicRoute;
+
 public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProcessor {
   private final ReadableMap data;
   private final AzifaceMobileSdkModule aziFaceModule;
@@ -131,10 +133,11 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
 
       ArrayList<String> frontImagesCompressedBase64 = idScanResult.getFrontImagesCompressedBase64();
       ArrayList<String> backImagesCompressedBase64 = idScanResult.getBackImagesCompressedBase64();
-      if (frontImagesCompressedBase64.size() > 0) {
+      
+      if (!frontImagesCompressedBase64.isEmpty()) {
         parameters.put("idScanFrontImage", frontImagesCompressedBase64.get(0));
       }
-      if (backImagesCompressedBase64.size() > 0) {
+      if (!backImagesCompressedBase64.isEmpty()) {
         parameters.put("idScanBackImage", backImagesCompressedBase64.get(0));
       }
     } catch (JSONException e) {
@@ -144,8 +147,11 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
           "JSONError");
     }
 
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrlIdScanOnly("base");
+
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + "/idscan-only")
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),

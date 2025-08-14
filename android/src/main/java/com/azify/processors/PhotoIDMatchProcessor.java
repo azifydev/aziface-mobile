@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.azify.utils.DynamicRoute;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
@@ -134,9 +135,12 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-    String route = "/Process/" + Config.ProcessId + "/Enrollment3d";
+
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrlEnrollment3d("base");
+
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + route)
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),
@@ -211,10 +215,10 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
 
       ArrayList<String> frontImagesCompressedBase64 = idScanResult.getFrontImagesCompressedBase64();
       ArrayList<String> backImagesCompressedBase64 = idScanResult.getBackImagesCompressedBase64();
-      if (frontImagesCompressedBase64.size() > 0) {
+      if (!frontImagesCompressedBase64.isEmpty()) {
         parameters.put("idScanFrontImage", frontImagesCompressedBase64.get(0));
       }
-      if (backImagesCompressedBase64.size() > 0) {
+      if (!backImagesCompressedBase64.isEmpty()) {
         parameters.put("idScanBackImage", backImagesCompressedBase64.get(0));
       }
     } catch (JSONException e) {
@@ -223,9 +227,12 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
           "JSONError");
     }
-    String route = "/Process/" + Config.ProcessId + "/Match3d2dIdScan";
+
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrlMatch3d2dIdScan("match");
+
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + route)
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),

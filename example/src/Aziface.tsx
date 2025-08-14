@@ -24,15 +24,16 @@ import {
   getUserAgent,
   syncUniqueId,
 } from 'react-native-device-info';
-import { Buffer } from 'buffer';
 import md5 from 'md5';
 import { useBiometricConfigs } from './services/assemble.service';
 import { styles } from './Style';
 import Config from 'react-native-config';
 import { useState } from 'react';
+import { useUser } from './hooks/useuser.hook';
 
 export default function Aziface() {
   const { data: configs } = useBiometricConfigs();
+  const { token } = useUser();
   const [processId, setProcessId] = useState('');
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -43,12 +44,9 @@ export default function Aziface() {
     const isAndroid = Platform.OS === 'android';
     const userAgent = await getUserAgent?.();
     const xForwardedFor = getIpAddressSync?.();
-    // Replace with dynamic user Client ID and Client Secret
-    const credentials = `${Config.X_CLIENT_ID}:${Config.X_CLIENT_SECRET}`;
-    const encoded = Buffer.from(credentials, 'utf8').toString('base64');
-
     const headers = {
-      'Authorization': `Basic ${encoded}`,
+      'Authorization': `${token}`,
+      'x-token-bearer': `${token}`,
       'x-api-key': Config.X_API_KEY,
       'clientInfo': clientInfo,
       'contentType': 'application/json',

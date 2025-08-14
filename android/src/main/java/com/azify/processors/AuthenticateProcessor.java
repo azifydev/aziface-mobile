@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import com.azify.utils.DynamicRoute;
 import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
@@ -60,10 +61,12 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
-    String route = "/Process/" + Config.ProcessId + "/Match3d3d";
+
+    DynamicRoute dynamicRoute = new DynamicRoute();
+    String pathUrl = dynamicRoute.getPathUrlMatch3d3d("base");
 
     okhttp3.Request request = new okhttp3.Request.Builder()
-        .url(Config.BaseURL + route)
+        .url(Config.BaseURL + pathUrl)
         .headers(Config.getHeaders("POST"))
         .post(new ProgressRequestBody(
             RequestBody.create(MediaType.parse("application/json; charset=utf-8"), parameters.toString()),

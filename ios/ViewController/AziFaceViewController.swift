@@ -6,10 +6,10 @@
 //  Copyright © 2024 Azify. All rights reserved.
 //
 
-import Foundation
-import UIKit
 import FaceTecSDK
+import Foundation
 import LocalAuthentication
+import UIKit
 
 class AziFaceViewController: UIViewController, URLSessionDelegate {
   var isSuccess: Bool! = false
@@ -135,6 +135,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         }
       }
     })
+
     task.resume()
   }
 }
