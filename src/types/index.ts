@@ -104,18 +104,24 @@ export interface DefaultMessage {
    *
    * @default "Liveness Confirmed"
    *
-   * @description For Enrollment flow.
+   * @description For Enrollment and Photo ID Match flow.
    *
    * @default "Face Scanned\n3D Liveness Proven"
    *
    * @description For Authenticate flow.
    *
    * @default "Authenticated"
+   *
+   * @description For Photo ID Scan.
+   *
+   * @default undefined
    */
   successMessage?: string;
 
   /**
    * @description Success message when the process is completed successfully.
+   * This message is displayed only in Enrollment, Authenticate and Liveness
+   * flow.
    *
    * @default "Still Uploading..."
    *
@@ -997,7 +1003,7 @@ export interface Theme {
    *
    * @platform iOS
    */
-  defaultStatusBarColor?: StatusBarColor;
+  statusBarColor?: StatusBarColor;
 
   /**
    * @description An object with all messages to will be used the during the
