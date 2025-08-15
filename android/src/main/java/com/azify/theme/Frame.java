@@ -20,7 +20,7 @@ public class Frame extends CommonStyle {
   }
 
   public int getCornerRadius() {
-    return faceTec.getBorderRadius(this.theme, "cornerRadius");
+    return this.faceTec.getBorderRadius(this.theme, "cornerRadius");
   }
 
   public int getBorderColor() {
