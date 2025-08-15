@@ -33,6 +33,6 @@ public class ResultScreen extends CommonStyle {
   }
 
   public ResultAnimation getResultAnimation() {
-    return resultAnimation;
+    return this.resultAnimation;
   }
 }
