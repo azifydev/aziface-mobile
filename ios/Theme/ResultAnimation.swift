@@ -6,11 +6,11 @@
 //
 
 public class ResultAnimation: CommonViewStyle {
-  override init(theme: NSDictionary?, key: String) {
-    super.init(theme: theme, key: key)
+  init(theme: NSDictionary?) {
+    super.init(theme: theme, key: "resultAnimation")
   }
   
   override public func getBackgroundColor() -> UIColor {
-    return self.getBackgroundColor(defaultColor: "026ff4")
+    return self.getBackgroundColor(defaultColor: "#026ff4")
   }
 }
