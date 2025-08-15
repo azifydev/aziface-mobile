@@ -1,12 +1,8 @@
 package com.azify.theme;
 
-import android.util.Log;
-
 import com.azify.utils.Theme;
 
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class Message {
   private final Theme theme;
@@ -23,7 +19,6 @@ public class Message {
 
       return theme.getString(key);
     } catch (Exception error) {
-      Log.d("Aziface", Objects.requireNonNull(error.getMessage()));
       return defaultMessage;
     }
   }

@@ -133,7 +133,7 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
 
       ArrayList<String> frontImagesCompressedBase64 = idScanResult.getFrontImagesCompressedBase64();
       ArrayList<String> backImagesCompressedBase64 = idScanResult.getBackImagesCompressedBase64();
-      
+
       if (!frontImagesCompressedBase64.isEmpty()) {
         parameters.put("idScanFrontImage", frontImagesCompressedBase64.get(0));
       }
