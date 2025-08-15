@@ -18,6 +18,8 @@ public class Theme {
   private let guidance: Guidance
   private let oval: Oval
   private let feedback: Feedback
+  private let resultScreen: ResultScreen
+  private let idScan: IdScan
   public static var Style: NSDictionary?
 
   init() {
@@ -29,6 +31,8 @@ public class Theme {
     self.guidance = Guidance()
     self.oval = Oval()
     self.feedback = Feedback()
+    self.resultScreen = ResultScreen()
+    self.idScan = IdScan()
   }
 
   @available(iOS 8.2, *)
@@ -124,5 +128,13 @@ public class Theme {
 
   public func getFeedback() -> Feedback {
     return self.feedback
+  }
+  
+  public func getResultScreen() -> ResultScreen {
+    return self.resultScreen
+  }
+  
+  public func getIdScan() -> IdScan {
+    return self.idScan
   }
 }
