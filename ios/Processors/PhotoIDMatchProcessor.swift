@@ -13,81 +13,75 @@ import UIKit
 class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
                              FaceTecIDScanProcessorDelegate, URLSessionTaskDelegate
 {
-  var success = false
-  var faceScanWasSuccessful = false
-  var latestExternalDatabaseRefID: String!
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var faceScanResultCallback: FaceTecFaceScanResultCallback!
-  var idScanResultCallback: FaceTecIDScanResultCallback!
+  public var success = false
+  public var faceScanWasSuccessful = false
+  public var latestExternalDatabaseRefID: String!
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var viewController: AziFaceViewController!
+  public var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public var idScanResultCallback: FaceTecIDScanResultCallback!
   
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
-    self.latestExternalDatabaseRefID = self.fromViewController.getLatestExternalDatabaseRefID()
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
+    self.latestExternalDatabaseRefID = self.viewController.getLatestExternalDatabaseRefID()
     self.data = data
     super.init()
     
+    let theme: Theme = AziFaceViewController.Style
+    
     FaceTecCustomization.setIDScanUploadMessageOverrides(
-      frontSideUploadStarted: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "frontSideUploadStarted",
-        defaultMessage: "Uploading\nEncrypted\nID Scan"),  // Upload of ID front-side has started.
-      frontSideStillUploading: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "frontSideStillUploading",
-        defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID front-side is still uploading to Server after an extended period of time.
-      frontSideUploadCompleteAwaitingResponse: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "frontSideUploadCompleteAwaitingResponse",
-        defaultMessage: "Upload Complete"),  // Upload of ID front-side to the Server is complete.
-      frontSideUploadCompleteAwaitingProcessing: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "frontSideUploadCompleteAwaitingProcessing",
-        defaultMessage: "Processing\nID Scan"),  // Upload of ID front-side is complete and we are waiting for the Server to finish processing and respond.
-      backSideUploadStarted: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "backSideUploadStarted",
-        defaultMessage: "Uploading\nEncrypted\nBack of ID"),  // Upload of ID back-side has started.
-      backSideStillUploading: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "backSideStillUploading",
-        defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID back-side is still uploading to Server after an extended period of time.
-      backSideUploadCompleteAwaitingResponse: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "backSideUploadCompleteAwaitingResponse",
-        defaultMessage: "Upload Complete"),  // Upload of ID back-side to Server is complete.
-      backSideUploadCompleteAwaitingProcessing: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "backSideUploadCompleteAwaitingProcessing",
+      frontSideUploadStarted: theme.getPhotoIDMatchMessage(
+        "frontSide", key: "uploadStarted", defaultMessage: "Uploading\nEncrypted\nID Scan"),  // Upload of ID front-side has started.
+      frontSideStillUploading: theme.getPhotoIDMatchMessage(
+        "frontSide", key: "stillUploading", defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID front-side is still uploading to Server after an extended period of time.
+      frontSideUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+        "frontSide", key: "uploadCompleteAwaitingResponse", defaultMessage: "Upload Complete"),  // Upload of ID front-side to the Server is complete.
+      frontSideUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+        "frontSide", key: "uploadCompleteAwaitingProcessing", defaultMessage: "Processing\nID Scan"),  // Upload of ID front-side is complete and we are waiting for the Server to finish processing and respond.
+      backSideUploadStarted: theme.getPhotoIDMatchMessage(
+        "backSide", key: "uploadStarted", defaultMessage: "Uploading\nEncrypted\nBack of ID"),  // Upload of ID back-side has started.
+      backSideStillUploading: theme.getPhotoIDMatchMessage(
+        "backSide", key: "stillUploading", defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID back-side is still uploading to Server after an extended period of time.
+      backSideUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+        "backSide", key: "uploadCompleteAwaitingResponse", defaultMessage: "Upload Complete"),  // Upload of ID back-side to Server is complete.
+      backSideUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+        "backSide", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nBack of ID"),  // Upload of ID back-side is complete and we are waiting for the Server to finish processing and respond.
-      userConfirmedInfoUploadStarted: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "userConfirmedInfoUploadStarted",
-        defaultMessage: "Uploading\nYour Confirmed Info"),  // Upload of User Confirmed Info has started.
-      userConfirmedInfoStillUploading: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "userConfirmedInfoStillUploading",
+      userConfirmedInfoUploadStarted: theme.getPhotoIDMatchMessage(
+        "userConfirmedInfo", key: "uploadStarted", defaultMessage: "Uploading\nYour Confirmed Info"),  // Upload of User Confirmed Info has started.
+      userConfirmedInfoStillUploading: theme.getPhotoIDMatchMessage(
+        "userConfirmedInfo", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of User Confirmed Info is still uploading to Server after an extended period of time.
-      userConfirmedInfoUploadCompleteAwaitingResponse: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "userConfirmedInfoUploadCompleteAwaitingResponse",
+      userConfirmedInfoUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+        "userConfirmedInfo", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of User Confirmed Info to the Server is complete.
-      userConfirmedInfoUploadCompleteAwaitingProcessing: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "userConfirmedInfoUploadCompleteAwaitingProcessing",
+      userConfirmedInfoUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+        "userConfirmedInfo", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing"),  // Upload of User Confirmed Info is complete and we are waiting for the Server to finish processing and respond.
-      nfcUploadStarted: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "nfcUploadStarted",
+      nfcUploadStarted: theme.getPhotoIDMatchMessage(
+        "nfc", key: "uploadStarted",
         defaultMessage: "Uploading Encrypted\nNFC Details"),  // Upload of NFC Details has started.
-      nfcStillUploading: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "nfcStillUploading",
+      nfcStillUploading: theme.getPhotoIDMatchMessage(
+        "nfc", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of NFC Details is still uploading to Server after an extended period of time.
-      nfcUploadCompleteAwaitingResponse: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "nfcUploadCompleteAwaitingResponse",
+      nfcUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+        "nfc", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of NFC Details to the Server is complete.
-      nfcUploadCompleteAwaitingProcessing: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "nfcUploadCompleteAwaitingProcessing",
+      nfcUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+        "nfc", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nNFC Details"),  // Upload of NFC Details is complete and we are waiting for the Server to finish processing and respond.
-      skippedNFCUploadStarted: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "skippedNFCUploadStarted",
+      skippedNFCUploadStarted: theme.getPhotoIDMatchMessage(
+        "skippedNFC", key: "uploadStarted",
         defaultMessage: "Uploading Encrypted\nID Details"),  // Upload of ID Details has started.
-      skippedNFCStillUploading: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "skippedNFCStillUploading",
+      skippedNFCStillUploading: theme.getPhotoIDMatchMessage(
+        "skippedNFC", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID Details is still uploading to Server after an extended period of time.
-      skippedNFCUploadCompleteAwaitingResponse: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "skippedNFCUploadCompleteAwaitingResponse",
+      skippedNFCUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+        "skippedNFC", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of ID Details to the Server is complete.
-      skippedNFCUploadCompleteAwaitingProcessing: self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "skippedNFCUploadCompleteAwaitingProcessing",
+      skippedNFCUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+        "skippedNFC", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nID Details")  // Upload of ID Details is complete and we are waiting for the Server to finish processing and respond.
     )
     
@@ -95,15 +89,12 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     
     let idScanViewController = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, idScanProcessorDelegate: self, sessionToken: sessionToken)
-    
-    FaceTecUtilities.getTopMostViewController()?.present(
-      idScanViewController, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
-    fromViewController.setLatestSessionResult(sessionResult: sessionResult)
+    self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     
     self.faceScanResultCallback = faceScanResultCallback
     
@@ -125,7 +116,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
       parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
     }
-    parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+    parameters["externalDatabaseRefID"] = self.viewController.getLatestExternalDatabaseRefID()
     if let data = self.data {
       parameters["data"] = data
     }
@@ -187,7 +178,8 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
           
           if wasProcessed == 1 {
-            let message = AziFaceViewController.Style.getPhotoIDMatchMessage("successMessage", defaultMessage: "Liveness Face Scanned\n3D Liveness Proven")
+            let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
+              "successMessage", defaultMessage: "Liveness Face Scanned\n3D Liveness Proven")
             FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
@@ -210,7 +202,8 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = AziFaceViewController.Style.getPhotoIDMatchMessage("uploadMessage", defaultMessage: "Still Uploading...")
+      let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
+        "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }
@@ -219,7 +212,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   func processIDScanWhileFaceTecSDKWaits(
     idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback
   ) {
-    fromViewController.setLatestIDScanResult(idScanResult: idScanResult)
+    self.viewController.setLatestIDScanResult(idScanResult: idScanResult)
     
     self.idScanResultCallback = idScanResultCallback
     
@@ -362,7 +355,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   }
   
   func onFaceTecSDKCompletelyDone() {
-    self.fromViewController.onComplete()
+    self.viewController.onComplete()
   }
   
   func isSuccess() -> Bool {

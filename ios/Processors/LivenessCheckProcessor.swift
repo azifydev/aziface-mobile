@@ -13,14 +13,14 @@ import UIKit
 class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
                               URLSessionTaskDelegate
 {
-  var success = false
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public var success = false
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var viewController: AziFaceViewController!
+  public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
     self.data = data
     super.init()
     
@@ -28,15 +28,12 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
     
     let livenessCheckViewController = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, sessionToken: sessionToken)
-    
-    FaceTecUtilities.getTopMostViewController()?.present(
-      livenessCheckViewController, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
-    fromViewController.setLatestSessionResult(sessionResult: sessionResult)
+    self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     
     self.faceScanResultCallback = faceScanResultCallback
     
@@ -146,7 +143,7 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
   }
   
   func onFaceTecSDKCompletelyDone() {
-    self.fromViewController.onComplete()
+    self.viewController.onComplete()
   }
   
   func isSuccess() -> Bool {

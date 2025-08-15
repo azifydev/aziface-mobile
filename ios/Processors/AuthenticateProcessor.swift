@@ -13,14 +13,14 @@ import UIKit
 class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
                              URLSessionTaskDelegate
 {
-  var success = false
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public var success = false
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var viewController: AziFaceViewController!
+  public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
     self.data = data
     super.init()
     
@@ -28,15 +28,12 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     
     let authenticateViewController = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, sessionToken: sessionToken)
-    
-    FaceTecUtilities.getTopMostViewController()?.present(
-      authenticateViewController, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
-    fromViewController.setLatestSessionResult(sessionResult: sessionResult)
+    self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     self.faceScanResultCallback = faceScanResultCallback
     
     // validate session result
@@ -58,7 +55,7 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
       parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
     }
-    parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+    parameters["externalDatabaseRefID"] = self.viewController.getLatestExternalDatabaseRefID()
     if let data = self.data {
       parameters["data"] = data
     }
@@ -156,7 +153,7 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   }
   
   func onFaceTecSDKCompletelyDone() {
-    self.fromViewController.onComplete()
+    self.viewController.onComplete()
   }
   
   func isSuccess() -> Bool {

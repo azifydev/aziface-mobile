@@ -13,14 +13,14 @@ import UIKit
 class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
                             URLSessionTaskDelegate
 {
-  var success = false
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var idScanResultCallback: FaceTecIDScanResultCallback!
+  public var success = false
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var viewController: AziFaceViewController!
+  public var idScanResultCallback: FaceTecIDScanResultCallback!
   
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
     self.data = data
     super.init()
     
@@ -91,16 +91,12 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
     
     let idScanViewController = FaceTec.sdk.createSessionVC(
       idScanProcessorDelegate: self, sessionToken: sessionToken)
-    
-    FaceTecUtilities.getTopMostViewController()?.present(
-      idScanViewController, animated: true, completion: nil)
   }
   
   func processIDScanWhileFaceTecSDKWaits(
     idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback
   ) {
-    fromViewController.setLatestIDScanResult(idScanResult: idScanResult)
-    
+    self.viewController.setLatestIDScanResult(idScanResult: idScanResult)
     self.idScanResultCallback = idScanResultCallback
     
     if idScanResult.status != FaceTecIDScanStatus.success {
@@ -243,7 +239,7 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
   }
   
   func onFaceTecSDKCompletelyDone() {
-    self.fromViewController.onComplete()
+    self.viewController.onComplete()
   }
   
   func isSuccess() -> Bool {

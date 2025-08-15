@@ -16,25 +16,23 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
   public var success = false
   public var data: NSDictionary!
   public var latestNetworkRequest: URLSessionTask!
-  public var fromViewController: AziFaceViewController!
+  public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
     self.data = data
     super.init()
     print("EnrollmentProcessor initialized.")
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
     let enrollmentViewController = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, sessionToken: sessionToken)
-    FaceTecUtilities.getTopMostViewController()?.present(
-      enrollmentViewController, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
-    fromViewController.setLatestSessionResult(sessionResult: sessionResult)
+    self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     self.faceScanResultCallback = faceScanResultCallback
     
     if sessionResult.status != .sessionCompletedSuccessfully {
@@ -51,7 +49,7 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
     if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
       parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
     }
-    parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+    parameters["externalDatabaseRefID"] = self.viewController.getLatestExternalDatabaseRefID()
     if let data = self.data {
       parameters["data"] = data
     }
@@ -153,7 +151,7 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
   }
   
   func onFaceTecSDKCompletelyDone() {
-    fromViewController.onComplete()
+    self.viewController.onComplete()
   }
   
   func isSuccess() -> Bool {
