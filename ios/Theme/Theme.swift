@@ -80,6 +80,10 @@ public class Theme {
   public func getEnrollmentMessage(_ key: String, defaultMessage: String) -> String {
     return self.message.getMessage("enrollMessage", key: key, defaultMessage: defaultMessage)
   }
+  
+  public func getLivenessMessage(_ key: String, defaultMessage: String) -> String {
+    return self.message.getMessage("livenessMessage", key: key, defaultMessage: defaultMessage)
+  }
 
   public func getPhotoIDScanMessage(_ key: String, defaultMessage: String) -> String {
     return self.message.getMessage("scanMessage", key: key, defaultMessage: defaultMessage)
