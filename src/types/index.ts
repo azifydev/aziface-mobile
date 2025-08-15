@@ -30,19 +30,21 @@ export type StatusBarColor = 'DARK_CONTENT' | 'DEFAULT' | 'LIGHT_CONTENT';
  *
  * @description Defines the drawn in the layer's coordinate space with axis X
  * and Y.
+ *
+ * @platform iOS
  */
 export interface Point {
   /**
    * @description The X coordinate of the point.
    *
-   * @default undefined
+   * @default 0
    */
   x?: number;
 
   /**
    * @description The Y coordinate of the point.
    *
-   * @default undefined
+   * @default 0
    */
   y?: number;
 }
@@ -51,12 +53,14 @@ export interface Point {
  * @interface FeedbackBackgroundColor
  *
  * @description This type must be used to set the theme of the feedback box.
+ *
+ * @platform iOS
  */
 export interface FeedbackBackgroundColor {
   /**
    * @description An array of colors defining the color of each gradient stop.
    *
-   * @default undefined
+   * @default ['#026ff4', '#026ff4']
    */
   colors?: string[];
 
@@ -64,7 +68,7 @@ export interface FeedbackBackgroundColor {
    * @description It's accepts only two values between 0 and 1 that defining
    * the location of each gradient stop.
    *
-   * @default undefined
+   * @default [0, 1]
    */
   locations?: [number, number];
 
@@ -72,7 +76,7 @@ export interface FeedbackBackgroundColor {
    * @description The start point of the gradient when drawn in the layer’s
    * coordinate space.
    *
-   * @default undefined
+   * @default { x: 0, y: 0 }
    */
   startPoint?: Point;
 
@@ -80,7 +84,7 @@ export interface FeedbackBackgroundColor {
    * @description The end point of the gradient when drawn in the layer’s
    * coordinate space.
    *
-   * @default undefined
+   * @default { x: 1, y: 0 }
    */
   endPoint?: Point;
 }
@@ -744,24 +748,18 @@ export interface ThemeGuidance {
   /**
    * @description Represents the background color style of the guidance view.
    * The guidance view is above the frame view and it's showed to before
-   * check face or scan ID of the user.
+   * check face or scan ID of the user. In Android you must provide a string
+   * color, but in iOS you must provide an array of colors.
+   *
+   * @description Default value in **Android** is:
    *
    * @default '#ffffff'
    *
-   * @platform Android
-   */
-  backgroundColor?: string;
-
-  /**
-   * @description Represents the background color style of the guidance view.
-   * The guidance view is above the frame view and it's showed to before
-   * check face or scan ID of the user.
+   * @description Default value in **iOS** is:
    *
-   * @default undefined
-   *
-   * @platform iOS
+   * @default ['#ffffff', '#ffffff']
    */
-  backgroundColors?: string[];
+  backgroundColor?: string | string[];
 
   /**
    * @description Represents the foreground color style of the guidance text.
@@ -794,23 +792,18 @@ export interface ThemeGuidance {
 export interface ThemeResultScreen {
   /**
    * @description Represents the background color style of the feedback view
-   * that's shown on the finish to check face or scan ID.
+   * that's shown on the finish to check face or scan ID. In Android you must
+   * provide a string color, but in iOS you must provide an array of colors.
+   *
+   * @description Default value in **Android** is:
    *
    * @default '#ffffff'
    *
-   * @platform Android
-   */
-  backgroundColor?: string;
-
-  /**
-   * @description Represents the background color style of the feedback view
-   * that's shown on the finish to check face or scan ID.
+   * @description Default value in **iOS** is:
    *
-   * @default undefined
-   *
-   * @platform iOS
+   * @default ['#ffffff', '#ffffff']
    */
-  backgroundColors?: string[];
+  backgroundColor?: string | string[];
 
   /**
    * @description Represents the foreground color style of the result screen
@@ -916,23 +909,18 @@ export interface ThemeIdScanReviewScreen {
 export interface ThemeIdScanSelectionScreen {
   /**
    * @description Represents the background color style of the ID scan
-   * selection view.
+   * selection view. In Android you must provide a string color, but in iOS you
+   * must provide an array of colors.
+   *
+   * @description Default value in **Android** is:
    *
    * @default '#ffffff'
    *
-   * @platform Android
-   */
-  backgroundColor?: string;
-
-  /**
-   * @description Represents the background color style of the ID scan
-   * selection view.
+   * @description Default value in **iOS** is:
    *
-   * @default undefined
-   *
-   * @platform iOS
+   * @default ['#ffffff', '#ffffff']
    */
-  backgroundColors?: string[];
+  backgroundColor?: string | string[];
 
   /**
    * @description Represents the color style of the ID scan selection text.
