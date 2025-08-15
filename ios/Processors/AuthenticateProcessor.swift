@@ -120,8 +120,8 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
           
           if wasProcessed == 1 {
-            FaceTecCustomization.setOverrideResultScreenSuccessMessage(
-              "3D Liveness Proven\nFace Verified")
+            let message = AziFaceViewController.Style.getAuthenticateMessage("successMessage", defaultMessage: "Authenticated")
+            FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
@@ -141,8 +141,7 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "uploadMessageIos", defaultMessage: "Still Uploading...")
+      let message = AziFaceViewController.Style.getAuthenticateMessage("uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }

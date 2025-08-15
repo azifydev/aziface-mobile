@@ -187,8 +187,8 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
           
           if wasProcessed == 1 {
-            FaceTecCustomization.setOverrideResultScreenSuccessMessage(
-              "Face Scanned\n3D Liveness Proven")
+            let message = AziFaceViewController.Style.getPhotoIDMatchMessage("successMessage", defaultMessage: "Liveness Face Scanned\n3D Liveness Proven")
+            FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
@@ -210,8 +210,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "uploadMessageIos", defaultMessage: "Still Uploading...")
+      let message = AziFaceViewController.Style.getPhotoIDMatchMessage("uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }

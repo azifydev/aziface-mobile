@@ -114,8 +114,7 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
         }
         
         if wasProcessed == true {
-          let message = self.AziThemeUtils.handleMessage(
-            self.principalKey, child: "successMessage", defaultMessage: "Liveness\nConfirmed")
+          let message = AziFaceViewController.Style.getLivenessMessage("successMessage", defaultMessage: "Liveness Confirmed")
           FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
           
           self.success = faceScanResultCallback.onFaceScanGoToNextStep(
@@ -132,8 +131,7 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "uploadMessageIos", defaultMessage: "Still Uploading...")
+      let message = AziFaceViewController.Style.getLivenessMessage("uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }

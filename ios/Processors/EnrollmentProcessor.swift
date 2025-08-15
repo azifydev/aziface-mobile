@@ -13,11 +13,11 @@ import UIKit
 class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
                            URLSessionTaskDelegate
 {
-  var success = false
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public var success = false
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var fromViewController: AziFaceViewController!
+  public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController
@@ -113,8 +113,8 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
           }
           
           if wasProcessed == 1 {
-            FaceTecCustomization.setOverrideResultScreenSuccessMessage(
-              "Face Scanned\n3D Liveness Proven")
+            let message = AziFaceViewController.Style.getEnrollmentMessage("successMessage", defaultMessage: "Face Scanned\n3D Liveness Proven")
+            FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
@@ -136,8 +136,8 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
     // show loading message
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       guard self.latestNetworkRequest.state != .completed else { return }
-      let message = self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "uploadMessageIos", defaultMessage: "Still Uploading...")
+      
+      let message = AziFaceViewController.Style.getEnrollmentMessage("uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage = NSMutableAttributedString(string: message)
       self.faceScanResultCallback.onFaceScanUploadMessageOverride(
         uploadMessageOverride: uploadMessage)
