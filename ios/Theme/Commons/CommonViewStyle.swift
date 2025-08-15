@@ -31,11 +31,11 @@ public class CommonViewStyle {
   }
   
   func getBackgroundColors() -> [UIColor] {
-    return self.linearGradient.getLinearGradient(self.theme, key: "backgroundColors")
+    return self.linearGradient.getLinearGradient(self.theme, key: "backgroundColor")
   }
   
-  func getGradientBackgroundColors() -> CAGradientLayer {
-    return self.linearGradient.getGradientLayer(self.theme, key: "backgroundColors")
+  func getGradientBackgroundColor() -> CAGradientLayer {
+    return self.linearGradient.getGradientLayer(self.theme, key: "backgroundColor")
   }
 
   func getForegroundColor() -> UIColor {
