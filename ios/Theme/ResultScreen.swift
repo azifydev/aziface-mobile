@@ -18,4 +18,20 @@ public class ResultScreen: CommonViewStyle {
     
     super.init(key: ResultScreen.KEY);
   }
+  
+  override public func getForegroundColor() -> UIColor {
+    return self.getForegroundColor(defaultColor: "#272937")
+  }
+  
+  public func getActivityIndicatorColor() -> UIColor {
+    return self.color.getColor(self.theme, key: "activityIndicatorColor", defaultColor: "#026ff4");
+  }
+  
+  public func getUploadProgressFillColor() -> UIColor {
+    return self.color.getColor(self.theme, key: "uploadProgressFillColor", defaultColor: "#026ff4");
+  }
+  
+  public func getResultAnimation() -> ResultAnimation {
+    return self.resultAnimation;
+  }
 }
