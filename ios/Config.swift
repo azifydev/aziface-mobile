@@ -134,7 +134,7 @@ public class Config {
     defaultCustomization.ovalCustomization.progressColor2 = theme.getOval().getSecondProgressColor()
     
     defaultCustomization.feedbackCustomization.backgroundColor = theme.getFeedback()
-      .getGradientBackgroundColor()
+      .getGradientBackgroundColors()
     defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
     
     defaultCustomization.cancelButtonCustomization.customImage = theme.getImage(
