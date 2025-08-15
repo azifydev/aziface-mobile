@@ -93,7 +93,7 @@ public class Config {
   }
   
   public static func retrieveConfigurationWizardCustomization() -> FaceTecCustomization {
-    let theme: Theme = AzifaceMobileSdk.theme
+    let theme: Theme = AziFaceViewController.Style
     
     let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
     

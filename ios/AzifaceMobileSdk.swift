@@ -13,21 +13,21 @@ import LocalAuthentication
 @objc(AzifaceMobileSdk)
 class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   public static var emitter: RCTEventEmitter!
-  public static var theme: Theme!
-  var AziFaceViewController: AziFaceViewController!
-  var isInitialized: Bool = false
+  public var controller: AziFaceViewController
+  public var isInitialized: Bool = false
 
   override init() {
+    self.controller = AziFaceViewController()
+    
     super.init()
+    
     AzifaceMobileSdk.emitter = self
-    AzifaceMobileSdk.theme = Theme()
   }
 
   @objc func initializeSdk(
     _ params: NSDictionary, headers: NSDictionary, callback: @escaping RCTResponseSenderBlock
   ) {
     DispatchQueue.main.async {
-      self.AziFaceViewController = aziface_mobile_sdk.AziFaceViewController()
       self.setTheme(Theme.Style)
 
       if params.count == 0 {
@@ -84,7 +84,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     commonParams.buildProcessorPathURL()
 
     if self.isInitialized {
-      self.AziFaceViewController.onLivenessCheck(data, resolve: resolve, reject: reject)
+      self.controller.onLivenessCheck(data, resolve: resolve, reject: reject)
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
@@ -98,7 +98,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     commonParams.buildProcessorPathURL()
 
     if self.isInitialized {
-      self.AziFaceViewController.onEnrollUser(data, resolve: resolve, reject: reject)
+      self.controller.onEnrollUser(data, resolve: resolve, reject: reject)
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
@@ -112,7 +112,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     commonParams.buildProcessorPathURL()
 
     if self.isInitialized {
-      self.AziFaceViewController.onAuthenticateUser(data, resolve: resolve, reject: reject)
+      self.controller.onAuthenticateUser(data, resolve: resolve, reject: reject)
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
@@ -126,7 +126,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     commonParams.buildProcessorPathURL()
 
     if self.isInitialized {
-      self.AziFaceViewController.onPhotoIDMatch(data, resolve: resolve, reject: reject)
+      self.controller.onPhotoIDMatch(data, resolve: resolve, reject: reject)
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
@@ -140,7 +140,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     commonParams.buildProcessorPathURL()
 
     if self.isInitialized {
-      self.AziFaceViewController.onPhotoIDScan(data, resolve: resolve, reject: reject)
+      self.controller.onPhotoIDScan(data, resolve: resolve, reject: reject)
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
