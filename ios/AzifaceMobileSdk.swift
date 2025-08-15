@@ -13,12 +13,14 @@ import LocalAuthentication
 @objc(AzifaceMobileSdk)
 class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   public static var emitter: RCTEventEmitter!
+  public static var theme: Theme!
   var AziFaceViewController: AziFaceViewController!
   var isInitialized: Bool = false
   
   override init() {
     super.init()
     AzifaceMobileSdk.emitter = self
+    AzifaceMobileSdk.theme = Theme()
   }
   
   @objc func initializeSdk(
@@ -26,7 +28,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   ) {
     DispatchQueue.main.async {
       self.AziFaceViewController = aziface_mobile_sdk.AziFaceViewController()
-      self.setTheme(Config.Theme)
+      self.setTheme(Theme.Style)
       
       if params.count == 0 {
         self.isInitialized = false
@@ -68,6 +70,10 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   
   @objc override func supportedEvents() -> [String]! {
     return ["onCloseModal"]
+  }
+  
+  @objc func setTheme(_ options: NSDictionary?) {
+    Theme.setAppTheme(options)
   }
   
   @objc func handleLivenessCheck(
@@ -138,9 +144,5 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
     } else {
       return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
     }
-  }
-  
-  @objc func setTheme(_ options: NSDictionary?) {
-    ThemeHelpers.setAppTheme(options)
   }
 }

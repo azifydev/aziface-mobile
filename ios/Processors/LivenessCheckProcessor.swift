@@ -18,8 +18,6 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
   var latestNetworkRequest: URLSessionTask!
   var fromViewController: AziFaceViewController!
   var faceScanResultCallback: FaceTecFaceScanResultCallback!
-  private let principalKey = "livenessMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController

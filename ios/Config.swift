@@ -18,8 +18,6 @@ public class Config {
   public static var ProductionKeyText: String!
   public static var ProcessorPathURL: [String: String]! = [:]
   public static var Headers: NSDictionary?
-  public static var Theme: NSDictionary?
-  private static let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   public static func setDevice(_ device: String) {
     Config.DeviceKeyIdentifier = device
@@ -47,10 +45,6 @@ public class Config {
   
   public static func setHeaders(_ headers: NSDictionary?) {
     Config.Headers = headers
-  }
-  
-  public static func setTheme(_ theme: NSDictionary?) {
-    Config.Theme = theme
   }
   
   public static func hasConfig() -> Bool {

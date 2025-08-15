@@ -18,8 +18,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   var latestNetworkRequest: URLSessionTask!
   var fromViewController: AziFaceViewController!
   var faceScanResultCallback: FaceTecFaceScanResultCallback!
-  private let principalKey = "authenticateMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController

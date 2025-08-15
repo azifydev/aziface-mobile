@@ -18,8 +18,6 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
   var latestNetworkRequest: URLSessionTask!
   var fromViewController: AziFaceViewController!
   var faceScanResultCallback: FaceTecFaceScanResultCallback!
-  private let principalKey = "enrollMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController

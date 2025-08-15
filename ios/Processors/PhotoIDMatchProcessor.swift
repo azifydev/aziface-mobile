@@ -21,8 +21,6 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   var fromViewController: AziFaceViewController!
   var faceScanResultCallback: FaceTecFaceScanResultCallback!
   var idScanResultCallback: FaceTecIDScanResultCallback!
-  private let principalKey = "photoIdMatchMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController

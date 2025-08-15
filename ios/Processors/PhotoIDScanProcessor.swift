@@ -18,8 +18,6 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
   var latestNetworkRequest: URLSessionTask!
   var fromViewController: AziFaceViewController!
   var idScanResultCallback: FaceTecIDScanResultCallback!
-  private let principalKey = "photoIdScanMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
   
   init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
     self.fromViewController = fromViewController
