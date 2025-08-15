@@ -5,7 +5,7 @@
 //  Created by Daniel Sansão Araldi on 15/08/25.
 //
 
-public class Frame: CommonStyle {
+public class Frame: CommonViewStyle {
   private static let KEY: String = "frame"
   private let theme: NSDictionary?
   private let color: Color

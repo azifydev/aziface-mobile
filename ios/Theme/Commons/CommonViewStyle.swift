@@ -5,7 +5,7 @@
 //  Created by Daniel Sansão Araldi on 15/08/25.
 //
 
-public class CommonStyle {
+public class CommonViewStyle {
   private let theme: NSDictionary?
   private let color: Color
   private let linearGradient: LinearGradient

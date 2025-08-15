@@ -5,7 +5,7 @@
 //  Created by Daniel Sansão Araldi on 15/08/25.
 //
 
-public class Feedback: CommonStyle {
+public class Feedback: CommonViewStyle {
   private static let KEY: String = "feedback"
   private let theme: NSDictionary?
   private let color: Color

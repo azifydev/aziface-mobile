@@ -5,7 +5,7 @@
 //  Created by Daniel Sansão Araldi on 15/08/25.
 //
 
-public class Guidance: CommonStyle {
+public class Guidance: CommonViewStyle {
   private static let KEY: String = "guidance"
   private let button: Button
   private let retryScreen: RetryScreen
