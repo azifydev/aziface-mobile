@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Button {
+public class Button {
   private let theme: NSDictionary?
   private let color: Color
   
