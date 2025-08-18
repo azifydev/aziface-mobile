@@ -72,15 +72,15 @@ export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
  * @return {Promise<boolean>} Represents if authentication was a successful.
  * @throws If authenticate was a unsuccessful or occurred some interference.
  */
-export async function authenticate(
-  data?: SessionParams<'base'>
-): Promise<boolean> {
-  return await AzifaceMobileSdk.handleAuthenticateUser(data)
-    .then((successful: boolean) => successful)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
+// export async function authenticate(
+//   data?: SessionParams<'base'>
+// ): Promise<boolean> {
+//   return await AzifaceMobileSdk.handleAuthenticateUser(data)
+//     .then((successful: boolean) => successful)
+//     .catch((error: Error) => {
+//       throw new Error(error.message);
+//     });
+// }
 
 /**
  * @description This method must be used to **set** the **theme** of the Aziface

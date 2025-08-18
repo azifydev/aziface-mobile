@@ -1328,7 +1328,7 @@ export interface Methods {
    * @return {Promise<boolean>} Represents if authentication was a successful.
    * @throws If authenticate was a unsuccessful or occurred some interference.
    */
-  handleAuthenticateUser(data?: Object): Promise<boolean>;
+  // handleAuthenticateUser(data?: Object): Promise<boolean>;
 
   /**
    * @description This method must be used to **set** the **theme** of the
