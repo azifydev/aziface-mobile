@@ -18,40 +18,40 @@ public class Config {
   public static var ProductionKeyText: String!
   public static var ProcessorPathURL: [String: String]! = [:]
   public static var Headers: NSDictionary?
-  
+
   public static func setDevice(_ device: String) {
     Config.DeviceKeyIdentifier = device
   }
-  
+
   public static func setUrl(_ url: String) {
     Config.BaseURL = url
   }
-  
+
   public static func setProcessId(_ id: String) {
     Config.ProcessId = id
   }
-  
+
   public static func setKey(_ key: String) {
     Config.PublicFaceScanEncryptionKey = key
   }
-  
+
   public static func setProductionKeyText(_ keyText: String) {
     Config.ProductionKeyText = keyText
   }
-  
+
   public static func setProcessorPathURL(_ key: String, pathUrl: String) {
     Config.ProcessorPathURL[key] = pathUrl
   }
-  
+
   public static func setHeaders(_ headers: NSDictionary?) {
     Config.Headers = headers
   }
-  
+
   public static func hasConfig() -> Bool {
     return Config.BaseURL != nil && Config.DeviceKeyIdentifier != nil
-    && Config.ProductionKeyText != nil && Config.PublicFaceScanEncryptionKey != nil
+      && Config.ProductionKeyText != nil && Config.PublicFaceScanEncryptionKey != nil
   }
-  
+
   public static func makeRequest(url: String, httpMethod: String) -> URLRequest {
     let endpoint = BaseURL + url
     let request = NSMutableURLRequest(url: NSURL(string: endpoint)! as URL)
@@ -59,21 +59,21 @@ public class Config {
     request.addValue(DeviceKeyIdentifier, forHTTPHeaderField: "X-Device-Key")
     request.addValue(
       FaceTec.sdk.createFaceTecAPIUserAgentString(""), forHTTPHeaderField: "X-User-Agent")
-    
+
     if httpMethod != "GET" {
       request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     }
-    
+
     if Headers != nil {
       for key in Headers!.allKeys {
         request.addValue(
           Headers![key] != nil ? Headers![key] as! String : "", forHTTPHeaderField: key as! String)
       }
     }
-    
+
     return request as URLRequest
   }
-  
+
   static func initialize(_ isDeveloper: Bool, completion: @escaping (Bool) -> Void) {
     if isDeveloper {
       FaceTec.sdk.initializeInDevelopmentMode(
@@ -91,23 +91,21 @@ public class Config {
         })
     }
   }
-  
+
   public static func retrieveConfigurationWizardCustomization() -> FaceTecCustomization {
-    let theme: Theme = AziFaceViewController.Style
-    
-    let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
-    
+    let theme = Theme()
+
     let defaultCustomization = FaceTecCustomization()
-    
+
     defaultCustomization.frameCustomization.cornerRadius = theme.getFrame().getCornerRadius()
     defaultCustomization.frameCustomization.backgroundColor = theme.getFrame().getBackgroundColor()
     defaultCustomization.frameCustomization.borderColor = theme.getFrame().getBorderColor()
-    
+
     defaultCustomization.overlayCustomization.brandingImage = theme.getImage(
       "logo", defaultImage: "facetec_your_app_logo")
     defaultCustomization.overlayCustomization.backgroundColor = theme.getColor(
       "overlayBackgroundColor")
-    
+
     defaultCustomization.guidanceCustomization.backgroundColors = theme.getGuidance()
       .getBackgroundColors()
     defaultCustomization.guidanceCustomization.foregroundColor = theme.getGuidance()
@@ -128,20 +126,20 @@ public class Config {
       .getRetryScreen().getImageBorderColor()
     defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor = theme.getGuidance()
       .getRetryScreen().getOvalStrokeColor()
-    
+
     defaultCustomization.ovalCustomization.strokeColor = theme.getOval().getStrokeColor()
     defaultCustomization.ovalCustomization.progressColor1 = theme.getOval().getFirstProgressColor()
     defaultCustomization.ovalCustomization.progressColor2 = theme.getOval().getSecondProgressColor()
-    
+
     defaultCustomization.feedbackCustomization.backgroundColor = theme.getFeedback()
       .getGradientBackgroundColors()
     defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
-    
+
     defaultCustomization.cancelButtonCustomization.customImage = theme.getImage(
       "cancel", defaultImage: "facetec_cancel")
     defaultCustomization.cancelButtonCustomization.location = theme.getGeneral().getButtonLocation(
       "cancelButtonLocation")
-    
+
     defaultCustomization.resultScreenCustomization.backgroundColors = theme.getResultScreen()
       .getBackgroundColors()
     defaultCustomization.resultScreenCustomization.foregroundColor = theme.getResultScreen()
@@ -149,14 +147,15 @@ public class Config {
     defaultCustomization.resultScreenCustomization.activityIndicatorColor = theme.getResultScreen()
       .getActivityIndicatorColor()
     defaultCustomization.resultScreenCustomization.resultAnimationBackgroundColor =
-    theme.getResultScreen().getResultAnimation().getBackgroundColor()
+      theme.getResultScreen().getResultAnimation().getBackgroundColor()
     defaultCustomization.resultScreenCustomization.resultAnimationForegroundColor =
-    theme.getResultScreen().getResultAnimation().getForegroundColor()
+      theme.getResultScreen().getResultAnimation().getForegroundColor()
     defaultCustomization.resultScreenCustomization.uploadProgressFillColor = theme.getResultScreen()
       .getUploadProgressFillColor()
-    
+
+    let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
     defaultCustomization.securityWatermarkImage = securityWatermarkImage
-    
+
     defaultCustomization.idScanCustomization.selectionScreenBackgroundColors = theme.getIdScan()
       .getSelectionScreen().getBackgroundColors()
     defaultCustomization.idScanCustomization.selectionScreenForegroundColor = theme.getIdScan()
@@ -185,23 +184,23 @@ public class Config {
       .getTextDisabledColor()
     defaultCustomization.idScanCustomization.buttonTextHighlightColor = theme.getIdScan()
       .getButton().getTextHighlightColor()
-    
+
     return defaultCustomization
   }
-  
+
   public static func retrieveLowLightConfigurationWizardCustomization() -> FaceTecCustomization {
     return retrieveConfigurationWizardCustomization()
   }
-  
+
   public static func retrieveDynamicDimmingConfigurationWizardCustomization()
-  -> FaceTecCustomization
+    -> FaceTecCustomization
   {
     return retrieveConfigurationWizardCustomization()
   }
-  
+
   static var currentCustomization: FaceTecCustomization = retrieveConfigurationWizardCustomization()
   static var currentLowLightCustomization: FaceTecCustomization =
-  retrieveLowLightConfigurationWizardCustomization()
+    retrieveLowLightConfigurationWizardCustomization()
   static var currentDynamicDimmingCustomization: FaceTecCustomization =
-  retrieveDynamicDimmingConfigurationWizardCustomization()
+    retrieveDynamicDimmingConfigurationWizardCustomization()
 }

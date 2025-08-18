@@ -18,16 +18,20 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   public var latestNetworkRequest: URLSessionTask!
   public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public let theme: Theme!
   
   init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
     self.viewController = viewController
     self.data = data
+    self.theme = Theme()
+    
     super.init()
     
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
     
-    let authenticateViewController = FaceTec.sdk.createSessionVC(
-      faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    let controller = FaceTec.sdk.createSessionVC(faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    FaceTecUtilities.getTopMostViewController()?.present(controller, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
@@ -59,7 +63,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     if let data = self.data {
       parameters["data"] = data
     }
-    
     
     let dynamicRoute = DynamicRoute()
     let route = dynamicRoute.getPathUrlMatch3d3d(target: "base")
@@ -117,7 +120,8 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
           
           if wasProcessed == 1 {
-            let message = AziFaceViewController.Style.getAuthenticateMessage("successMessage", defaultMessage: "Authenticated")
+            let message = self.theme.getAuthenticateMessage(
+              "successMessage", defaultMessage: "Authenticated")
             FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
@@ -138,7 +142,8 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = AziFaceViewController.Style.getAuthenticateMessage("uploadMessage", defaultMessage: "Still Uploading...")
+      let message = self.theme.getAuthenticateMessage(
+        "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }

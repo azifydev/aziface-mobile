@@ -18,16 +18,20 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
   public var latestNetworkRequest: URLSessionTask!
   public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public let theme: Theme!
   
   init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
     self.viewController = viewController
     self.data = data
+    self.theme = Theme()
+    
     super.init()
     
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
     
-    let livenessCheckViewController = FaceTec.sdk.createSessionVC(
-      faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    let controller = FaceTec.sdk.createSessionVC(faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    FaceTecUtilities.getTopMostViewController()?.present(controller, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
@@ -111,7 +115,8 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
         }
         
         if wasProcessed == true {
-          let message = AziFaceViewController.Style.getLivenessMessage("successMessage", defaultMessage: "Liveness Confirmed")
+          let message = self.theme.getLivenessMessage(
+            "successMessage", defaultMessage: "Liveness Confirmed")
           FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
           
           self.success = faceScanResultCallback.onFaceScanGoToNextStep(
@@ -128,7 +133,8 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = AziFaceViewController.Style.getLivenessMessage("uploadMessage", defaultMessage: "Still Uploading...")
+      let message = self.theme.getLivenessMessage(
+        "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }

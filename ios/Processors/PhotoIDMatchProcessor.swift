@@ -21,81 +21,83 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   public var idScanResultCallback: FaceTecIDScanResultCallback!
+  public let theme: Theme!
   
   init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
     self.viewController = viewController
     self.latestExternalDatabaseRefID = self.viewController.getLatestExternalDatabaseRefID()
     self.data = data
+    self.theme = Theme()
+    
     super.init()
     
-    let theme: Theme = AziFaceViewController.Style
-    
     FaceTecCustomization.setIDScanUploadMessageOverrides(
-      frontSideUploadStarted: theme.getPhotoIDMatchMessage(
+      frontSideUploadStarted: self.theme.getPhotoIDMatchMessage(
         "frontSide", key: "uploadStarted", defaultMessage: "Uploading\nEncrypted\nID Scan"),  // Upload of ID front-side has started.
-      frontSideStillUploading: theme.getPhotoIDMatchMessage(
+      frontSideStillUploading: self.theme.getPhotoIDMatchMessage(
         "frontSide", key: "stillUploading", defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID front-side is still uploading to Server after an extended period of time.
-      frontSideUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+      frontSideUploadCompleteAwaitingResponse: self.theme.getPhotoIDMatchMessage(
         "frontSide", key: "uploadCompleteAwaitingResponse", defaultMessage: "Upload Complete"),  // Upload of ID front-side to the Server is complete.
-      frontSideUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+      frontSideUploadCompleteAwaitingProcessing: self.theme.getPhotoIDMatchMessage(
         "frontSide", key: "uploadCompleteAwaitingProcessing", defaultMessage: "Processing\nID Scan"),  // Upload of ID front-side is complete and we are waiting for the Server to finish processing and respond.
-      backSideUploadStarted: theme.getPhotoIDMatchMessage(
+      backSideUploadStarted: self.theme.getPhotoIDMatchMessage(
         "backSide", key: "uploadStarted", defaultMessage: "Uploading\nEncrypted\nBack of ID"),  // Upload of ID back-side has started.
-      backSideStillUploading: theme.getPhotoIDMatchMessage(
+      backSideStillUploading: self.theme.getPhotoIDMatchMessage(
         "backSide", key: "stillUploading", defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID back-side is still uploading to Server after an extended period of time.
-      backSideUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+      backSideUploadCompleteAwaitingResponse: self.theme.getPhotoIDMatchMessage(
         "backSide", key: "uploadCompleteAwaitingResponse", defaultMessage: "Upload Complete"),  // Upload of ID back-side to Server is complete.
-      backSideUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+      backSideUploadCompleteAwaitingProcessing: self.theme.getPhotoIDMatchMessage(
         "backSide", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nBack of ID"),  // Upload of ID back-side is complete and we are waiting for the Server to finish processing and respond.
-      userConfirmedInfoUploadStarted: theme.getPhotoIDMatchMessage(
+      userConfirmedInfoUploadStarted: self.theme.getPhotoIDMatchMessage(
         "userConfirmedInfo", key: "uploadStarted", defaultMessage: "Uploading\nYour Confirmed Info"),  // Upload of User Confirmed Info has started.
-      userConfirmedInfoStillUploading: theme.getPhotoIDMatchMessage(
+      userConfirmedInfoStillUploading: self.theme.getPhotoIDMatchMessage(
         "userConfirmedInfo", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of User Confirmed Info is still uploading to Server after an extended period of time.
-      userConfirmedInfoUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+      userConfirmedInfoUploadCompleteAwaitingResponse: self.theme.getPhotoIDMatchMessage(
         "userConfirmedInfo", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of User Confirmed Info to the Server is complete.
-      userConfirmedInfoUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+      userConfirmedInfoUploadCompleteAwaitingProcessing: self.theme.getPhotoIDMatchMessage(
         "userConfirmedInfo", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing"),  // Upload of User Confirmed Info is complete and we are waiting for the Server to finish processing and respond.
-      nfcUploadStarted: theme.getPhotoIDMatchMessage(
+      nfcUploadStarted: self.theme.getPhotoIDMatchMessage(
         "nfc", key: "uploadStarted",
         defaultMessage: "Uploading Encrypted\nNFC Details"),  // Upload of NFC Details has started.
-      nfcStillUploading: theme.getPhotoIDMatchMessage(
+      nfcStillUploading: self.theme.getPhotoIDMatchMessage(
         "nfc", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of NFC Details is still uploading to Server after an extended period of time.
-      nfcUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+      nfcUploadCompleteAwaitingResponse: self.theme.getPhotoIDMatchMessage(
         "nfc", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of NFC Details to the Server is complete.
-      nfcUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+      nfcUploadCompleteAwaitingProcessing: self.theme.getPhotoIDMatchMessage(
         "nfc", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nNFC Details"),  // Upload of NFC Details is complete and we are waiting for the Server to finish processing and respond.
-      skippedNFCUploadStarted: theme.getPhotoIDMatchMessage(
+      skippedNFCUploadStarted: self.theme.getPhotoIDMatchMessage(
         "skippedNFC", key: "uploadStarted",
         defaultMessage: "Uploading Encrypted\nID Details"),  // Upload of ID Details has started.
-      skippedNFCStillUploading: theme.getPhotoIDMatchMessage(
+      skippedNFCStillUploading: self.theme.getPhotoIDMatchMessage(
         "skippedNFC", key: "stillUploading",
         defaultMessage: "Still Uploading...\nSlow Connection"),  // Upload of ID Details is still uploading to Server after an extended period of time.
-      skippedNFCUploadCompleteAwaitingResponse: theme.getPhotoIDMatchMessage(
+      skippedNFCUploadCompleteAwaitingResponse: self.theme.getPhotoIDMatchMessage(
         "skippedNFC", key: "uploadCompleteAwaitingResponse",
         defaultMessage: "Upload Complete"),  // Upload of ID Details to the Server is complete.
-      skippedNFCUploadCompleteAwaitingProcessing: theme.getPhotoIDMatchMessage(
+      skippedNFCUploadCompleteAwaitingProcessing: self.theme.getPhotoIDMatchMessage(
         "skippedNFC", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nID Details")  // Upload of ID Details is complete and we are waiting for the Server to finish processing and respond.
     )
     
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
     
-    let idScanViewController = FaceTec.sdk.createSessionVC(
+    let controller = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, idScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    FaceTecUtilities.getTopMostViewController()?.present(controller, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
     self.viewController.setLatestSessionResult(sessionResult: sessionResult)
-    
     self.faceScanResultCallback = faceScanResultCallback
     
     if sessionResult.status != FaceTecSessionStatus.sessionCompletedSuccessfully {
@@ -178,7 +180,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
           
           if wasProcessed == 1 {
-            let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
+            let message = self.theme.getPhotoIDMatchMessage(
               "successMessage", defaultMessage: "Liveness Face Scanned\n3D Liveness Proven")
             FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
@@ -202,7 +204,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
       
-      let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
+      let message = self.theme.getPhotoIDMatchMessage(
         "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
@@ -290,24 +292,37 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         return
       }
       
-      if wasProcessed {
-        let theme: Theme = AziFaceViewController.Style
-        
+      if wasProcessed == true {
         FaceTecCustomization.setIDScanResultScreenMessageOverrides(
-          successFrontSide: theme.getPhotoIDMatchMessage("success", key: "frontSide", defaultMessage: "ID Scan Complete"),
-          successFrontSideBackNext: theme.getPhotoIDMatchMessage("success", key: "frontSideBackNext", defaultMessage: "Front of ID\nScanned"),
-          successFrontSideNFCNext: theme.getPhotoIDMatchMessage("success", key: "frontSideNFCNext", defaultMessage: "Front of ID\nScanned"),
-          successBackSide: theme.getPhotoIDMatchMessage("success", key: "backSide", defaultMessage: "ID Scan Complete"),
-          successBackSideNFCNext: theme.getPhotoIDMatchMessage("success", key: "backSideNFCNext", defaultMessage: "Back of ID\nScanned"),
-          successPassport: theme.getPhotoIDMatchMessage("success", key: "passport", defaultMessage: "Passport Scan Complete"),
-          successPassportNFCNext: theme.getPhotoIDMatchMessage("success", key: "passportNFCNext", defaultMessage: "Passport Scanned"),
-          successUserConfirmation: theme.getPhotoIDMatchMessage("success", key: "userConfirmation", defaultMessage: "Photo ID Scan\nComplete"),
-          successNFC: theme.getPhotoIDMatchMessage("success", key: "NFC", defaultMessage: "ID Scan Complete"),
-          retryFaceDidNotMatch: theme.getPhotoIDMatchMessage("retry", key: "faceDidNotMatch", defaultMessage: "Face Didn’t Match\nHighly Enough"),
-          retryIDNotFullyVisible: theme.getPhotoIDMatchMessage("retry", key: "IDNotFullyVisible", defaultMessage: "ID Document\nNot Fully Visible"),
-          retryOCRResultsNotGoodEnough: theme.getPhotoIDMatchMessage("retry", key: "OCRResultsNotGoodEnough", defaultMessage: "ID Text Not Legible"),
-          retryIDTypeNotSupported: theme.getPhotoIDMatchMessage("retry", key: "IDTypeNotSupported", defaultMessage: "ID Type Mismatch\nPlease Try Again"),
-          skipOrErrorNFC: theme.getPhotoIDMatchMessage("skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")
+          successFrontSide: self.theme.getPhotoIDMatchMessage(
+            "success", key: "frontSide", defaultMessage: "ID Scan Complete"),
+          successFrontSideBackNext: self.theme.getPhotoIDMatchMessage(
+            "success", key: "frontSideBackNext", defaultMessage: "Front of ID\nScanned"),
+          successFrontSideNFCNext: self.theme.getPhotoIDMatchMessage(
+            "success", key: "frontSideNFCNext", defaultMessage: "Front of ID\nScanned"),
+          successBackSide: self.theme.getPhotoIDMatchMessage(
+            "success", key: "backSide", defaultMessage: "ID Scan Complete"),
+          successBackSideNFCNext: self.theme.getPhotoIDMatchMessage(
+            "success", key: "backSideNFCNext", defaultMessage: "Back of ID\nScanned"),
+          successPassport: self.theme.getPhotoIDMatchMessage(
+            "success", key: "passport", defaultMessage: "Passport Scan Complete"),
+          successPassportNFCNext: self.theme.getPhotoIDMatchMessage(
+            "success", key: "passportNFCNext", defaultMessage: "Passport Scanned"),
+          successUserConfirmation: self.theme.getPhotoIDMatchMessage(
+            "success", key: "userConfirmation", defaultMessage: "Photo ID Scan\nComplete"),
+          successNFC: self.theme.getPhotoIDMatchMessage(
+            "success", key: "NFC", defaultMessage: "ID Scan Complete"),
+          retryFaceDidNotMatch: self.theme.getPhotoIDMatchMessage(
+            "retry", key: "faceDidNotMatch", defaultMessage: "Face Didn’t Match\nHighly Enough"),
+          retryIDNotFullyVisible: self.theme.getPhotoIDMatchMessage(
+            "retry", key: "IDNotFullyVisible", defaultMessage: "ID Document\nNot Fully Visible"),
+          retryOCRResultsNotGoodEnough: self.theme.getPhotoIDMatchMessage(
+            "retry", key: "OCRResultsNotGoodEnough", defaultMessage: "ID Text Not Legible"),
+          retryIDTypeNotSupported: self.theme.getPhotoIDMatchMessage(
+            "retry", key: "IDTypeNotSupported", defaultMessage: "ID Type Mismatch\nPlease Try Again"
+          ),
+          skipOrErrorNFC: self.theme.getPhotoIDMatchMessage(
+            "skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")
         )
         
         self.success = idScanResultCallback.onIDScanResultProceedToNextStep(

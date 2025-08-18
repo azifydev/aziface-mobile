@@ -18,15 +18,20 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
   public var latestNetworkRequest: URLSessionTask!
   public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public let theme: Theme!
   
   init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
     self.viewController = viewController
     self.data = data
+    self.theme = Theme()
+    
     super.init()
-    print("EnrollmentProcessor initialized.")
+    
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
-    let enrollmentViewController = FaceTec.sdk.createSessionVC(
-      faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    let controller = FaceTec.sdk.createSessionVC(faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    FaceTecUtilities.getTopMostViewController()?.present(controller, animated: true, completion: nil)
   }
   
   func processSessionWhileFaceTecSDKWaits(
@@ -111,7 +116,8 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
           }
           
           if wasProcessed == 1 {
-            let message = AziFaceViewController.Style.getEnrollmentMessage("successMessage", defaultMessage: "Face Scanned\n3D Liveness Proven")
+            let message = self.theme.getEnrollmentMessage(
+              "successMessage", defaultMessage: "Face Scanned\n3D Liveness Proven")
             FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
@@ -135,7 +141,8 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       guard self.latestNetworkRequest.state != .completed else { return }
       
-      let message = AziFaceViewController.Style.getEnrollmentMessage("uploadMessage", defaultMessage: "Still Uploading...")
+      let message = self.theme.getEnrollmentMessage(
+        "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage = NSMutableAttributedString(string: message)
       self.faceScanResultCallback.onFaceScanUploadMessageOverride(
         uploadMessageOverride: uploadMessage)

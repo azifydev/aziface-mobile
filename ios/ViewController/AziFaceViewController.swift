@@ -12,8 +12,6 @@ import LocalAuthentication
 import UIKit
 
 class AziFaceViewController: UIViewController, URLSessionDelegate {
-  private var window: UIWindow?
-  public static var Style: Theme!
   public var isSuccess: Bool! = false
   public var latestExternalDatabaseRefID: String = ""
   public var latestSessionResult: FaceTecSessionResult!
@@ -22,14 +20,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
   public var processorRejecter: RCTPromiseRejectBlock!
   public var latestProcessor: Processor!
   
+  @IBOutlet weak var themeTransitionText: UILabel!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    AziFaceViewController.Style = Theme()
-  }
-  
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return AziFaceViewController.Style.getGeneral().getStatusBarStyle("statusBarColor")
   }
   
   func onLivenessCheck(
@@ -40,7 +34,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = LivenessCheckProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
   
@@ -53,7 +47,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
       self.latestProcessor = EnrollmentProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
   
@@ -65,7 +59,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = AuthenticateProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
   
@@ -78,7 +72,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
       self.latestProcessor = PhotoIDMatchProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
   
@@ -90,7 +84,7 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = PhotoIDScanProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
   
