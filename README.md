@@ -18,21 +18,34 @@ Azify SDK adapter to react native. 📱
     - [`SessionBasePathUrl`](#sessionbasepathurl)
     - [`SessionMatchPathUrl`](#sessionmatchpathurl)
   - [`Theme`](#theme)
-  - [`ButtonLocation`](#buttonlocation)
-  - [`StatusBarColor`](#statusbarcolor-ios-only)
-  - [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)
-  - [`Point`](#point-ios-only)
-  - [`DefaultMessage`](#defaultmessage)
-  - [`DefaultScanMessage`](#defaultscanmessage)
-    - [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)
-    - [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)
-    - [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo)
-    - [`DefaultScanMessageNFC`](#defaultscanmessagenfc)
-    - [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)
-    - [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)
-    - [`DefaultScanMessageRetry`](#defaultscanmessageretry)
+    - [`ButtonLocation`](#buttonlocation)
+    - [`StatusBarColor`](#statusbarcolor-ios-only)
+    - [`ThemeImage`](#themeimage)
+    - [`ThemeFrame`](#themeframe)
+    - [`ThemeButton`](#themebutton)
+    - [`ThemeGuidance`](#themeguidance)
+      - [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)
+    - [`ThemeOval`](#themeoval)
+    - [`ThemeFeedback`](#themefeedback)
+      - [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)
+        - [`Point`](#point-ios-only)
+    - [`ThemeResultScreen`](#themeresultscreen)
+      - [`ThemeResultAnimation`](#themeresultanimation)
+    - [`ThemeIdScan`](#themeidscan)
+      - [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)
+      - [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)
+      - [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)
+    - [`DefaultMessage`](#defaultmessage)
+      - [`DefaultScanMessage`](#defaultscanmessage)
+      - [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)
+      - [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)
+      - [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo)
+      - [`DefaultScanMessageNFC`](#defaultscanmessagenfc)
+      - [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)
+      - [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)
+      - [`DefaultScanMessageRetry`](#defaultscanmessageretry)
   - [`Errors`](#errors)
-- [Native Events](#native-events)
+- [Native Events (Deprecated)](#native-events-deprecated)
   - [`Event Types`](#event-types)
 - [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
   - [How to add images in Android?](#how-to-add-images-in-android)
@@ -240,6 +253,14 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 <hr/>
 
+## Enums
+
+| Enums               | iOS | Android |
+| ------------------- | --- | ------- |
+| [`Errors`](#errors) | ✅  | ✅      |
+
+<hr/>
+
 ## Types
 
 | Types                                                                     | iOS | Android |
@@ -252,8 +273,21 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 | [`Theme`](#theme)                                                         | ✅  | ✅      |
 | [`ButtonLocation`](#buttonlocation)                                       | ✅  | ✅      |
 | [`StatusBarColor`](#statusbarcolor-ios-only)                              | ✅  | ❌      |
+| [`ThemeImage`](#themeimage)                                               | ✅  | ✅      |
+| [`ThemeFrame`](#themeframe)                                               | ✅  | ✅      |
+| [`ThemeButton`](#themebutton)                                             | ✅  | ✅      |
+| [`ThemeGuidance`](#themeguidance)                                         | ✅  | ✅      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)                   | ✅  | ✅      |
+| [`ThemeOval`](#themeoval)                                                 | ✅  | ✅      |
+| [`ThemeFeedback`](#themefeedback)                                         | ✅  | ✅      |
 | [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)            | ✅  | ❌      |
 | [`Point`](#point-ios-only)                                                | ✅  | ❌      |
+| [`ThemeResultScreen`](#themeresultscreen)                                 | ✅  | ✅      |
+| [`ThemeResultAnimation`](#themeresultanimation)                           | ✅  | ✅      |
+| [`ThemeIdScan`](#themeidscan)                                             | ✅  | ✅      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)               | ✅  | ✅      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)                     | ✅  | ✅      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)                   | ✅  | ✅      |
 | [`DefaultMessage`](#defaultmessage)                                       | ✅  | ✅      |
 | [`DefaultScanMessage`](#defaultmessage)                                   | ✅  | ✅      |
 | [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | ✅  | ✅      |
@@ -263,12 +297,6 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 | [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | ✅  | ✅      |
 | [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | ✅  | ✅      |
 | [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | ✅  | ✅      |
-
-## Enums
-
-| Enums               | iOS | Android |
-| ------------------- | --- | ------- |
-| [`Errors`](#errors) | ✅  | ✅      |
 
 ### `Params`
 
@@ -326,61 +354,25 @@ This type is specify of the `photoMatch` method.
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors, between six and eight characters, because still we don't supported others color type.
 
-| `Theme`                                        | type                                                                                                    | iOS | Android | Required | Default                                                                                                 |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --- | ------- | -------- | ------------------------------------------------------------------------------------------------------- |
-| `logoImage`                                    | `string`                                                                                                | ✅  | ✅      | ❌       | `facetec_your_app_logo.png`                                                                             |
-| `cancelImage`                                  | `string`                                                                                                | ✅  | ✅      | ❌       | `facetec_cancel.png`                                                                                    |
-| `cancelButtonLocation`                         | [`ButtonLocation`](#azifacesdkbuttonlocation)                                                           | ✅  | ✅      | ❌       | `TOP_RIGHT`                                                                                             |
-| `defaultStatusBarColorIos`                     | [`StatusBarColor`](#azifacesdkstatusbarcolor-ios-only)                                                  | ✅  | ❌      | ❌       | `DARK_CONTENT`                                                                                          |
-| `frameCornerRadius`                            | `number`                                                                                                | ✅  | ✅      | ❌       | `10` (iOS) and `20` (Android)                                                                           |
-| `frameBackgroundColor`                         | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `frameBorderColor`                             | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `overlayBackgroundColor`                       | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceBackgroundColorsAndroid`              | `string`                                                                                                | ❌  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceBackgroundColorsIos`                  | `string[]`                                                                                              | ✅  | ❌      | ❌       | `["#FFFFFF", "#FFFFFF"]`                                                                                |
-| `guidanceForegroundColor`                      | `string`                                                                                                | ✅  | ✅      | ❌       | `#272937`                                                                                               |
-| `guidanceButtonBackgroundNormalColor`          | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `guidanceButtonBackgroundDisabledColor`        | `string`                                                                                                | ✅  | ✅      | ❌       | `#B3D4FC`                                                                                               |
-| `guidanceButtonBackgroundHighlightColor`       | `string`                                                                                                | ✅  | ✅      | ❌       | `#0264DC`                                                                                               |
-| `guidanceButtonTextNormalColor`                | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceButtonTextDisabledColor`              | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceButtonTextHighlightColor`             | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceRetryScreenImageBorderColor`          | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `guidanceRetryScreenOvalStrokeColor`           | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `ovalStrokeColor`                              | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `ovalFirstProgressColor`                       | `string`                                                                                                | ✅  | ✅      | ❌       | `#0264DC`                                                                                               |
-| `ovalSecondProgressColor`                      | `string`                                                                                                | ✅  | ✅      | ❌       | `#0264DC`                                                                                               |
-| `feedbackBackgroundColorsAndroid`              | `string`                                                                                                | ❌  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `feedbackBackgroundColorsIos`                  | [`FeedbackBackgroundColor` ](#azifacesdkfeedbackbackgroundcolor-ios-only)                               | ✅  | ❌      | ❌       | [`FeedbackBackgroundColor` ](#azifacesdkfeedbackbackgroundcolor-ios-only)                               |
-| `feedbackTextColor`                            | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `resultScreenBackgroundColorsAndroid`          | `string`                                                                                                | ❌  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `resultScreenBackgroundColorsIos`              | `string[]`                                                                                              | ✅  | ❌      | ❌       | `["#FFFFFF", "#FFFFFF"]`                                                                                |
-| `resultScreenForegroundColor`                  | `string`                                                                                                | ✅  | ✅      | ❌       | `#272937`                                                                                               |
-| `resultScreenActivityIndicatorColor`           | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `resultScreenResultAnimationBackgroundColor`   | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `resultScreenResultAnimationForegroundColor`   | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `resultScreenUploadProgressFillColor`          | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `idScanSelectionScreenBackgroundColorsAndroid` | `string`                                                                                                | ❌  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanSelectionScreenBackgroundColorsIos`     | `string[]`                                                                                              | ✅  | ❌      | ❌       | `["#FFFFFF", "#FFFFFF"]`                                                                                |
-| `idScanSelectionScreenForegroundColor`         | `string`                                                                                                | ✅  | ✅      | ❌       | `#272937`                                                                                               |
-| `idScanReviewScreenForegroundColor`            | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanReviewScreenTextBackgroundColor`        | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `idScanCaptureScreenForegroundColor`           | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanCaptureScreenTextBackgroundColor`       | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `idScanButtonBackgroundNormalColor`            | `string`                                                                                                | ✅  | ✅      | ❌       | `#026FF4`                                                                                               |
-| `idScanButtonBackgroundDisabledColor`          | `string`                                                                                                | ✅  | ✅      | ❌       | `#B3D4FC`                                                                                               |
-| `idScanButtonBackgroundHighlightColor`         | `string`                                                                                                | ✅  | ✅      | ❌       | `#0264DC`                                                                                               |
-| `idScanButtonTextNormalColor`                  | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanButtonTextDisabledColor`                | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanButtonTextHighlightColor`               | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanCaptureScreenBackgroundColor`           | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `idScanCaptureFrameStrokeColor`                | `string`                                                                                                | ✅  | ✅      | ❌       | `#FFFFFF`                                                                                               |
-| `autheticanteMessage`                          | [`DefaultMessage`](#azifacesdkdefaultmessage)                                                           | ✅  | ✅      | ❌       | [`DefaultMessage`](#azifacesdkdefaultmessage)                                                           |
-| `enrollMessage`                                | [`DefaultMessage`](#azifacesdkdefaultmessage)                                                           | ✅  | ✅      | ❌       | [`DefaultMessage`](#azifacesdkdefaultmessage)                                                           |
-| `photoIdScanMessage`                           | [`DefaultScanMessage`](#azifacesdkdefaultscanmessage)                                                   | ✅  | ✅      | ❌       | [`DefaultScanMessage`](#azifacesdkdefaultscanmessage)                                                   |
-| `photoIdMatchMessage`                          | [`DefaultScanMessage`](#azifacesdkdefaultscanmessage) and [`DefaultMessage`](#azifacesdkdefaultmessage) | ✅  | ✅      | ❌       | [`DefaultScanMessage`](#azifacesdkdefaultscanmessage) and [`DefaultMessage`](#azifacesdkdefaultmessage) |
+| `Theme`                  | type                                         | iOS | Android | Required | Default        |
+| ------------------------ | -------------------------------------------- | --- | ------- | -------- | -------------- |
+| `overlayBackgroundColor` | `string`                                     | ✅  | ✅      | ❌       | `#ffffff`      |
+| `cancelButtonLocation`   | [`ButtonLocation`](#buttonlocation)          | ✅  | ✅      | ❌       | `TOP_RIGHT`    |
+| `statusBarColor`         | [`StatusBarColor`](#statusbarcolor-ios-only) | ✅  | ❌      | ❌       | `DARK_CONTENT` |
+| `authenticateMessage`    | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
+| `enrollMessage`          | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
+| `livenessMessage`        | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
+| `scanMessage`            | [`DefaultScanMessage`](#defaultscanmessage)  | ✅  | ✅      | ❌       | `undefined`    |
+| `matchMessage`           | `DefaultScanMessage & DefaultMessage`        | ✅  | ✅      | ❌       | `undefined`    |
+| `image`                  | [`ThemeImage`](#themeimage)                  | ✅  | ✅      | ❌       | `undefined`    |
+| `frame`                  | [`ThemeFrame`](#themeframe)                  | ✅  | ✅      | ❌       | `undefined`    |
+| `guidance`               | [`ThemeGuidance`](#themeguidance)            | ✅  | ✅      | ❌       | `undefined`    |
+| `oval`                   | [`ThemeOval`](#themeoval)                    | ✅  | ✅      | ❌       | `undefined`    |
+| `feedback`               | [`ThemeFeedback`](#themefeedback)            | ✅  | ✅      | ❌       | `undefined`    |
+| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen)    | ✅  | ✅      | ❌       | `undefined`    |
+| `idScan`                 | [`ThemeIdScan`](#themeidscan)                | ✅  | ✅      | ❌       | `undefined`    |
 
-### `ButtonLocation`
+#### `ButtonLocation`
 
 This type must be used to position of the cancel button on screen.
 
@@ -390,7 +382,7 @@ This type must be used to position of the cancel button on screen.
 | `TOP_LEFT`       | Position cancel button in top right.                            |
 | `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
 
-### `StatusBarColor` (`iOS` only)
+#### `StatusBarColor` (`iOS` only)
 
 This type must be used to status bar color.
 
@@ -400,7 +392,79 @@ This type must be used to status bar color.
 | `DEFAULT`        | Status bar color that's set from the device. |
 | `LIGHT_CONTENT`  | Light color to status bar.                   |
 
-### `FeedbackBackgroundColor` (`iOS` only)
+#### `ThemeImage`
+
+An object containing the image assets used in the Aziface SDK.
+
+| `ThemeImage` | type     | iOS | Android | Required | Default                     |
+| ------------ | -------- | --- | ------- | -------- | --------------------------- |
+| `logo`       | `string` | ✅  | ✅      | ❌       | `facetec_your_app_logo.png` |
+| `cancel`     | `string` | ✅  | ✅      | ❌       | `facetec_cancel.png`        |
+
+#### `ThemeFrame`
+
+An object containing the frame styles used in the Aziface SDK.
+
+| `ThemeFrame`      | type     | iOS | Android | Required | Default   |
+| ----------------- | -------- | --- | ------- | -------- | --------- |
+| `cornerRadius`    | `number` | ✅  | ✅      | ❌       | `20`      |
+| `borderColor`     | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `backgroundColor` | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+
+#### `ThemeButton`
+
+An object containing the button styles used in the Aziface SDK.
+
+| `ThemeButton`              | type     | iOS | Android | Required | Default   |
+| -------------------------- | -------- | --- | ------- | -------- | --------- |
+| `backgroundNormalColor`    | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+| `backgroundDisabledColor`  | `string` | ✅  | ✅      | ❌       | `#b3d4fc` |
+| `backgroundHighlightColor` | `string` | ✅  | ✅      | ❌       | `#0264dc` |
+| `textNormalColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `textDisabledColor`        | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `textHighlightColor`       | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+
+#### `ThemeGuidance`
+
+An object containing the styles used in the guidance view.
+
+| `ThemeGuidance`   | type                                                    | iOS | Android | Required | Default                                                |
+| ----------------- | ------------------------------------------------------- | --- | ------- | -------- | ------------------------------------------------------ |
+| `backgroundColor` | `string` or `string[]`                                  | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor` | `string`                                                | ✅  | ✅      | ❌       | `#272937`                                              |
+| `button`          | [`ThemeButton`](#themebutton)                           | ✅  | ✅      | ❌       | `undefined`                                            |
+| `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | ✅  | ✅      | ❌       | `undefined`                                            |
+
+##### `ThemeGuidanceRetryScreen`
+
+An object containing the styles used in the guidance retry screen.
+
+| `ThemeGuidanceRetryScreen` | type     | iOS | Android | Required | Default   |
+| -------------------------- | -------- | --- | ------- | -------- | --------- |
+| `imageBorderColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ovalStrokeColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+
+#### `ThemeOval`
+
+An object containing the oval styles used in the Aziface SDK.
+
+| `ThemeOval`           | type     | iOS | Android | Required | Default   |
+| --------------------- | -------- | --- | ------- | -------- | --------- |
+| `strokeColor`         | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+| `firstProgressColor`  | `string` | ✅  | ✅      | ❌       | `#0264dc` |
+| `secondProgressColor` | `string` | ✅  | ✅      | ❌       | `#0264dc` |
+
+#### `ThemeFeedback`
+
+An object containing the oval styles used in the Aziface SDK.
+
+| `ThemeFeedback`                                         | type     | iOS | Android | Required | Default     |
+| ------------------------------------------------------- | -------- | --- | ------- | -------- | ----------- |
+| `backgroundColor`                                       | `string` | ❌  | ✅      | ❌       | `#026ff4`   |
+| [`backgroundColors`](#feedbackbackgroundcolor-ios-only) | `string` | ✅  | ❌      | ❌       | `undefined` |
+| `textColor`                                             | `string` | ✅  | ✅      | ❌       | `#ffffff`   |
+
+##### `FeedbackBackgroundColor` (`iOS` only)
 
 This type must be used to **set** the **theme** of the feedback box.
 
@@ -411,7 +475,7 @@ This type must be used to **set** the **theme** of the feedback box.
 | `startPoint`              | The start point of the gradient when drawn in the layer’s coordinate space.                        | [`Point`](#point-ios-only) | ❌       | `{ x: 0, y: 0 }`         |
 | `endPoint`                | The end point of the gradient when drawn in the layer’s coordinate space.                          | [`Point`](#point-ios-only) | ❌       | `{ x: 1, y: 0 }`         |
 
-### `Point` (`iOS` only)
+###### `Point` (`iOS` only)
 
 This interface defines the drawn in the layer's coordinate space.
 
@@ -420,7 +484,68 @@ This interface defines the drawn in the layer's coordinate space.
 | `x`     | `number` | ❌       | `0`     |
 | `y`     | `number` | ❌       | `0`     |
 
-### `DefaultMessage`
+#### `ThemeResultScreen`
+
+An object containing the styles used in the result screen.
+
+| `ThemeResultScreen`       | type                                            | iOS | Android | Required | Default                                                |
+| ------------------------- | ----------------------------------------------- | --- | ------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`         | `string` or `string[]`                          | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`         | `string`                                        | ✅  | ✅      | ❌       | `#272937`                                              |
+| `activityIndicatorColor`  | `string`                                        | ✅  | ✅      | ❌       | `#026ff4`                                              |
+| `uploadProgressFillColor` | `string`                                        | ✅  | ✅      | ❌       | `#026ff4`                                              |
+| `resultAnimation`         | [`ThemeResultAnimation`](#themeresultanimation) | ✅  | ✅      | ❌       | `undefined`                                            |
+
+##### `ThemeResultAnimation`
+
+An object containing the animation styles used in the Aziface SDK result animation.
+
+| `ThemeResultAnimation` | type     | iOS | Android | Required | Default   |
+| ---------------------- | -------- | --- | ------- | -------- | --------- |
+| `backgroundColor`      | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+| `foregroundColor`      | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+
+#### `ThemeIdScan`
+
+An object containing the styles used in the ID scan screens.
+
+| `ThemeIdScan`     | type                                                        | iOS | Android | Required | Default     |
+| ----------------- | ----------------------------------------------------------- | --- | ------- | -------- | ----------- |
+| `selectionScreen` | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen) | ✅  | ✅      | ❌       | `undefined` |
+| `reviewScreen`    | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)       | ✅  | ✅      | ❌       | `undefined` |
+| `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | ✅  | ✅      | ❌       | `undefined` |
+| `button`          | [`ThemeButton`](#themebutton)                               | ✅  | ✅      | ❌       | `undefined` |
+
+##### `ThemeIdScanSelectionScreen`
+
+An object containing the styles used in the ID scan selection screen.
+
+| `ThemeIdScanSelectionScreen` | type                   | iOS | Android | Required | Default                                                |
+| ---------------------------- | ---------------------- | --- | ------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`            | `string` or `string[]` | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`            | `string`               | ✅  | ✅      | ❌       | `#272937`                                              |
+
+##### `ThemeIdScanReviewScreen`
+
+An object containing the styles used in the ID scan review screen.
+
+| `ThemeIdScanReviewScreen` | type     | iOS | Android | Required | Default   |
+| ------------------------- | -------- | --- | ------- | -------- | --------- |
+| `foregroundColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `textBackgroundColor`     | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+
+##### `ThemeIdScanCaptureScreen`
+
+An object containing the styles used in the ID scan capture screen.
+
+| `ThemeIdScanCaptureScreen` | type     | iOS | Android | Required | Default   |
+| -------------------------- | -------- | --- | ------- | -------- | --------- |
+| `foregroundColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `textBackgroundColor`      | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `backgroundColor`          | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+| `frameStrokeColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+
+#### `DefaultMessage`
 
 This interface represents the success message and loading data message during to Aziface SDK flow. It interface is used by processors's [enroll](#enroll) processor.
 
@@ -429,7 +554,7 @@ This interface represents the success message and loading data message during to
 | `successMessage` | `string` | ✅  | ✅      | ❌       | `Face Scanned\n3D Liveness Proven` |
 | `uploadMessage`  | `string` | ✅  | ❌      | ❌       | `Still Uploading...`               |
 
-### `DefaultScanMessage`
+#### `DefaultScanMessage`
 
 This interface represents the all scan messages during to Aziface SDK flow. It interface is used by [photoMatch](#photomatch) processors.
 
@@ -444,7 +569,7 @@ This interface represents the all scan messages during to Aziface SDK flow. It i
 | `success`            | [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | ✅  | ✅      | ❌       | `undefined`           |
 | `retry`              | [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | ✅  | ✅      | ❌       | `undefined`           |
 
-#### `DefaultScanMessageFrontSide`
+##### `DefaultScanMessageFrontSide`
 
 Represents the front-side scan messages during to Aziface SDK flow.
 
@@ -455,7 +580,7 @@ Represents the front-side scan messages during to Aziface SDK flow.
 | `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
 | `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing ID Scan`                 |
 
-#### `DefaultScanMessageBackSide`
+##### `DefaultScanMessageBackSide`
 
 Represents the back-side scan messages during to Aziface SDK flow.
 
@@ -466,7 +591,7 @@ Represents the back-side scan messages during to Aziface SDK flow.
 | `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
 | `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing Back of ID`              |
 
-#### `DefaultScanMessageUserConfirmInfo`
+##### `DefaultScanMessageUserConfirmInfo`
 
 Represents the user confirmed information messages during to Aziface SDK flow.
 
@@ -477,7 +602,7 @@ Represents the user confirmed information messages during to Aziface SDK flow.
 | `uploadCompleteAwaitingResponse`    | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
 | `uploadCompleteAwaitingProcessing`  | `string` | ✅  | ✅      | ❌       | `Processing`                         |
 
-#### `DefaultScanMessageNFC`
+##### `DefaultScanMessageNFC`
 
 Represents the NFC scan messages during to Aziface SDK flow.
 
@@ -488,7 +613,7 @@ Represents the NFC scan messages during to Aziface SDK flow.
 | `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
 | `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing NFC Details`             |
 
-#### `DefaultScanMessageSkippedNFC`
+##### `DefaultScanMessageSkippedNFC`
 
 Represents the skipped NFC scan messages during to Aziface SDK flow.
 
@@ -499,7 +624,7 @@ Represents the skipped NFC scan messages during to Aziface SDK flow.
 | `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
 | `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing ID Details`              |
 
-#### `DefaultScanMessageSuccess`
+##### `DefaultScanMessageSuccess`
 
 Represents the success messages during to Aziface SDK flow.
 
@@ -515,7 +640,7 @@ Represents the success messages during to Aziface SDK flow.
 | `userConfirmation`          | `string` | ✅  | ✅      | ❌       | `Photo ID Scan Complete` |
 | `NFC`                       | `string` | ✅  | ✅      | ❌       | `ID Scan Complete`       |
 
-#### `DefaultScanMessageRetry`
+##### `DefaultScanMessageRetry`
 
 Represents the retry messages during to Aziface SDK flow.
 
@@ -525,6 +650,8 @@ Represents the retry messages during to Aziface SDK flow.
 | `IDNotFullyVisible`            | `string` | ✅  | ✅      | ❌       | `ID Document Not Fully Visible`     |
 | `OCRResultsNotGoodEnough`      | `string` | ✅  | ✅      | ❌       | `ID Text Not Legible`               |
 | `IDTypeNotSupported`           | `string` | ✅  | ✅      | ❌       | `ID Type Mismatch Please Try Again` |
+
+<hr/>
 
 ### `Errors`
 
@@ -540,7 +667,9 @@ Represents the retry messages during to Aziface SDK flow.
 
 <hr/>
 
-## Native Events
+## Native Events (Deprecated)
+
+In the near future we will remove native events for native components, with this you will be able to capture opening and closing events of the Aziface module on the screen.
 
 | Methods                                                              | Return Type                                                                                               | iOS | Android |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --- | ------- |
