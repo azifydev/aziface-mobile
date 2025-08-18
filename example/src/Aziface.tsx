@@ -14,6 +14,7 @@ import {
   enroll,
   initialize,
   photoMatch,
+  setTheme,
 } from '@azify/aziface-mobile';
 import * as pkg from '../package.json';
 import {
@@ -71,6 +72,11 @@ export default function Aziface() {
     };
 
     try {
+      setTheme({
+        image: {
+          logo: 'brand_logo',
+        },
+      });
       const isInit = await initialize({
         params,
         headers,
