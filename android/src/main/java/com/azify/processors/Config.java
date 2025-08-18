@@ -114,10 +114,8 @@ public class Config {
   public static FaceTecCustomization retrieveConfigurationWizardCustomization() {
     Theme theme = AzifaceMobileSdkModule.AziTheme;
 
-    FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getFaceTec()
+    FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
         .getButtonLocation("cancelButtonLocation");
-
-    FaceTecSecurityWatermarkImage securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
@@ -171,7 +169,7 @@ public class Config {
     defaultCustomization.getResultScreenCustomization().uploadProgressFillColor = theme.getResultScreen()
         .getUploadProgressFillColor();
 
-    defaultCustomization.securityWatermarkImage = securityWatermarkImage;
+    defaultCustomization.securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
 
     defaultCustomization.getIdScanCustomization().selectionScreenBackgroundColors = theme.getIdScan()
         .getSelectionScreen().getBackgroundColor();

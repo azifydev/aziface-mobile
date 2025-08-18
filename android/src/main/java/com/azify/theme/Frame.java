@@ -9,18 +9,18 @@ public class Frame extends CommonStyle {
   private static final String KEY = "frame";
   private final JSONObject theme;
   private final Color color;
-  private final FaceTec faceTec;
+  private final General general;
 
   public Frame() {
     super(KEY);
 
     this.theme = new Theme().getTarget(KEY);
     this.color = new Color();
-    this.faceTec = new FaceTec();
+    this.general = new General();
   }
 
   public int getCornerRadius() {
-    return this.faceTec.getBorderRadius(this.theme, "cornerRadius");
+    return this.general.getBorderRadius(this.theme, "cornerRadius");
   }
 
   public int getBorderColor() {

@@ -9,7 +9,7 @@ import com.facetec.sdk.FaceTecSDK;
 
 public class Theme {
   private final Color color;
-  private final FaceTec faceTec;
+  private final General general;
   private final Message message;
   private final Image image;
   private final Frame frame;
@@ -22,7 +22,7 @@ public class Theme {
 
   public Theme(ReactApplicationContext context) {
     this.color = new Color();
-    this.faceTec = new FaceTec();
+    this.general = new General();
     this.message = new Message();
     this.frame = new Frame();
     this.guidance = new Guidance();
@@ -106,8 +106,8 @@ public class Theme {
     return this.image.getImage(key, defaultImage);
   }
 
-  public FaceTec getFaceTec() {
-    return this.faceTec;
+  public General getGeneral() {
+    return this.general;
   }
 
   public Frame getFrame() {

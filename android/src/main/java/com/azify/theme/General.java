@@ -6,10 +6,10 @@ import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FaceTec {
+public class General {
   private final Theme theme;
 
-  public FaceTec() {
+  public General() {
     this.theme = new Theme();
   }
 
