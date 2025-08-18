@@ -21,15 +21,15 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   public var viewController: AziFaceViewController!
   public var faceScanResultCallback: FaceTecFaceScanResultCallback!
   public var idScanResultCallback: FaceTecIDScanResultCallback!
-
+  
   init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
     self.viewController = viewController
     self.latestExternalDatabaseRefID = self.viewController.getLatestExternalDatabaseRefID()
     self.data = data
     super.init()
-
+    
     let theme: Theme = AziFaceViewController.Style
-
+    
     FaceTecCustomization.setIDScanUploadMessageOverrides(
       frontSideUploadStarted: theme.getPhotoIDMatchMessage(
         "frontSide", key: "uploadStarted", defaultMessage: "Uploading\nEncrypted\nID Scan"),  // Upload of ID front-side has started.
@@ -84,30 +84,30 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         "skippedNFC", key: "uploadCompleteAwaitingProcessing",
         defaultMessage: "Processing\nID Details")  // Upload of ID Details is complete and we are waiting for the Server to finish processing and respond.
     )
-
+    
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
-
+    
     let idScanViewController = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, idScanProcessorDelegate: self, sessionToken: sessionToken)
   }
-
+  
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
     self.viewController.setLatestSessionResult(sessionResult: sessionResult)
-
+    
     self.faceScanResultCallback = faceScanResultCallback
-
+    
     if sessionResult.status != FaceTecSessionStatus.sessionCompletedSuccessfully {
       if latestNetworkRequest != nil {
         latestNetworkRequest.cancel()
       }
-
+      
       AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
       faceScanResultCallback.onFaceScanResultCancel()
       return
     }
-
+    
     // prepare parameters
     var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
     if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
@@ -120,33 +120,33 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     if let data = self.data {
       parameters["data"] = data
     }
-
+    
     let dynamicRoute = DynamicRoute()
     let route = dynamicRoute.getPathUrlEnrollment3d(target: "base")
-
+    
     do {
       var request = Config.makeRequest(url: route, httpMethod: "POST")
       request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-
+      
       let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
       latestNetworkRequest = session.dataTask(with: request) { [weak self] data, response, error in
         guard let self = self else { return }
-
+        
         if let error = error {
           print("Network error")
           self.faceScanResultCallback.onFaceScanResultCancel()
           return
         }
-
+        
         guard let data = data else {
           print("No data received from server.")
           self.faceScanResultCallback.onFaceScanResultCancel()
           return
         }
-
+        
         // decode response
         do {
-
+          
           guard
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: [])
               as? [String: AnyObject]
@@ -155,20 +155,20 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
             print("Missing 'data' in response.")
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           if let error = responseData["error"] as? Int, error != 0 {
             let errorMessage = responseData["errorMessage"] as? String
             print("Error in response")
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
                 let wasProcessed = responseData["wasProcessed"] as? Int
           else {
@@ -176,7 +176,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           if wasProcessed == 1 {
             let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
               "successMessage", defaultMessage: "Liveness Face Scanned\n3D Liveness Proven")
@@ -197,32 +197,32 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       print("Error creating request")
       faceScanResultCallback.onFaceScanResultCancel()
     }
-
+    
     // show loading message
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
-
+      
       let message = AziFaceViewController.Style.getPhotoIDMatchMessage(
         "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
       faceScanResultCallback.onFaceScanUploadMessageOverride(uploadMessageOverride: uploadMessage)
     }
   }
-
+  
   func processIDScanWhileFaceTecSDKWaits(
     idScanResult: FaceTecIDScanResult, idScanResultCallback: FaceTecIDScanResultCallback
   ) {
     self.viewController.setLatestIDScanResult(idScanResult: idScanResult)
-
+    
     self.idScanResultCallback = idScanResultCallback
-
+    
     if idScanResult.status != FaceTecIDScanStatus.success {
       latestNetworkRequest?.cancel()
       AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
       idScanResultCallback.onIDScanResultCancel()
       return
     }
-
+    
     // prepare parameters
     let minMatchLevel = 3
     var parameters: [String: Any] = [:]
@@ -235,11 +235,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     }
     parameters["minMatchLevel"] = minMatchLevel
     parameters["externalDatabaseRefID"] = self.latestExternalDatabaseRefID
-
+    
     let dynamicRoute = DynamicRoute()
     let route = dynamicRoute.getPathUrlMatch3d2dIdScan(target: "match")
     var request = Config.makeRequest(url: route, httpMethod: "POST")
-
+    
     do {
       request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
     } catch {
@@ -247,19 +247,19 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       idScanResultCallback.onIDScanResultCancel()
       return
     }
-
+    
     let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
     latestNetworkRequest = session.dataTask(with: request) { data, response, error in
       if let error = error {
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       guard let data = data else {
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       guard
         let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
           as? [String: AnyObject]
@@ -268,20 +268,20 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
         print("Missing 'data' in response.")
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       if let error = responseJSON["error"] as? Bool, error {
         let errorMessage = responseJSON["errorMessage"] as? String ?? "Erro desconhecido"
         print("Missing 'data' in response.")
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       guard let scanResultBlob = responseData["scanResultBlob"] as? String,
             let wasProcessed = responseData["wasProcessed"] as? Bool
       else {
@@ -289,10 +289,10 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         idScanResultCallback.onIDScanResultCancel()
         return
       }
-
+      
       if wasProcessed {
         let theme: Theme = AziFaceViewController.Style
-
+        
         FaceTecCustomization.setIDScanResultScreenMessageOverrides(
           successFrontSide: theme.getPhotoIDMatchMessage("success", key: "frontSide", defaultMessage: "ID Scan Complete"),
           successFrontSideBackNext: theme.getPhotoIDMatchMessage("success", key: "frontSideBackNext", defaultMessage: "Front of ID\nScanned"),
@@ -309,7 +309,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           retryIDTypeNotSupported: theme.getPhotoIDMatchMessage("retry", key: "IDTypeNotSupported", defaultMessage: "ID Type Mismatch\nPlease Try Again"),
           skipOrErrorNFC: theme.getPhotoIDMatchMessage("skipOrErrorNFC", defaultMessage: "ID Details\nUploaded")
         )
-
+        
         self.success = idScanResultCallback.onIDScanResultProceedToNextStep(
           scanResultBlob: scanResultBlob)
       } else {
@@ -318,10 +318,10 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         idScanResultCallback.onIDScanResultCancel()
       }
     }
-
+    
     latestNetworkRequest?.resume()
   }
-
+  
   func urlSession(
     _ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64,
     totalBytesSent: Int64, totalBytesExpectedToSend: Int64
@@ -333,11 +333,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       faceScanResultCallback.onFaceScanUploadProgress(uploadedPercent: uploadProgress)
     }
   }
-
+  
   func onFaceTecSDKCompletelyDone() {
     self.viewController.onComplete()
   }
-
+  
   func isSuccess() -> Bool {
     return success
   }
