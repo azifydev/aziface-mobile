@@ -209,53 +209,66 @@ const styles = StyleSheet.create({
 
 This is the **principal** method to be called, he must be **called first** to initialize the Aziface SDK. If he doens't be called the other methods **don't works!**
 
-| `Initialize` | type                            | Required | Default     |
-| ------------ | ------------------------------- | -------- | ----------- |
-| `params`     | [`Params`](#azifacesdkparams)   | ✅       | -           |
-| `headers`    | [`Headers`](#azifacesdkheaders) | ❌       | `undefined` |
+| `Initialize` | type                  | Required | Default     |
+| ------------ | --------------------- | -------- | ----------- |
+| `params`     | [`Params`](#params)   | ✅       | -           |
+| `headers`    | [`Headers`](#headers) | ❌       | `undefined` |
 
 ### `enroll`
 
 This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
 
-| `SessionParams<"base">` | type                                                    | Required | Default     |
-| ----------------------- | ------------------------------------------------------- | -------- | ----------- |
-| `data`                  | [`SessionBasePathUrl`](#azifacesdkcommonsessionpathurl) | ❌       | `undefined` |
+| `SessionParams<"base">` | type                                        | Required | Default     |
+| ----------------------- | ------------------------------------------- | -------- | ----------- |
+| `data`                  | [`SessionBasePathUrl`](#sessionbasepathurl) | ❌       | `undefined` |
 
 ### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
 
-| `SessionParams<"match">` | type                                                       | Required | Default     |
-| ------------------------ | ---------------------------------------------------------- | -------- | ----------- |
-| `data`                   | [`SessionMatchPathUrl`](#azifacesdkmultiplesessionpathurl) | ❌       | `undefined` |
+| `SessionParams<"match">` | type                                          | Required | Default     |
+| ------------------------ | --------------------------------------------- | -------- | ----------- |
+| `data`                   | [`SessionMatchPathUrl`](#sessionmatchpathurl) | ❌       | `undefined` |
 
 ### `setTheme`
 
 This method must be used to **set** the **theme** of the Aziface SDK screen.
 
-| Property  | type                        | Required | Default     |
-| --------- | --------------------------- | -------- | ----------- |
-| `options` | [`Theme`](#azifacesdktheme) | ❌       | `undefined` |
+| Property  | type              | Required | Default     |
+| --------- | ----------------- | -------- | ----------- |
+| `options` | [`Theme`](#theme) | ❌       | `undefined` |
 
 <hr/>
 
 ## Types
 
-| Types                                                                    | iOS | Android |
-| ------------------------------------------------------------------------ | --- | ------- |
-| [`Params`](#azifacesdkparams)                                            | ✅  | ✅      |
-| [`Headers`](#azifacesdkheaders)                                          | ✅  | ✅      |
-| [`SessionParams`](#azifacesdkcommonsessionparams)                        | ✅  | ✅      |
-| [`SessionBasePathUrl`](#azifacesdkcommonsessionpathurl)                  | ✅  | ✅      |
-| [`SessionMatchPathUrl`](#azifacesdkmultiplesessionpathurl)               | ✅  | ✅      |
-| [`Theme`](#azifacesdktheme)                                              | ✅  | ✅      |
-| [`ButtonLocation`](#azifacesdkbuttonlocation)                            | ✅  | ✅      |
-| [`StatusBarColor`](#azifacesdkstatusbarcolor-ios-only)                   | ✅  | ❌      |
-| [`FeedbackBackgroundColor`](#azifacesdkfeedbackbackgroundcolor-ios-only) | ✅  | ❌      |
-| [`Point`](#azifacesdkpoint-ios-only)                                     | ✅  | ❌      |
-| [`DefaultMessage`](#azifacesdkdefaultmessage)                            | ✅  | ✅      |
-| [`DefaultScanMessage`](#azifacesdkdefaultscanmessage)                    | ✅  | ✅      |
+| Types                                                                     | iOS | Android |
+| ------------------------------------------------------------------------- | --- | ------- |
+| [`Params`](#params)                                                       | ✅  | ✅      |
+| [`Headers`](#headers)                                                     | ✅  | ✅      |
+| [`SessionParams`](#sessionparamst)                                        | ✅  | ✅      |
+| [`SessionBasePathUrl`](#sessionbasepathurl)                               | ✅  | ✅      |
+| [`SessionMatchPathUrl`](#sessionmatchpathurl)                             | ✅  | ✅      |
+| [`Theme`](#theme)                                                         | ✅  | ✅      |
+| [`ButtonLocation`](#buttonlocation)                                       | ✅  | ✅      |
+| [`StatusBarColor`](#statusbarcolor-ios-only)                              | ✅  | ❌      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)            | ✅  | ❌      |
+| [`Point`](#point-ios-only)                                                | ✅  | ❌      |
+| [`DefaultMessage`](#defaultmessage)                                       | ✅  | ✅      |
+| [`DefaultScanMessage`](#defaultmessage)                                   | ✅  | ✅      |
+| [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | ✅  | ✅      |
+| [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | ✅  | ✅      |
+| [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | ✅  | ✅      |
+| [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | ✅  | ✅      |
+| [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | ✅  | ✅      |
+| [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | ✅  | ✅      |
+| [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | ✅  | ✅      |
+
+## Enums
+
+| Enums               | iOS | Android |
+| ------------------- | --- | ------- |
+| [`Errors`](#errors) | ✅  | ✅      |
 
 ### `Params`
 
