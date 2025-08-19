@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Your Selfie";
 "FaceTec_retry_ideal_image_label" = "Ideal Pose";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "We Need a Higher Quality Image";
+"FaceTec_retry_official_id_photo_instruction_message" = "Please try Indoor Lighting,\nNo Glare in Glasses, No Smiling & No Headwear";
+"FaceTec_retry_official_id_photo_your_image_label" = "Your Image";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Compliant Face";
+

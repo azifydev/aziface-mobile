@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Η σέλφι σας";
 "FaceTec_retry_ideal_image_label" = "Ιδανική πόζα";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "Χρειαζόμαστε καλύτερη ποιότητα";
+"FaceTec_retry_official_id_photo_instruction_message" = "Δοκίμασε σε εσωτερικό χώρο,\nΧωρίς έντονο φως, χαμόγελο και καπέλο";
+"FaceTec_retry_official_id_photo_your_image_label" = "Η εικόνα σου";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Συμμορφούμενο πρόσωπο";
+
