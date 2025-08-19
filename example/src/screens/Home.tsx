@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
 import {
   View,
   Text,
@@ -16,7 +14,7 @@ import {
   photoMatch,
   setTheme,
 } from '@azify/aziface-mobile';
-import * as pkg from '../package.json';
+import * as pkg from '../../package.json';
 import {
   getDeviceId,
   getFingerprintSync,
@@ -26,16 +24,16 @@ import {
   syncUniqueId,
 } from 'react-native-device-info';
 import md5 from 'md5';
-import { useBiometricConfigs } from './services/assemble.service';
+import { useBiometricConfigs } from '../services/client.service';
 import { styles } from './Style';
 import Config from 'react-native-config';
 import { useState } from 'react';
-import { useUser } from './hooks/useuser.hook';
+import { useUser } from '../hooks/useuser.hook';
 
-export default function Aziface() {
+export default function Home() {
   const { data: configs } = useBiometricConfigs();
-  const { token } = useUser();
-  const [processId, setProcessId] = useState('');
+  const { tokenBiometric, processId: process, logout } = useUser();
+  const [processId, setProcessId] = useState(process);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const isDisabledActions = !isInitialized || !processId;
@@ -46,9 +44,7 @@ export default function Aziface() {
     const userAgent = await getUserAgent?.();
     const xForwardedFor = getIpAddressSync?.();
     const headers = {
-      'Authorization': `${token}`,
-      'x-token-bearer': `${token}`,
-      'x-api-key': Config.X_API_KEY,
+      'x-token-bearer': `${tokenBiometric}`,
       'clientInfo': clientInfo,
       'contentType': 'application/json',
       'device': md5(
@@ -64,7 +60,7 @@ export default function Aziface() {
 
     const params = {
       isDeveloperMode: true,
-      processId: processId,
+      processId: processId || '',
       device: configs?.device || '',
       url: Config.API_URL_AZTECH,
       key: configs?.key || '',
@@ -149,6 +145,9 @@ export default function Aziface() {
         disabled={isDisabledActions}
       >
         <Text style={styles.buttonText}>Photo Match</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
+        <Text style={styles.textLogout}>Logout</Text>
       </TouchableOpacity>
     </View>
   );
