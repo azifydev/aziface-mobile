@@ -51,7 +51,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void initialize(ReadableMap params, ReadableMap headers, com.facebook.react.bridge.Callback callback) {
+  public void initialize(ReadableMap params, ReadableMap headers, Promise promise) {
     setPromise(promise);
 
     CommonParams parameters = new CommonParams(params);
@@ -61,7 +61,6 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       if (this.hasPromise()) {
         this.promise.reject("Parameters aren't provided", "ParamsNotProvided");
       }
-      callback.invoke(false);
       return;
     }
 
@@ -76,10 +75,12 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
             @Override
             public void onCompletion(final boolean successful) {
               isInitialized = successful;
-              if (hasPromise() && !successful) {
+              if (hasPromise() && !isInitialized) {
                 promise.reject("Initialization failed", "InitializationFailed");
               }
-              callback.invoke(successful);
+              if (isInitialized) {
+                promise.resolve(true);
+              }
             }
           });
     } else {
@@ -87,7 +88,6 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       if (this.hasPromise()) {
         promise.reject("Configuration aren't provided", "ConfigNotProvided");
       }
-      callback.invoke(false);
       return;
     }
 
