@@ -80,7 +80,6 @@ export function useBiometricSession() {
       if (response?.data?.token) {
         useUserStore.getState().setTokenBiometric(response?.data?.token);
       }
-      console.log('useBiometricSession Response:', response);
       return response?.data?.token;
     },
   });
