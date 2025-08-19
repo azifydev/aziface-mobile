@@ -18,7 +18,7 @@ import {
  */
 export function initialize({ params, headers }: Initialize): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    AzifaceMobileSdk.initializeSdk(params, headers, (successful: boolean) => {
+    AzifaceMobileSdk.initialize(params, headers, (successful: boolean) => {
       successful ? resolve(true) : reject(false);
     });
   });

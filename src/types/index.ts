@@ -1287,7 +1287,7 @@ export interface Methods {
    *
    * @return {Promise<boolean>} Represents if initialization was a successful.
    */
-  initializeSdk(
+  initialize(
     params: Params,
     headers?: Headers,
     callback?: Function
