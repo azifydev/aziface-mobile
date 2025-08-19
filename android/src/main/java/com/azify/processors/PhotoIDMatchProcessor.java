@@ -20,14 +20,14 @@ import com.facetec.sdk.*;
 public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanProcessor, FaceTecIDScanProcessor {
   private final String latestExternalDatabaseRefID;
   private final ReadableMap data;
-  private final AzifaceMobileSdkModule faceTecModule;
+  private final AzifaceMobileSdkModule module;
   private boolean success = false;
   private boolean faceScanWasSuccessful = false;
 
-  public PhotoIDMatchProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
+  public PhotoIDMatchProcessor(String sessionToken, Context context, AzifaceMobileSdkModule module,
       ReadableMap data) {
-    this.faceTecModule = faceTecModule;
-    this.latestExternalDatabaseRefID = this.faceTecModule.getLatestExternalDatabaseRefID();
+    this.module = module;
+    this.latestExternalDatabaseRefID = this.module.getLatestExternalDatabaseRefID();
     this.data = data;
 
     FaceTecCustomization.setIDScanUploadMessageOverrides(
@@ -102,21 +102,21 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
         AzifaceMobileSdkModule.AziTheme
             .getPhotoIDMatchMessage("skippedNFC", "uploadCompleteAwaitingProcessing", "Processing\nID Details"));
 
-    faceTecModule.sendEvent("onCloseModal", true);
+    module.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, PhotoIDMatchProcessor.this, PhotoIDMatchProcessor.this,
         sessionToken);
   }
 
   public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult,
       final FaceTecFaceScanResultCallback faceScanResultCallback) {
-    faceTecModule.setLatestSessionResult(sessionResult);
+    this.module.setLatestSessionResult(sessionResult);
 
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not session completed successfully!",
-          "AziFaceTecDifferentStatus");
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Status is not session completed successfully!",
+          "SessionStatusError");
       return;
     }
 
@@ -130,9 +130,8 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
       parameters.put("externalDatabaseRefID", this.latestExternalDatabaseRefID);
     } catch (JSONException e) {
-      e.printStackTrace();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
 
@@ -162,6 +161,16 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
           JSONObject responseJSON = new JSONObject(responseString);
           JSONObject responseJSONData = responseJSON.getJSONObject("data");
           boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          boolean error = responseJSONData.getBoolean("error");
+
+          if (error) {
+            faceScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("An error occurred while scanning",
+              "ProcessorError");
+            return;
+          }
+
           String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
@@ -171,15 +180,14 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
             faceScanWasSuccessful = faceScanResultCallback.proceedToNextStep(scanResultBlob);
           } else {
             faceScanResultCallback.cancel();
-            faceTecModule.sendEvent("onCloseModal", false);
-            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to liveness values processed!",
-                "AziFaceScanValuesWereNotProcessed");
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("AziFace SDK wasn't have to liveness values processed!",
+                "SessionNotProcessedError");
           }
         } catch (JSONException e) {
-          e.printStackTrace();
           faceScanResultCallback.cancel();
-          faceTecModule.sendEvent("onCloseModal", false);
-          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          module.sendEvent("onCloseModal", false);
+          module.promise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
       }
@@ -187,21 +195,21 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
         faceScanResultCallback.cancel();
-        faceTecModule.sendEvent("onCloseModal", false);
-        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        module.sendEvent("onCloseModal", false);
+        module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }
 
   public void processIDScanWhileFaceTecSDKWaits(final FaceTecIDScanResult idScanResult,
       final FaceTecIDScanResultCallback idScanResultCallback) {
-    faceTecModule.setLatestIDScanResult(idScanResult);
+    this.module.setLatestIDScanResult(idScanResult);
 
     if (idScanResult.getStatus() != FaceTecIDScanStatus.SUCCESS) {
       NetworkingHelpers.cancelPendingRequests();
       idScanResultCallback.cancel();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not success!", "AziFaceTecDifferentStatus");
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Scan status is not success!", "SessionScanStatusError");
       return;
     }
 
@@ -222,9 +230,8 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
         parameters.put("idScanBackImage", backImagesCompressedBase64.get(0));
       }
     } catch (JSONException e) {
-      e.printStackTrace();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Exception raised while attempting to parse JSON result.",
           "JSONError");
     }
 
@@ -254,6 +261,16 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
           JSONObject responseJSON = new JSONObject(responseString);
           JSONObject responseJSONData = responseJSON.getJSONObject("data");
           boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          boolean error = responseJSONData.getBoolean("error");
+
+          if (error) {
+            idScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("An error occurred while scanning",
+              "ProcessorError");
+            return;
+          }
+
           String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
@@ -309,19 +326,18 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
 
             success = idScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              faceTecModule.processorPromise.resolve(true);
+              module.promise.resolve(true);
             }
           } else {
             idScanResultCallback.cancel();
-            faceTecModule.sendEvent("onCloseModal", false);
-            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to scan values processed!",
-                "AziFaceScanValuesWereNotProcessed");
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("AziFace SDK wasn't have to scan values processed!",
+                "SessionNotProcessedError");
           }
         } catch (JSONException e) {
-          e.printStackTrace();
           idScanResultCallback.cancel();
-          faceTecModule.sendEvent("onCloseModal", false);
-          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          module.sendEvent("onCloseModal", false);
+          module.promise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
       }
@@ -329,8 +345,8 @@ public class PhotoIDMatchProcessor extends Processor implements FaceTecFaceScanP
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
         idScanResultCallback.cancel();
-        faceTecModule.sendEvent("onCloseModal", false);
-        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        module.sendEvent("onCloseModal", false);
+        module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }

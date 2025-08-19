@@ -11,7 +11,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
-import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   private boolean isInitialized = false;
   private boolean isSessionPreparingToLaunch = false;
   private String latestExternalDatabaseRefID = "";
-  public Promise processorPromise;
+  public Promise promise;
   public Processor latestProcessor;
   public FaceTecSessionResult latestSessionResult;
   public FaceTecIDScanResult latestIDScanResult;
@@ -52,15 +51,20 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void initializeSdk(ReadableMap params, ReadableMap headers, com.facebook.react.bridge.Callback callback) {
-    if (params == null) {
+  public void initialize(ReadableMap params, ReadableMap headers, com.facebook.react.bridge.Callback callback) {
+    setPromise(promise);
+
+    CommonParams parameters = new CommonParams(params);
+
+    if (parameters.isNull()) {
       isInitialized = false;
+      if (this.hasPromise()) {
+        this.promise.reject("Parameters aren't provided", "ParamsNotProvided");
+      }
       callback.invoke(false);
-      Log.d("Aziface", "No parameters provided!");
       return;
     }
 
-    CommonParams parameters = new CommonParams(params.toHashMap());
     parameters.setHeaders(headers);
     parameters.build();
 
@@ -72,18 +76,19 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
             @Override
             public void onCompletion(final boolean successful) {
               isInitialized = successful;
-              callback.invoke(successful);
-              if (!successful) {
-                Log.d("Aziface", "FaceTecSDK doesn't initialized!");
-              } else {
-                Log.d("Aziface", "FaceTecSDK initialized!");
+              if (hasPromise() && !successful) {
+                promise.reject("Initialization failed", "InitializationFailed");
               }
+              callback.invoke(successful);
             }
           });
     } else {
       isInitialized = false;
+      if (this.hasPromise()) {
+        promise.reject("Configuration aren't provided", "ConfigNotProvided");
+      }
       callback.invoke(false);
-      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
+      return;
     }
 
     this.setTheme(Theme.Style);
@@ -103,10 +108,8 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
     NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
       @Override
       public void onFailure(Call call, IOException e) {
-        e.printStackTrace();
-        Log.d("Aziface - HTTPS", "Exception raised while attempting HTTPS call.");
-        if (processorPromise != null) {
-          processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        if (hasPromise()) {
+          promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
         }
       }
 
@@ -121,17 +124,13 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
           if (responseJSONData.has("sessionToken")) {
             sessionTokenCallback.onSessionTokenReceived(responseJSONData.getString("sessionToken"));
           } else {
-            final String errorMessage = responseJSONData.has("errorMessage")
-                ? responseJSONData.getString("errorMessage")
-                : "Response JSON is missing sessionToken.";
-            if (processorPromise != null) {
-              processorPromise.reject(errorMessage, "JSONError");
+            if (hasPromise()) {
+              promise.reject("Response JSON is missing sessionToken.", "JSONError");
             }
           }
         } catch (JSONException e) {
-          e.printStackTrace();
-          if (processorPromise != null) {
-            processorPromise.reject("Exception raised while attempting to parse JSON result.", "JSONError");
+          if (hasPromise()) {
+            promise.reject("Exception raised while attempting to parse JSON result.", "JSONError");
           }
         }
       }
@@ -159,8 +158,12 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
     return this.latestExternalDatabaseRefID;
   }
 
-  public void setProcessorPromise(Promise promise) {
-    this.processorPromise = promise;
+  public void setPromise(Promise promise) {
+    this.promise = promise;
+  }
+
+  public Boolean hasPromise() {
+    return this.promise != null;
   }
 
   public void sendEvent(@NonNull String eventName, @Nullable Boolean eventValue) {
@@ -184,10 +187,10 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void handleEnrollUser(ReadableMap data, Promise promise) {
-    setProcessorPromise(promise);
+    setPromise(promise);
+
     if (!isInitialized) {
-      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
-      this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
+      this.promise.reject("FaceTecSDK doesn't initialized!", "NotInitialized");
       return;
     }
 
@@ -201,7 +204,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
         setLatestExternalDatabaseRefID("android_azify_app_" + randomUUID());
 
         if(data != null) {
-          CommonParams parameters = new CommonParams(data.toHashMap());
+          CommonParams parameters = new CommonParams(data);
           parameters.buildProcessorPathURL();
         }
 
@@ -213,10 +216,10 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void handleAuthenticateUser(ReadableMap data, Promise promise) {
-    setProcessorPromise(promise);
+    setPromise(promise);
+
     if (!isInitialized) {
-      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
-      this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
+      this.promise.reject("FaceTecSDK doesn't initialized!", "NotInitialized");
       return;
     }
 
@@ -230,7 +233,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
 
         if(data != null) {
-          CommonParams parameters = new CommonParams(data.toHashMap());
+          CommonParams parameters = new CommonParams(data);
           parameters.buildProcessorPathURL();
         }
 
@@ -242,10 +245,10 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void handlePhotoIDMatch(ReadableMap data, Promise promise) {
-    setProcessorPromise(promise);
+    setPromise(promise);
+
     if (!isInitialized) {
-      Log.d("Aziface", "FaceTecSDK doesn't initialized!");
-      this.processorPromise.reject("FaceTecSDK doesn't initialized!", "AziFaceHasNotBeenInitialized");
+      this.promise.reject("FaceTecSDK doesn't initialized!", "NotInitialized");
       return;
     }
 
@@ -260,7 +263,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
 
 
         if(data != null) {
-          CommonParams parameters = new CommonParams(data.toHashMap());
+          CommonParams parameters = new CommonParams(data);
           parameters.buildProcessorPathURL();
         }
 
