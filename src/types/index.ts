@@ -1287,11 +1287,7 @@ export interface Methods {
    *
    * @return {Promise<boolean>} Represents if initialization was a successful.
    */
-  initialize(
-    params: Params,
-    headers?: Headers,
-    callback?: Function
-  ): Promise<boolean>;
+  initialize(params: Params, headers?: Headers): Promise<boolean>;
 
   /**
    * @description This method make to read from face and documents for user,

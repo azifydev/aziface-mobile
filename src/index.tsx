@@ -16,12 +16,15 @@ import {
  * @return {Promise<boolean>} Represents if Aziface SDK initialized with
  * successful.
  */
-export function initialize({ params, headers }: Initialize): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    AzifaceMobileSdk.initialize(params, headers, (successful: boolean) => {
-      successful ? resolve(true) : reject(false);
+export async function initialize({
+  params,
+  headers,
+}: Initialize): Promise<boolean> {
+  return await AzifaceMobileSdk.initialize(params, headers)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
     });
-  });
 }
 
 /**

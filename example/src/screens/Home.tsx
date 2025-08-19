@@ -73,10 +73,7 @@ export default function Home() {
           logo: 'brand_logo',
         },
       });
-      const isInit = await initialize({
-        params,
-        headers,
-      });
+      const isInit = await initialize({ params, headers });
       setIsInitialized(isInit);
       console.log('isInitialized', isInit);
     } catch (error) {
