@@ -655,15 +655,18 @@ Represents the retry messages during to Aziface SDK flow.
 
 ### `Errors`
 
-| `Errors`                            | Description                                                                           | iOS | Android |
-| ----------------------------------- | ------------------------------------------------------------------------------------- | --- | ------- |
-| `AziFaceHasNotBeenInitialized`      | When some processors method is running, but Aziface SDK **has not been initialized**. | ✅  | ✅      |
-| `AziFaceValuesWereNotProcessed`     | When the image sent to the processors cannot be processed due to inconsistency.       | ✅  | ✅      |
-| `HTTPSError`                        | When exists some network error.                                                       | ✅  | ✅      |
-| `JSONError`                         | When exists some problem in getting data in request of **base URL** information.      | ❌  | ✅      |
-| `AziFaceInvalidSession`             | When session status is invalid.                                                       | ❌  | ✅      |
-| `AziFaceTecDifferentStatus`         | When session status is different of success.                                          | ❌  | ✅      |
-| `AziFaceScanValuesWereNotProcessed` | When the image ID sent to the processors cannot be processed due to inconsistency.    | ❌  | ✅      |
+| `Errors`                   | Description                                                                        | iOS | Android |
+| -------------------------- | ---------------------------------------------------------------------------------- | --- | ------- |
+| `ConfigNotProvided`        | When `device`, `url`, `key` and `productionKey` aren't provided.                   | ❌  | ✅      |
+| `HTTPSError`               | When exists some network error.                                                    | ❌  | ✅      |
+| `InitializationFailed`     | When parameters provided by initialize are inconsistent or invalid.                | ❌  | ✅      |
+| `JSONError`                | When exists some problem in getting `data` in request of **base URL** information. | ❌  | ✅      |
+| `ParamsNotProvided`        | When parameters aren't provided, this case, it is `null`.                          | ❌  | ✅      |
+| `NotInitialized`           | When session status is different of success.                                       | ❌  | ✅      |
+| `ProcessorError`           | When an unknown session error occurs.                                              | ❌  | ✅      |
+| `SessionNotProcessedError` | When the image ID sent to the processors cannot be processed due to inconsistency. | ❌  | ✅      |
+| `SessionScanStatusError`   | When scan session status isn't success. It's recommend try again.                  | ❌  | ✅      |
+| `SessionStatusError`       | When session status isn't of success. It's recommend try again.                    | ❌  | ✅      |
 
 <hr/>
 
