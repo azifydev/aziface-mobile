@@ -663,10 +663,10 @@ Represents the retry messages during to Aziface SDK flow.
 | `JSONError`                | When exists some problem in getting `data` in request of **base URL** information. | All      |
 | `ParamsNotProvided`        | When parameters aren't provided, this case, it is `null`.                          | All      |
 | `NotInitialized`           | When session status is different of success.                                       | All      |
-| `ProcessorError`           | When an unknown session error occurs.                                              | All      |
+| `ProcessorError`           | When an unknown session error occurs.                                              | Android  |
 | `SessionNotProcessedError` | When the image ID sent to the processors cannot be processed due to inconsistency. | All      |
-| `SessionScanStatusError`   | When scan session status isn't success. It's recommend try again.                  | All      |
-| `SessionStatusError`       | When session status isn't of success. It's recommend try again.                    | All      |
+| `SessionScanStatusError`   | When scan session status isn't success. It's recommend try again.                  | Android  |
+| `SessionStatusError`       | When session status isn't of success. It's recommend try again.                    | Android  |
 
 <hr/>
 
