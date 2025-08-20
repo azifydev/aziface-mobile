@@ -14,9 +14,10 @@
 
 @interface RCT_EXTERN_MODULE(AzifaceMobileSdk, RCTEventEmitter)
 
-RCT_EXTERN_METHOD(initializeSdk:(NSDictionary *)params
+RCT_EXTERN_METHOD(initialize:(NSDictionary *)params
                   headers:(NSDictionary *)headers
-                  callback:(RCTResponseSenderBlock)callback)
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
 RCT_EXTERN_METHOD(handleLivenessCheck:(NSDictionary *)data
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
