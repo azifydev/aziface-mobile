@@ -12,6 +12,7 @@ import {
   enroll,
   initialize,
   photoMatch,
+  setTheme,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -67,6 +68,11 @@ export default function Home() {
     };
 
     try {
+      setTheme({
+        image: {
+          logo: 'brand_logo',
+        },
+      });
       const isInit = await initialize({
         params,
         headers,
@@ -113,6 +119,8 @@ export default function Home() {
         style={styles.loginInput}
         value={processId}
         onChangeText={setProcessId}
+        placeholderTextColor="gray"
+        onSubmitEditing={onPressInit}
       />
       <TouchableOpacity
         style={[styles.button, { opacity: processId ? 1 : 0.5 }]}

@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Ваше селфи";
 "FaceTec_retry_ideal_image_label" = "Идеальная поза";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "Нужно фото лучшего качества";
+"FaceTec_retry_official_id_photo_instruction_message" = "Попробуйте внутреннее освещение.\nБез бликов, улыбки и головного убора";
+"FaceTec_retry_official_id_photo_your_image_label" = "Ваше изображение";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Соответствующее лицо";
+

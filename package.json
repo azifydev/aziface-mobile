@@ -37,13 +37,10 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace AzifaceMobileSdkExample",
-    "test": "jest",
     "typecheck": "tsc --noEmit",
     "prepack": "bob build",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
     "podspec": "pod ipc spec aziface-mobile-sdk.podspec",
-    "test:clean": "jest --clearCache",
     "release": "npx semantic-release --ci"
   },
   "keywords": [

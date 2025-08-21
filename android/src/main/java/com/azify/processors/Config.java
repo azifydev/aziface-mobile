@@ -2,9 +2,10 @@ package com.azify.processors;
 
 import android.content.Context;
 
+import com.azify.azifacemobilesdk.AzifaceMobileSdkModule;
+import com.azify.theme.Theme;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
-import com.azify.processors.helpers.ThemeUtils;
 import com.azify.azifacemobilesdk.R;
 
 import java.util.HashMap;
@@ -14,18 +15,17 @@ import okhttp3.Headers;
 import okhttp3.Request;
 
 public class Config {
-  private static final ThemeUtils AziThemeUtils = new ThemeUtils();
   public static String DeviceKeyIdentifier;
   public static String BaseURL;
   public static String ProcessId;
   public static String PublicFaceScanEncryptionKey;
   public static String ProductionKeyText;
-  public static Map<String, String> ProcessorPathURL = new HashMap<String, String>();
   public static ReadableMap Theme;
   public static ReadableMap RequestHeaders;
+  public static Map<String, String> ProcessorPathURL = new HashMap<String, String>();
 
   private static Map<String, String> parseReadableMapToMap() {
-    Map<String, String> headers = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<>();
 
     if (RequestHeaders == null) {
       return headers;
@@ -61,12 +61,7 @@ public class Config {
 
   public static Headers getHeaders(String httpMethod) {
     Map<String, String> headersMap = parseReadableMapToMap();
-    okhttp3.Headers headers = parseHeadersMapToHeaders(headersMap, httpMethod.toUpperCase());
-    return headers;
-  }
-
-  public static void setTheme(ReadableMap theme) {
-    Theme = theme;
+    return parseHeadersMapToHeaders(headersMap, httpMethod.toUpperCase());
   }
 
   public static void setDevice(String device) {
@@ -117,103 +112,96 @@ public class Config {
   }
 
   public static FaceTecCustomization retrieveConfigurationWizardCustomization() {
-    FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = AziThemeUtils
-        .handleButtonLocation("cancelButtonLocation");
+    Theme theme = AzifaceMobileSdkModule.AziTheme;
 
-    FaceTecSecurityWatermarkImage securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
+    FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
+        .getButtonLocation("cancelButtonLocation");
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
-    defaultCustomization.getFrameCustomization().cornerRadius = AziThemeUtils.handleBorderRadius("frameCornerRadius");
-    defaultCustomization.getFrameCustomization().backgroundColor = AziThemeUtils.handleColor("frameBackgroundColor");
-    defaultCustomization.getFrameCustomization().borderColor = AziThemeUtils.handleColor("frameBorderColor");
+    defaultCustomization.getFrameCustomization().cornerRadius = theme.getFrame().getCornerRadius();
+    defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
+    defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
 
-    defaultCustomization.getOverlayCustomization().brandingImage = AziThemeUtils.handleImage("logoImage",
-        R.drawable.facetec_your_app_logo);
-    defaultCustomization.getOverlayCustomization().backgroundColor = AziThemeUtils
-        .handleColor("overlayBackgroundColor");
+    defaultCustomization.getOverlayCustomization().brandingImage = theme
+        .getImage("logo", R.drawable.facetec_your_app_logo);
+    defaultCustomization.getOverlayCustomization().backgroundColor = theme
+        .getColor("overlayBackgroundColor");
 
-    defaultCustomization.getGuidanceCustomization().backgroundColors = AziThemeUtils.handleColor(
-        "guidanceBackgroundColorsAndroid");
-    defaultCustomization.getGuidanceCustomization().foregroundColor = AziThemeUtils.handleColor(
-        "guidanceForegroundColor",
-        "#272937");
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundNormalColor = AziThemeUtils.handleColor(
-        "guidanceButtonBackgroundNormalColor", "#026ff4");
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundDisabledColor = AziThemeUtils.handleColor(
-        "guidanceButtonBackgroundDisabledColor", "#b3d4fc");
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundHighlightColor = AziThemeUtils.handleColor(
-        "guidanceButtonBackgroundHighlightColor", "#0264dc");
-    defaultCustomization.getGuidanceCustomization().buttonTextNormalColor = AziThemeUtils.handleColor(
-        "guidanceButtonTextNormalColor");
-    defaultCustomization.getGuidanceCustomization().buttonTextDisabledColor = AziThemeUtils.handleColor(
-        "guidanceButtonTextDisabledColor");
-    defaultCustomization.getGuidanceCustomization().buttonTextHighlightColor = AziThemeUtils.handleColor(
-        "guidanceButtonTextHighlightColor");
-    defaultCustomization.getGuidanceCustomization().retryScreenImageBorderColor = AziThemeUtils.handleColor(
-        "guidanceRetryScreenImageBorderColor");
-    defaultCustomization.getGuidanceCustomization().retryScreenOvalStrokeColor = AziThemeUtils.handleColor(
-        "guidanceRetryScreenOvalStrokeColor");
+    defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
+    defaultCustomization.getGuidanceCustomization().foregroundColor = theme.getGuidance().getForegroundColor();
+    defaultCustomization.getGuidanceCustomization().buttonBackgroundNormalColor = theme.getGuidance()
+        .getButton().getBackgroundNormalColor();
+    defaultCustomization.getGuidanceCustomization().buttonBackgroundDisabledColor = theme.getGuidance()
+        .getButton().getBackgroundDisabledColor();
+    defaultCustomization.getGuidanceCustomization().buttonBackgroundHighlightColor = theme.getGuidance()
+        .getButton().getBackgroundHighlightColor();
+    defaultCustomization.getGuidanceCustomization().buttonTextNormalColor = theme.getGuidance().getButton()
+        .getTextNormalColor();
+    defaultCustomization.getGuidanceCustomization().buttonTextDisabledColor = theme.getGuidance().getButton()
+        .getTextDisabledColor();
+    defaultCustomization.getGuidanceCustomization().buttonTextHighlightColor = theme.getGuidance().getButton()
+        .getTextHighlightColor();
+    defaultCustomization.getGuidanceCustomization().retryScreenImageBorderColor = theme.getGuidance().getRetryScreen()
+        .getImageBorderColor();
+    defaultCustomization.getGuidanceCustomization().retryScreenOvalStrokeColor = theme.getGuidance().getRetryScreen()
+        .getOvalStrokeColor();
 
-    defaultCustomization.getOvalCustomization().strokeColor = AziThemeUtils.handleColor("ovalStrokeColor", "#026ff4");
-    defaultCustomization.getOvalCustomization().progressColor1 = AziThemeUtils.handleColor("ovalFirstProgressColor",
-        "#0264dc");
-    defaultCustomization.getOvalCustomization().progressColor2 = AziThemeUtils.handleColor("ovalSecondProgressColor",
-        "#0264dc");
+    defaultCustomization.getOvalCustomization().strokeColor = theme.getOval().getStrokeColor();
+    defaultCustomization.getOvalCustomization().progressColor1 = theme.getOval().getFirstProgressColor();
+    defaultCustomization.getOvalCustomization().progressColor2 = theme.getOval().getSecondProgressColor();
 
-    defaultCustomization.getFeedbackCustomization().backgroundColors = AziThemeUtils.handleColor(
-        "feedbackBackgroundColorsAndroid",
-        "#026ff4");
-    defaultCustomization.getFeedbackCustomization().textColor = AziThemeUtils.handleColor("feedbackTextColor");
+    defaultCustomization.getFeedbackCustomization().backgroundColors = theme.getFeedback().getBackgroundColor();
+    defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
 
-    defaultCustomization.getCancelButtonCustomization().customImage = AziThemeUtils.handleImage("cancelImage",
+    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage("cancel",
         R.drawable.facetec_cancel);
     defaultCustomization.getCancelButtonCustomization().setLocation(cancelButtonLocation);
 
-    defaultCustomization.getResultScreenCustomization().backgroundColors = AziThemeUtils.handleColor(
-        "resultScreenBackgroundColorsAndroid");
-    defaultCustomization.getResultScreenCustomization().foregroundColor = AziThemeUtils.handleColor(
-        "resultScreenForegroundColor",
-        "#272937");
-    defaultCustomization.getResultScreenCustomization().activityIndicatorColor = AziThemeUtils.handleColor(
-        "resultScreenActivityIndicatorColor", "#026ff4");
-    defaultCustomization.getResultScreenCustomization().resultAnimationBackgroundColor = AziThemeUtils.handleColor(
-        "resultScreenResultAnimationBackgroundColor", "#026ff4");
-    defaultCustomization.getResultScreenCustomization().resultAnimationForegroundColor = AziThemeUtils.handleColor(
-        "resultScreenResultAnimationForegroundColor");
-    defaultCustomization.getResultScreenCustomization().uploadProgressFillColor = AziThemeUtils.handleColor(
-        "resultScreenUploadProgressFillColor", "#026ff4");
+    defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();
+    defaultCustomization.getResultScreenCustomization().foregroundColor = theme.getResultScreen().getForegroundColor();
+    defaultCustomization.getResultScreenCustomization().activityIndicatorColor = theme.getResultScreen()
+        .getActivityIndicatorColor();
+    defaultCustomization.getResultScreenCustomization().resultAnimationBackgroundColor = theme.getResultScreen()
+        .getResultAnimation().getBackgroundColor();
+    defaultCustomization.getResultScreenCustomization().resultAnimationForegroundColor = theme.getResultScreen()
+        .getResultAnimation().getForegroundColor();
+    defaultCustomization.getResultScreenCustomization().uploadProgressFillColor = theme.getResultScreen()
+        .getUploadProgressFillColor();
 
-    defaultCustomization.securityWatermarkImage = securityWatermarkImage;
+    defaultCustomization.securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
 
-    defaultCustomization.getIdScanCustomization().selectionScreenBackgroundColors = AziThemeUtils.handleColor(
-        "idScanSelectionScreenBackgroundColorsAndroid");
-    defaultCustomization.getIdScanCustomization().selectionScreenForegroundColor = AziThemeUtils.handleColor(
-        "idScanSelectionScreenForegroundColor", "#272937");
-    defaultCustomization.getIdScanCustomization().reviewScreenForegroundColor = AziThemeUtils.handleColor(
-        "idScanReviewScreenForegroundColor");
-    defaultCustomization.getIdScanCustomization().reviewScreenTextBackgroundColor = AziThemeUtils.handleColor(
-        "idScanReviewScreenTextBackgroundColor", "#026ff4");
-    defaultCustomization.getIdScanCustomization().captureScreenForegroundColor = AziThemeUtils.handleColor(
-        "idScanCaptureScreenForegroundColor");
-    defaultCustomization.getIdScanCustomization().captureScreenTextBackgroundColor = AziThemeUtils.handleColor(
-        "idScanCaptureScreenTextBackgroundColor", "#026ff4");
-    defaultCustomization.getIdScanCustomization().buttonBackgroundNormalColor = AziThemeUtils.handleColor(
-        "idScanButtonBackgroundNormalColor", "#026ff4");
-    defaultCustomization.getIdScanCustomization().buttonBackgroundDisabledColor = AziThemeUtils.handleColor(
-        "idScanButtonBackgroundDisabledColor", "#b3d4fc");
-    defaultCustomization.getIdScanCustomization().buttonBackgroundHighlightColor = AziThemeUtils.handleColor(
-        "idScanButtonBackgroundHighlightColor", "#0264dc");
-    defaultCustomization.getIdScanCustomization().buttonTextNormalColor = AziThemeUtils.handleColor(
-        "idScanButtonTextNormalColor");
-    defaultCustomization.getIdScanCustomization().buttonTextDisabledColor = AziThemeUtils.handleColor(
-        "idScanButtonTextDisabledColor");
-    defaultCustomization.getIdScanCustomization().buttonTextHighlightColor = AziThemeUtils.handleColor(
-        "idScanButtonTextHighlightColor");
-    defaultCustomization.getIdScanCustomization().captureScreenBackgroundColor = AziThemeUtils.handleColor(
-        "idScanCaptureScreenBackgroundColor");
-    defaultCustomization.getIdScanCustomization().captureFrameStrokeColor = AziThemeUtils.handleColor(
-        "idScanCaptureFrameStrokeColor");
+    defaultCustomization.getIdScanCustomization().selectionScreenBackgroundColors = theme.getIdScan()
+        .getSelectionScreen().getBackgroundColor();
+    defaultCustomization.getIdScanCustomization().selectionScreenForegroundColor = theme.getIdScan()
+        .getSelectionScreen().getForegroundColor();
+
+    defaultCustomization.getIdScanCustomization().reviewScreenForegroundColor = theme.getIdScan().getReviewScreen()
+        .getForegroundColor();
+    defaultCustomization.getIdScanCustomization().reviewScreenTextBackgroundColor = theme.getIdScan().getReviewScreen()
+        .getTextBackgroundColor();
+
+    defaultCustomization.getIdScanCustomization().captureScreenForegroundColor = theme.getIdScan().getCaptureScreen()
+        .getForegroundColor();
+    defaultCustomization.getIdScanCustomization().captureScreenTextBackgroundColor = theme.getIdScan()
+        .getCaptureScreen().getTextBackgroundColor();
+    defaultCustomization.getIdScanCustomization().captureScreenBackgroundColor = theme.getIdScan().getCaptureScreen()
+        .getBackgroundColor();
+    defaultCustomization.getIdScanCustomization().captureFrameStrokeColor = theme.getIdScan().getCaptureScreen()
+        .getFrameStrokeColor();
+
+    defaultCustomization.getIdScanCustomization().buttonBackgroundNormalColor = theme.getIdScan().getButton()
+        .getBackgroundNormalColor();
+    defaultCustomization.getIdScanCustomization().buttonBackgroundDisabledColor = theme.getIdScan().getButton()
+        .getBackgroundDisabledColor();
+    defaultCustomization.getIdScanCustomization().buttonBackgroundHighlightColor = theme.getIdScan().getButton()
+        .getBackgroundHighlightColor();
+    defaultCustomization.getIdScanCustomization().buttonTextNormalColor = theme.getIdScan().getButton()
+        .getTextNormalColor();
+    defaultCustomization.getIdScanCustomization().buttonTextDisabledColor = theme.getIdScan().getButton()
+        .getTextDisabledColor();
+    defaultCustomization.getIdScanCustomization().buttonTextHighlightColor = theme.getIdScan().getButton()
+        .getTextHighlightColor();
 
     return defaultCustomization;
   }

@@ -13,5 +13,4 @@
 #import <React/RCTEventEmitter.h>
 #import <React/RCTViewManager.h>
 
-
 #endif /* AzifaceMobileSdk_Bridging_Header_h */

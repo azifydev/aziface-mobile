@@ -18,8 +18,6 @@ public class Config {
   public static var ProductionKeyText: String!
   public static var ProcessorPathURL: [String: String]! = [:]
   public static var Headers: NSDictionary?
-  public static var Theme: NSDictionary?
-  private static let AziThemeUtils: ThemeUtils! = ThemeUtils()
 
   public static func setDevice(_ device: String) {
     Config.DeviceKeyIdentifier = device
@@ -47,10 +45,6 @@ public class Config {
 
   public static func setHeaders(_ headers: NSDictionary?) {
     Config.Headers = headers
-  }
-
-  public static func setTheme(_ theme: NSDictionary?) {
-    Config.Theme = theme
   }
 
   public static func hasConfig() -> Bool {
@@ -99,104 +93,97 @@ public class Config {
   }
 
   public static func retrieveConfigurationWizardCustomization() -> FaceTecCustomization {
-    let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
+    let theme = Theme()
 
     let defaultCustomization = FaceTecCustomization()
 
-    defaultCustomization.frameCustomization.cornerRadius = AziThemeUtils.handleBorderRadius(
-      "frameCornerRadius")
-    defaultCustomization.frameCustomization.backgroundColor = AziThemeUtils.handleColor(
-      "frameBackgroundColor")
-    defaultCustomization.frameCustomization.borderColor = AziThemeUtils.handleColor(
-      "frameBorderColor")
+    defaultCustomization.frameCustomization.cornerRadius = theme.getFrame().getCornerRadius()
+    defaultCustomization.frameCustomization.backgroundColor = theme.getFrame().getBackgroundColor()
+    defaultCustomization.frameCustomization.borderColor = theme.getFrame().getBorderColor()
 
-    defaultCustomization.overlayCustomization.brandingImage = AziThemeUtils.handleImage(
-      "logoImage", defaultImage: "facetec_your_app_logo")
-    defaultCustomization.overlayCustomization.backgroundColor = AziThemeUtils.handleColor(
+    defaultCustomization.overlayCustomization.brandingImage = theme.getImage(
+      "logo", defaultImage: "facetec_your_app_logo")
+    defaultCustomization.overlayCustomization.backgroundColor = theme.getColor(
       "overlayBackgroundColor")
 
-    defaultCustomization.guidanceCustomization.backgroundColors =
-      AziThemeUtils.handleSimpleLinearGradient("guidanceBackgroundColorsIos")
-    defaultCustomization.guidanceCustomization.foregroundColor = AziThemeUtils.handleColor(
-      "guidanceForegroundColor", defaultColor: "#272937")
-    defaultCustomization.guidanceCustomization.buttonBackgroundNormalColor =
-      AziThemeUtils.handleColor("guidanceButtonBackgroundNormalColor", defaultColor: "#026ff4")
-    defaultCustomization.guidanceCustomization.buttonBackgroundDisabledColor =
-      AziThemeUtils.handleColor("guidanceButtonBackgroundDisabledColor", defaultColor: "#b3d4fc")
-    defaultCustomization.guidanceCustomization.buttonBackgroundHighlightColor =
-      AziThemeUtils.handleColor("guidanceButtonBackgroundHighlightColor", defaultColor: "#0264dc")
-    defaultCustomization.guidanceCustomization.buttonTextNormalColor = AziThemeUtils.handleColor(
-      "guidanceButtonTextNormalColor")
-    defaultCustomization.guidanceCustomization.buttonTextDisabledColor = AziThemeUtils.handleColor(
-      "guidanceButtonTextDisabledColor")
-    defaultCustomization.guidanceCustomization.buttonTextHighlightColor = AziThemeUtils.handleColor(
-      "guidanceButtonTextHighlightColor")
-    defaultCustomization.guidanceCustomization.retryScreenImageBorderColor =
-      AziThemeUtils.handleColor("guidanceRetryScreenImageBorderColor")
-    defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor =
-      AziThemeUtils.handleColor("guidanceRetryScreenOvalStrokeColor")
+    defaultCustomization.guidanceCustomization.backgroundColors = theme.getGuidance()
+      .getBackgroundColors()
+    defaultCustomization.guidanceCustomization.foregroundColor = theme.getGuidance()
+      .getForegroundColor()
+    defaultCustomization.guidanceCustomization.buttonBackgroundNormalColor = theme.getGuidance()
+      .getButton().getBackgroundNormalColor()
+    defaultCustomization.guidanceCustomization.buttonBackgroundDisabledColor = theme.getGuidance()
+      .getButton().getBackgroundDisabledColor()
+    defaultCustomization.guidanceCustomization.buttonBackgroundHighlightColor = theme.getGuidance()
+      .getButton().getBackgroundHighlightColor()
+    defaultCustomization.guidanceCustomization.buttonTextNormalColor = theme.getGuidance()
+      .getButton().getTextNormalColor()
+    defaultCustomization.guidanceCustomization.buttonTextDisabledColor = theme.getGuidance()
+      .getButton().getTextDisabledColor()
+    defaultCustomization.guidanceCustomization.buttonTextHighlightColor = theme.getGuidance()
+      .getButton().getTextHighlightColor()
+    defaultCustomization.guidanceCustomization.retryScreenImageBorderColor = theme.getGuidance()
+      .getRetryScreen().getImageBorderColor()
+    defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor = theme.getGuidance()
+      .getRetryScreen().getOvalStrokeColor()
 
-    defaultCustomization.ovalCustomization.strokeColor = AziThemeUtils.handleColor(
-      "ovalStrokeColor", defaultColor: "#026ff4")
-    defaultCustomization.ovalCustomization.progressColor1 = AziThemeUtils.handleColor(
-      "ovalFirstProgressColor", defaultColor: "#0264dc")
-    defaultCustomization.ovalCustomization.progressColor2 = AziThemeUtils.handleColor(
-      "ovalSecondProgressColor", defaultColor: "#0264dc")
+    defaultCustomization.ovalCustomization.strokeColor = theme.getOval().getStrokeColor()
+    defaultCustomization.ovalCustomization.progressColor1 = theme.getOval().getFirstProgressColor()
+    defaultCustomization.ovalCustomization.progressColor2 = theme.getOval().getSecondProgressColor()
 
-    defaultCustomization.feedbackCustomization.backgroundColor = AziThemeUtils.handleCAGradient(
-      "feedbackBackgroundColorsIos")
-    defaultCustomization.feedbackCustomization.textColor = AziThemeUtils.handleColor(
-      "feedbackTextColor")
+    defaultCustomization.feedbackCustomization.backgroundColor = theme.getFeedback()
+      .getGradientBackgroundColors()
+    defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
 
-    defaultCustomization.cancelButtonCustomization.customImage = AziThemeUtils.handleImage(
-      "cancelImage", defaultImage: "facetec_cancel")
-    defaultCustomization.cancelButtonCustomization.location = AziThemeUtils.handleButtonLocation(
+    defaultCustomization.cancelButtonCustomization.customImage = theme.getImage(
+      "cancel", defaultImage: "facetec_cancel")
+    defaultCustomization.cancelButtonCustomization.location = theme.getGeneral().getButtonLocation(
       "cancelButtonLocation")
 
-    defaultCustomization.resultScreenCustomization.backgroundColors =
-      AziThemeUtils.handleSimpleLinearGradient("resultScreenBackgroundColorsIos")
-    defaultCustomization.resultScreenCustomization.foregroundColor = AziThemeUtils.handleColor(
-      "resultScreenForegroundColor", defaultColor: "#272937")
-    defaultCustomization.resultScreenCustomization.activityIndicatorColor =
-      AziThemeUtils.handleColor("resultScreenActivityIndicatorColor", defaultColor: "#026ff4")
+    defaultCustomization.resultScreenCustomization.backgroundColors = theme.getResultScreen()
+      .getBackgroundColors()
+    defaultCustomization.resultScreenCustomization.foregroundColor = theme.getResultScreen()
+      .getForegroundColor()
+    defaultCustomization.resultScreenCustomization.activityIndicatorColor = theme.getResultScreen()
+      .getActivityIndicatorColor()
     defaultCustomization.resultScreenCustomization.resultAnimationBackgroundColor =
-      AziThemeUtils.handleColor(
-        "resultScreenResultAnimationBackgroundColor", defaultColor: "#026ff4")
+      theme.getResultScreen().getResultAnimation().getBackgroundColor()
     defaultCustomization.resultScreenCustomization.resultAnimationForegroundColor =
-      AziThemeUtils.handleColor("resultScreenResultAnimationForegroundColor")
-    defaultCustomization.resultScreenCustomization.uploadProgressFillColor =
-      AziThemeUtils.handleColor("resultScreenUploadProgressFillColor", defaultColor: "#026ff4")
+      theme.getResultScreen().getResultAnimation().getForegroundColor()
+    defaultCustomization.resultScreenCustomization.uploadProgressFillColor = theme.getResultScreen()
+      .getUploadProgressFillColor()
 
+    let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
     defaultCustomization.securityWatermarkImage = securityWatermarkImage
 
-    defaultCustomization.idScanCustomization.selectionScreenBackgroundColors =
-      AziThemeUtils.handleSimpleLinearGradient("idScanSelectionScreenBackgroundColorsIos")
-    defaultCustomization.idScanCustomization.selectionScreenForegroundColor =
-      AziThemeUtils.handleColor("idScanSelectionScreenForegroundColor", defaultColor: "#272937")
-    defaultCustomization.idScanCustomization.reviewScreenForegroundColor =
-      AziThemeUtils.handleColor("idScanReviewScreenForegroundColor")
-    defaultCustomization.idScanCustomization.reviewScreenTextBackgroundColor =
-      AziThemeUtils.handleColor("idScanReviewScreenTextBackgroundColor", defaultColor: "#026ff4")
-    defaultCustomization.idScanCustomization.captureScreenForegroundColor =
-      AziThemeUtils.handleColor("idScanCaptureScreenForegroundColor")
-    defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor =
-      AziThemeUtils.handleColor("idScanCaptureScreenTextBackgroundColor", defaultColor: "#026ff4")
-    defaultCustomization.idScanCustomization.buttonBackgroundNormalColor =
-      AziThemeUtils.handleColor("idScanButtonBackgroundNormalColor", defaultColor: "#026ff4")
-    defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor =
-      AziThemeUtils.handleColor("idScanButtonBackgroundDisabledColor", defaultColor: "#b3d4fc")
-    defaultCustomization.idScanCustomization.buttonBackgroundHighlightColor =
-      AziThemeUtils.handleColor("idScanButtonBackgroundHighlightColor", defaultColor: "#0264dc")
-    defaultCustomization.idScanCustomization.buttonTextNormalColor = AziThemeUtils.handleColor(
-      "idScanButtonTextNormalColor")
-    defaultCustomization.idScanCustomization.buttonTextDisabledColor = AziThemeUtils.handleColor(
-      "idScanButtonTextDisabledColor")
-    defaultCustomization.idScanCustomization.buttonTextHighlightColor = AziThemeUtils.handleColor(
-      "idScanButtonTextHighlightColor")
-    defaultCustomization.idScanCustomization.captureScreenBackgroundColor =
-      AziThemeUtils.handleColor("idScanCaptureScreenBackgroundColor")
-    defaultCustomization.idScanCustomization.captureFrameStrokeColor = AziThemeUtils.handleColor(
-      "idScanCaptureFrameStrokeColor")
+    defaultCustomization.idScanCustomization.selectionScreenBackgroundColors = theme.getIdScan()
+      .getSelectionScreen().getBackgroundColors()
+    defaultCustomization.idScanCustomization.selectionScreenForegroundColor = theme.getIdScan()
+      .getSelectionScreen().getForegroundColor()
+    defaultCustomization.idScanCustomization.reviewScreenForegroundColor = theme.getIdScan()
+      .getReviewScreen().getForegroundColor()
+    defaultCustomization.idScanCustomization.reviewScreenTextBackgroundColor = theme.getIdScan()
+      .getReviewScreen().getTextBackgroundColor()
+    defaultCustomization.idScanCustomization.captureScreenForegroundColor = theme.getIdScan()
+      .getCaptureScreen().getForegroundColor()
+    defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor = theme.getIdScan()
+      .getCaptureScreen().getTextBackgroundColor()
+    defaultCustomization.idScanCustomization.captureScreenBackgroundColor = theme.getIdScan()
+      .getCaptureScreen().getBackgroundColor()
+    defaultCustomization.idScanCustomization.captureFrameStrokeColor = theme.getIdScan()
+      .getCaptureScreen().getFrameStrokeColor()
+    defaultCustomization.idScanCustomization.buttonBackgroundNormalColor = theme.getIdScan()
+      .getButton().getBackgroundNormalColor()
+    defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor = theme.getIdScan()
+      .getButton().getBackgroundDisabledColor()
+    defaultCustomization.idScanCustomization.buttonBackgroundHighlightColor = theme.getIdScan()
+      .getButton().getBackgroundHighlightColor()
+    defaultCustomization.idScanCustomization.buttonTextNormalColor = theme.getIdScan().getButton()
+      .getTextNormalColor()
+    defaultCustomization.idScanCustomization.buttonTextDisabledColor = theme.getIdScan().getButton()
+      .getTextDisabledColor()
+    defaultCustomization.idScanCustomization.buttonTextHighlightColor = theme.getIdScan()
+      .getButton().getTextHighlightColor()
 
     return defaultCustomization
   }

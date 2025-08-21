@@ -12,20 +12,20 @@ import LocalAuthentication
 import UIKit
 
 class AziFaceViewController: UIViewController, URLSessionDelegate {
-  var isSuccess: Bool! = false
-  var latestExternalDatabaseRefID: String = ""
-  var latestSessionResult: FaceTecSessionResult!
-  var latestIDScanResult: FaceTecIDScanResult!
-  var processorRevolver: RCTPromiseResolveBlock!
-  var processorRejecter: RCTPromiseRejectBlock!
-  var latestProcessor: Processor!
-  var utils: FaceTecUtilities!
+  public var isSuccess: Bool! = false
+  public var latestExternalDatabaseRefID: String = ""
+  public var latestSessionResult: FaceTecSessionResult!
+  public var latestIDScanResult: FaceTecIDScanResult!
+  public var processorRevolver: RCTPromiseResolveBlock!
+  public var processorRejecter: RCTPromiseRejectBlock!
+  public var latestProcessor: Processor!
+  
   @IBOutlet weak var themeTransitionText: UILabel!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
   }
-
+  
   func onLivenessCheck(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
@@ -34,10 +34,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = LivenessCheckProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-
+  
   func onEnrollUser(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
@@ -47,10 +47,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
       self.latestProcessor = EnrollmentProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-
+  
   func onAuthenticateUser(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
@@ -59,10 +59,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = AuthenticateProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-
+  
   func onPhotoIDMatch(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
@@ -72,10 +72,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
       self.latestProcessor = PhotoIDMatchProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-
+  
   func onPhotoIDScan(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
@@ -84,19 +84,19 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = PhotoIDScanProcessor(
-        sessionToken: sessionToken, fromViewController: self, data: data)
+        sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-
+  
   func onComplete() {
-    UIApplication.shared.statusBarStyle = FaceTecUtilities.DefaultStatusBarStyle
-
+    self.setNeedsStatusBarAppearanceUpdate()
+    
     if self.latestProcessor != nil {
       self.isSuccess = self.latestProcessor.isSuccess()
     }
-
+    
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
-
+    
     if !self.isSuccess {
       self.latestExternalDatabaseRefID = ""
       self.processorRejecter(
@@ -105,31 +105,31 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.processorRevolver(self.isSuccess)
     }
   }
-
+  
   func setLatestSessionResult(sessionResult: FaceTecSessionResult) {
     latestSessionResult = sessionResult
   }
-
+  
   func setLatestIDScanResult(idScanResult: FaceTecIDScanResult) {
     latestIDScanResult = idScanResult
   }
-
+  
   func resetLatestResults() {
     latestSessionResult = nil
     latestIDScanResult = nil
   }
-
+  
   func getLatestExternalDatabaseRefID() -> String {
     return latestExternalDatabaseRefID
   }
-
+  
   func setProcessorPromise(
     _ resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock
   ) {
     self.processorRevolver = resolver
     self.processorRejecter = rejecter
   }
-
+  
   func getSessionToken(sessionTokenCallback: @escaping (String) -> Void) {
     let request = Config.makeRequest(url: "/Process/Session/Token", httpMethod: "GET")
     let session = URLSession(
@@ -143,14 +143,14 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
             self.processorRejecter(
               "Exception raised while attempting HTTPS call.", "HTTPSError", nil)
           }
+          
           return
         }
-
+        
         if let responseJSONObj = try? JSONSerialization.jsonObject(
           with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-          as! [String: AnyObject]
+            as! [String: AnyObject]
         {
-
           if let dataObj = responseJSONObj["data"] as? [String: AnyObject] {
             if let sessionToken = dataObj["sessionToken"] as? String {
               sessionTokenCallback(sessionToken)
@@ -161,12 +161,13 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
           } else {
             print("Data object not found.")
           }
-
+          
           if let processorRejecter = self.processorRejecter {
             processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
           }
         }
       })
+    
     task.resume()
   }
 }

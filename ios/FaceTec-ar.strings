@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "صورتك الذاتية";
 "FaceTec_retry_ideal_image_label" = "الوضعية المثالية";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "نحتاج إلى صورة عالية الجودة.";
+"FaceTec_retry_official_id_photo_instruction_message" = "يُرجى استخدام إضاءة داخلية،\nدون نظارة شمسية أو ابتسام أو غطاء رأس.";
+"FaceTec_retry_official_id_photo_your_image_label" = "صورتك";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "الوجه المتوافق";
+

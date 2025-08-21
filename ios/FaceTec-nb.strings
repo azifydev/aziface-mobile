@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Selfien din";
 "FaceTec_retry_ideal_image_label" = "Ideell posering";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "Trenger høyere bildekvalitet";
+"FaceTec_retry_official_id_photo_instruction_message" = "Prøv innendørsbelysning,\nIkke gjenskinn i briller, ikke smil/hodeplagg";
+"FaceTec_retry_official_id_photo_your_image_label" = "Ditt bilde";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Samsvarende ansikt";
+

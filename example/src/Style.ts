@@ -4,8 +4,8 @@ const padding = 20;
 
 export const styles = StyleSheet.create({
   container: {
+    padding,
     flex: 1,
-    padding: padding,
     backgroundColor: '#ffffff',
   },
 });

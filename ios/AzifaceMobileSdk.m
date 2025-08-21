@@ -32,7 +32,7 @@ RCT_EXTERN_METHOD(handlePhotoIDMatch:(NSDictionary *)data
 RCT_EXTERN_METHOD(handlePhotoIDScan:(NSDictionary *)data
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
-RCT_EXTERN_METHOD(handleTheme:(NSDictionary *)options)
+RCT_EXTERN_METHOD(setTheme:(NSDictionary *)options)
 RCT_EXTERN_METHOD(supportedEvents)
 
 @end

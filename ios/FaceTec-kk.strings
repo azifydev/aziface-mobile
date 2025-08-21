@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Сенің сенсің";
 "FaceTec_retry_ideal_image_label" = "Идеалды поза";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "Сапасы жоғары сурет керек";
+"FaceTec_retry_official_id_photo_instruction_message" = "Ішкі жарықты қолданыңыз,\nКөзілдірікте жарқылсыз, күлмеңіз, бас киімсіз";
+"FaceTec_retry_official_id_photo_your_image_label" = "Сіздің Суретіңіз";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Үйлесімді Тұлға";
+

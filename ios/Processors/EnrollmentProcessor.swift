@@ -11,43 +11,42 @@ import Foundation
 import UIKit
 
 class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-  URLSessionTaskDelegate
+                           URLSessionTaskDelegate
 {
-  var success = false
-  var data: NSDictionary!
-  var latestNetworkRequest: URLSessionTask!
-  var fromViewController: AziFaceViewController!
-  var faceScanResultCallback: FaceTecFaceScanResultCallback!
-  private let principalKey = "enrollMessage"
-  private let AziThemeUtils: ThemeUtils! = ThemeUtils()
-
-  init(sessionToken: String, fromViewController: AziFaceViewController, data: NSDictionary) {
-    self.fromViewController = fromViewController
+  public var success = false
+  public var data: NSDictionary!
+  public var latestNetworkRequest: URLSessionTask!
+  public var viewController: AziFaceViewController!
+  public var faceScanResultCallback: FaceTecFaceScanResultCallback!
+  public let theme: Theme!
+  
+  init(sessionToken: String, viewController: AziFaceViewController, data: NSDictionary) {
+    self.viewController = viewController
     self.data = data
+    self.theme = Theme()
+    
     super.init()
-    print("EnrollmentProcessor initialized.")
+    
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
-    let enrollmentViewController = FaceTec.sdk.createSessionVC(
-      faceScanProcessorDelegate: self, sessionToken: sessionToken)
-    FaceTecUtilities.getTopMostViewController()?.present(
-      enrollmentViewController, animated: true, completion: nil)
+    
+    let controller = FaceTec.sdk.createSessionVC(faceScanProcessorDelegate: self, sessionToken: sessionToken)
+    
+    FaceTecUtilities.getTopMostViewController()?.present(controller, animated: true, completion: nil)
   }
-
+  
   func processSessionWhileFaceTecSDKWaits(
     sessionResult: FaceTecSessionResult, faceScanResultCallback: FaceTecFaceScanResultCallback
   ) {
-    fromViewController.setLatestSessionResult(sessionResult: sessionResult)
+    self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     self.faceScanResultCallback = faceScanResultCallback
-
-    // validate session result
+    
     if sessionResult.status != .sessionCompletedSuccessfully {
       latestNetworkRequest?.cancel()
       AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
       faceScanResultCallback.onFaceScanResultCancel()
       return
     }
-
-    // prepare parameters
+    
     var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
     if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
       parameters["auditTrailImage"] = auditTrailImage
@@ -55,37 +54,37 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
     if let lowQualityAuditTrailImage = sessionResult.lowQualityAuditTrailCompressedBase64?.first {
       parameters["lowQualityAuditTrailImage"] = lowQualityAuditTrailImage
     }
-    parameters["externalDatabaseRefID"] = fromViewController.getLatestExternalDatabaseRefID()
+    parameters["externalDatabaseRefID"] = self.viewController.getLatestExternalDatabaseRefID()
     if let data = self.data {
       parameters["data"] = data
     }
-
+    
     let dynamicRoute = DynamicRoute()
     let route = dynamicRoute.getPathUrlEnrollment3d(target: "base")
-
+    
     do {
       var request = Config.makeRequest(url: route, httpMethod: "POST")
       request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-
+      
       let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
       latestNetworkRequest = session.dataTask(with: request) { [weak self] data, response, error in
         guard let self = self else { return }
-
+        
         if let error = error {
           print("Network error")
           self.faceScanResultCallback.onFaceScanResultCancel()
           return
         }
-
+        
         guard let data = data else {
           print("No data received from server.")
           self.faceScanResultCallback.onFaceScanResultCancel()
           return
         }
-
+        
         // decode response
         do {
-
+          
           guard
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: [])
               as? [String: AnyObject]
@@ -94,30 +93,32 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
+          
           guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
             print("Missing 'data' in response.")
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           if let error = responseData["error"] as? Int, error != 0 {
             let errorMessage = responseData["errorMessage"] as? String
             print("Error in response")
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-            let wasProcessed = responseData["wasProcessed"] as? Int
+                let wasProcessed = responseData["wasProcessed"] as? Int
           else {
             print("Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
             self.faceScanResultCallback.onFaceScanResultCancel()
             return
           }
-
+          
           if wasProcessed == 1 {
-            FaceTecCustomization.setOverrideResultScreenSuccessMessage(
-              "Face Scanned\n3D Liveness Proven")
+            let message = self.theme.getEnrollmentMessage(
+              "successMessage", defaultMessage: "Face Scanned\n3D Liveness Proven")
+            FaceTecCustomization.setOverrideResultScreenSuccessMessage(message)
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
@@ -129,23 +130,25 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
           self.faceScanResultCallback.onFaceScanResultCancel()
         }
       }
+      
       latestNetworkRequest?.resume()
     } catch {
       print("Error creating request")
       faceScanResultCallback.onFaceScanResultCancel()
     }
-
+    
     // show loading message
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       guard self.latestNetworkRequest.state != .completed else { return }
-      let message = self.AziThemeUtils.handleMessage(
-        self.principalKey, child: "uploadMessageIos", defaultMessage: "Still Uploading...")
+      
+      let message = self.theme.getEnrollmentMessage(
+        "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage = NSMutableAttributedString(string: message)
       self.faceScanResultCallback.onFaceScanUploadMessageOverride(
         uploadMessageOverride: uploadMessage)
     }
   }
-
+  
   func urlSession(
     _ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64,
     totalBytesSent: Int64, totalBytesExpectedToSend: Int64
@@ -153,11 +156,11 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
     let uploadProgress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
     faceScanResultCallback.onFaceScanUploadProgress(uploadedPercent: uploadProgress)
   }
-
+  
   func onFaceTecSDKCompletelyDone() {
-    fromViewController.onComplete()
+    self.viewController.onComplete()
   }
-
+  
   func isSuccess() -> Bool {
     return success
   }

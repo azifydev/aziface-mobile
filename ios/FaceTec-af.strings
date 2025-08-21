@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Jou Selfie";
 "FaceTec_retry_ideal_image_label" = "Ideale Posisie";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "n Hoër Kwaliteit Beeld asb";
+"FaceTec_retry_official_id_photo_instruction_message" = "Probeer Binnebeligting.\nGeen Glans op Bril, Glimlag of Kopbedekking";
+"FaceTec_retry_official_id_photo_your_image_label" = "Jou Beeld";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Genoegsame Gesig";
+

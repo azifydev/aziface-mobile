@@ -117,3 +117,8 @@
 "FaceTec_retry_your_image_label" = "Sua selfie";
 "FaceTec_retry_ideal_image_label" = "Pose Ideal";
 
+"FaceTec_retry_official_id_photo_subheader_message" = "É necessária uma imagem melhor";
+"FaceTec_retry_official_id_photo_instruction_message" = "Tente iluminação interna,\nóculos sem reflexos, sem sorrir nem chapéus";
+"FaceTec_retry_official_id_photo_your_image_label" = "Sua Imagem";
+"FaceTec_retry_official_id_photo_ideal_image_label" = "Rosto Conforme";
+
