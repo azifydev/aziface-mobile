@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/azifydev/aziface-mobile/compare/v1.1.0...v1.1.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* adjust readme ([30a9c9b](https://github.com/azifydev/aziface-mobile/commit/30a9c9b244e146be37b65b8163f7c99ac0a635c1))
+
 # [1.1.0](https://github.com/azifydev/aziface-mobile/compare/v1.0.5...v1.1.0) (2025-08-21)
 
 
