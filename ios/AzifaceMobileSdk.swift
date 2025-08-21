@@ -15,134 +15,142 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   public static var emitter: RCTEventEmitter!
   public var controller: AziFaceViewController
   public var isInitialized: Bool = false
-  
+
   override init() {
     self.controller = AziFaceViewController()
-    
+
     super.init()
-    
+
     AzifaceMobileSdk.emitter = self
   }
-  
-  @objc func initializeSdk(
-    _ params: NSDictionary, headers: NSDictionary, callback: @escaping RCTResponseSenderBlock
+
+  @objc func initialize(
+    _ params: NSDictionary,
+    headers: NSDictionary,
+    resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
       self.setTheme(Theme.Style)
-      
-      if params.count == 0 {
+
+      let paremeters = CommonParams(params: params)
+
+      if paremeters.isNull() {
         self.isInitialized = false
-        callback([false])
-        print("No parameters provided!")
-        return
+        return reject("Parameters aren't provided", "ParamsNotProvided", nil)
       }
-      
-      let commonParams = CommonParams(params: params)
-      commonParams.setHeaders(headers)
-      commonParams.build()
-      
+
+      paremeters.setHeaders(headers)
+      paremeters.build()
+
       if Config.hasConfig() {
         Config.initialize(
-          commonParams.isDeveloper(),
+          paremeters.isDeveloper(),
           completion: { initializationSuccessful in
             self.isInitialized = initializationSuccessful
-            callback([initializationSuccessful])
+            if self.isInitialized {
+              return resolve(true)
+            }
+            return reject("Initialization failed", "InitializationFailed", nil)
           })
       } else {
         self.isInitialized = false
-        callback([false])
-        print("AziFace SDK Configuration doesn't exists!")
+        return reject("Configuration aren't provided", "ConfigNotProvided", nil)
       }
     }
   }
-  
+
   @objc override static func requiresMainQueueSetup() -> Bool {
     return true
   }
-  
+
   @objc override func constantsToExport() -> [AnyHashable: Any]! {
     return nil
   }
-  
+
   @objc override func startObserving() {}
-  
+
   @objc override func stopObserving() {}
-  
+
   @objc override func supportedEvents() -> [String]! {
     return ["onCloseModal"]
   }
-  
+
   @objc func setTheme(_ options: NSDictionary?) {
     Theme.setAppTheme(options)
   }
-  
+
   @objc func handleLivenessCheck(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
+    _ data: NSDictionary,
+    resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    let commonParams = CommonParams(params: data)
-    commonParams.buildProcessorPathURL()
-    
     if self.isInitialized {
+      let parameters = CommonParams(params: data)
+      parameters.buildProcessorPathURL()
+
       self.controller.onLivenessCheck(data, resolve: resolve, reject: reject)
     } else {
-      return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
+      return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
     }
   }
-  
+
   @objc func handleEnrollUser(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
+    _ data: NSDictionary,
+    resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    let commonParams = CommonParams(params: data)
-    commonParams.buildProcessorPathURL()
-    
     if self.isInitialized {
+      let parameters = CommonParams(params: data)
+      parameters.buildProcessorPathURL()
+
       self.controller.onEnrollUser(data, resolve: resolve, reject: reject)
     } else {
-      return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
+      return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
     }
   }
-  
+
   @objc func handleAuthenticateUser(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    let commonParams = CommonParams(params: data)
-    commonParams.buildProcessorPathURL()
-    
     if self.isInitialized {
+      let parameters = CommonParams(params: data)
+      parameters.buildProcessorPathURL()
+
       self.controller.onAuthenticateUser(data, resolve: resolve, reject: reject)
     } else {
-      return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
+      return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
     }
   }
-  
+
   @objc func handlePhotoIDMatch(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
+    _ data: NSDictionary,
+    resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    let commonParams = CommonParams(params: data)
-    commonParams.buildProcessorPathURL()
-    
     if self.isInitialized {
+      let parameters = CommonParams(params: data)
+      parameters.buildProcessorPathURL()
+
       self.controller.onPhotoIDMatch(data, resolve: resolve, reject: reject)
     } else {
-      return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
+      return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
     }
   }
-  
+
   @objc func handlePhotoIDScan(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
+    _ data: NSDictionary,
+    resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    let commonParams = CommonParams(params: data)
-    commonParams.buildProcessorPathURL()
-    
     if self.isInitialized {
+      let parameters = CommonParams(params: data)
+      parameters.buildProcessorPathURL()
+
       self.controller.onPhotoIDScan(data, resolve: resolve, reject: reject)
     } else {
-      return reject("AziFace SDK has not been initialized!", "AziFaceHasNotBeenInitialized", nil)
+      return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
     }
   }
 }

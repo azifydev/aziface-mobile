@@ -1,7 +1,6 @@
 package com.azify.processors;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,28 +20,28 @@ import com.facetec.sdk.*;
 
 public class EnrollmentProcessor extends Processor implements FaceTecFaceScanProcessor {
   private boolean success = false;
-  private final AzifaceMobileSdkModule faceTecModule;
+  private final AzifaceMobileSdkModule module;
   private final ReadableMap data;
 
-  public EnrollmentProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
+  public EnrollmentProcessor(String sessionToken, Context context, AzifaceMobileSdkModule module,
       ReadableMap data) {
-    this.faceTecModule = faceTecModule;
+    this.module = module;
     this.data = data;
 
-    faceTecModule.sendEvent("onCloseModal", true);
+    this.module.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, EnrollmentProcessor.this, sessionToken);
   }
 
   public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult,
       final FaceTecFaceScanResultCallback faceScanResultCallback) {
-    faceTecModule.setLatestSessionResult(sessionResult);
+    this.module.setLatestSessionResult(sessionResult);
 
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not session completed successfully!",
-          "AziFaceTecDifferentStatus");
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Status is not session completed successfully!",
+          "SessionStatusError");
       return;
     }
 
@@ -57,11 +56,10 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
       parameters.put("faceScan", sessionResult.getFaceScanBase64());
       parameters.put("auditTrailImage", sessionResult.getAuditTrailCompressedBase64()[0]);
       parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
-      parameters.put("externalDatabaseRefID", faceTecModule.getLatestExternalDatabaseRefID());
+      parameters.put("externalDatabaseRefID", module.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
-      e.printStackTrace();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      module.sendEvent("onCloseModal", false);
+      module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
 
@@ -92,9 +90,10 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
           boolean error = responseJSONData.getBoolean("error");
 
           if (error) {
-            String errorMessage = responseJSONData.optString("errorMessage");
-            Log.d("Aziface", "Error while processing FaceScan. " + errorMessage);
             faceScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("An error occurred while scanning",
+              "ProcessorError");
             return;
           }
 
@@ -105,21 +104,26 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
               .getEnrollmentMessage("successMessage", "Face Scanned\n3D Liveness Proven");
 
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
+            if (success) {
+              module.promise.resolve(true);
+            }
           } else {
             faceScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("AziFace SDK wasn't have to values processed!",
+              "SessionNotProcessedError");
           }
         } catch (JSONException e) {
-          e.printStackTrace();
-          Log.d("Aziface", "Exception raised while attempting to parse JSON result.");
-          faceTecModule.sendEvent("onCloseModal", false);
           faceScanResultCallback.cancel();
+          module.sendEvent("onCloseModal", false);
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @Nullable IOException e) {
-        Log.d("Aziface", "Exception raised while attempting HTTPS call.");
         faceScanResultCallback.cancel();
+        module.sendEvent("onCloseModal", false);
+        module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }

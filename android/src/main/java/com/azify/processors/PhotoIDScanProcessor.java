@@ -28,12 +28,12 @@ import com.azify.utils.DynamicRoute;
 
 public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProcessor {
   private final ReadableMap data;
-  private final AzifaceMobileSdkModule aziFaceModule;
+  private final AzifaceMobileSdkModule module;
   private boolean success = false;
 
-  public PhotoIDScanProcessor(String sessionToken, Context context, AzifaceMobileSdkModule aziFaceModule,
+  public PhotoIDScanProcessor(String sessionToken, Context context, AzifaceMobileSdkModule module,
       ReadableMap data) {
-    this.aziFaceModule = aziFaceModule;
+    this.module = module;
     this.data = data;
 
     FaceTecCustomization.setIDScanUploadMessageOverrides(
@@ -108,19 +108,19 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
         AzifaceMobileSdkModule.AziTheme
             .getPhotoIDScanMessage("skippedNFC", "uploadCompleteAwaitingProcessing", "Processing\nID Details"));
 
-    aziFaceModule.sendEvent("onCloseModal", true);
+    module.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, PhotoIDScanProcessor.this, sessionToken);
   }
 
   public void processIDScanWhileFaceTecSDKWaits(final FaceTecIDScanResult idScanResult,
       final FaceTecIDScanResultCallback idScanResultCallback) {
-    aziFaceModule.setLatestIDScanResult(idScanResult);
+    this.module.setLatestIDScanResult(idScanResult);
 
     if (idScanResult.getStatus() != FaceTecIDScanStatus.SUCCESS) {
       NetworkingHelpers.cancelPendingRequests();
       idScanResultCallback.cancel();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("The scan status has not been completed!", "AziFaceInvalidSession");
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Scan status is not success!", "SessionScanStatusError");
       return;
     }
 
@@ -141,9 +141,8 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
         parameters.put("idScanBackImage", backImagesCompressedBase64.get(0));
       }
     } catch (JSONException e) {
-      e.printStackTrace();
-      aziFaceModule.sendEvent("onCloseModal", false);
-      aziFaceModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
 
@@ -172,6 +171,16 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
         try {
           JSONObject responseJSON = new JSONObject(responseString);
           boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
+          boolean error = responseJSON.getBoolean("error");
+
+          if (error) {
+            idScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("An error occurred while scanning",
+              "ProcessorError");
+            return;
+          }
+
           String scanResultBlob = responseJSON.getString("scanResultBlob");
 
           if (wasProcessed) {
@@ -227,20 +236,19 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
 
             success = idScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              aziFaceModule.sendEvent("onCloseModal", false);
-              aziFaceModule.processorPromise.resolve(true);
+              module.sendEvent("onCloseModal", false);
+              module.promise.resolve(true);
             }
           } else {
             idScanResultCallback.cancel();
-            aziFaceModule.sendEvent("onCloseModal", false);
-            aziFaceModule.processorPromise.reject("AziFace SDK values were not processed!",
-                "AziFaceValuesWereNotProcessed");
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("AziFace SDK values were not processed!",
+                "SessionNotProcessedError");
           }
         } catch (JSONException e) {
-          e.printStackTrace();
           idScanResultCallback.cancel();
-          aziFaceModule.sendEvent("onCloseModal", false);
-          aziFaceModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          module.sendEvent("onCloseModal", false);
+          module.promise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
       }
@@ -248,8 +256,8 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
         idScanResultCallback.cancel();
-        aziFaceModule.sendEvent("onCloseModal", false);
-        aziFaceModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        module.sendEvent("onCloseModal", false);
+        module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }

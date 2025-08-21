@@ -208,15 +208,15 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods        | Return Type        | iOS | Android |
-| -------------- | ------------------ | --- | ------- |
-| `initialize`   | `Promise<boolean>` | ✅  | ✅      |
-| `enroll`       | `Promise<boolean>` | ✅  | ✅      |
-| `authenticate` | `Promise<boolean>` | ❌  | ❌      |
-| `liveness`     | `Promise<boolean>` | ❌  | ❌      |
-| `photoMatch`   | `Promise<boolean>` | ✅  | ✅      |
-| `photoScan`    | `Promise<boolean>` | ❌  | ❌      |
-| `setTheme`     | `void`             | ✅  | ✅      |
+| Methods        | Return Type        | Platform    |
+| -------------- | ------------------ | ----------- |
+| `initialize`   | `Promise<boolean>` | All         |
+| `enroll`       | `Promise<boolean>` | All         |
+| `authenticate` | `Promise<boolean>` | Unavailable |
+| `liveness`     | `Promise<boolean>` | Unavailable |
+| `photoMatch`   | `Promise<boolean>` | All         |
+| `photoScan`    | `Promise<boolean>` | Unavailable |
+| `setTheme`     | `void`             | All         |
 
 ### `initialize`
 
@@ -263,40 +263,40 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 ## Types
 
-| Types                                                                     | iOS | Android |
-| ------------------------------------------------------------------------- | --- | ------- |
-| [`Params`](#params)                                                       | ✅  | ✅      |
-| [`Headers`](#headers)                                                     | ✅  | ✅      |
-| [`SessionParams`](#sessionparamst)                                        | ✅  | ✅      |
-| [`SessionBasePathUrl`](#sessionbasepathurl)                               | ✅  | ✅      |
-| [`SessionMatchPathUrl`](#sessionmatchpathurl)                             | ✅  | ✅      |
-| [`Theme`](#theme)                                                         | ✅  | ✅      |
-| [`ButtonLocation`](#buttonlocation)                                       | ✅  | ✅      |
-| [`StatusBarColor`](#statusbarcolor-ios-only)                              | ✅  | ❌      |
-| [`ThemeImage`](#themeimage)                                               | ✅  | ✅      |
-| [`ThemeFrame`](#themeframe)                                               | ✅  | ✅      |
-| [`ThemeButton`](#themebutton)                                             | ✅  | ✅      |
-| [`ThemeGuidance`](#themeguidance)                                         | ✅  | ✅      |
-| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)                   | ✅  | ✅      |
-| [`ThemeOval`](#themeoval)                                                 | ✅  | ✅      |
-| [`ThemeFeedback`](#themefeedback)                                         | ✅  | ✅      |
-| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)            | ✅  | ❌      |
-| [`Point`](#point-ios-only)                                                | ✅  | ❌      |
-| [`ThemeResultScreen`](#themeresultscreen)                                 | ✅  | ✅      |
-| [`ThemeResultAnimation`](#themeresultanimation)                           | ✅  | ✅      |
-| [`ThemeIdScan`](#themeidscan)                                             | ✅  | ✅      |
-| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)               | ✅  | ✅      |
-| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)                     | ✅  | ✅      |
-| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)                   | ✅  | ✅      |
-| [`DefaultMessage`](#defaultmessage)                                       | ✅  | ✅      |
-| [`DefaultScanMessage`](#defaultmessage)                                   | ✅  | ✅      |
-| [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | ✅  | ✅      |
-| [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | ✅  | ✅      |
-| [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | ✅  | ✅      |
-| [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | ✅  | ✅      |
-| [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | ✅  | ✅      |
-| [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | ✅  | ✅      |
-| [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | ✅  | ✅      |
+| Types                                                                     | Platform |
+| ------------------------------------------------------------------------- | -------- |
+| [`Params`](#params)                                                       | All      |
+| [`Headers`](#headers)                                                     | All      |
+| [`SessionParams`](#sessionparamst)                                        | All      |
+| [`SessionBasePathUrl`](#sessionbasepathurl)                               | All      |
+| [`SessionMatchPathUrl`](#sessionmatchpathurl)                             | All      |
+| [`Theme`](#theme)                                                         | All      |
+| [`ButtonLocation`](#buttonlocation)                                       | All      |
+| [`StatusBarColor`](#statusbarcolor-ios-only)                              | iOS      |
+| [`ThemeImage`](#themeimage)                                               | All      |
+| [`ThemeFrame`](#themeframe)                                               | All      |
+| [`ThemeButton`](#themebutton)                                             | All      |
+| [`ThemeGuidance`](#themeguidance)                                         | All      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)                   | All      |
+| [`ThemeOval`](#themeoval)                                                 | All      |
+| [`ThemeFeedback`](#themefeedback)                                         | All      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)            | iOS      |
+| [`Point`](#point-ios-only)                                                | iOS      |
+| [`ThemeResultScreen`](#themeresultscreen)                                 | All      |
+| [`ThemeResultAnimation`](#themeresultanimation)                           | All      |
+| [`ThemeIdScan`](#themeidscan)                                             | All      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)               | All      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)                     | All      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)                   | All      |
+| [`DefaultMessage`](#defaultmessage)                                       | All      |
+| [`DefaultScanMessage`](#defaultmessage)                                   | All      |
+| [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | All      |
+| [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | All      |
+| [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | All      |
+| [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | All      |
+| [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | All      |
+| [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | All      |
+| [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | All      |
 
 ### `Params`
 
@@ -354,23 +354,23 @@ This type is specify of the `photoMatch` method.
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors, between six and eight characters, because still we don't supported others color type.
 
-| `Theme`                  | type                                         | iOS | Android | Required | Default        |
-| ------------------------ | -------------------------------------------- | --- | ------- | -------- | -------------- |
-| `overlayBackgroundColor` | `string`                                     | ✅  | ✅      | ❌       | `#ffffff`      |
-| `cancelButtonLocation`   | [`ButtonLocation`](#buttonlocation)          | ✅  | ✅      | ❌       | `TOP_RIGHT`    |
-| `statusBarColor`         | [`StatusBarColor`](#statusbarcolor-ios-only) | ✅  | ❌      | ❌       | `DARK_CONTENT` |
-| `authenticateMessage`    | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
-| `enrollMessage`          | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
-| `livenessMessage`        | [`DefaultMessage`](#defaultmessage)          | ✅  | ✅      | ❌       | `undefined`    |
-| `scanMessage`            | [`DefaultScanMessage`](#defaultscanmessage)  | ✅  | ✅      | ❌       | `undefined`    |
-| `matchMessage`           | `DefaultScanMessage & DefaultMessage`        | ✅  | ✅      | ❌       | `undefined`    |
-| `image`                  | [`ThemeImage`](#themeimage)                  | ✅  | ✅      | ❌       | `undefined`    |
-| `frame`                  | [`ThemeFrame`](#themeframe)                  | ✅  | ✅      | ❌       | `undefined`    |
-| `guidance`               | [`ThemeGuidance`](#themeguidance)            | ✅  | ✅      | ❌       | `undefined`    |
-| `oval`                   | [`ThemeOval`](#themeoval)                    | ✅  | ✅      | ❌       | `undefined`    |
-| `feedback`               | [`ThemeFeedback`](#themefeedback)            | ✅  | ✅      | ❌       | `undefined`    |
-| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen)    | ✅  | ✅      | ❌       | `undefined`    |
-| `idScan`                 | [`ThemeIdScan`](#themeidscan)                | ✅  | ✅      | ❌       | `undefined`    |
+| `Theme`                  | type                                         | Platform | Required | Default        |
+| ------------------------ | -------------------------------------------- | -------- | -------- | -------------- |
+| `overlayBackgroundColor` | `string`                                     | All      | ❌       | `#ffffff`      |
+| `cancelButtonLocation`   | [`ButtonLocation`](#buttonlocation)          | All      | ❌       | `TOP_RIGHT`    |
+| `statusBarColor`         | [`StatusBarColor`](#statusbarcolor-ios-only) | iOS      | ❌       | `DARK_CONTENT` |
+| `authenticateMessage`    | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
+| `enrollMessage`          | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
+| `livenessMessage`        | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
+| `scanMessage`            | [`DefaultScanMessage`](#defaultscanmessage)  | All      | ❌       | `undefined`    |
+| `matchMessage`           | `DefaultScanMessage & DefaultMessage`        | All      | ❌       | `undefined`    |
+| `image`                  | [`ThemeImage`](#themeimage)                  | All      | ❌       | `undefined`    |
+| `frame`                  | [`ThemeFrame`](#themeframe)                  | All      | ❌       | `undefined`    |
+| `guidance`               | [`ThemeGuidance`](#themeguidance)            | All      | ❌       | `undefined`    |
+| `oval`                   | [`ThemeOval`](#themeoval)                    | All      | ❌       | `undefined`    |
+| `feedback`               | [`ThemeFeedback`](#themefeedback)            | All      | ❌       | `undefined`    |
+| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen)    | All      | ❌       | `undefined`    |
+| `idScan`                 | [`ThemeIdScan`](#themeidscan)                | All      | ❌       | `undefined`    |
 
 #### `ButtonLocation`
 
@@ -396,73 +396,73 @@ This type must be used to status bar color.
 
 An object containing the image assets used in the Aziface SDK.
 
-| `ThemeImage` | type     | iOS | Android | Required | Default                     |
-| ------------ | -------- | --- | ------- | -------- | --------------------------- |
-| `logo`       | `string` | ✅  | ✅      | ❌       | `facetec_your_app_logo.png` |
-| `cancel`     | `string` | ✅  | ✅      | ❌       | `facetec_cancel.png`        |
+| `ThemeImage` | type     | Platform | Required | Default                     |
+| ------------ | -------- | -------- | -------- | --------------------------- |
+| `logo`       | `string` | All      | ❌       | `facetec_your_app_logo.png` |
+| `cancel`     | `string` | All      | ❌       | `facetec_cancel.png`        |
 
 #### `ThemeFrame`
 
 An object containing the frame styles used in the Aziface SDK.
 
-| `ThemeFrame`      | type     | iOS | Android | Required | Default   |
-| ----------------- | -------- | --- | ------- | -------- | --------- |
-| `cornerRadius`    | `number` | ✅  | ✅      | ❌       | `20`      |
-| `borderColor`     | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `backgroundColor` | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ThemeFrame`      | type     | Platform | Required | Default   |
+| ----------------- | -------- | -------- | -------- | --------- |
+| `cornerRadius`    | `number` | All      | ❌       | `20`      |
+| `borderColor`     | `string` | All      | ❌       | `#ffffff` |
+| `backgroundColor` | `string` | All      | ❌       | `#ffffff` |
 
 #### `ThemeButton`
 
 An object containing the button styles used in the Aziface SDK.
 
-| `ThemeButton`              | type     | iOS | Android | Required | Default   |
-| -------------------------- | -------- | --- | ------- | -------- | --------- |
-| `backgroundNormalColor`    | `string` | ✅  | ✅      | ❌       | `#026ff4` |
-| `backgroundDisabledColor`  | `string` | ✅  | ✅      | ❌       | `#b3d4fc` |
-| `backgroundHighlightColor` | `string` | ✅  | ✅      | ❌       | `#0264dc` |
-| `textNormalColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `textDisabledColor`        | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `textHighlightColor`       | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ThemeButton`              | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `backgroundNormalColor`    | `string` | All      | ❌       | `#026ff4` |
+| `backgroundDisabledColor`  | `string` | All      | ❌       | `#b3d4fc` |
+| `backgroundHighlightColor` | `string` | All      | ❌       | `#0264dc` |
+| `textNormalColor`          | `string` | All      | ❌       | `#ffffff` |
+| `textDisabledColor`        | `string` | All      | ❌       | `#ffffff` |
+| `textHighlightColor`       | `string` | All      | ❌       | `#ffffff` |
 
 #### `ThemeGuidance`
 
 An object containing the styles used in the guidance view.
 
-| `ThemeGuidance`   | type                                                    | iOS | Android | Required | Default                                                |
-| ----------------- | ------------------------------------------------------- | --- | ------- | -------- | ------------------------------------------------------ |
-| `backgroundColor` | `string` or `string[]`                                  | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor` | `string`                                                | ✅  | ✅      | ❌       | `#272937`                                              |
-| `button`          | [`ThemeButton`](#themebutton)                           | ✅  | ✅      | ❌       | `undefined`                                            |
-| `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | ✅  | ✅      | ❌       | `undefined`                                            |
+| `ThemeGuidance`   | type                                                    | Platform | Required | Default                                                |
+| ----------------- | ------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor` | `string` or `string[]`                                  | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor` | `string`                                                | All      | ❌       | `#272937`                                              |
+| `button`          | [`ThemeButton`](#themebutton)                           | All      | ❌       | `undefined`                                            |
+| `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | All      | ❌       | `undefined`                                            |
 
 ##### `ThemeGuidanceRetryScreen`
 
 An object containing the styles used in the guidance retry screen.
 
-| `ThemeGuidanceRetryScreen` | type     | iOS | Android | Required | Default   |
-| -------------------------- | -------- | --- | ------- | -------- | --------- |
-| `imageBorderColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `ovalStrokeColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ThemeGuidanceRetryScreen` | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `imageBorderColor`         | `string` | All      | ❌       | `#ffffff` |
+| `ovalStrokeColor`          | `string` | All      | ❌       | `#ffffff` |
 
 #### `ThemeOval`
 
 An object containing the oval styles used in the Aziface SDK.
 
-| `ThemeOval`           | type     | iOS | Android | Required | Default   |
-| --------------------- | -------- | --- | ------- | -------- | --------- |
-| `strokeColor`         | `string` | ✅  | ✅      | ❌       | `#026ff4` |
-| `firstProgressColor`  | `string` | ✅  | ✅      | ❌       | `#0264dc` |
-| `secondProgressColor` | `string` | ✅  | ✅      | ❌       | `#0264dc` |
+| `ThemeOval`           | type     | Platform | Required | Default   |
+| --------------------- | -------- | -------- | -------- | --------- |
+| `strokeColor`         | `string` | All      | ❌       | `#026ff4` |
+| `firstProgressColor`  | `string` | All      | ❌       | `#0264dc` |
+| `secondProgressColor` | `string` | All      | ❌       | `#0264dc` |
 
 #### `ThemeFeedback`
 
 An object containing the oval styles used in the Aziface SDK.
 
-| `ThemeFeedback`                                         | type     | iOS | Android | Required | Default     |
-| ------------------------------------------------------- | -------- | --- | ------- | -------- | ----------- |
-| `backgroundColor`                                       | `string` | ❌  | ✅      | ❌       | `#026ff4`   |
-| [`backgroundColors`](#feedbackbackgroundcolor-ios-only) | `string` | ✅  | ❌      | ❌       | `undefined` |
-| `textColor`                                             | `string` | ✅  | ✅      | ❌       | `#ffffff`   |
+| `ThemeFeedback`                                         | type     | Platform | Required | Default     |
+| ------------------------------------------------------- | -------- | -------- | -------- | ----------- |
+| `backgroundColor`                                       | `string` | Android  | ❌       | `#026ff4`   |
+| [`backgroundColors`](#feedbackbackgroundcolor-ios-only) | `string` | iOS      | ❌       | `undefined` |
+| `textColor`                                             | `string` | All      | ❌       | `#ffffff`   |
 
 ##### `FeedbackBackgroundColor` (`iOS` only)
 
@@ -488,182 +488,185 @@ This interface defines the drawn in the layer's coordinate space.
 
 An object containing the styles used in the result screen.
 
-| `ThemeResultScreen`       | type                                            | iOS | Android | Required | Default                                                |
-| ------------------------- | ----------------------------------------------- | --- | ------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`         | `string` or `string[]`                          | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`         | `string`                                        | ✅  | ✅      | ❌       | `#272937`                                              |
-| `activityIndicatorColor`  | `string`                                        | ✅  | ✅      | ❌       | `#026ff4`                                              |
-| `uploadProgressFillColor` | `string`                                        | ✅  | ✅      | ❌       | `#026ff4`                                              |
-| `resultAnimation`         | [`ThemeResultAnimation`](#themeresultanimation) | ✅  | ✅      | ❌       | `undefined`                                            |
+| `ThemeResultScreen`       | type                                            | Platform | Required | Default                                                |
+| ------------------------- | ----------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`         | `string` or `string[]`                          | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`         | `string`                                        | All      | ❌       | `#272937`                                              |
+| `activityIndicatorColor`  | `string`                                        | All      | ❌       | `#026ff4`                                              |
+| `uploadProgressFillColor` | `string`                                        | All      | ❌       | `#026ff4`                                              |
+| `resultAnimation`         | [`ThemeResultAnimation`](#themeresultanimation) | All      | ❌       | `undefined`                                            |
 
 ##### `ThemeResultAnimation`
 
 An object containing the animation styles used in the Aziface SDK result animation.
 
-| `ThemeResultAnimation` | type     | iOS | Android | Required | Default   |
-| ---------------------- | -------- | --- | ------- | -------- | --------- |
-| `backgroundColor`      | `string` | ✅  | ✅      | ❌       | `#026ff4` |
-| `foregroundColor`      | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ThemeResultAnimation` | type     | Platform | Required | Default   |
+| ---------------------- | -------- | -------- | -------- | --------- |
+| `backgroundColor`      | `string` | All      | ❌       | `#026ff4` |
+| `foregroundColor`      | `string` | All      | ❌       | `#ffffff` |
 
 #### `ThemeIdScan`
 
 An object containing the styles used in the ID scan screens.
 
-| `ThemeIdScan`     | type                                                        | iOS | Android | Required | Default     |
-| ----------------- | ----------------------------------------------------------- | --- | ------- | -------- | ----------- |
-| `selectionScreen` | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen) | ✅  | ✅      | ❌       | `undefined` |
-| `reviewScreen`    | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)       | ✅  | ✅      | ❌       | `undefined` |
-| `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | ✅  | ✅      | ❌       | `undefined` |
-| `button`          | [`ThemeButton`](#themebutton)                               | ✅  | ✅      | ❌       | `undefined` |
+| `ThemeIdScan`     | type                                                        | Platform | Required | Default     |
+| ----------------- | ----------------------------------------------------------- | -------- | -------- | ----------- |
+| `selectionScreen` | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen) | All      | ❌       | `undefined` |
+| `reviewScreen`    | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)       | All      | ❌       | `undefined` |
+| `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | All      | ❌       | `undefined` |
+| `button`          | [`ThemeButton`](#themebutton)                               | All      | ❌       | `undefined` |
 
 ##### `ThemeIdScanSelectionScreen`
 
 An object containing the styles used in the ID scan selection screen.
 
-| `ThemeIdScanSelectionScreen` | type                   | iOS | Android | Required | Default                                                |
-| ---------------------------- | ---------------------- | --- | ------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`            | `string` or `string[]` | ✅  | ✅      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`            | `string`               | ✅  | ✅      | ❌       | `#272937`                                              |
+| `ThemeIdScanSelectionScreen` | type                   | Platform | Required | Default                                                |
+| ---------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`            | `string`               | All      | ❌       | `#272937`                                              |
 
 ##### `ThemeIdScanReviewScreen`
 
 An object containing the styles used in the ID scan review screen.
 
-| `ThemeIdScanReviewScreen` | type     | iOS | Android | Required | Default   |
-| ------------------------- | -------- | --- | ------- | -------- | --------- |
-| `foregroundColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `textBackgroundColor`     | `string` | ✅  | ✅      | ❌       | `#026ff4` |
+| `ThemeIdScanReviewScreen` | type     | Platform | Required | Default   |
+| ------------------------- | -------- | -------- | -------- | --------- |
+| `foregroundColor`         | `string` | All      | ❌       | `#ffffff` |
+| `textBackgroundColor`     | `string` | All      | ❌       | `#026ff4` |
 
 ##### `ThemeIdScanCaptureScreen`
 
 An object containing the styles used in the ID scan capture screen.
 
-| `ThemeIdScanCaptureScreen` | type     | iOS | Android | Required | Default   |
-| -------------------------- | -------- | --- | ------- | -------- | --------- |
-| `foregroundColor`          | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `textBackgroundColor`      | `string` | ✅  | ✅      | ❌       | `#ffffff` |
-| `backgroundColor`          | `string` | ✅  | ✅      | ❌       | `#026ff4` |
-| `frameStrokeColor`         | `string` | ✅  | ✅      | ❌       | `#ffffff` |
+| `ThemeIdScanCaptureScreen` | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `foregroundColor`          | `string` | All      | ❌       | `#ffffff` |
+| `textBackgroundColor`      | `string` | All      | ❌       | `#ffffff` |
+| `backgroundColor`          | `string` | All      | ❌       | `#026ff4` |
+| `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff` |
 
 #### `DefaultMessage`
 
 This interface represents the success message and loading data message during to Aziface SDK flow. It interface is used by processors's [enroll](#enroll) processor.
 
-| `DefaultMessage` | type     | iOS | Android | Required | Default                            |
-| ---------------- | -------- | --- | ------- | -------- | ---------------------------------- |
-| `successMessage` | `string` | ✅  | ✅      | ❌       | `Face Scanned\n3D Liveness Proven` |
-| `uploadMessage`  | `string` | ✅  | ❌      | ❌       | `Still Uploading...`               |
+| `DefaultMessage` | type     | Platform | Required | Default                            |
+| ---------------- | -------- | -------- | -------- | ---------------------------------- |
+| `successMessage` | `string` | All      | ❌       | `Face Scanned\n3D Liveness Proven` |
+| `uploadMessage`  | `string` | iOS      | ❌       | `Still Uploading...`               |
 
 #### `DefaultScanMessage`
 
 This interface represents the all scan messages during to Aziface SDK flow. It interface is used by [photoMatch](#photomatch) processors.
 
-| `DefaultScanMessage` | type                                                                      | iOS | Android | Required | Default               |
-| -------------------- | ------------------------------------------------------------------------- | --- | ------- | -------- | --------------------- |
-| `skipOrErrorNFC`     | `string`                                                                  | ✅  | ✅      | ❌       | `ID Details Uploaded` |
-| `frontSide`          | [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | ✅  | ✅      | ❌       | `undefined`           |
-| `backSide`           | [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | ✅  | ✅      | ❌       | `undefined`           |
-| `userConfirmedInfo`  | [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | ✅  | ✅      | ❌       | `undefined`           |
-| `nfc`                | [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | ✅  | ✅      | ❌       | `undefined`           |
-| `skippedNFC`         | [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | ✅  | ✅      | ❌       | `undefined`           |
-| `success`            | [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | ✅  | ✅      | ❌       | `undefined`           |
-| `retry`              | [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | ✅  | ✅      | ❌       | `undefined`           |
+| `DefaultScanMessage` | type                                                                      | Platform | Required | Default               |
+| -------------------- | ------------------------------------------------------------------------- | -------- | -------- | --------------------- |
+| `skipOrErrorNFC`     | `string`                                                                  | All      | ❌       | `ID Details Uploaded` |
+| `frontSide`          | [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | All      | ❌       | `undefined`           |
+| `backSide`           | [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | All      | ❌       | `undefined`           |
+| `userConfirmedInfo`  | [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | All      | ❌       | `undefined`           |
+| `nfc`                | [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | All      | ❌       | `undefined`           |
+| `skippedNFC`         | [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | All      | ❌       | `undefined`           |
+| `success`            | [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | All      | ❌       | `undefined`           |
+| `retry`              | [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | All      | ❌       | `undefined`           |
 
 ##### `DefaultScanMessageFrontSide`
 
 Represents the front-side scan messages during to Aziface SDK flow.
 
-| `DefaultScanMessageFrontSide`      | type     | iOS | Android | Required | Default                              |
-| ---------------------------------- | -------- | --- | ------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | ✅  | ✅      | ❌       | `Uploading Encrypted ID Scan`        |
-| `stillUploading`                   | `string` | ✅  | ✅      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing ID Scan`                 |
+| `DefaultScanMessageFrontSide`      | type     | Platform | Required | Default                              |
+| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
+| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted ID Scan`        |
+| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
+| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
+| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing ID Scan`                 |
 
 ##### `DefaultScanMessageBackSide`
 
 Represents the back-side scan messages during to Aziface SDK flow.
 
-| `DefaultScanMessageBackSide`       | type     | iOS | Android | Required | Default                              |
-| ---------------------------------- | -------- | --- | ------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | ✅  | ✅      | ❌       | `Uploading Encrypted Back of ID`     |
-| `stillUploading`                   | `string` | ✅  | ✅      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing Back of ID`              |
+| `DefaultScanMessageBackSide`       | type     | Platform | Required | Default                              |
+| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
+| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted Back of ID`     |
+| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
+| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
+| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing Back of ID`              |
 
 ##### `DefaultScanMessageUserConfirmInfo`
 
 Represents the user confirmed information messages during to Aziface SDK flow.
 
-| `DefaultScanMessageUserConfirmInfo` | type     | iOS | Android | Required | Default                              |
-| ----------------------------------- | -------- | --- | ------- | -------- | ------------------------------------ |
-| `uploadStarted`                     | `string` | ✅  | ✅      | ❌       | `Uploading Your Confirmed Info`      |
-| `stillUploading`                    | `string` | ✅  | ✅      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`    | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing`  | `string` | ✅  | ✅      | ❌       | `Processing`                         |
+| `DefaultScanMessageUserConfirmInfo` | type     | Platform | Required | Default                              |
+| ----------------------------------- | -------- | -------- | -------- | ------------------------------------ |
+| `uploadStarted`                     | `string` | All      | ❌       | `Uploading Your Confirmed Info`      |
+| `stillUploading`                    | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
+| `uploadCompleteAwaitingResponse`    | `string` | All      | ❌       | `Upload Complete`                    |
+| `uploadCompleteAwaitingProcessing`  | `string` | All      | ❌       | `Processing`                         |
 
 ##### `DefaultScanMessageNFC`
 
 Represents the NFC scan messages during to Aziface SDK flow.
 
-| `DefaultScanMessageNFC`            | type     | iOS | Android | Required | Default                              |
-| ---------------------------------- | -------- | --- | ------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | ✅  | ✅      | ❌       | `Uploading Encrypted NFC Details`    |
-| `stillUploading`                   | `string` | ✅  | ✅      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing NFC Details`             |
+| `DefaultScanMessageNFC`            | type     | Platform | Required | Default                              |
+| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
+| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted NFC Details`    |
+| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
+| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
+| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing NFC Details`             |
 
 ##### `DefaultScanMessageSkippedNFC`
 
 Represents the skipped NFC scan messages during to Aziface SDK flow.
 
-| `DefaultScanMessageSkippedNFC`     | type     | iOS | Android | Required | Default                              |
-| ---------------------------------- | -------- | --- | ------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | ✅  | ✅      | ❌       | `Uploading Encrypted ID Details`     |
-| `stillUploading`                   | `string` | ✅  | ✅      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | ✅  | ✅      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | ✅  | ✅      | ❌       | `Processing ID Details`              |
+| `DefaultScanMessageSkippedNFC`     | type     | Platform | Required | Default                              |
+| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
+| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted ID Details`     |
+| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
+| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
+| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing ID Details`              |
 
 ##### `DefaultScanMessageSuccess`
 
 Represents the success messages during to Aziface SDK flow.
 
-| `DefaultScanMessageSuccess` | type     | iOS | Android | Required | Default                  |
-| --------------------------- | -------- | --- | ------- | -------- | ------------------------ |
-| `frontSide`                 | `string` | ✅  | ✅      | ❌       | `ID Scan Complete`       |
-| `frontSideBackNext`         | `string` | ✅  | ✅      | ❌       | `Front of ID Scanned`    |
-| `frontSideNFCNext`          | `string` | ✅  | ✅      | ❌       | `Front of ID Scanned`    |
-| `backSide`                  | `string` | ✅  | ✅      | ❌       | `ID Scan Complete`       |
-| `backSideNFCNext`           | `string` | ✅  | ✅      | ❌       | `Back of ID Scanned`     |
-| `passport`                  | `string` | ✅  | ✅      | ❌       | `Passport Scan Complete` |
-| `passportNFCNext`           | `string` | ✅  | ✅      | ❌       | `Passport Scanned`       |
-| `userConfirmation`          | `string` | ✅  | ✅      | ❌       | `Photo ID Scan Complete` |
-| `NFC`                       | `string` | ✅  | ✅      | ❌       | `ID Scan Complete`       |
+| `DefaultScanMessageSuccess` | type     | Platform | Required | Default                  |
+| --------------------------- | -------- | -------- | -------- | ------------------------ |
+| `frontSide`                 | `string` | All      | ❌       | `ID Scan Complete`       |
+| `frontSideBackNext`         | `string` | All      | ❌       | `Front of ID Scanned`    |
+| `frontSideNFCNext`          | `string` | All      | ❌       | `Front of ID Scanned`    |
+| `backSide`                  | `string` | All      | ❌       | `ID Scan Complete`       |
+| `backSideNFCNext`           | `string` | All      | ❌       | `Back of ID Scanned`     |
+| `passport`                  | `string` | All      | ❌       | `Passport Scan Complete` |
+| `passportNFCNext`           | `string` | All      | ❌       | `Passport Scanned`       |
+| `userConfirmation`          | `string` | All      | ❌       | `Photo ID Scan Complete` |
+| `NFC`                       | `string` | All      | ❌       | `ID Scan Complete`       |
 
 ##### `DefaultScanMessageRetry`
 
 Represents the retry messages during to Aziface SDK flow.
 
-| `DefaultScanMessageSkippedNFC` | type     | iOS | Android | Required | Default                             |
-| ------------------------------ | -------- | --- | ------- | -------- | ----------------------------------- |
-| `faceDidNotMatch`              | `string` | ✅  | ✅      | ❌       | `Face Didn’t Match Highly Enough`   |
-| `IDNotFullyVisible`            | `string` | ✅  | ✅      | ❌       | `ID Document Not Fully Visible`     |
-| `OCRResultsNotGoodEnough`      | `string` | ✅  | ✅      | ❌       | `ID Text Not Legible`               |
-| `IDTypeNotSupported`           | `string` | ✅  | ✅      | ❌       | `ID Type Mismatch Please Try Again` |
+| `DefaultScanMessageSkippedNFC` | type     | Platform | Required | Default                             |
+| ------------------------------ | -------- | -------- | -------- | ----------------------------------- |
+| `faceDidNotMatch`              | `string` | All      | ❌       | `Face Didn’t Match Highly Enough`   |
+| `IDNotFullyVisible`            | `string` | All      | ❌       | `ID Document Not Fully Visible`     |
+| `OCRResultsNotGoodEnough`      | `string` | All      | ❌       | `ID Text Not Legible`               |
+| `IDTypeNotSupported`           | `string` | All      | ❌       | `ID Type Mismatch Please Try Again` |
 
 <hr/>
 
 ### `Errors`
 
-| `Errors`                            | Description                                                                           | iOS | Android |
-| ----------------------------------- | ------------------------------------------------------------------------------------- | --- | ------- |
-| `AziFaceHasNotBeenInitialized`      | When some processors method is running, but Aziface SDK **has not been initialized**. | ✅  | ✅      |
-| `AziFaceValuesWereNotProcessed`     | When the image sent to the processors cannot be processed due to inconsistency.       | ✅  | ✅      |
-| `HTTPSError`                        | When exists some network error.                                                       | ✅  | ✅      |
-| `JSONError`                         | When exists some problem in getting data in request of **base URL** information.      | ❌  | ✅      |
-| `AziFaceInvalidSession`             | When session status is invalid.                                                       | ❌  | ✅      |
-| `AziFaceTecDifferentStatus`         | When session status is different of success.                                          | ❌  | ✅      |
-| `AziFaceScanValuesWereNotProcessed` | When the image ID sent to the processors cannot be processed due to inconsistency.    | ❌  | ✅      |
+| `Errors`                   | Description                                                                        | Platform |
+| -------------------------- | ---------------------------------------------------------------------------------- | -------- |
+| `ConfigNotProvided`        | When `device`, `url`, `key` and `productionKey` aren't provided.                   | All      |
+| `HTTPSError`               | When exists some network error.                                                    | All      |
+| `InitializationFailed`     | When parameters provided by initialize are inconsistent or invalid.                | All      |
+| `JSONError`                | When exists some problem in getting `data` in request of **base URL** information. | All      |
+| `ParamsNotProvided`        | When parameters aren't provided, this case, it is `null`.                          | All      |
+| `NotInitialized`           | When session status is different of success.                                       | All      |
+| `ProcessorError`           | When an unknown session error occurs.                                              | Android  |
+| `SessionNotProcessedError` | When the image ID sent to the processors cannot be processed due to inconsistency. | All      |
+| `SessionScanStatusError`   | When scan session status isn't success. It's recommend try again.                  | Android  |
+| `SessionStatusError`       | When session status isn't of success. It's recommend try again.                    | Android  |
 
 <hr/>
 
@@ -671,9 +674,9 @@ Represents the retry messages during to Aziface SDK flow.
 
 In the near future we will remove native events for native components, with this you will be able to capture opening and closing events of the Aziface module on the screen.
 
-| Methods                                                              | Return Type                                                                                               | iOS | Android |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --- | ------- |
-| `addListener(eventType: string, callback: (event: boolean) => void)` | [`EmitterSubscription`](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) | ✅  | ✅      |
+| Methods                                                              | Return Type                                                                                               | Platform |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `addListener(eventType: string, callback: (event: boolean) => void)` | [`EmitterSubscription`](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) | All      |
 
 ### `Event Types`
 

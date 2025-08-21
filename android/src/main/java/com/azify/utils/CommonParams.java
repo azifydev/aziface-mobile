@@ -1,7 +1,5 @@
 package com.azify.utils;
 
-import android.util.Log;
-
 import com.azify.processors.Config;
 import com.facebook.react.bridge.ReadableMap;
 
@@ -10,8 +8,8 @@ import java.util.Map;
 public class CommonParams {
   private final Map<String, Object> params;
 
-  public CommonParams(Map<String, Object> params) {
-    this.params = params;
+  public CommonParams(ReadableMap params) {
+    this.params = params == null ? null : params.toHashMap();
   }
 
   private String getParam(String key) {
@@ -38,24 +36,28 @@ public class CommonParams {
     return false;
   }
 
+  public Boolean isNull() {
+    return this.params == null;
+  }
+
   public void setHeaders(ReadableMap headers) {
     Config.setHeaders(headers);
   }
 
   public void buildProcessorPathURL() {
-    Config.setProcessorPathURL("base", this.getParam("pathUrl", "base"));
-    Config.setProcessorPathURL("match", this.getParam("pathUrl", "match"));
+    if (!this.isNull()) {
+      Config.setProcessorPathURL("base", this.getParam("pathUrl", "base"));
+      Config.setProcessorPathURL("match", this.getParam("pathUrl", "match"));
+    }
   }
 
   public void build() {
-    try {
+    if (!this.isNull()) {
       Config.setDevice(this.getParam("device"));
       Config.setUrl(this.getParam("url"));
       Config.setProcessId(this.getParam("processId"));
       Config.setKey(this.getParam("key"));
       Config.setProductionKeyText(this.getParam("productionKey"));
-    } catch (Exception error) {
-      Log.d("Aziface - SDK", "Error while setting FaceTecSDK configuration!");
     }
   }
 }

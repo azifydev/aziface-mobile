@@ -21,28 +21,28 @@ import com.facetec.sdk.*;
 
 public class AuthenticateProcessor extends Processor implements FaceTecFaceScanProcessor {
   private boolean success = false;
-  private final AzifaceMobileSdkModule faceTecModule;
+  private final AzifaceMobileSdkModule module;
   private final ReadableMap data;
 
-  public AuthenticateProcessor(String sessionToken, Context context, AzifaceMobileSdkModule faceTecModule,
+  public AuthenticateProcessor(String sessionToken, Context context, AzifaceMobileSdkModule module,
       ReadableMap data) {
-    this.faceTecModule = faceTecModule;
+    this.module = module;
     this.data = data;
 
-    faceTecModule.sendEvent("onCloseModal", true);
+    module.sendEvent("onCloseModal", true);
     FaceTecSessionActivity.createAndLaunchSession(context, AuthenticateProcessor.this, sessionToken);
   }
 
   public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult,
       final FaceTecFaceScanResultCallback faceScanResultCallback) {
-    faceTecModule.setLatestSessionResult(sessionResult);
+    this.module.setLatestSessionResult(sessionResult);
 
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Status is not session completed successfully!",
-          "AziFaceTecDifferentStatus");
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Status is not session completed successfully!",
+          "SessionStatusError");
       return;
     }
 
@@ -54,11 +54,10 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       parameters.put("faceScan", sessionResult.getFaceScanBase64());
       parameters.put("auditTrailImage", sessionResult.getAuditTrailCompressedBase64()[0]);
       parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
-      parameters.put("externalDatabaseRefID", faceTecModule.getLatestExternalDatabaseRefID());
+      parameters.put("externalDatabaseRefID", module.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
-      e.printStackTrace();
-      faceTecModule.sendEvent("onCloseModal", false);
-      faceTecModule.processorPromise.reject("Exception raised while attempting to create JSON payload for upload.",
+      this.module.sendEvent("onCloseModal", false);
+      this.module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
 
@@ -88,6 +87,16 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
           JSONObject responseJSON = new JSONObject(responseString);
           JSONObject responseJSONData = responseJSON.getJSONObject("data");
           boolean wasProcessed = responseJSONData.getBoolean("wasProcessed");
+          boolean error = responseJSONData.getBoolean("error");
+
+          if (error) {
+            faceScanResultCallback.cancel();
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("An error occurred while scanning",
+              "ProcessorError");
+            return;
+          }
+
           String scanResultBlob = responseJSONData.getString("scanResultBlob");
 
           if (wasProcessed) {
@@ -96,19 +105,18 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
 
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              faceTecModule.processorPromise.resolve(true);
+              module.promise.resolve(true);
             }
           } else {
             faceScanResultCallback.cancel();
-            faceTecModule.sendEvent("onCloseModal", false);
-            faceTecModule.processorPromise.reject("FaceTec SDK wasn't have to values processed!",
-                "AziFaceValuesWereNotProcessed");
+            module.sendEvent("onCloseModal", false);
+            module.promise.reject("AziFace SDK wasn't have to values processed!",
+                "SessionNotProcessedError");
           }
         } catch (JSONException e) {
-          e.printStackTrace();
           faceScanResultCallback.cancel();
-          faceTecModule.sendEvent("onCloseModal", false);
-          faceTecModule.processorPromise.reject("Exception raised while attempting to parse JSON result.",
+          module.sendEvent("onCloseModal", false);
+          module.promise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
       }
@@ -116,8 +124,8 @@ public class AuthenticateProcessor extends Processor implements FaceTecFaceScanP
       @Override
       public void onFailure(@NonNull Call call, IOException e) {
         faceScanResultCallback.cancel();
-        faceTecModule.sendEvent("onCloseModal", false);
-        faceTecModule.processorPromise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
+        module.sendEvent("onCloseModal", false);
+        module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
   }

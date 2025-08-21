@@ -16,33 +16,35 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
   public var latestExternalDatabaseRefID: String = ""
   public var latestSessionResult: FaceTecSessionResult!
   public var latestIDScanResult: FaceTecIDScanResult!
-  public var processorRevolver: RCTPromiseResolveBlock!
-  public var processorRejecter: RCTPromiseRejectBlock!
+  public var resolver: RCTPromiseResolveBlock!
+  public var rejector: RCTPromiseRejectBlock!
   public var latestProcessor: Processor!
-  
+
   @IBOutlet weak var themeTransitionText: UILabel!
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
-  
+
   func onLivenessCheck(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    setProcessorPromise(resolve, rejecter: reject)
+    self.setPromises(resolve, rejecter: reject)
+
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = LivenessCheckProcessor(
         sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-  
+
   func onEnrollUser(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    setProcessorPromise(resolve, rejecter: reject)
+    self.setPromises(resolve, rejecter: reject)
+
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
@@ -50,24 +52,26 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-  
+
   func onAuthenticateUser(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    setProcessorPromise(resolve, rejecter: reject)
+    self.setPromises(resolve, rejecter: reject)
+
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = AuthenticateProcessor(
         sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-  
+
   func onPhotoIDMatch(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    setProcessorPromise(resolve, rejecter: reject)
+    self.setPromises(resolve, rejecter: reject)
+
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestExternalDatabaseRefID = "ios_azify_app_" + UUID().uuidString
@@ -75,61 +79,69 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-  
+
   func onPhotoIDScan(
     _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    setProcessorPromise(resolve, rejecter: reject)
+    self.setPromises(resolve, rejecter: reject)
+
     getSessionToken { sessionToken in
       self.resetLatestResults()
       self.latestProcessor = PhotoIDScanProcessor(
         sessionToken: sessionToken, viewController: self, data: data)
     }
   }
-  
+
   func onComplete() {
     self.setNeedsStatusBarAppearanceUpdate()
-    
+
     if self.latestProcessor != nil {
       self.isSuccess = self.latestProcessor.isSuccess()
     }
-    
+
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
-    
+
     if !self.isSuccess {
       self.latestExternalDatabaseRefID = ""
-      self.processorRejecter(
-        "AziFace SDK values were not processed!", "AziFaceValuesWereNotProcessed", nil)
+      self.rejector("AziFace SDK values were not processed!", "SessionNotProcessedError", nil)
     } else {
-      self.processorRevolver(self.isSuccess)
+      self.resolver(self.isSuccess)
     }
   }
-  
+
   func setLatestSessionResult(sessionResult: FaceTecSessionResult) {
     latestSessionResult = sessionResult
   }
-  
+
   func setLatestIDScanResult(idScanResult: FaceTecIDScanResult) {
     latestIDScanResult = idScanResult
   }
-  
+
   func resetLatestResults() {
     latestSessionResult = nil
     latestIDScanResult = nil
   }
-  
+
   func getLatestExternalDatabaseRefID() -> String {
     return latestExternalDatabaseRefID
   }
-  
-  func setProcessorPromise(
+
+  func setPromises(
     _ resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock
   ) {
-    self.processorRevolver = resolver
-    self.processorRejecter = rejecter
+    self.resolver = resolver
+    self.rejector = rejecter
   }
-  
+
+  func hasResolver() -> Bool {
+    return self.resolver != nil
+  }
+
+  func hasRejector() -> Bool {
+    return self.rejector != nil
+  }
+
   func getSessionToken(sessionTokenCallback: @escaping (String) -> Void) {
     let request = Config.makeRequest(url: "/Process/Session/Token", httpMethod: "GET")
     let session = URLSession(
@@ -139,35 +151,37 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       with: request as URLRequest,
       completionHandler: { data, response, error in
         guard let data = data else {
-          if self.processorRejecter != nil {
-            self.processorRejecter(
-              "Exception raised while attempting HTTPS call.", "HTTPSError", nil)
+          if self.hasRejector() {
+            self.rejector("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
           }
-          
+
           return
         }
-        
+
         if let responseJSONObj = try? JSONSerialization.jsonObject(
-          with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-            as! [String: AnyObject]
+          with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject]
         {
           if let dataObj = responseJSONObj["data"] as? [String: AnyObject] {
             if let sessionToken = dataObj["sessionToken"] as? String {
               sessionTokenCallback(sessionToken)
               return
             } else {
-              print("Session token not found.")
+              if self.hasRejector() {
+                self.rejector("Response JSON is missing sessionToken.", "JSONError", nil)
+              }
             }
           } else {
-            print("Data object not found.")
+            if self.hasRejector() {
+              self.rejector("Exception raised while attempting to parse JSON result.", "JSONError", nil)
+            }
           }
-          
-          if let processorRejecter = self.processorRejecter {
-            processorRejecter("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
+
+          if self.hasRejector() {
+            self.rejector("Exception raised while attempting HTTPS call.", "HTTPSError", nil)
           }
         }
       })
-    
+
     task.resume()
   }
 }
