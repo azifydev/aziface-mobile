@@ -101,7 +101,6 @@ export default function App() {
      *
      * */
     const headers = {
-      'Authorization': 'YOUR_AUTHORIZATION',
       'x-token-bearer': 'YOUR_X_TOKEN_BEARER',
       'x-api-key': 'YOUR_X_API_KEY',
       'clientInfo': 'YUOR_CLIENT_INFO',
