@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/azifydev/aziface-mobile/compare/v1.0.5...v1.1.0) (2025-08-21)
+
+
+### Bug Fixes
+
+* adjust release ([b85373b](https://github.com/azifydev/aziface-mobile/commit/b85373bba3218e3cbe28d3dee78324820a6eca99))
+
+
+### Features
+
+* add custom path route via params method ([#4](https://github.com/azifydev/aziface-mobile/issues/4)) ([9d1536b](https://github.com/azifydev/aziface-mobile/commit/9d1536b0ec8701445620ed0ba3e270a8608a8fb3))
+* improve theme structure ([#5](https://github.com/azifydev/aziface-mobile/issues/5)) ([600f8ad](https://github.com/azifydev/aziface-mobile/commit/600f8ad3b5d8e8caf1f710fc6ad4826165054794))
+* **WL-53:** Upgrade and add the new message errors in native ([#7](https://github.com/azifydev/aziface-mobile/issues/7)) ([282c6e6](https://github.com/azifydev/aziface-mobile/commit/282c6e62ff37e6ce8424849b07d3bb2e34c32571))
+
 ## [1.0.5](https://github.com/azifydev/aziface-mobile/compare/v1.0.4...v1.0.5) (2025-08-08)
 
 
