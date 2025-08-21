@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
-  URLSessionTaskDelegate
+                            URLSessionTaskDelegate
 {
   public var success = false
   public var data: NSDictionary!
@@ -24,7 +24,6 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
     self.viewController = viewController
     self.data = data
     self.theme = Theme()
-
     super.init()
 
     FaceTecCustomization.setIDScanUploadMessageOverrides(
@@ -163,7 +162,7 @@ class PhotoIDScanProcessor: NSObject, Processor, FaceTecIDScanProcessorDelegate,
         }
 
         guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-          let wasProcessed = responseJSON["wasProcessed"] as? Bool
+              let wasProcessed = responseJSON["wasProcessed"] as? Bool
         else {
           AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
           idScanResultCallback.onIDScanResultCancel()

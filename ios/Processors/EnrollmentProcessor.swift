@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-  URLSessionTaskDelegate
+                           URLSessionTaskDelegate
 {
   public var success = false
   public var data: NSDictionary!
@@ -41,7 +41,6 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
   ) {
     self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     self.faceScanResultCallback = faceScanResultCallback
-
     if sessionResult.status != .sessionCompletedSuccessfully {
       if latestNetworkRequest != nil {
         latestNetworkRequest.cancel()
@@ -52,7 +51,6 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
       print("(Aziface SDK) Status is not session completed successfully!")
       return
     }
-
     var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
     if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
       parameters["auditTrailImage"] = auditTrailImage
@@ -100,7 +98,6 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
             print("(Aziface SDK) Invalid JSON response.")
             return
           }
-
           guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
             AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
             self.faceScanResultCallback.onFaceScanResultCancel()
@@ -116,7 +113,7 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
           }
 
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-            let wasProcessed = responseData["wasProcessed"] as? Int
+                let wasProcessed = responseData["wasProcessed"] as? Int
           else {
             AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
             self.faceScanResultCallback.onFaceScanResultCancel()
@@ -144,7 +141,6 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
           return
         }
       }
-
       latestNetworkRequest?.resume()
     } catch {
       AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)

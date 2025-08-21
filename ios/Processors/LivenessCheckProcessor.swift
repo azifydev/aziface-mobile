@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-  URLSessionTaskDelegate
+                              URLSessionTaskDelegate
 {
   public var success = false
   public var data: NSDictionary!
@@ -24,7 +24,6 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
     self.viewController = viewController
     self.data = data
     self.theme = Theme()
-
     super.init()
 
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
@@ -111,7 +110,7 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
         }
 
         guard let scanResultBlob = responseJSON["scanResultBlob"] as? String,
-          let wasProcessed = responseJSON["wasProcessed"] as? Bool
+              let wasProcessed = responseJSON["wasProcessed"] as? Bool
         else {
           AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
           self.faceScanResultCallback.onFaceScanResultCancel()
@@ -138,7 +137,6 @@ class LivenessCheckProcessor: NSObject, Processor, FaceTecFaceScanProcessorDeleg
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
-
       let message = self.theme.getLivenessMessage(
         "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)

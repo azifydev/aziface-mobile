@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-  FaceTecIDScanProcessorDelegate, URLSessionTaskDelegate
+                             FaceTecIDScanProcessorDelegate, URLSessionTaskDelegate
 {
   public var success = false
   public var faceScanWasSuccessful = false
@@ -28,7 +28,6 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     self.latestExternalDatabaseRefID = self.viewController.getLatestExternalDatabaseRefID()
     self.data = data
     self.theme = Theme()
-
     super.init()
 
     FaceTecCustomization.setIDScanUploadMessageOverrides(
@@ -111,7 +110,6 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       print("(Aziface SDK) Status is not session completed successfully!")
       return
     }
-
     var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
     if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
       parameters["auditTrailImage"] = auditTrailImage
@@ -175,7 +173,7 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
 
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-            let wasProcessed = responseData["wasProcessed"] as? Int
+                let wasProcessed = responseData["wasProcessed"] as? Int
           else {
             AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
             self.faceScanResultCallback.onFaceScanResultCancel()
@@ -236,7 +234,6 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       print("(Aziface SDK) Scan status is not success!")
       return
     }
-
     let minMatchLevel = 3
     var parameters: [String: Any] = [:]
     parameters["idScan"] = idScanResult.idScanBase64
@@ -303,14 +300,13 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       }
 
       guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-        let wasProcessed = responseData["wasProcessed"] as? Bool
+            let wasProcessed = responseData["wasProcessed"] as? Bool
       else {
         AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
         return
       }
-
       if wasProcessed == true {
         FaceTecCustomization.setIDScanResultScreenMessageOverrides(
           successFrontSide: self.theme.getPhotoIDMatchMessage(

@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-  URLSessionTaskDelegate
+                             URLSessionTaskDelegate
 {
   public var success = false
   public var data: NSDictionary!
@@ -24,7 +24,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     self.viewController = viewController
     self.data = data
     self.theme = Theme()
-
     super.init()
 
     AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
@@ -41,7 +40,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
   ) {
     self.viewController.setLatestSessionResult(sessionResult: sessionResult)
     self.faceScanResultCallback = faceScanResultCallback
-
     if sessionResult.status != FaceTecSessionStatus.sessionCompletedSuccessfully {
       if latestNetworkRequest != nil {
         latestNetworkRequest.cancel()
@@ -52,7 +50,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       print("(Aziface SDK) Status is not session completed successfully!")
       return
     }
-
     var parameters: [String: Any] = ["faceScan": sessionResult.faceScanBase64]
     if let auditTrailImage = sessionResult.auditTrailCompressedBase64?.first {
       parameters["auditTrailImage"] = auditTrailImage
@@ -116,7 +113,7 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           }
 
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-            let wasProcessed = responseData["wasProcessed"] as? Int
+                let wasProcessed = responseData["wasProcessed"] as? Int
           else {
             AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
             self.faceScanResultCallback.onFaceScanResultCancel()
@@ -155,7 +152,6 @@ class AuthenticateProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
       if self.latestNetworkRequest.state == .completed { return }
-
       let message = self.theme.getAuthenticateMessage(
         "uploadMessage", defaultMessage: "Still Uploading...")
       let uploadMessage: NSMutableAttributedString = NSMutableAttributedString.init(string: message)
