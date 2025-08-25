@@ -70,6 +70,7 @@ android {
 
   buildTypes {
     release {
+      crunchPngs false
       minifyEnabled false
     }
   }
