@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/azifydev/aziface-mobile/compare/v1.1.1...v1.1.2) (2025-08-27)
+
+
+### Bug Fixes
+
+* **android:** resolve failed to read `.png` signature in release mode ([#8](https://github.com/azifydev/aziface-mobile/issues/8)) ([f1d9199](https://github.com/azifydev/aziface-mobile/commit/f1d9199c7aadf91360fea80fa0de6457336abb73))
+
 ## [1.1.1](https://github.com/azifydev/aziface-mobile/compare/v1.1.0...v1.1.1) (2025-08-21)
 
 
