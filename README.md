@@ -1,6 +1,11 @@
 # @azify/aziface-mobile
 
-![Version](https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen)
+<div align="center">
+  <p>
+    <img alt="Version" src="https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/%40azify%2Faziface-mobile?style=flat">
+  </p>
+</div>
 
 Azify SDK adapter to react native. 📱
 
