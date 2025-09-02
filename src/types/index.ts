@@ -1344,6 +1344,8 @@ export interface FaceViewProps extends ViewProps {
    * @description Callback function called when the Aziface SDK is opened.
    *
    * @param {boolean} opened - Indicates if the Aziface SDK is opened.
+   *
+   * @return {void}
    */
   onOpen?: (opened: boolean) => void;
 
@@ -1351,6 +1353,8 @@ export interface FaceViewProps extends ViewProps {
    * @description Callback function called when the Aziface SDK is closed.
    *
    * @param {boolean} closed - Indicates if the Aziface SDK is closed.
+   *
+   * @return {void}
    */
   onClose?: (closed: boolean) => void;
 
@@ -1358,6 +1362,8 @@ export interface FaceViewProps extends ViewProps {
    * @description Callback function called when the Aziface SDK is cancelled.
    *
    * @param {boolean} cancelled - Indicates if the Aziface SDK is cancelled.
+   *
+   * @return {void}
    */
   onCancel?: (cancelled: boolean) => void;
 
@@ -1366,6 +1372,8 @@ export interface FaceViewProps extends ViewProps {
    * SDK.
    *
    * @param {boolean} error - Indicates if an error occurred in the Aziface SDK.
+   *
+   * @return {void}
    */
   onError?: (error: boolean) => void;
 
@@ -1373,6 +1381,8 @@ export interface FaceViewProps extends ViewProps {
    * @description Callback function called when the Aziface SDK is initialized.
    *
    * @param {boolean} initialized - Indicates if the Aziface SDK is initialized.
+   *
+   * @return {void}
    */
   onInitialize?: (initialized: boolean) => void;
 }
