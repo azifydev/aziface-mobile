@@ -100,15 +100,15 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.isSuccess = self.latestProcessor.isSuccess()
     }
 
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: !self.isSuccess)
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: !self.isSuccess)
-
     if !self.isSuccess {
       self.latestExternalDatabaseRefID = ""
       self.rejector("AziFace SDK values were not processed!", "SessionNotProcessedError", nil)
     } else {
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: !self.isSuccess)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: !self.isSuccess)
+
       self.resolver(self.isSuccess)
     }
   }
@@ -162,7 +162,8 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
         }
 
         if let responseJSONObj = try? JSONSerialization.jsonObject(
-          with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject]
+          with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+          as! [String: AnyObject]
         {
           if let dataObj = responseJSONObj["data"] as? [String: AnyObject] {
             if let sessionToken = dataObj["sessionToken"] as? String {
@@ -175,7 +176,8 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
             }
           } else {
             if self.hasRejector() {
-              self.rejector("Exception raised while attempting to parse JSON result.", "JSONError", nil)
+              self.rejector(
+                "Exception raised while attempting to parse JSON result.", "JSONError", nil)
             }
           }
 
