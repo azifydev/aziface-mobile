@@ -89,13 +89,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  NativeEventEmitter,
 } from 'react-native';
-import ReactNativeAzifaceSdk, {
-  enroll,
-  initialize,
-  photoMatch,
-} from '@azify/aziface-mobile';
+import { enroll, initialize, photoMatch } from '@azify/aziface-mobile';
 
 export default function App() {
   const init = async () => {
@@ -137,11 +132,6 @@ export default function App() {
       console.error(error.message);
     }
   };
-
-  const emitter = new NativeEventEmitter(ReactNativeAzifaceSdk);
-  emitter.addListener('onCloseModal', (event: boolean) =>
-    console.log('onCloseModal', event)
-  );
 
   const onPressPhotoMatch = async () => {
     try {
