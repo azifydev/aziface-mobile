@@ -1,10 +1,4 @@
-import { NativeModules, Platform } from 'react-native';
-
-const LINKING_ERROR =
-  `The package '@azify/aziface-mobile' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+import { type ViewProps } from 'react-native';
 
 /**
  * @type
@@ -1339,23 +1333,46 @@ export interface Methods {
 }
 
 /**
- * @description Native module Aziface SDK, it's recommended use it with event
- * types.
+ * @interface FaceViewProps
  *
- * @example
- * import { NativeEventEmitter } from 'react-native';
- * import AzifaceMobileSdk from '@azify/aziface-mobile';
- *
- * const emitter = new NativeEventEmitter(AzifaceMobileSdk);
- * emitter.addListener('onCloseModal', (event: boolean) => console.log('onCloseModal', event));
+ * @description Props for the FaceView component. The FaceView component is
+ * responsible for displaying the user's face during processes. It informs
+ * the user about the current status of the face modal.
  */
-export const AzifaceMobileSdk: Methods = NativeModules?.AzifaceMobileSdk
-  ? NativeModules.AzifaceMobileSdk
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+export interface FaceViewProps extends ViewProps {
+  /**
+   * @description Callback function called when the Aziface SDK is opened.
+   *
+   * @param {boolean} opened - Indicates if the Aziface SDK is opened.
+   */
+  onOpen?: (opened: boolean) => void;
+
+  /**
+   * @description Callback function called when the Aziface SDK is closed.
+   *
+   * @param {boolean} closed - Indicates if the Aziface SDK is closed.
+   */
+  onClose?: (closed: boolean) => void;
+
+  /**
+   * @description Callback function called when the Aziface SDK is cancelled.
+   *
+   * @param {boolean} cancelled - Indicates if the Aziface SDK is cancelled.
+   */
+  onCancel?: (cancelled: boolean) => void;
+
+  /**
+   * @description Callback function called when an error occurs in the Aziface
+   * SDK.
+   *
+   * @param {boolean} error - Indicates if an error occurred in the Aziface SDK.
+   */
+  onError?: (error: boolean) => void;
+
+  /**
+   * @description Callback function called when the Aziface SDK is initialized.
+   *
+   * @param {boolean} initialized - Indicates if the Aziface SDK is initialized.
+   */
+  onInitialize?: (initialized: boolean) => void;
+}
