@@ -108,7 +108,11 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
         AzifaceMobileSdkModule.AziTheme
             .getPhotoIDScanMessage("skippedNFC", "uploadCompleteAwaitingProcessing", "Processing\nID Details"));
 
-    module.sendEvent("onCloseModal", true);
+    this.module.sendEvent("onOpen", true);
+    this.module.sendEvent("onClose", false);
+    this.module.sendEvent("onCancel", false);
+    this.module.sendEvent("onError", false);
+
     FaceTecSessionActivity.createAndLaunchSession(context, PhotoIDScanProcessor.this, sessionToken);
   }
 
@@ -119,7 +123,10 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
     if (idScanResult.getStatus() != FaceTecIDScanStatus.SUCCESS) {
       NetworkingHelpers.cancelPendingRequests();
       idScanResultCallback.cancel();
-      this.module.sendEvent("onCloseModal", false);
+      this.module.sendEvent("onOpen", false);
+      this.module.sendEvent("onClose", true);
+      this.module.sendEvent("onCancel", true);
+      this.module.sendEvent("onError", false);
       this.module.promise.reject("Scan status is not success!", "SessionScanStatusError");
       return;
     }
@@ -141,7 +148,10 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
         parameters.put("idScanBackImage", backImagesCompressedBase64.get(0));
       }
     } catch (JSONException e) {
-      this.module.sendEvent("onCloseModal", false);
+      this.module.sendEvent("onOpen", false);
+      this.module.sendEvent("onClose", true);
+      this.module.sendEvent("onCancel", false);
+      this.module.sendEvent("onError", true);
       this.module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
@@ -175,7 +185,10 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
 
           if (error) {
             idScanResultCallback.cancel();
-            module.sendEvent("onCloseModal", false);
+            module.sendEvent("onOpen", false);
+            module.sendEvent("onClose", true);
+            module.sendEvent("onCancel", true);
+            module.sendEvent("onError", true);
             module.promise.reject("An error occurred while scanning",
               "ProcessorError");
             return;
@@ -236,18 +249,27 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
 
             success = idScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
-              module.sendEvent("onCloseModal", false);
+              module.sendEvent("onOpen", false);
+              module.sendEvent("onClose", true);
+              module.sendEvent("onCancel", false);
+              module.sendEvent("onError", false);
               module.promise.resolve(true);
             }
           } else {
             idScanResultCallback.cancel();
-            module.sendEvent("onCloseModal", false);
+            module.sendEvent("onOpen", false);
+            module.sendEvent("onClose", true);
+            module.sendEvent("onCancel", true);
+            module.sendEvent("onError", true);
             module.promise.reject("AziFace SDK values were not processed!",
                 "SessionNotProcessedError");
           }
         } catch (JSONException e) {
           idScanResultCallback.cancel();
-          module.sendEvent("onCloseModal", false);
+          module.sendEvent("onOpen", false);
+          module.sendEvent("onClose", true);
+          module.sendEvent("onCancel", true);
+          module.sendEvent("onError", true);
           module.promise.reject("Exception raised while attempting to parse JSON result.",
               "JSONError");
         }
@@ -256,7 +278,10 @@ public class PhotoIDScanProcessor extends Processor implements FaceTecIDScanProc
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
         idScanResultCallback.cancel();
-        module.sendEvent("onCloseModal", false);
+        module.sendEvent("onOpen", false);
+        module.sendEvent("onClose", true);
+        module.sendEvent("onCancel", true);
+        module.sendEvent("onError", true);
         module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });

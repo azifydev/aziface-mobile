@@ -28,7 +28,11 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
     this.module = module;
     this.data = data;
 
-    this.module.sendEvent("onCloseModal", true);
+    this.module.sendEvent("onOpen", true);
+    this.module.sendEvent("onClose", false);
+    this.module.sendEvent("onCancel", false);
+    this.module.sendEvent("onError", false);
+
     FaceTecSessionActivity.createAndLaunchSession(context, EnrollmentProcessor.this, sessionToken);
   }
 
@@ -39,7 +43,10 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
     if (sessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
       NetworkingHelpers.cancelPendingRequests();
       faceScanResultCallback.cancel();
-      this.module.sendEvent("onCloseModal", false);
+      this.module.sendEvent("onOpen", false);
+      this.module.sendEvent("onClose", true);
+      this.module.sendEvent("onCancel", true);
+      this.module.sendEvent("onError", false);
       this.module.promise.reject("Status is not session completed successfully!",
           "SessionStatusError");
       return;
@@ -58,7 +65,10 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
       parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
       parameters.put("externalDatabaseRefID", module.getLatestExternalDatabaseRefID());
     } catch (JSONException e) {
-      module.sendEvent("onCloseModal", false);
+      this.module.sendEvent("onOpen", false);
+      this.module.sendEvent("onClose", true);
+      this.module.sendEvent("onCancel", false);
+      this.module.sendEvent("onError", true);
       module.promise.reject("Exception raised while attempting to create JSON payload for upload.",
           "JSONError");
     }
@@ -91,7 +101,10 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
 
           if (error) {
             faceScanResultCallback.cancel();
-            module.sendEvent("onCloseModal", false);
+            module.sendEvent("onOpen", false);
+            module.sendEvent("onClose", true);
+            module.sendEvent("onCancel", true);
+            module.sendEvent("onError", true);
             module.promise.reject("An error occurred while scanning",
               "ProcessorError");
             return;
@@ -105,24 +118,37 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
 
             success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
             if (success) {
+              module.sendEvent("onOpen", false);
+              module.sendEvent("onClose", true);
+              module.sendEvent("onCancel", false);
+              module.sendEvent("onError", false);
               module.promise.resolve(true);
             }
           } else {
             faceScanResultCallback.cancel();
-            module.sendEvent("onCloseModal", false);
+            module.sendEvent("onOpen", false);
+            module.sendEvent("onClose", true);
+            module.sendEvent("onCancel", true);
+            module.sendEvent("onError", true);
             module.promise.reject("AziFace SDK wasn't have to values processed!",
               "SessionNotProcessedError");
           }
         } catch (JSONException e) {
           faceScanResultCallback.cancel();
-          module.sendEvent("onCloseModal", false);
+          module.sendEvent("onOpen", false);
+          module.sendEvent("onClose", true);
+          module.sendEvent("onCancel", true);
+          module.sendEvent("onError", true);
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @Nullable IOException e) {
         faceScanResultCallback.cancel();
-        module.sendEvent("onCloseModal", false);
+        module.sendEvent("onOpen", false);
+        module.sendEvent("onClose", true);
+        module.sendEvent("onCancel", true);
+        module.sendEvent("onError", true);
         module.promise.reject("Exception raised while attempting HTTPS call.", "HTTPSError");
       }
     });
