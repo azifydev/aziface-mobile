@@ -37,6 +37,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
 
       if paremeters.isNull() {
         self.isInitialized = false
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onInitialize", body: self.isInitialized)
         return reject("Parameters aren't provided", "ParamsNotProvided", nil)
       }
 
@@ -48,6 +49,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
           paremeters.isDeveloper(),
           completion: { initializationSuccessful in
             self.isInitialized = initializationSuccessful
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onInitialize", body: initializationSuccessful)
             if self.isInitialized {
               return resolve(true)
             }
@@ -55,6 +57,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
           })
       } else {
         self.isInitialized = false
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onInitialize", body: self.isInitialized)
         return reject("Configuration aren't provided", "ConfigNotProvided", nil)
       }
     }
@@ -73,7 +76,7 @@ class AzifaceMobileSdk: RCTEventEmitter, URLSessionDelegate {
   @objc override func stopObserving() {}
 
   @objc override func supportedEvents() -> [String]! {
-    return ["onCloseModal"]
+    return ["onOpen", "onClose", "onCancel", "onError", "onInitialize"]
   }
 
   @objc func setTheme(_ options: NSDictionary?) {
