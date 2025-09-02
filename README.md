@@ -50,8 +50,8 @@ Azify SDK adapter to react native. 📱
       - [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)
       - [`DefaultScanMessageRetry`](#defaultscanmessageretry)
   - [`Errors`](#errors)
-- [Native Events (Deprecated)](#native-events-deprecated)
-  - [`Event Types`](#event-types)
+- [Components](#components)
+  - [`FaceView`](#faceview)
 - [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
   - [How to add images in Android?](#how-to-add-images-in-android)
   - [How to add images in iOS?](#how-to-add-images-in-ios)
@@ -674,21 +674,21 @@ Represents the retry messages during to Aziface SDK flow.
 
 <hr/>
 
-## Native Events (Deprecated)
+## Components
 
-In the near future we will remove native events for native components, with this you will be able to capture opening and closing events of the Aziface module on the screen.
+### `FaceView`
 
-| Methods                                                              | Return Type                                                                                               | Platform |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| `addListener(eventType: string, callback: (event: boolean) => void)` | [`EmitterSubscription`](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) | All      |
+The `FaceView` extends all properties of the `View`, but it has five new callbacks to listener Aziface SDK events.
 
-### `Event Types`
+#### Properties
 
-This is a list of event types that can be used on `addListener`.
-
-| `eventType`    | Return    | Description                                                                                                       |
-| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
-| `onCloseModal` | `boolean` | This event listener verify if Aziface modal biometric is open. Return `true` if modal is open, `false` otherwise. |
+| Property       | Description                                                       | Returns   | Platform |
+| -------------- | ----------------------------------------------------------------- | --------- | -------- |
+| `onOpen`       | Callback function called when the Aziface SDK is opened.          | `boolean` | All      |
+| `onClose`      | Callback function called when the Aziface SDK is closed.          | `boolean` | All      |
+| `onCancel`     | Callback function called when the Aziface SDK is cancelled.       | `boolean` | All      |
+| `onError`      | Callback function called when an error occurs in the Aziface SDK. | `boolean` | All      |
+| `onInitialize` | Callback function called when the Aziface SDK is initialized.     | `boolean` | All      |
 
 <hr/>
 
