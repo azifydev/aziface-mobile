@@ -100,7 +100,10 @@ class AziFaceViewController: UIViewController, URLSessionDelegate {
       self.isSuccess = self.latestProcessor.isSuccess()
     }
 
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: !self.isSuccess)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: !self.isSuccess)
 
     if !self.isSuccess {
       self.latestExternalDatabaseRefID = ""
