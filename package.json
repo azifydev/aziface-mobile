@@ -41,7 +41,10 @@
     "prepack": "bob build",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
     "podspec": "pod ipc spec aziface-mobile-sdk.podspec",
-    "release": "npx semantic-release --ci"
+    "release": "npx semantic-release --ci",
+    "setup": "npm i && npm run podspec && npm run prepack",
+    "android": "npm run setup && cd example && npm i && npm run start",
+    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start"
   },
   "keywords": [
     "react-native",
@@ -172,9 +175,5 @@
         }
       ]
     ]
-  },
-  "dependencies": {
-    "example": "^0.0.0",
-    "pods": "^2.0.0"
   }
 }
