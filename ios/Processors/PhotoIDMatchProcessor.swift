@@ -85,7 +85,10 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         defaultMessage: "Processing\nID Details")  // Upload of ID Details is complete and we are waiting for the Server to finish processing and respond.
     )
 
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: true)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: false)
 
     let controller = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, idScanProcessorDelegate: self, sessionToken: sessionToken)
@@ -105,7 +108,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         latestNetworkRequest.cancel()
       }
 
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: false)
+      
       faceScanResultCallback.onFaceScanResultCancel()
       print("(Aziface SDK) Status is not session completed successfully!")
       return
@@ -134,14 +141,22 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         guard let self = self else { return }
 
         if error != nil {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+          
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) An error occurred while scanning")
           return
         }
 
         guard let data = data else {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+          
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) Data object not found!")
           return
@@ -152,21 +167,33 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: [])
               as? [String: AnyObject]
           else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+            
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Invalid JSON response.")
             return
           }
 
           guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+            
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Missing 'data' in response.")
             return
           }
 
           if let error = responseData["error"] as? Int, error != 0 {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+            
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Error in response")
             return
@@ -175,7 +202,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
                 let wasProcessed = responseData["wasProcessed"] as? Int
           else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+            
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
             return
@@ -188,13 +219,21 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+            
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) AziFace SDK wasn't have to values processed!")
             return
           }
         } catch {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+          
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) Exception raised while attempting to parse JSON result.")
           return
@@ -202,7 +241,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       }
       latestNetworkRequest?.resume()
     } catch {
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+      
       faceScanResultCallback.onFaceScanResultCancel()
       print("(Aziface SDK) Exception raised while attempting HTTPS call.")
       return
@@ -229,7 +272,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         latestNetworkRequest.cancel()
       }
 
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: false)
+      
       idScanResultCallback.onIDScanResultCancel()
       print("(Aziface SDK) Scan status is not success!")
       return
@@ -253,7 +300,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     do {
       request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
     } catch {
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+      
       self.idScanResultCallback.onIDScanResultCancel()
       print("(Aziface SDK) Exception raised while attempting HTTPS call.")
       return
@@ -262,14 +313,22 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
     let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
     latestNetworkRequest = session.dataTask(with: request) { data, response, error in
       if error != nil {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) An error occurred while scanning")
         return
       }
 
       guard let data = data else {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Data object not found!")
         return
@@ -279,21 +338,33 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
           as? [String: AnyObject]
       else {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Invalid JSON response.")
         return
       }
 
       guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Missing 'data' in response.")
         return
       }
 
       if let error = responseJSON["error"] as? Bool, error {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Error in response")
         return
@@ -302,7 +373,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
       guard let scanResultBlob = responseData["scanResultBlob"] as? String,
             let wasProcessed = responseData["wasProcessed"] as? Bool
       else {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
         return
@@ -343,7 +418,11 @@ class PhotoIDMatchProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelega
         self.success = idScanResultCallback.onIDScanResultProceedToNextStep(
           scanResultBlob: scanResultBlob)
       } else {
-        AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+        AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+        
         self.idScanResultCallback.onIDScanResultCancel()
         print("(Aziface SDK) AziFace SDK wasn't have to scan values processed!")
         return

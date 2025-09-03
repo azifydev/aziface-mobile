@@ -61,6 +61,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       if (this.hasPromise()) {
         this.promise.reject("Parameters aren't provided", "ParamsNotProvided");
       }
+      this.sendEvent("onInitialize", isInitialized);
       return;
     }
 
@@ -75,6 +76,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
             @Override
             public void onCompletion(final boolean successful) {
               isInitialized = successful;
+              sendEvent("onInitialize", successful);
               if (hasPromise() && !isInitialized) {
                 promise.reject("Initialization failed", "InitializationFailed");
               }
@@ -88,6 +90,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
       if (this.hasPromise()) {
         promise.reject("Configuration aren't provided", "ConfigNotProvided");
       }
+      this.sendEvent("onInitialize", isInitialized);
       return;
     }
 
@@ -166,7 +169,7 @@ public class AzifaceMobileSdkModule extends ReactContextBaseJavaModule {
     return this.promise != null;
   }
 
-  public void sendEvent(@NonNull String eventName, @Nullable Boolean eventValue) {
+  public void sendEvent(@NonNull String eventName, @Nullable Object eventValue) {
     reactContext
         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
         .emit(eventName, eventValue);

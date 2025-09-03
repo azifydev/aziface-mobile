@@ -1,6 +1,11 @@
 # @azify/aziface-mobile
 
-![Version](https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen)
+<div align="center">
+  <p>
+    <img alt="Version" src="https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/%40azify%2Faziface-mobile?style=flat">
+  </p>
+</div>
 
 Azify SDK adapter to react native. 📱
 
@@ -45,8 +50,8 @@ Azify SDK adapter to react native. 📱
       - [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)
       - [`DefaultScanMessageRetry`](#defaultscanmessageretry)
   - [`Errors`](#errors)
-- [Native Events (Deprecated)](#native-events-deprecated)
-  - [`Event Types`](#event-types)
+- [Components](#components)
+  - [`FaceView`](#faceview)
 - [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
   - [How to add images in Android?](#how-to-add-images-in-android)
   - [How to add images in iOS?](#how-to-add-images-in-ios)
@@ -84,13 +89,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  NativeEventEmitter,
 } from 'react-native';
-import ReactNativeAzifaceSdk, {
-  enroll,
-  initialize,
-  photoMatch,
-} from '@azify/aziface-mobile';
+import { enroll, initialize, photoMatch } from '@azify/aziface-mobile';
 
 export default function App() {
   const init = async () => {
@@ -132,11 +132,6 @@ export default function App() {
       console.error(error.message);
     }
   };
-
-  const emitter = new NativeEventEmitter(ReactNativeAzifaceSdk);
-  emitter.addListener('onCloseModal', (event: boolean) =>
-    console.log('onCloseModal', event)
-  );
 
   const onPressPhotoMatch = async () => {
     try {
@@ -669,21 +664,21 @@ Represents the retry messages during to Aziface SDK flow.
 
 <hr/>
 
-## Native Events (Deprecated)
+## Components
 
-In the near future we will remove native events for native components, with this you will be able to capture opening and closing events of the Aziface module on the screen.
+### `FaceView`
 
-| Methods                                                              | Return Type                                                                                               | Platform |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| `addListener(eventType: string, callback: (event: boolean) => void)` | [`EmitterSubscription`](https://reactnative.dev/docs/native-modules-android#sending-events-to-javascript) | All      |
+The `FaceView` extends all properties of the `View`, but it has five new callbacks to listener Aziface SDK events.
 
-### `Event Types`
+#### Properties
 
-This is a list of event types that can be used on `addListener`.
-
-| `eventType`    | Return    | Description                                                                                                       |
-| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
-| `onCloseModal` | `boolean` | This event listener verify if Aziface modal biometric is open. Return `true` if modal is open, `false` otherwise. |
+| Property       | Description                                                       | Returns   | Platform |
+| -------------- | ----------------------------------------------------------------- | --------- | -------- |
+| `onOpen`       | Callback function called when the Aziface SDK is opened.          | `boolean` | All      |
+| `onClose`      | Callback function called when the Aziface SDK is closed.          | `boolean` | All      |
+| `onCancel`     | Callback function called when the Aziface SDK is cancelled.       | `boolean` | All      |
+| `onError`      | Callback function called when an error occurs in the Aziface SDK. | `boolean` | All      |
+| `onInitialize` | Callback function called when the Aziface SDK is initialized.     | `boolean` | All      |
 
 <hr/>
 

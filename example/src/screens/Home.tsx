@@ -1,18 +1,10 @@
+import { Text, TouchableOpacity, Platform, TextInput } from 'react-native';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  NativeEventEmitter,
-  type NativeModule,
-  Platform,
-  TextInput,
-} from 'react-native';
-import {
-  AzifaceMobileSdk,
   enroll,
   initialize,
   photoMatch,
   setTheme,
+  FaceView,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -80,21 +72,13 @@ export default function Home() {
       console.error('ERROR initializing SDK', error);
     }
   };
-  const emitter = new NativeEventEmitter(
-    AzifaceMobileSdk as unknown as NativeModule
-  );
-  emitter.addListener('onCloseModal', (event: boolean) =>
-    console.log('onCloseModal', event)
-  );
 
   const onPressPhotoMatch = async () => {
     try {
       const isSuccess = await photoMatch();
       console.log('onPressPhotoMatch', isSuccess);
-      console.log(isSuccess);
     } catch (error: any) {
       console.error('ERROR onPressPhotoMatch', error.message);
-      console.error(error.message);
     }
   };
 
@@ -108,7 +92,7 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.azifaceContent}>
+    <FaceView style={styles.azifaceContent}>
       <TextInput
         placeholder="Process ID"
         autoCapitalize="none"
@@ -146,6 +130,6 @@ export default function Home() {
       <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
         <Text style={styles.textLogout}>Logout</Text>
       </TouchableOpacity>
-    </View>
+    </FaceView>
   );
 }

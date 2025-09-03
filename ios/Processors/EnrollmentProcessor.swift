@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate,
-                           URLSessionTaskDelegate
+  URLSessionTaskDelegate
 {
   public var success = false
   public var data: NSDictionary!
@@ -27,7 +27,10 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
 
     super.init()
 
-    AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: true)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: true)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: false)
+    AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: false)
 
     let controller = FaceTec.sdk.createSessionVC(
       faceScanProcessorDelegate: self, sessionToken: sessionToken)
@@ -46,7 +49,11 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
         latestNetworkRequest.cancel()
       }
 
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: false)
+
       faceScanResultCallback.onFaceScanResultCancel()
       print("(Aziface SDK) Status is not session completed successfully!")
       return
@@ -75,14 +82,22 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
         guard let self = self else { return }
 
         if error != nil {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) An error occurred while scanning")
           return
         }
 
         guard let data = data else {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) Data object not found!")
           return
@@ -93,29 +108,45 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: [])
               as? [String: AnyObject]
           else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Invalid JSON response.")
             return
           }
           guard let responseData = responseJSON["data"] as? [String: AnyObject] else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Missing 'data' in response.")
             return
           }
 
           if let error = responseData["error"] as? Int, error != 0 {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) Error in response")
             return
           }
 
           guard let scanResultBlob = responseData["scanResultBlob"] as? String,
-                let wasProcessed = responseData["wasProcessed"] as? Int
+            let wasProcessed = responseData["wasProcessed"] as? Int
           else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
             self.faceScanResultCallback.onFaceScanResultCancel()
             print(
               "(Aziface SDK) Missing required keys 'scanResultBlob' or 'wasProcessed' in 'data'.")
@@ -129,13 +160,21 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
             self.success = self.faceScanResultCallback.onFaceScanGoToNextStep(
               scanResultBlob: scanResultBlob)
           } else {
-            AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+            AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
             self.faceScanResultCallback.onFaceScanResultCancel()
             print("(Aziface SDK) AziFace SDK wasn't able to process the values.")
             return
           }
         } catch {
-          AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+          AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
           self.faceScanResultCallback.onFaceScanResultCancel()
           print("(Aziface SDK) Exception raised while attempting to parse JSON result.")
           return
@@ -143,7 +182,11 @@ class EnrollmentProcessor: NSObject, Processor, FaceTecFaceScanProcessorDelegate
       }
       latestNetworkRequest?.resume()
     } catch {
-      AzifaceMobileSdk.emitter.sendEvent(withName: "onCloseModal", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onOpen", body: false)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onClose", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onCancel", body: true)
+      AzifaceMobileSdk.emitter.sendEvent(withName: "onError", body: true)
+
       faceScanResultCallback.onFaceScanResultCancel()
       print("(Aziface SDK) Exception raised while attempting HTTPS call.")
       return
