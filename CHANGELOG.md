@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/azifydev/aziface-mobile/compare/v1.1.2...v1.2.0) (2025-09-03)
+
+
+### Features
+
+* **WL-93:** Create `FaceView` component for swap `NativeEventEmitter` deprecated ([#9](https://github.com/azifydev/aziface-mobile/issues/9)) ([de80597](https://github.com/azifydev/aziface-mobile/commit/de80597752dd34658b31ef553d6546253c25d55d))
+
 ## [1.1.2](https://github.com/azifydev/aziface-mobile/compare/v1.1.1...v1.1.2) (2025-08-27)
 
 
