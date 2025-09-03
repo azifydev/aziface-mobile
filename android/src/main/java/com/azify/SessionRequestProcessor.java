@@ -2,9 +2,8 @@ package com.azify;
 
 import androidx.annotation.NonNull;
 
+import com.azify.services.NetworkingRequest;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
-
-import Utilities.SampleAppNetworkingRequest;
 
 // This class demonstrates the most important integration point in the FaceTec Device SDK  -- The Session Request Processor.
 //
@@ -22,33 +21,33 @@ import Utilities.SampleAppNetworkingRequest;
 // - Adding additional asynchronous calls to this code is not allowed.  Only make your own additional asynchronous calls once the FaceTec UI is closed.
 // - Adding code that modifies any App UI (Yours or FaceTec's) is not allowed.  Only add code that modifies your own App UI once the FaceTec UI is closed.
 final public class SessionRequestProcessor implements FaceTecSessionRequestProcessor {
-    // onSessionRequest is the core method called by the FaceTec SDK when a request needs to be processed by the FaceTec SDK.
-    // Your code must retrieve the Session Request Blob and send to your FaceTec Server.
-    // Your code must retrieve the Response Blob from FaceTec Server and call processResponse, passing in the Response Blob.    @Override
-    public void onSessionRequest(@NonNull String sessionRequestBlob, @NonNull Callback sessionRequestCallback) {
-        // When you receive a Session Request Blob, call your webservice API that handles this object and passes it to FaceTec Server.
-        // NetworkingRequest is a demonstration class for making a networking call that passes the Session Request Blob, and handles the response.
-        NetworkingRequest.send(this, sessionRequestBlob, sessionRequestCallback);
-    }
+  // onSessionRequest is the core method called by the FaceTec SDK when a request needs to be processed by the FaceTec SDK.
+  // Your code must retrieve the Session Request Blob and send to your FaceTec Server.
+  // Your code must retrieve the Response Blob from FaceTec Server and call processResponse, passing in the Response Blob.    @Override
+  public void onSessionRequest(@NonNull String sessionRequestBlob, @NonNull Callback sessionRequestCallback) {
+    // When you receive a Session Request Blob, call your webservice API that handles this object and passes it to FaceTec Server.
+    // NetworkingRequest is a demonstration class for making a networking call that passes the Session Request Blob, and handles the response.
+    NetworkingRequest.send(this, sessionRequestBlob, sessionRequestCallback);
+  }
 
-    // When the Response Blob is received, call processResponse with it.
-    // Please note that onResponseBlobReceived is a convenience function set up on this class,
-    // so that this function can be called asynchronously once you receive the Response Blob.
-    public void onResponseBlobReceived(@NonNull String responseBlob, @NonNull Callback sessionRequestCallback) {
-        sessionRequestCallback.processResponse(responseBlob);
-    }
+  // When the Response Blob is received, call processResponse with it.
+  // Please note that onResponseBlobReceived is a convenience function set up on this class,
+  // so that this function can be called asynchronously once you receive the Response Blob.
+  public void onResponseBlobReceived(@NonNull String responseBlob, @NonNull Callback sessionRequestCallback) {
+    sessionRequestCallback.processResponse(responseBlob);
+  }
 
-    // When upload progress is received from your webservice, call updateProgress to update the Progress Bar state.
-    // Please note that onUploadProgress is a convenience function set up on this class,
-    // so that this function can be called asynchronously when your networking code receives an upload progress event.
-    public void onUploadProgress(float progress, @NonNull Callback sessionRequestCallback) {
-        sessionRequestCallback.updateProgress(progress);
-    }
+  // When upload progress is received from your webservice, call updateProgress to update the Progress Bar state.
+  // Please note that onUploadProgress is a convenience function set up on this class,
+  // so that this function can be called asynchronously when your networking code receives an upload progress event.
+  public void onUploadProgress(float progress, @NonNull Callback sessionRequestCallback) {
+    sessionRequestCallback.updateProgress(progress);
+  }
 
-    // When an unrecoverable network event occurs, call the FaceTec SDK abortOnCatastrophicError
-    // Calling abortOnCatastrophicError is not allowed except for catastrophic network failures.
-    // Calling abortOnCatastrophicError to exit the FaceTec UI with custom logic is not allowed.
-    public void onCatastrophicNetworkError(@NonNull Callback sessionRequestCallback) {
-        sessionRequestCallback.abortOnCatastrophicError();
-    }
+  // When an unrecoverable network event occurs, call the FaceTec SDK abortOnCatastrophicError
+  // Calling abortOnCatastrophicError is not allowed except for catastrophic network failures.
+  // Calling abortOnCatastrophicError to exit the FaceTec UI with custom logic is not allowed.
+  public void onCatastrophicNetworkError(@NonNull Callback sessionRequestCallback) {
+    sessionRequestCallback.abortOnCatastrophicError();
+  }
 }

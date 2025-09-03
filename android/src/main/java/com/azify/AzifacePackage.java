@@ -1,4 +1,4 @@
-package com.azify.azifacemobilesdk;
+package com.azify;
 
 import androidx.annotation.NonNull;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AzifaceMobileSdkPackage implements ReactPackage {
+public class AzifacePackage implements ReactPackage {
   @NonNull
   @Override
   public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
-    modules.add(new AzifaceMobileSdkModule(reactContext));
+    modules.add(new AzifaceModule(reactContext));
     return modules;
   }
 

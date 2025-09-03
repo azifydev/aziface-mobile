@@ -7,7 +7,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 buildscript {
-  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceMobileSdk_kotlinVersion"]
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceModule_kotlinVersion"]
 
   repositories {
     google()
@@ -33,11 +33,11 @@ apply plugin: "kotlin-android"
 // }
 
 def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["AzifaceMobileSdk_" + name]
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["AzifaceModule_" + name]
 }
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["AzifaceMobileSdk_" + name]).toInteger()
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["AzifaceModule_" + name]).toInteger()
 }
 
 def supportsNamespace() {
@@ -49,10 +49,9 @@ def supportsNamespace() {
   return (major == 7 && minor >= 3) || major >= 8
 }
 
-
 android {
   if (supportsNamespace()) {
-    namespace "com.azify.azifacemobilesdk"
+    namespace "com.azify"
 
     sourceSets {
       main {
