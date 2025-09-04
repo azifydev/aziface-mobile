@@ -32,15 +32,15 @@ public class Vocal {
   static MediaPlayer vocalGuidanceOffPlayer;
   static Vocal.VocalGuidanceMode vocalGuidanceMode = VocalGuidanceMode.MINIMAL;
 
-  public static void setUpVocalGuidancePlayers(AzifaceModule moduleActivity) {
-    vocalGuidanceOnPlayer = MediaPlayer.create(moduleActivity.getContext(), R.raw.vocal_guidance_on);
-    vocalGuidanceOffPlayer = MediaPlayer.create(moduleActivity.getContext(), R.raw.vocal_guidance_off);
+  public static void setUpVocalGuidancePlayers(AzifaceModule module) {
+    vocalGuidanceOnPlayer = MediaPlayer.create(module.getContext(), R.raw.vocal_guidance_on);
+    vocalGuidanceOffPlayer = MediaPlayer.create(module.getContext(), R.raw.vocal_guidance_off);
     vocalGuidanceMode = Vocal.VocalGuidanceMode.MINIMAL;
   }
 
-  public static void setVocalGuidanceMode(AzifaceModule moduleActivity) {
-    if (isDeviceMuted(moduleActivity)) {
-      AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(moduleActivity.getContext(), android.R.style.Theme_Holo_Light)).create();
+  public static void setVocalGuidanceMode(AzifaceModule module) {
+    if (isDeviceMuted(module)) {
+      AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(module.getContext(), android.R.style.Theme_Holo_Light)).create();
       alertDialog.setMessage("Vocal Guidance is disabled when the device is muted");
       alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
         (dialog, which) -> dialog.dismiss());
@@ -97,8 +97,8 @@ public class Vocal {
     }
   }
 
-  public static boolean isDeviceMuted(AzifaceModule moduleActivity) {
-    AudioManager audio = (AudioManager) (moduleActivity.getActivity().getSystemService(Context.AUDIO_SERVICE));
+  public static boolean isDeviceMuted(AzifaceModule module) {
+    AudioManager audio = (AudioManager) (module.getActivity().getSystemService(Context.AUDIO_SERVICE));
     return audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0;
   }
 
@@ -116,7 +116,6 @@ public class Vocal {
       JSONObject ocrLocalizationJSON = new JSONObject(ocrLocalizationJSONString);
 
       FaceTecSDK.configureOCRLocalization(ocrLocalizationJSON);
-
     } catch (IOException | JSONException ex) {
       ex.printStackTrace();
     }
