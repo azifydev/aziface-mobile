@@ -17,6 +17,11 @@ public class CommonParams {
     return value != null ? value.toString() : null;
   }
 
+  private Boolean isDevelopment() {
+    String isDev = this.getParam("isDevelopment");
+    return isDev != null && isDev.equalsIgnoreCase("true");
+  }
+
   public Boolean isNull() {
     return this.params == null;
   }
@@ -29,6 +34,7 @@ public class CommonParams {
     if (!this.isNull()) {
       Config.setDeviceKeyIdentifier(this.getParam("deviceKeyIdentifier"));
       Config.setBaseUrl(this.getParam("baseUrl"));
+      Config.setIsDevelopment(this.isDevelopment());
     }
   }
 }
