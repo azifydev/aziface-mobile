@@ -467,7 +467,7 @@ An object containing the styles used in the ID scan capture screen.
 
 | `Errors`               | Description                                                         | Platform |
 | ---------------------- | ------------------------------------------------------------------- | -------- |
-| `ConfigNotProvided`    | When `device`, `url`, `key` and `productionKey` aren't provided.    | All      |
+| `ConfigNotProvided`    | When `deviceKeyIdentifier` and `baseUrl` aren't provided.           | All      |
 | `InitializationFailed` | When parameters provided by initialize are inconsistent or invalid. | All      |
 | `ParamsNotProvided`    | When parameters aren't provided, this case, it is `null`.           | All      |
 | `NotInitialized`       | When session status is different of success.                        | All      |
