@@ -3,11 +3,12 @@ package com.azify.services;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.azify.AzifaceModule;
 import com.azify.Config;
 import com.azify.SessionRequestProcessor;
-import com.facetec.sdk.FaceTecSDK;
+import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
 
 import org.json.JSONException;
@@ -24,11 +25,15 @@ public class NetworkingRequest {
   public static void send(
     @NonNull SessionRequestProcessor referencingProcessor,
     @NonNull String sessionRequestBlob,
-    @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback
+    @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback,
+    @Nullable ReadableMap data
   ) {
     JSONObject sessionRequestCallPayload = new JSONObject();
 
     try {
+      if (data != null) {
+        sessionRequestCallPayload.put("data", new JSONObject(data.toHashMap()));
+      }
       sessionRequestCallPayload.put("requestBlob", sessionRequestBlob);
 
       if (!AzifaceModule.demonstrationExternalDatabaseRefID.isEmpty()) {
@@ -42,9 +47,7 @@ public class NetworkingRequest {
 
     Request request = new Request.Builder()
       .url(Config.BaseURL)
-      .header("Content-Type", "application/json")
-      .header("X-Device-Key", Config.DeviceKeyIdentifier)
-      .header("X-Testing-API-Header", FaceTecSDK.getTestingAPIHeader())
+      .headers(Config.getHeaders())
       .post(new ProgressRequestBody(requestBody,
         (bytesWritten, totalBytes) -> {
           final float uploadProgressPercent = ((float) bytesWritten) / ((float) totalBytes);
@@ -63,8 +66,6 @@ public class NetworkingRequest {
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
-
         referencingProcessor.onCatastrophicNetworkError(sessionRequestCallback);
       }
     });
@@ -79,17 +80,16 @@ public class NetworkingRequest {
         response.close();
         return responseBlob;
       } catch (JSONException e) {
-        logErrorAndCallAbortAndClose("JSON Parsing Failed.  This indicates an issue in your own webservice or API contracts.", referencingProcessor, response, sessionRequestCallback);
+        callAbortAndClose(referencingProcessor, response, sessionRequestCallback);
       }
     } else {
-      logErrorAndCallAbortAndClose("API Response not successful.  Inspect network request and response for more details.", referencingProcessor, response, sessionRequestCallback);
+      callAbortAndClose(referencingProcessor, response, sessionRequestCallback);
     }
 
     return null;
   }
 
-  static void logErrorAndCallAbortAndClose(String errorDetail, SessionRequestProcessor referencingProcessor, okhttp3.Response response, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) {
-    Log.d("FaceTecSDKSampleApp", "Networking Exception raised while attempting HTTPS call. Details: " + errorDetail);
+  static void callAbortAndClose(SessionRequestProcessor referencingProcessor, okhttp3.Response response, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) {
     referencingProcessor.onCatastrophicNetworkError(sessionRequestCallback);
     response.close();
   }
