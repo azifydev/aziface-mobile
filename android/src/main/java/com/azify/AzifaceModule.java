@@ -4,6 +4,7 @@ import static java.util.UUID.randomUUID;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.azify.theme.Theme;
 import com.azify.theme.Vocal;
 import com.azify.utils.CommonParams;
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -22,14 +24,24 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facetec.sdk.*;
 
 @ReactModule(name = AzifaceModule.NAME)
-public class AzifaceModule extends ReactContextBaseJavaModule {
+public class AzifaceModule extends ReactContextBaseJavaModule implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
   public static final String NAME = "AzifaceModule";
   public static String demonstrationExternalDatabaseRefID = "";
   public static Theme AziTheme;
   public Boolean isInitialized = false;
   public FaceTecSDKInstance sdkInstance;
+  public Promise promiseResult;
   ReactApplicationContext reactContext;
+
+  public AzifaceModule(ReactApplicationContext context) {
+    context.addActivityEventListener(this);
+
+    this.reactContext = context;
+
+    AziTheme = new Theme(context);
+    FaceTecSDK.preload(context);
+  }
 
   @Override
   @NonNull
@@ -37,11 +49,21 @@ public class AzifaceModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
-  public AzifaceModule(ReactApplicationContext context) {
-    this.reactContext = context;
+  @Override
+  public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+    FaceTecSessionResult sessionResult = sdkInstance.getActivitySessionResult(requestCode, resultCode, data);
+    assert sessionResult != null;
 
-    AziTheme = new Theme(context);
-    FaceTecSDK.preload(context);
+    boolean isSuccess = sessionResult.getStatus() == FaceTecSessionStatus.SESSION_COMPLETED;
+    if (!isSuccess) {
+      demonstrationExternalDatabaseRefID = "";
+    }
+
+    this.promiseResult.resolve(isSuccess);
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
   }
 
   @ReactMethod
@@ -87,45 +109,49 @@ public class AzifaceModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void liveness(ReadableMap data, Promise promise) {
-    if (!this.isInitialized) {
-      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
-      return;
-    }
-
     if (this.getActivity() == null) {
       promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
       return;
     }
 
+    if (!this.isInitialized) {
+      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
+      return;
+    }
+
+    this.setPromiseResult(promise);
+
     demonstrationExternalDatabaseRefID = "";
-    sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor());
+    sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void enroll(ReadableMap data, Promise promise) {
-    if (!this.isInitialized) {
-      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
-      return;
-    }
-
     if (this.getActivity() == null) {
       promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
       return;
     }
 
+    if (!this.isInitialized) {
+      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
+      return;
+    }
+
+    this.setPromiseResult(promise);
+
     demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
-    sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor());
+    sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
-  public void verify(ReadableMap data, Promise promise) {
-    if (!this.isInitialized) {
-      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
+  public void authenticate(ReadableMap data, Promise promise) {
+    if (this.getActivity() == null) {
+      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
       return;
     }
 
-    if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+    if (!this.isInitialized) {
+      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
 
@@ -134,38 +160,44 @@ public class AzifaceModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    sdkInstance.start3DLivenessThen3DFaceMatch(this.getActivity(), new SessionRequestProcessor());
+    this.setPromiseResult(promise);
+
+    sdkInstance.start3DLivenessThen3DFaceMatch(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void photoIDMatch(ReadableMap data, Promise promise) {
-    if (!this.isInitialized) {
-      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
-      return;
-    }
-
     if (this.getActivity() == null) {
       promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
       return;
     }
 
+    if (!this.isInitialized) {
+      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
+      return;
+    }
+
+    this.setPromiseResult(promise);
+
     demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
-    sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(this.getActivity(), new SessionRequestProcessor());
+    sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void photoIDScanOnly(ReadableMap data, Promise promise) {
-    if (!this.isInitialized) {
-      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
-      return;
-    }
-
     if (this.getActivity() == null) {
       promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
       return;
     }
 
-    sdkInstance.startIDScanOnly(this.getActivity(), new SessionRequestProcessor());
+    if (!this.isInitialized) {
+      promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
+      return;
+    }
+
+    this.setPromiseResult(promise);
+
+    sdkInstance.startIDScanOnly(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
@@ -181,6 +213,11 @@ public class AzifaceModule extends ReactContextBaseJavaModule {
   public void removeListeners(Integer count) {
   }
 
+  @ReactMethod
+  public void setVocal() {
+    Vocal.setVocalGuidanceMode(this);
+  }
+
   private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
     this.sdkInstance = sdkInstance;
 
@@ -189,9 +226,8 @@ public class AzifaceModule extends ReactContextBaseJavaModule {
     Vocal.setVocalGuidanceSoundFiles();
     Vocal.setUpVocalGuidancePlayers(this);
   }
-
-  public void onVocalGuidanceSettingsButtonPressed() {
-    Vocal.setVocalGuidanceMode(this);
+  private void setPromiseResult(Promise promise) {
+    this.promiseResult = promise;
   }
 
   public Context getContext() {
