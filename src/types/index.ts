@@ -1131,35 +1131,18 @@ export interface Params {
    * @description Your device to will be used to initialize Aziface SDK.
    * Available in your Aziface account.
    */
-  device: string;
+  deviceKeyIdentifier: string;
 
   /**
    * @description Your base URL to will be used to sent data.
    */
-  url: string;
-
-  /**
-   * @description Your public key to will be used to initialize Aziface SDK.
-   * Available in your Aziface account.
-   */
-  key: string;
-
-  /**
-   * @description Your production key to will be used to initialize Aziface SDK.
-   * Available in your Aziface account.
-   */
-  productionKey: string;
+  baseUrl: string;
 
   /**
    * @description Option to select production or development mode for
    * initialize Aziface SDK.
    */
-  isDeveloperMode: boolean;
-
-  /**
-   * @description The id of the user process.
-   */
-  processId: string;
+  isDevelopment?: boolean;
 }
 
 /**
@@ -1294,7 +1277,7 @@ export interface Methods {
    * @throws If photo ID match was a unsuccessful or occurred some
    * interference.
    */
-  handlePhotoIDMatch(data?: Object): Promise<boolean>;
+  photoIDMatch(data?: Object): Promise<boolean>;
 
   /**
    * @description This method makes a 3D reading of the user's face. But, you
@@ -1306,7 +1289,7 @@ export interface Methods {
    * @return {Promise<boolean>} Represents if enrollment was a successful.
    * @throws If enrollment was a unsuccessful or occurred some interference.
    */
-  handleEnrollUser(data?: Object): Promise<boolean>;
+  enroll(data?: Object): Promise<boolean>;
 
   /**
    * @description This method makes a 3D reading of the user's face. But, you
