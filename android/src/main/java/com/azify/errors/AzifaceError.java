@@ -13,28 +13,28 @@ public class AzifaceError {
   public String getErrorMessage(FaceTecSessionStatus status) {
     switch (status) {
       case SESSION_COMPLETED: {
-        return "Session Completed";
+        return "Aziface SDK has session completed!";
       }
       case CAMERA_ERROR: {
-        return "Camera Error";
+        return "Aziface SDK has a camera error!";
       }
       case USER_CANCELLED_ID_SCAN: {
-        return "User Cancelled on ID Scan";
+        return "Aziface SDK was cancelled on ID scan!";
       }
       case USER_CANCELLED_FACE_SCAN: {
-        return "User Cancelled on Face Scan";
+        return "Aziface SDK was cancelled on face scan!";
       }
       case REQUEST_ABORTED: {
-        return "Request Aborted";
+        return "Aziface SDK has request aborted. Some error in JSON or network!";
       }
       case CAMERA_PERMISSIONS_DENIED: {
-        return "Camera Permissions Denied";
+        return "Aziface SDK hasn't camera permissions denied!";
       }
       case LOCKED_OUT: {
-        return "Locked Out";
+        return "Aziface SDK is locked out!";
       }
       default: {
-        return "Unknown Internal Error";
+        return "Aziface SDK has unknown internal error";
       }
     }
   }

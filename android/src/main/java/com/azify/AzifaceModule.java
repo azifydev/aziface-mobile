@@ -167,7 +167,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     if (demonstrationExternalDatabaseRefID.isEmpty()) {
-      promise.reject("AziFace SDK not found external ID!", "NotFoundExternalID");
+      promise.reject("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       return;
     }
 
