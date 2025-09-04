@@ -7,8 +7,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-export const AzifaceMobileSdk: Methods = NativeModules?.AzifaceMobileSdk
-  ? NativeModules.AzifaceMobileSdk
+export const AzifaceModule: Methods = NativeModules?.AzifaceModule
+  ? NativeModules.AzifaceModule
   : new Proxy(
       {},
       {
@@ -33,7 +33,7 @@ export async function initialize({
   params,
   headers,
 }: Initialize): Promise<boolean> {
-  return await AzifaceMobileSdk.initialize(params, headers)
+  return await AzifaceModule.initialize(params, headers)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -53,7 +53,7 @@ export async function initialize({
 export async function photoMatch(
   data?: SessionParams<'match'>
 ): Promise<boolean> {
-  return await AzifaceMobileSdk.handlePhotoIDMatch(data)
+  return await AzifaceModule.photoIDMatch(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -71,7 +71,7 @@ export async function photoMatch(
  * @throws If enrollment was a unsuccessful or occurred some interference.
  */
 export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
-  return await AzifaceMobileSdk.handleEnrollUser(data)
+  return await AzifaceModule.enroll(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -108,5 +108,5 @@ export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
  * @return {void}
  */
 export function setTheme(options?: Theme): void {
-  AzifaceMobileSdk.setTheme(options);
+  AzifaceModule.setTheme(options);
 }
