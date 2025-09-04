@@ -3,6 +3,7 @@ package com.azify;
 import androidx.annotation.NonNull;
 
 import com.azify.services.NetworkingRequest;
+import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
 
 // This class demonstrates the most important integration point in the FaceTec Device SDK  -- The Session Request Processor.
@@ -21,13 +22,22 @@ import com.facetec.sdk.FaceTecSessionRequestProcessor;
 // - Adding additional asynchronous calls to this code is not allowed.  Only make your own additional asynchronous calls once the FaceTec UI is closed.
 // - Adding code that modifies any App UI (Yours or FaceTec's) is not allowed.  Only add code that modifies your own App UI once the FaceTec UI is closed.
 final public class SessionRequestProcessor implements FaceTecSessionRequestProcessor {
+  private final ReadableMap data;
+
+  public SessionRequestProcessor() {
+    this.data = null;
+  }
+
+  public SessionRequestProcessor(ReadableMap data) {
+    this.data = data;
+  }
   // onSessionRequest is the core method called by the FaceTec SDK when a request needs to be processed by the FaceTec SDK.
   // Your code must retrieve the Session Request Blob and send to your FaceTec Server.
   // Your code must retrieve the Response Blob from FaceTec Server and call processResponse, passing in the Response Blob.    @Override
   public void onSessionRequest(@NonNull String sessionRequestBlob, @NonNull Callback sessionRequestCallback) {
     // When you receive a Session Request Blob, call your webservice API that handles this object and passes it to FaceTec Server.
     // NetworkingRequest is a demonstration class for making a networking call that passes the Session Request Blob, and handles the response.
-    NetworkingRequest.send(this, sessionRequestBlob, sessionRequestCallback);
+    NetworkingRequest.send(this, sessionRequestBlob, sessionRequestCallback, this.data);
   }
 
   // When the Response Blob is received, call processResponse with it.
