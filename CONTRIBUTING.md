@@ -53,10 +53,9 @@ Remember to add tests for your change if possible. Run the unit tests by:
 npm run test
 ```
 
-To edit the Objective-C or Swift files, open `example/ios/AzifaceMobileSdkExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > @azify/aziface-mobile`.
+To edit the Objective-C or Swift files, open `example/ios/AzifaceModuleExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > @azify/aziface-mobile`.
 
 To edit the Java or Kotlin files, open `example/android` in Android studio and find the source files at `aziface-mobile-sdk` under `Android`.
-
 
 ### Commit message convention
 
