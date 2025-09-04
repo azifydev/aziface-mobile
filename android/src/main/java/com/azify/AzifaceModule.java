@@ -9,6 +9,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.azify.errors.AzifaceError;
 import com.azify.theme.Theme;
 import com.azify.theme.Vocal;
 import com.azify.utils.CommonParams;
@@ -29,6 +30,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   public static final String NAME = "AzifaceModule";
   public static String demonstrationExternalDatabaseRefID = "";
   public static Theme AziTheme;
+  private final AzifaceError error;
   public Boolean isInitialized = false;
   public FaceTecSDKInstance sdkInstance;
   public Promise promiseResult;
@@ -38,6 +40,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     context.addActivityEventListener(this);
 
     this.reactContext = context;
+    this.error = new AzifaceError(this);
 
     AziTheme = new Theme(context);
     FaceTecSDK.preload(context);
@@ -54,12 +57,18 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     FaceTecSessionResult sessionResult = sdkInstance.getActivitySessionResult(requestCode, resultCode, data);
     assert sessionResult != null;
 
-    boolean isSuccess = sessionResult.getStatus() == FaceTecSessionStatus.SESSION_COMPLETED;
-    if (!isSuccess) {
+    FaceTecSessionStatus status = sessionResult.getStatus();
+    boolean isCompleted = status == FaceTecSessionStatus.SESSION_COMPLETED;
+    if (!isCompleted) {
       demonstrationExternalDatabaseRefID = "";
     }
 
-    this.promiseResult.resolve(isSuccess);
+    boolean isError = this.error.isError(status);
+    if (isError) {
+      this.promiseResult.reject(this.error.getErrorMessage(status), this.error.getErrorCode(status));
+    } else {
+      this.promiseResult.resolve(true);
+    }
   }
 
   @Override
@@ -120,6 +129,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     this.setPromiseResult(promise);
+    this.sendOpenEvent();
 
     demonstrationExternalDatabaseRefID = "";
     sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
@@ -138,6 +148,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     this.setPromiseResult(promise);
+    this.sendOpenEvent();
 
     demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
     sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
@@ -178,6 +189,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     this.setPromiseResult(promise);
+    this.sendOpenEvent();
 
     demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
     sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(this.getActivity(), new SessionRequestProcessor(data));
@@ -196,6 +208,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     this.setPromiseResult(promise);
+    this.sendOpenEvent();
 
     sdkInstance.startIDScanOnly(this.getActivity(), new SessionRequestProcessor(data));
   }
@@ -214,7 +227,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   }
 
   @ReactMethod
-  public void setVocal() {
+  public void activeVocal() {
     Vocal.setVocalGuidanceMode(this);
   }
 
@@ -226,6 +239,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     Vocal.setVocalGuidanceSoundFiles();
     Vocal.setUpVocalGuidancePlayers(this);
   }
+
   private void setPromiseResult(Promise promise) {
     this.promiseResult = promise;
   }
@@ -242,6 +256,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.reactContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(eventName, eventValue);
+  }
+
+  public void sendOpenEvent() {
+    this.sendEvent("onOpen", true);
+    this.sendEvent("onClose", false);
+    this.sendEvent("onCancel", false);
+    this.sendEvent("onError", false);
   }
 }
 
