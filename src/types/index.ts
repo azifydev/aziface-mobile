@@ -10,16 +10,6 @@ import { type ViewProps } from 'react-native';
 export type ButtonLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
 
 /**
- * @type
- *
- * @description The type of status bar color. Note: The status bar color is
- * `DEFAULT` if device is less than iOS 13.
- *
- * @default "DARK_CONTENT"
- */
-export type StatusBarColor = 'DARK_CONTENT' | 'DEFAULT' | 'LIGHT_CONTENT';
-
-/**
  * @interface Point
  *
  * @description Defines the drawn in the layer's coordinate space with axis X
@@ -552,16 +542,6 @@ export interface Theme {
   cancelButtonLocation?: ButtonLocation;
 
   /**
-   * @description The status bar color style of the device during the Aziface
-   * SDK flow.
-   *
-   * @default "DARK_CONTENT"
-   *
-   * @platform iOS
-   */
-  statusBarColor?: StatusBarColor;
-
-  /**
    * @description An object containing the image assets used in the Aziface
    * SDK.
    *
@@ -668,104 +648,11 @@ export interface Params {
 }
 
 /**
- * @interface SessionBasePathUrl
- *
- * @description This is target properties of the path session.
- */
-interface SessionBasePathUrl {
-  /**
-   * @description The base URL used for the session.
-   *
-   * @default undefined
-   */
-  base?: string;
-}
-
-/**
- * @interface SessionMatchPathUrl
- *
- * @description This is target properties of the session with multiple path
- * urls.
- */
-interface SessionMatchPathUrl extends SessionParams {
-  /**
-   * @description The match URL used for the session with multiple
-   * verifications.
-   *
-   * @default undefined
-   */
-  match?: string;
-}
-
-/**
- * @interface SessionParams
- *
- * @description This is the parameters for the session.
- */
-export interface SessionParams<T = 'base'> {
-  /**
-   * @description The object path URL for the session.
-   *
-   * @default undefined
-   */
-  pathUrl?: T extends 'base' ? SessionBasePathUrl : SessionMatchPathUrl;
-
-  [key: string]: any;
-}
-
-/**
  * @enum
  *
  * @description This is the enum Errors that can be throws by Aziface SDK.
  */
-export enum Errors {
-  /**
-   * @description When some processors method is running, but Aziface SDK
-   * **has not been initialized!**.
-   */
-  AziFaceHasNotBeenInitialized = 'AziFaceHasNotBeenInitialized',
-
-  /**
-   * @description When the image sent to the processors cannot be processed
-   * due to inconsistency.
-   */
-  AziFaceValuesWereNotProcessed = 'AziFaceValuesWereNotProcessed',
-
-  /**
-   * @description When exists some network error.
-   */
-  HTTPSError = 'HTTPSError',
-
-  /**
-   * @description When exists some problem in getting data in request of
-   * **base URL** information.
-   *
-   * @platform Android
-   */
-  JSONError = 'JSONError',
-
-  /**
-   * @description When session status is invalid.
-   *
-   * @platform Android
-   */
-  AziFaceInvalidSession = 'AziFaceInvalidSession',
-
-  /**
-   * @description When session status is different of success.
-   *
-   * @platform Android
-   */
-  AziFaceTecDifferentStatus = 'AziFaceTecDifferentStatus',
-
-  /**
-   * @description When the image ID sent to the processors cannot be processed
-   * due to inconsistency.
-   *
-   * @platform Android
-   */
-  AziFaceScanValuesWereNotProcessed = 'AziFaceScanValuesWereNotProcessed',
-}
+export enum Errors {}
 
 /**
  * @interface Methods
