@@ -1,15 +1,56 @@
 package com.azify;
 
-import android.graphics.Color;
-
 import com.azify.theme.Theme;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
+
 public class Config {
+  public static Boolean IsDevelopment = false;
   public static String DeviceKeyIdentifier = null;
   public static String BaseURL = null;
   public static ReadableMap Headers = null;
+
+  private static Map<String, String> parseReadableMapToMap() {
+    Map<String, String> headers = new HashMap<>();
+    if (Headers == null) {
+      return headers;
+    }
+
+    for (Map.Entry<String, Object> entry : Headers.toHashMap().entrySet()) {
+      String key = entry.getKey();
+      Object value = entry.getValue();
+      headers.put(key, value == null ? "" : value.toString());
+    }
+
+    return headers;
+  }
+
+  public static okhttp3.Headers getHeaders() {
+    Map<String, String> headers = parseReadableMapToMap();
+
+    okhttp3.Request.Builder buildHeader = new Request.Builder()
+      .header("Content-Type", "application/json")
+      .header("X-Device-Key", Config.DeviceKeyIdentifier);
+
+    if (IsDevelopment) {
+      buildHeader.header("X-Testing-API-Header", FaceTecSDK.getTestingAPIHeader());
+    }
+
+    for (Map.Entry<String, String> entry : headers.entrySet()) {
+      buildHeader = buildHeader.header(entry.getKey(), entry.getValue());
+    }
+
+    okhttp3.Request requestHeader = buildHeader
+      .url(Config.BaseURL)
+      .build();
+
+    return requestHeader.headers();
+  }
 
   public static void setDeviceKeyIdentifier(String deviceKeyIdentifier) {
     DeviceKeyIdentifier = deviceKeyIdentifier;
@@ -21,6 +62,9 @@ public class Config {
 
   public static void setHeaders(ReadableMap headers) {
     Headers = headers;
+  }
+  public static void setIsDevelopment(Boolean isDevelopment) {
+    IsDevelopment = isDevelopment;
   }
 
   public static boolean isEmpty() {
