@@ -15,16 +15,34 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
   private static let NAME: String = "ios_azify_app_"
   public static var DemonstrationExternalDatabaseRefID: String = ""
   //  public static var VocalGuidance: Vocal!
-  public static var SDKInstance: FaceTecSDKInstance!
-  public static var emitter: RCTEventEmitter!
-  private var resolver: RCTPromiseResolveBlock?
-  private var rejector: RCTPromiseRejectBlock?
+  private static var error: AzifaceError!
+  private static var resolver: RCTPromiseResolveBlock?
+  private static var rejector: RCTPromiseRejectBlock?
   public var isInitialized: Bool = false
+  public var emitter: RCTEventEmitter!
+  public var sdkInstance: FaceTecSDKInstance!
 
   override init() {
     super.init()
-
-    AzifaceModule.emitter = self
+    
+    AzifaceModule.error = AzifaceError(module: self)
+    self.emitter = self
+  }
+  
+  static func demonstrateHandlingFaceTecExit(_ status: FaceTecSessionStatus) {
+    let isCompleted = status == .sessionCompleted
+    if !isCompleted {
+      AzifaceModule.DemonstrationExternalDatabaseRefID = ""
+    }
+    
+    let isError = AzifaceModule.error.isError(status: status)
+    if isError {
+      let message = AzifaceModule.error.getMessage(status: status)
+      let code = AzifaceModule.error.getCode(status: status)
+      AzifaceModule.rejector?(message, code, nil)
+    } else {
+      AzifaceModule.resolver?(true)
+    }
   }
 
   @objc func initialize(
@@ -34,14 +52,14 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
-      self.setInitilizePromise(resolve: resolve, reject: reject)
+      self.setPromiseResult(resolve: resolve, reject: reject)
       self.setTheme(Theme.Style)
 
       let paremeters = CommonParams(params: params)
 
       if paremeters.isNull() {
         self.isInitialized = false
-        AzifaceModule.emitter.sendEvent(withName: "onInitialize", body: false)
+        self.emitter.sendEvent(withName: "onInitialize", body: false)
         return reject("Parameters aren't provided", "ParamsNotProvided", nil)
       }
 
@@ -56,7 +74,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         )
       } else {
         self.isInitialized = false
-        AzifaceModule.emitter.sendEvent(withName: "onInitialize", body: false)
+        self.emitter.sendEvent(withName: "onInitialize", body: false)
         return reject("Configuration aren't provided", "ConfigNotProvided", nil)
       }
     }
@@ -69,19 +87,19 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     DispatchQueue.main.async {
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
+        self.setPromiseResult(resolve: resolve, reject: reject)
         AzifaceModule.DemonstrationExternalDatabaseRefID = ""
 
-        let controller = AzifaceModule.SDKInstance.start3DLiveness(
-          with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
         
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+        self.emitter.sendEvent(withName: "onError", body: true)
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -94,19 +112,19 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     DispatchQueue.main.async {
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
+        self.setPromiseResult(resolve: resolve, reject: reject)
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
 
-        let controller = AzifaceModule.SDKInstance.start3DLiveness(
-          with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
         
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+        self.emitter.sendEvent(withName: "onError", body: true)
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -119,22 +137,22 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     DispatchQueue.main.async {
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
         if AzifaceModule.DemonstrationExternalDatabaseRefID.isEmpty {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("User isn't authenticated! You must enroll first!", "NotAuthenticated", nil)
         }
         
-        let controller = AzifaceModule.SDKInstance.start3DLivenessThen3DFaceMatch(
-          with: SessionRequestProcessor(data: data))
+        self.setPromiseResult(resolve: resolve, reject: reject)
+        let controller = self.sdkInstance.start3DLivenessThen3DFaceMatch(with: SessionRequestProcessor(data: data))
         
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+        self.emitter.sendEvent(withName: "onError", body: true)
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -147,19 +165,19 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     DispatchQueue.main.async {
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
+        self.setPromiseResult(resolve: resolve, reject: reject)
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
 
-        let controller = AzifaceModule.SDKInstance.start3DLivenessThen3D2DPhotoIDMatch(
-          with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(with: SessionRequestProcessor(data: data))
         
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+        self.emitter.sendEvent(withName: "onError", body: true)
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -172,17 +190,17 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     DispatchQueue.main.async {
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+          self.emitter.sendEvent(withName: "onError", body: true)
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
-        let controller = AzifaceModule.SDKInstance.startIDScanOnly(
-          with: SessionRequestProcessor(data: data))
+        self.setPromiseResult(resolve: resolve, reject: reject)
+        let controller = self.sdkInstance.startIDScanOnly(with: SessionRequestProcessor(data: data))
         
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        AzifaceModule.emitter.sendEvent(withName: "onError", body: true)
+        self.emitter.sendEvent(withName: "onError", body: true)
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -245,48 +263,39 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     return currentViewController
   }
 
-  static func demonstrateHandlingFaceTecExit(_ status: FaceTecSessionStatus) {
-    print("Session Status: " + Vocal.getSessionStatusString(status))
-
-    let successful = status == .sessionCompleted
-    if !successful {
-      AzifaceModule.DemonstrationExternalDatabaseRefID = ""
-    }
-  }
-
   func onFaceTecSDKInitializeSuccess(sdkInstance: FaceTecSDKInstance) {
     self.isInitialized = true
 
-    AzifaceModule.emitter.sendEvent(withName: "onInitialize", body: true)
-    AzifaceModule.SDKInstance = sdkInstance
+    self.emitter.sendEvent(withName: "onInitialize", body: true)
+    self.sdkInstance = sdkInstance
 
     Vocal.setVocalGuidanceSoundFiles()
-    //    AzifaceModule.VocalGuidance.setUpVocalGuidancePlayers()
+    //  AzifaceModule.VocalGuidance.setUpVocalGuidancePlayers()
 
     Vocal.setOCRLocalization()
 
-    self.resolver?(true)
+    AzifaceModule.resolver?(true)
   }
 
   func onFaceTecSDKInitializeError(error: FaceTecInitializationError) {
     self.isInitialized = false
 
-    AzifaceModule.emitter.sendEvent(withName: "onInitialize", body: false)
+    self.emitter.sendEvent(withName: "onInitialize", body: false)
 
-    self.resolver?(false)
+    AzifaceModule.resolver?(false)
   }
 
-  func setInitilizePromise(
+  func setPromiseResult(
     resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
   ) {
-    self.resolver = resolve
-    self.rejector = reject
+    AzifaceModule.resolver = resolve
+    AzifaceModule.rejector = reject
   }
   
   func sendOpenEvent() {
-    AzifaceModule.emitter.sendEvent(withName: "onOpen", body: true)
-    AzifaceModule.emitter.sendEvent(withName: "onClose", body: false)
-    AzifaceModule.emitter.sendEvent(withName: "onCancel", body: false)
-    AzifaceModule.emitter.sendEvent(withName: "onError", body: false)
+    self.emitter.sendEvent(withName: "onOpen", body: true)
+    self.emitter.sendEvent(withName: "onClose", body: false)
+    self.emitter.sendEvent(withName: "onCancel", body: false)
+    self.emitter.sendEvent(withName: "onError", body: false)
   }
 }
