@@ -119,11 +119,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void liveness(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -138,11 +140,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void enroll(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -157,16 +161,19 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void authenticate(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
 
     if (DemonstrationExternalDatabaseRefID.isEmpty()) {
+      this.sendEvent("onError", true);
       promise.reject("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       return;
     }
@@ -179,11 +186,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void photoIDMatch(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -198,11 +207,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void photoIDScanOnly(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
+      this.sendEvent("onError", true);
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
