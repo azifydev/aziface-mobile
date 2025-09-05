@@ -32,6 +32,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   public static Theme AziTheme;
   private final AzifaceError error;
   public Boolean isInitialized = false;
+  public Boolean isEnabled = false;
   public FaceTecSDKInstance sdkInstance;
   public Promise promiseResult;
   ReactApplicationContext reactContext;
@@ -239,10 +240,16 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   public void removeListeners(Integer count) {
   }
 
-  // @ReactMethod
-  // public void activeVocal() {
-  //   Vocal.setVocalGuidanceMode(this);
-  // }
+  @ReactMethod
+  public void vocal() {
+    this.isEnabled = !this.isEnabled;
+    Vocal.setVocalGuidanceMode(this);
+  }
+
+  @ReactMethod
+  public Boolean isVocalEnabled() {
+    return this.isEnabled;
+  }
 
   private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
     this.sdkInstance = sdkInstance;
