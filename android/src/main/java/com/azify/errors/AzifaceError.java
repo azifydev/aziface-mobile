@@ -13,28 +13,28 @@ public class AzifaceError {
   public String getErrorMessage(FaceTecSessionStatus status) {
     switch (status) {
       case SESSION_COMPLETED: {
-        return "Aziface SDK has session completed!";
+        return "Session was completed.";
       }
       case CAMERA_ERROR: {
-        return "Aziface SDK has a camera error!";
+        return "Session cancelled due to a camera error.";
       }
       case CAMERA_PERMISSIONS_DENIED: {
-        return "Aziface SDK hasn't camera permissions denied!";
+        return "FaceTec SDK was unable to access the Camera due to the User’s Settings or an Administrator Policy.";
       }
       case USER_CANCELLED_ID_SCAN: {
-        return "Aziface SDK was cancelled on ID scan!";
+        return "The User cancelled before completing all of the steps in the ID Scan Process.";
       }
       case USER_CANCELLED_FACE_SCAN: {
-        return "Aziface SDK was cancelled on face scan!";
+        return "The user cancelled before performing enough Scans to Succeed.";
       }
       case REQUEST_ABORTED: {
-        return "Aziface SDK has request aborted. Some error in JSON or network!";
+        return "Session was cancelled because abortOnCatastrophicError() was called.";
       }
       case LOCKED_OUT: {
-        return "Aziface SDK is locked out!";
+        return "FaceTec SDK is in a lockout state.";
       }
       default: {
-        return "Aziface SDK has unknown internal error!";
+        return "Session failed because an unknown or unexpected error occurred.";
       }
     }
   }
