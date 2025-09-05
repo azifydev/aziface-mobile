@@ -2,24 +2,29 @@ import Foundation
 
 public class AzifaceError {
   private let module: AzifaceModule
-  
+
   init(module: AzifaceModule) {
     self.module = module
   }
-  
+
   public func getMessage(status: FaceTecSessionStatus) -> String {
     switch status {
-    case .sessionCompleted: return "Aziface SDK has session completed!"
-    case .cameraError: return "Aziface SDK has a camera error!"
-    case .cameraPermissionsDenied: return "Aziface SDK hasn't camera permissions denied!"
-    case .userCancelledIDScan: return "Aziface SDK was cancelled on ID scan!"
-    case .userCancelledFaceScan: return "Aziface SDK was cancelled on face scan!"
-    case .requestAborted: return "Aziface SDK has request aborted. Some error in JSON or network!"
-    case .lockedOut: return "Aziface SDK is locked out!"
-    default: return "Aziface SDK has unknown internal error!"
+    case .sessionCompleted: return "Session was completed."
+    case .cameraError: return "Session cancelled due to a camera error."
+    case .cameraPermissionsDenied:
+      return
+        "FaceTec SDK was unable to access the Camera due to the User’s Settings or an Administrator Policy."
+    case .userCancelledIDScan:
+      return "The User cancelled before completing all of the steps in the ID Scan Process."
+    case .userCancelledFaceScan:
+      return "The user cancelled before performing enough Scans to Succeed."
+    case .requestAborted:
+      return "Session was cancelled because abortOnCatastrophicError() was called."
+    case .lockedOut: return "FaceTec SDK is in a lockout state."
+    default: return "Session failed because an unknown or unexpected error occurred."
     }
   }
-  
+
   public func getCode(status: FaceTecSessionStatus) -> String {
     switch status {
     case .sessionCompleted: return "SessionCompleted"
@@ -32,7 +37,7 @@ public class AzifaceError {
     default: return "UnknownInternalError"
     }
   }
-  
+
   public func isError(status: FaceTecSessionStatus) -> Bool {
     switch status {
     case .sessionCompleted:
