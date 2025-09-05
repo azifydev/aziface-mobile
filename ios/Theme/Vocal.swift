@@ -24,8 +24,7 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       if let roundedDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
         .withDesign(.rounded)
       {
-        let roundedMessageFont = UIFont(
-          descriptor: roundedDescriptor, size: module.statusLabel.font.pointSize)
+        let roundedMessageFont = UIFont(descriptor: roundedDescriptor, size: module.statusLabel.font.pointSize)
         module.statusLabel.font = roundedMessageFont
       }
     }
@@ -150,9 +149,6 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
   }
 
   public static func setOCRLocalization() {
-    // Set the strings to be used for group names, field names, and placeholder texts for the FaceTec ID Scan User OCR Confirmation Screen.
-    // DEVELOPER NOTE: For this demo, we are using the template json file, 'FaceTec_OCR_Customization.json,' as the parameter in calling this API.
-    // For the configureOCRLocalization API parameter, you may use any dictionary object that follows the same structure and key naming as the template json file, 'FaceTec_OCR_Customization.json'.
     if let path = Bundle.main.path(forResource: "FaceTec_OCR_Customization", ofType: "json") {
       do {
         let jsonData = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
@@ -163,30 +159,6 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       } catch {
         print("Error loading JSON for OCR Localization")
       }
-    }
-  }
-
-  public static func getSessionStatusString(_ status: FaceTecSessionStatus) -> String {
-    switch status {
-    case .sessionCompleted:
-      return "Session was completed."
-    case .requestAborted:
-      return "Session was cancelled because abortOnCatastrophicError() was called."
-    case .cameraPermissionsDenied:
-      return
-        "FaceTec SDK was unable to access the Camera due to the User’s Settings or an Administrator Policy"
-    case .userCancelledFaceScan:
-      return "The user cancelled before performing enough Scans to Succeed."
-    case .userCancelledIDScan:
-      return "The User cancelled before completing all of the steps in the ID Scan Process."
-    case .lockedOut:
-      return "FaceTec SDK is in a lockout state."
-    case .cameraError:
-      return "Session cancelled due to a camera error."
-    case .unknownInternalError:
-      return "Session failed because an unknown or unexpected error occurred."
-    default:
-      return "Session failed because an unknown or unexpected error occurred."
     }
   }
 }
