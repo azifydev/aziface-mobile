@@ -1,3 +1,10 @@
-export { enroll, initialize, photoMatch, setTheme } from './methods';
+export {
+  enroll,
+  initialize,
+  photoMatch,
+  setTheme,
+  isVocalEnabled,
+  vocal,
+} from './methods';
 export * from './components';
 export * from './types';

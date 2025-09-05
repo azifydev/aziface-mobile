@@ -1,7 +1,7 @@
 import React, { memo, forwardRef, useEffect } from 'react';
 import { View, NativeEventEmitter, type NativeModule } from 'react-native';
 import type { FaceViewProps } from '../types';
-import { AzifaceMobileSdk } from '../methods';
+import { AzifaceModule } from '../methods';
 
 const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
   const {
@@ -16,7 +16,7 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
 
   useEffect(() => {
     const emitter = new NativeEventEmitter(
-      AzifaceMobileSdk as unknown as NativeModule
+      AzifaceModule as unknown as NativeModule
     );
 
     emitter.addListener('onOpen', (event: boolean) => onOpen?.(event));

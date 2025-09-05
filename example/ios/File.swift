@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  AzifaceMobileSdkExample
+//  AzifaceModuleExample
 //
 
 import Foundation

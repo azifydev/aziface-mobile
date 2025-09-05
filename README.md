@@ -19,12 +19,8 @@ Azify SDK adapter to react native. 📱
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
   - [`Headers`](#azifacesdkheaders)
-  - [`SessionParams`](#sessionparamst)
-    - [`SessionBasePathUrl`](#sessionbasepathurl)
-    - [`SessionMatchPathUrl`](#sessionmatchpathurl)
   - [`Theme`](#theme)
     - [`ButtonLocation`](#buttonlocation)
-    - [`StatusBarColor`](#statusbarcolor-ios-only)
     - [`ThemeImage`](#themeimage)
     - [`ThemeFrame`](#themeframe)
     - [`ThemeButton`](#themebutton)
@@ -40,15 +36,6 @@ Azify SDK adapter to react native. 📱
       - [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)
       - [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)
       - [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)
-    - [`DefaultMessage`](#defaultmessage)
-      - [`DefaultScanMessage`](#defaultscanmessage)
-      - [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)
-      - [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)
-      - [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo)
-      - [`DefaultScanMessageNFC`](#defaultscanmessagenfc)
-      - [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)
-      - [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)
-      - [`DefaultScanMessageRetry`](#defaultscanmessageretry)
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
@@ -73,7 +60,7 @@ yarn add @azify/aziface-mobile
 Only iOS:
 
 ```sh
-cd ios && pod install
+cd ios && pod install && cd ..
 ```
 
 <hr/>
@@ -114,11 +101,9 @@ export default function App() {
       'x-only-raw-analysis': '1',
     };
     const params = {
-      isDeveloperMode: false,
-      device: 'YOUR_DEVICE',
-      url: 'YOUR_BASE_URL',
-      key: 'YOUR_KEY',
-      productionKey: 'YOUR_PRODUCTION_KEY',
+      isDevelopment: true,
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+      baseUrl: 'YOUR_BASE_URL',
     };
 
     try {
@@ -202,15 +187,17 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods        | Return Type        | Platform    |
-| -------------- | ------------------ | ----------- |
-| `initialize`   | `Promise<boolean>` | All         |
-| `enroll`       | `Promise<boolean>` | All         |
-| `authenticate` | `Promise<boolean>` | Unavailable |
-| `liveness`     | `Promise<boolean>` | Unavailable |
-| `photoMatch`   | `Promise<boolean>` | All         |
-| `photoScan`    | `Promise<boolean>` | Unavailable |
-| `setTheme`     | `void`             | All         |
+| Methods           | Return Type        | Platform    |
+| ----------------- | ------------------ | ----------- |
+| `initialize`      | `Promise<boolean>` | All         |
+| `enroll`          | `Promise<boolean>` | All         |
+| `authenticate`    | `Promise<boolean>` | In Progress |
+| `liveness`        | `Promise<boolean>` | In Progress |
+| `photoMatch`      | `Promise<boolean>` | All         |
+| `photoIDScanOnly` | `Promise<boolean>` | In Progress |
+| `vocal`           | `void`             | In Progress |
+| `isVocalEnabled`  | `boolean`          | In Progress |
+| `setTheme`        | `void`             | All         |
 
 ### `initialize`
 
@@ -225,17 +212,17 @@ This is the **principal** method to be called, he must be **called first** to in
 
 This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
 
-| `SessionParams<"base">` | type                                        | Required | Default     |
-| ----------------------- | ------------------------------------------- | -------- | ----------- |
-| `data`                  | [`SessionBasePathUrl`](#sessionbasepathurl) | ❌       | `undefined` |
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
 
 ### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
 
-| `SessionParams<"match">` | type                                          | Required | Default     |
-| ------------------------ | --------------------------------------------- | -------- | ----------- |
-| `data`                   | [`SessionMatchPathUrl`](#sessionmatchpathurl) | ❌       | `undefined` |
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
 
 ### `setTheme`
 
@@ -257,52 +244,37 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 ## Types
 
-| Types                                                                     | Platform |
-| ------------------------------------------------------------------------- | -------- |
-| [`Params`](#params)                                                       | All      |
-| [`Headers`](#headers)                                                     | All      |
-| [`SessionParams`](#sessionparamst)                                        | All      |
-| [`SessionBasePathUrl`](#sessionbasepathurl)                               | All      |
-| [`SessionMatchPathUrl`](#sessionmatchpathurl)                             | All      |
-| [`Theme`](#theme)                                                         | All      |
-| [`ButtonLocation`](#buttonlocation)                                       | All      |
-| [`StatusBarColor`](#statusbarcolor-ios-only)                              | iOS      |
-| [`ThemeImage`](#themeimage)                                               | All      |
-| [`ThemeFrame`](#themeframe)                                               | All      |
-| [`ThemeButton`](#themebutton)                                             | All      |
-| [`ThemeGuidance`](#themeguidance)                                         | All      |
-| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)                   | All      |
-| [`ThemeOval`](#themeoval)                                                 | All      |
-| [`ThemeFeedback`](#themefeedback)                                         | All      |
-| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)            | iOS      |
-| [`Point`](#point-ios-only)                                                | iOS      |
-| [`ThemeResultScreen`](#themeresultscreen)                                 | All      |
-| [`ThemeResultAnimation`](#themeresultanimation)                           | All      |
-| [`ThemeIdScan`](#themeidscan)                                             | All      |
-| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)               | All      |
-| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)                     | All      |
-| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)                   | All      |
-| [`DefaultMessage`](#defaultmessage)                                       | All      |
-| [`DefaultScanMessage`](#defaultmessage)                                   | All      |
-| [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | All      |
-| [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | All      |
-| [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | All      |
-| [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | All      |
-| [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | All      |
-| [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | All      |
-| [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | All      |
+| Types                                                          | Platform |
+| -------------------------------------------------------------- | -------- |
+| [`Params`](#params)                                            | All      |
+| [`Headers`](#headers)                                          | All      |
+| [`Theme`](#theme)                                              | All      |
+| [`ButtonLocation`](#buttonlocation)                            | All      |
+| [`ThemeImage`](#themeimage)                                    | All      |
+| [`ThemeFrame`](#themeframe)                                    | All      |
+| [`ThemeButton`](#themebutton)                                  | All      |
+| [`ThemeGuidance`](#themeguidance)                              | All      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)        | All      |
+| [`ThemeOval`](#themeoval)                                      | All      |
+| [`ThemeFeedback`](#themefeedback)                              | All      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only) | iOS      |
+| [`Point`](#point-ios-only)                                     | iOS      |
+| [`ThemeResultScreen`](#themeresultscreen)                      | All      |
+| [`ThemeResultAnimation`](#themeresultanimation)                | All      |
+| [`ThemeIdScan`](#themeidscan)                                  | All      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)    | All      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)          | All      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)        | All      |
 
 ### `Params`
 
 Here must be passed to initialize the Aziface SDK! Case the parameters isn't provided the Aziface SDK goes to be not initialized.
 
-| `Params`          | type      | Required |
-| ----------------- | --------- | -------- |
-| `device`          | `string`  | ✅       |
-| `url`             | `string`  | ✅       |
-| `key`             | `string`  | ✅       |
-| `productionKey`   | `string`  | ✅       |
-| `isDeveloperMode` | `boolean` | ✅       |
+| `Params`              | type      | Required |
+| --------------------- | --------- | -------- |
+| `deviceKeyIdentifier` | `string`  | ✅       |
+| `baseUrl`             | `string`  | ✅       |
+| `isDevelopment`       | `boolean` | ❌       |
 
 ### `Headers`
 
@@ -312,59 +284,21 @@ Here you can add your headers to send request when some method is called. Only v
 | --------------- | ------------------------------- | -------- | ----------- |
 | `[key: string]` | `string`, `null` or `undefined` | ❌       | `undefined` |
 
-### `SessionParams<T>`
-
-This type is related to the data that will be sent by the SDK methods. It accepts any key, but has a property called `pathUrl`. The `pathUrl` is an object of URLs that will be passed in requests instead of the SDK's default URLs.
-
-| `SessionParams<T>` | type                                                                                         | Required | Default     |
-| ------------------ | -------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `pathUrl`          | [`SessionBasePathUrl`](#sessionbasepathurl) or [`SessionMatchPathUrl`](#sessionmatchpathurl) | ❌       | `undefined` |
-| `[key: string]`    | `any`                                                                                        | ❌       | `undefined` |
-
-#### `SessionBasePathUrl`
-
-This type is only for SDK methods that perform a single request. It contains the `base` property, where you can specify the URL you want the request to be made natively. If not specified, the default URL will be used for the request.
-
-If the **URL is different** from the default and requires passing the `processId` parameter, you can enter the URL in this style `/my-url/:my-id/my-final-url`. Internally, our native module will identify the slug `/:my-id` and replace it with the `processId` in the parameters.
-
-| `SessionBasePathUrl` | type     | Required | Default     |
-| -------------------- | -------- | -------- | ----------- |
-| `base`               | `string` | ❌       | `undefined` |
-
-#### `SessionMatchPathUrl`
-
-This type is only for SDK methods that perform a single request. It contains the `base` and `match` properties, where you can specify the URL you want the request to be made natively. If not specified, the default URL will be used for the request.
-
-If the **URL is different** from the default and requires passing the `processId` parameter, you can enter the URL in this style `/my-url/:my-id/my-final-url`. Internally, our native module will identify the slug `/:my-id` and replace it with the `processId` in the parameters.
-
-This type is specify of the `photoMatch` method.
-
-| `SessionMatchPathUrl` | type     | Required | Default     |
-| --------------------- | -------- | -------- | ----------- |
-| `base`                | `string` | ❌       | `undefined` |
-| `match`               | `string` | ❌       | `undefined` |
-
 ### `Theme`
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors, between six and eight characters, because still we don't supported others color type.
 
-| `Theme`                  | type                                         | Platform | Required | Default        |
-| ------------------------ | -------------------------------------------- | -------- | -------- | -------------- |
-| `overlayBackgroundColor` | `string`                                     | All      | ❌       | `#ffffff`      |
-| `cancelButtonLocation`   | [`ButtonLocation`](#buttonlocation)          | All      | ❌       | `TOP_RIGHT`    |
-| `statusBarColor`         | [`StatusBarColor`](#statusbarcolor-ios-only) | iOS      | ❌       | `DARK_CONTENT` |
-| `authenticateMessage`    | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
-| `enrollMessage`          | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
-| `livenessMessage`        | [`DefaultMessage`](#defaultmessage)          | All      | ❌       | `undefined`    |
-| `scanMessage`            | [`DefaultScanMessage`](#defaultscanmessage)  | All      | ❌       | `undefined`    |
-| `matchMessage`           | `DefaultScanMessage & DefaultMessage`        | All      | ❌       | `undefined`    |
-| `image`                  | [`ThemeImage`](#themeimage)                  | All      | ❌       | `undefined`    |
-| `frame`                  | [`ThemeFrame`](#themeframe)                  | All      | ❌       | `undefined`    |
-| `guidance`               | [`ThemeGuidance`](#themeguidance)            | All      | ❌       | `undefined`    |
-| `oval`                   | [`ThemeOval`](#themeoval)                    | All      | ❌       | `undefined`    |
-| `feedback`               | [`ThemeFeedback`](#themefeedback)            | All      | ❌       | `undefined`    |
-| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen)    | All      | ❌       | `undefined`    |
-| `idScan`                 | [`ThemeIdScan`](#themeidscan)                | All      | ❌       | `undefined`    |
+| `Theme`                  | type                                      | Platform | Required | Default     |
+| ------------------------ | ----------------------------------------- | -------- | -------- | ----------- |
+| `overlayBackgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
+| `cancelButtonLocation`   | [`ButtonLocation`](#buttonlocation)       | All      | ❌       | `TOP_RIGHT` |
+| `image`                  | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
+| `frame`                  | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
+| `guidance`               | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
+| `oval`                   | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
+| `feedback`               | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
+| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
+| `idScan`                 | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
 
 #### `ButtonLocation`
 
@@ -375,16 +309,6 @@ This type must be used to position of the cancel button on screen.
 | `DISABLED`       | Disable cancel button and doesn't show it.                      |
 | `TOP_LEFT`       | Position cancel button in top right.                            |
 | `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
-
-#### `StatusBarColor` (`iOS` only)
-
-This type must be used to status bar color.
-
-| `StatusBarColor` | Description                                  |
-| ---------------- | -------------------------------------------- |
-| `DARK_CONTENT`   | **Default** color to status bar.             |
-| `DEFAULT`        | Status bar color that's set from the device. |
-| `LIGHT_CONTENT`  | Light color to status bar.                   |
 
 #### `ThemeImage`
 
@@ -539,128 +463,24 @@ An object containing the styles used in the ID scan capture screen.
 | `backgroundColor`          | `string` | All      | ❌       | `#026ff4` |
 | `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff` |
 
-#### `DefaultMessage`
-
-This interface represents the success message and loading data message during to Aziface SDK flow. It interface is used by processors's [enroll](#enroll) processor.
-
-| `DefaultMessage` | type     | Platform | Required | Default                            |
-| ---------------- | -------- | -------- | -------- | ---------------------------------- |
-| `successMessage` | `string` | All      | ❌       | `Face Scanned\n3D Liveness Proven` |
-| `uploadMessage`  | `string` | iOS      | ❌       | `Still Uploading...`               |
-
-#### `DefaultScanMessage`
-
-This interface represents the all scan messages during to Aziface SDK flow. It interface is used by [photoMatch](#photomatch) processors.
-
-| `DefaultScanMessage` | type                                                                      | Platform | Required | Default               |
-| -------------------- | ------------------------------------------------------------------------- | -------- | -------- | --------------------- |
-| `skipOrErrorNFC`     | `string`                                                                  | All      | ❌       | `ID Details Uploaded` |
-| `frontSide`          | [`DefaultScanMessageFrontSide`](#defaultscanmessagefrontside)             | All      | ❌       | `undefined`           |
-| `backSide`           | [`DefaultScanMessageBackSide`](#defaultscanmessagebackside)               | All      | ❌       | `undefined`           |
-| `userConfirmedInfo`  | [`DefaultScanMessageUserConfirmInfo`](#defaultscanmessageuserconfirminfo) | All      | ❌       | `undefined`           |
-| `nfc`                | [`DefaultScanMessageNFC`](#defaultscanmessagenfc)                         | All      | ❌       | `undefined`           |
-| `skippedNFC`         | [`DefaultScanMessageSkippedNFC`](#defaultscanmessageskippednfc)           | All      | ❌       | `undefined`           |
-| `success`            | [`DefaultScanMessageSuccess`](#defaultscanmessagesuccess)                 | All      | ❌       | `undefined`           |
-| `retry`              | [`DefaultScanMessageRetry`](#defaultscanmessageretry)                     | All      | ❌       | `undefined`           |
-
-##### `DefaultScanMessageFrontSide`
-
-Represents the front-side scan messages during to Aziface SDK flow.
-
-| `DefaultScanMessageFrontSide`      | type     | Platform | Required | Default                              |
-| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted ID Scan`        |
-| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing ID Scan`                 |
-
-##### `DefaultScanMessageBackSide`
-
-Represents the back-side scan messages during to Aziface SDK flow.
-
-| `DefaultScanMessageBackSide`       | type     | Platform | Required | Default                              |
-| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted Back of ID`     |
-| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing Back of ID`              |
-
-##### `DefaultScanMessageUserConfirmInfo`
-
-Represents the user confirmed information messages during to Aziface SDK flow.
-
-| `DefaultScanMessageUserConfirmInfo` | type     | Platform | Required | Default                              |
-| ----------------------------------- | -------- | -------- | -------- | ------------------------------------ |
-| `uploadStarted`                     | `string` | All      | ❌       | `Uploading Your Confirmed Info`      |
-| `stillUploading`                    | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`    | `string` | All      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing`  | `string` | All      | ❌       | `Processing`                         |
-
-##### `DefaultScanMessageNFC`
-
-Represents the NFC scan messages during to Aziface SDK flow.
-
-| `DefaultScanMessageNFC`            | type     | Platform | Required | Default                              |
-| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted NFC Details`    |
-| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing NFC Details`             |
-
-##### `DefaultScanMessageSkippedNFC`
-
-Represents the skipped NFC scan messages during to Aziface SDK flow.
-
-| `DefaultScanMessageSkippedNFC`     | type     | Platform | Required | Default                              |
-| ---------------------------------- | -------- | -------- | -------- | ------------------------------------ |
-| `uploadStarted`                    | `string` | All      | ❌       | `Uploading Encrypted ID Details`     |
-| `stillUploading`                   | `string` | All      | ❌       | `Still Uploading... Slow Connection` |
-| `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `Upload Complete`                    |
-| `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `Processing ID Details`              |
-
-##### `DefaultScanMessageSuccess`
-
-Represents the success messages during to Aziface SDK flow.
-
-| `DefaultScanMessageSuccess` | type     | Platform | Required | Default                  |
-| --------------------------- | -------- | -------- | -------- | ------------------------ |
-| `frontSide`                 | `string` | All      | ❌       | `ID Scan Complete`       |
-| `frontSideBackNext`         | `string` | All      | ❌       | `Front of ID Scanned`    |
-| `frontSideNFCNext`          | `string` | All      | ❌       | `Front of ID Scanned`    |
-| `backSide`                  | `string` | All      | ❌       | `ID Scan Complete`       |
-| `backSideNFCNext`           | `string` | All      | ❌       | `Back of ID Scanned`     |
-| `passport`                  | `string` | All      | ❌       | `Passport Scan Complete` |
-| `passportNFCNext`           | `string` | All      | ❌       | `Passport Scanned`       |
-| `userConfirmation`          | `string` | All      | ❌       | `Photo ID Scan Complete` |
-| `NFC`                       | `string` | All      | ❌       | `ID Scan Complete`       |
-
-##### `DefaultScanMessageRetry`
-
-Represents the retry messages during to Aziface SDK flow.
-
-| `DefaultScanMessageSkippedNFC` | type     | Platform | Required | Default                             |
-| ------------------------------ | -------- | -------- | -------- | ----------------------------------- |
-| `faceDidNotMatch`              | `string` | All      | ❌       | `Face Didn’t Match Highly Enough`   |
-| `IDNotFullyVisible`            | `string` | All      | ❌       | `ID Document Not Fully Visible`     |
-| `OCRResultsNotGoodEnough`      | `string` | All      | ❌       | `ID Text Not Legible`               |
-| `IDTypeNotSupported`           | `string` | All      | ❌       | `ID Type Mismatch Please Try Again` |
-
 <hr/>
 
 ### `Errors`
 
-| `Errors`                   | Description                                                                        | Platform |
-| -------------------------- | ---------------------------------------------------------------------------------- | -------- |
-| `ConfigNotProvided`        | When `device`, `url`, `key` and `productionKey` aren't provided.                   | All      |
-| `HTTPSError`               | When exists some network error.                                                    | All      |
-| `InitializationFailed`     | When parameters provided by initialize are inconsistent or invalid.                | All      |
-| `JSONError`                | When exists some problem in getting `data` in request of **base URL** information. | All      |
-| `ParamsNotProvided`        | When parameters aren't provided, this case, it is `null`.                          | All      |
-| `NotInitialized`           | When session status is different of success.                                       | All      |
-| `ProcessorError`           | When an unknown session error occurs.                                              | Android  |
-| `SessionNotProcessedError` | When the image ID sent to the processors cannot be processed due to inconsistency. | All      |
-| `SessionScanStatusError`   | When scan session status isn't success. It's recommend try again.                  | Android  |
-| `SessionStatusError`       | When session status isn't of success. It's recommend try again.                    | Android  |
+| `Errors`                  | Description                                                                         | Platform |
+| ------------------------- | ----------------------------------------------------------------------------------- | -------- |
+| `NotInitialized`          | When trying to initialize a process, but SDK wasn't initialized.                    | All      |
+| `ConfigNotProvided`       | When `deviceKeyIdentifier` and `baseUrl` aren't provided.                           | All      |
+| `ParamsNotProvided`       | When parameters aren't provided, this case, it is `null`.                           | All      |
+| `NotAuthenticated`        | When `authenticate` process is called, but `enroll` wasn't done first.              | All      |
+| `NotFoundTargetView`      | When `Activity` (Android) or `ViewController` (iOS) aren't found on call processor. | All      |
+| `CameraError`             | When an error on use the camera occurs.                                             | All      |
+| `CameraPermissionsDenied` | When the user doesn't permit the use camera.                                        | All      |
+| `UserCancelledIdScan`     | When process was cancelled on ID scan.                                              | All      |
+| `UserCancelledFaceScan`   | When process was cancelled on face scan.                                            | All      |
+| `RequestAborted`          | When process has request aborted. Some error in JSON or network.                    | All      |
+| `LockedOut`               | When process is locked out.                                                         | All      |
+| `UnknownInternalError`    | When process has unknown internal error.                                            | All      |
 
 <hr/>
 
@@ -684,7 +504,7 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 ## How to add images in Aziface SDK module?
 
-The `logoImage` and `cancelImage` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
+The `logo` and `cancel` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
 
 ### How to add images in Android?
 
@@ -708,11 +528,9 @@ import { initialize, enroll, setTheme } from '@azify/aziface-mobile';
 export default function App() {
   useEffect(() => {
     const params = {
-      isDeveloperMode: true,
-      device: 'YOUR_DEVICE',
-      url: 'YOUR_URL',
-      key: 'YOUR_PUBLIC_KEY',
-      productionKey: 'YOUR_PRODUCTION_KEY',
+      isDevelopment: true,
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+      baseUrl: 'YOUR_BASE_URL',
     };
 
     async function initialize() {

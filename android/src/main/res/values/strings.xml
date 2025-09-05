@@ -1,3 +1,14 @@
 <resources>
-  <string name="app_name" translatable="false">AziFace SDK Example</string>
+    <string name="app_name" translatable="false">AziFace SDK</string>
+    <string name="enroll_simple" translatable="false">Enroll 3D User</string>
+    <string name="auth_simple" translatable="false"> Re-Verify 3D User</string>
+    <string name="liveness_check" translatable="false">3D Liveness Check</string>
+    <string name="identity_check" translatable="false">Match Face to ID</string>
+    <string name="identity_scan_only" translatable="false">Scan &amp; OCR ID</string>
+    <string name="design_showcase" translatable="false">Customize Colors &amp; Themes</string>
+    <string name="transition_loading_text" translatable="false">Network Connection Slow…</string>
+    <string name="official_photo_id" translatable="false">Take Passport Photo</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="email_address" translatable="false"><i>email address</i></string>
+    <string name="cancel_button" translatable="false">Cancel</string>
 </resources>

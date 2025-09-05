@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This configuration file allows non-secure request.
+     It is purely for development purposes and should never be used for production apps. -->
 <network-security-config>
-  <base-config cleartextTrafficPermitted="true">
-    <trust-anchors>
-      <certificates src="system" />
-    </trust-anchors>
-  </base-config>
-  <domain-config cleartextTrafficPermitted="true">
-    <domain includeSubdomains="true">azify.io</domain>
-  </domain-config>
-  <domain-config cleartextTrafficPermitted="true">
-    <domain includeSubdomains="true">azify.app</domain>
-  </domain-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
 </network-security-config>
