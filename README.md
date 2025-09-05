@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
 | `liveness`        | `Promise<boolean>` | In Progress |
 | `photoMatch`      | `Promise<boolean>` | All         |
 | `photoIDScanOnly` | `Promise<boolean>` | In Progress |
-| `activeVocal`     | `void`             | In Progress |
+| `vocal`           | `void`             | In Progress |
+| `isVocalEnabled`  | `boolean`          | In Progress |
 | `setTheme`        | `void`             | All         |
 
 ### `initialize`
@@ -211,17 +212,17 @@ This is the **principal** method to be called, he must be **called first** to in
 
 This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
 
-| Property | type                                                                                                | Required | Default     |
-| -------- | --------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `data`   | [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | ❌       | `undefined` |
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
 
 ### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
 
-| Property | type                                                                                                | Required | Default     |
-| -------- | --------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `data`   | [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | ❌       | `undefined` |
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
 
 ### `setTheme`
 
