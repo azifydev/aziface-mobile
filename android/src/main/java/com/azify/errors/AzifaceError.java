@@ -34,7 +34,7 @@ public class AzifaceError {
         return "Aziface SDK is locked out!";
       }
       default: {
-        return "Aziface SDK has unknown internal error";
+        return "Aziface SDK has unknown internal error!";
       }
     }
   }

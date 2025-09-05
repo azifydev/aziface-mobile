@@ -63,6 +63,7 @@ public class Config {
   public static void setHeaders(ReadableMap headers) {
     Headers = headers;
   }
+
   public static void setIsDevelopment(Boolean isDevelopment) {
     IsDevelopment = isDevelopment;
   }
@@ -114,7 +115,6 @@ public class Config {
     defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
 
     defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage("cancel", R.drawable.facetec_cancel);
-    ;
     defaultCustomization.getCancelButtonCustomization().setLocation(cancelButtonLocation);
 
     defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();

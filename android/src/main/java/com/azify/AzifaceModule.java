@@ -28,7 +28,7 @@ import com.facetec.sdk.*;
 public class AzifaceModule extends ReactContextBaseJavaModule implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
   public static final String NAME = "AzifaceModule";
-  public static String demonstrationExternalDatabaseRefID = "";
+  public static String DemonstrationExternalDatabaseRefID = "";
   public static Theme AziTheme;
   private final AzifaceError error;
   public Boolean isInitialized = false;
@@ -60,7 +60,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     FaceTecSessionStatus status = sessionResult.getStatus();
     boolean isCompleted = status == FaceTecSessionStatus.SESSION_COMPLETED;
     if (!isCompleted) {
-      demonstrationExternalDatabaseRefID = "";
+      DemonstrationExternalDatabaseRefID = "";
     }
 
     boolean isError = this.error.isError(status);
@@ -119,7 +119,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void liveness(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+      promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
@@ -131,14 +131,14 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.setPromiseResult(promise);
     this.sendOpenEvent();
 
-    demonstrationExternalDatabaseRefID = "";
+    DemonstrationExternalDatabaseRefID = "";
     sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void enroll(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+      promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
@@ -150,14 +150,14 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.setPromiseResult(promise);
     this.sendOpenEvent();
 
-    demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
+    DemonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
     sdkInstance.start3DLiveness(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void authenticate(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+      promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
@@ -166,7 +166,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
       return;
     }
 
-    if (demonstrationExternalDatabaseRefID.isEmpty()) {
+    if (DemonstrationExternalDatabaseRefID.isEmpty()) {
       promise.reject("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       return;
     }
@@ -179,7 +179,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public void photoIDMatch(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+      promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
@@ -191,14 +191,14 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.setPromiseResult(promise);
     this.sendOpenEvent();
 
-    demonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
+    DemonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
     sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(this.getActivity(), new SessionRequestProcessor(data));
   }
 
   @ReactMethod
   public void photoIDScanOnly(ReadableMap data, Promise promise) {
     if (this.getActivity() == null) {
-      promise.reject("AziFace SDK not found Activity!", "NotFoundActivity");
+      promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
@@ -226,10 +226,10 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   public void removeListeners(Integer count) {
   }
 
-  @ReactMethod
-  public void activeVocal() {
-    Vocal.setVocalGuidanceMode(this);
-  }
+  // @ReactMethod
+  // public void activeVocal() {
+  //   Vocal.setVocalGuidanceMode(this);
+  // }
 
   private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
     this.sdkInstance = sdkInstance;

@@ -36,8 +36,8 @@ public class NetworkingRequest {
       }
       sessionRequestCallPayload.put("requestBlob", sessionRequestBlob);
 
-      if (!AzifaceModule.demonstrationExternalDatabaseRefID.isEmpty()) {
-        sessionRequestCallPayload.put("externalDatabaseRefID", AzifaceModule.demonstrationExternalDatabaseRefID);
+      if (!AzifaceModule.DemonstrationExternalDatabaseRefID.isEmpty()) {
+        sessionRequestCallPayload.put("externalDatabaseRefID", AzifaceModule.DemonstrationExternalDatabaseRefID);
       }
     } catch (JSONException e) {
       e.printStackTrace();
