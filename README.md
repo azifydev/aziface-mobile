@@ -187,15 +187,16 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods        | Return Type        | Platform    |
-| -------------- | ------------------ | ----------- |
-| `initialize`   | `Promise<boolean>` | All         |
-| `enroll`       | `Promise<boolean>` | All         |
-| `authenticate` | `Promise<boolean>` | In Progress |
-| `liveness`     | `Promise<boolean>` | In Progress |
-| `photoMatch`   | `Promise<boolean>` | All         |
-| `photoScan`    | `Promise<boolean>` | In Progress |
-| `setTheme`     | `void`             | All         |
+| Methods           | Return Type        | Platform    |
+| ----------------- | ------------------ | ----------- |
+| `initialize`      | `Promise<boolean>` | All         |
+| `enroll`          | `Promise<boolean>` | All         |
+| `authenticate`    | `Promise<boolean>` | In Progress |
+| `liveness`        | `Promise<boolean>` | In Progress |
+| `photoMatch`      | `Promise<boolean>` | All         |
+| `photoIDScanOnly` | `Promise<boolean>` | In Progress |
+| `activeVocal`     | `void`             | In Progress |
+| `setTheme`        | `void`             | All         |
 
 ### `initialize`
 
@@ -465,12 +466,20 @@ An object containing the styles used in the ID scan capture screen.
 
 ### `Errors`
 
-| `Errors`               | Description                                                         | Platform |
-| ---------------------- | ------------------------------------------------------------------- | -------- |
-| `ConfigNotProvided`    | When `deviceKeyIdentifier` and `baseUrl` aren't provided.           | All      |
-| `InitializationFailed` | When parameters provided by initialize are inconsistent or invalid. | All      |
-| `ParamsNotProvided`    | When parameters aren't provided, this case, it is `null`.           | All      |
-| `NotInitialized`       | When session status is different of success.                        | All      |
+| `Errors`                  | Description                                                                         | Platform |
+| ------------------------- | ----------------------------------------------------------------------------------- | -------- |
+| `NotInitialized`          | When trying to initialize a process, but SDK wasn't initialized.                    | All      |
+| `ConfigNotProvided`       | When `deviceKeyIdentifier` and `baseUrl` aren't provided.                           | All      |
+| `ParamsNotProvided`       | When parameters aren't provided, this case, it is `null`.                           | All      |
+| `NotAuthenticated`        | When `authenticate` process is called, but `enroll` wasn't done first.              | All      |
+| `NotFoundTargetView`      | When `Activity` (Android) or `ViewController` (iOS) aren't found on call processor. | All      |
+| `CameraError`             | When an error on use the camera occurs.                                             | All      |
+| `CameraPermissionsDenied` | When the user doesn't permit the use camera.                                        | All      |
+| `UserCancelledIdScan`     | When process was cancelled on ID scan.                                              | All      |
+| `UserCancelledFaceScan`   | When process was cancelled on face scan.                                            | All      |
+| `RequestAborted`          | When process has request aborted. Some error in JSON or network.                    | All      |
+| `LockedOut`               | When process is locked out.                                                         | All      |
+| `UnknownInternalError`    | When process has unknown internal error.                                            | All      |
 
 <hr/>
 
@@ -494,7 +503,7 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 ## How to add images in Aziface SDK module?
 
-The `logoImage` and `cancelImage` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
+The `logo` and `cancel` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
 
 ### How to add images in Android?
 
