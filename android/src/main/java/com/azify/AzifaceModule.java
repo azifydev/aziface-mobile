@@ -57,15 +57,17 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     FaceTecSessionResult sessionResult = sdkInstance.getActivitySessionResult(requestCode, resultCode, data);
     assert sessionResult != null;
 
-    FaceTecSessionStatus status = sessionResult.getStatus();
-    boolean isCompleted = status == FaceTecSessionStatus.SESSION_COMPLETED;
+    final FaceTecSessionStatus status = sessionResult.getStatus();
+    final boolean isCompleted = status == FaceTecSessionStatus.SESSION_COMPLETED;
     if (!isCompleted) {
       DemonstrationExternalDatabaseRefID = "";
     }
 
-    boolean isError = this.error.isError(status);
+    final boolean isError = this.error.isError(status);
     if (isError) {
-      this.promiseResult.reject(this.error.getErrorMessage(status), this.error.getErrorCode(status));
+      final String message = this.error.getErrorMessage(status);
+      final String code = this.error.getErrorCode(status);
+      this.promiseResult.reject(message, code);
     } else {
       this.promiseResult.resolve(true);
     }

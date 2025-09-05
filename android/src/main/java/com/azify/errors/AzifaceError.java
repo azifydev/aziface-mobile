@@ -18,6 +18,9 @@ public class AzifaceError {
       case CAMERA_ERROR: {
         return "Aziface SDK has a camera error!";
       }
+      case CAMERA_PERMISSIONS_DENIED: {
+        return "Aziface SDK hasn't camera permissions denied!";
+      }
       case USER_CANCELLED_ID_SCAN: {
         return "Aziface SDK was cancelled on ID scan!";
       }
@@ -26,9 +29,6 @@ public class AzifaceError {
       }
       case REQUEST_ABORTED: {
         return "Aziface SDK has request aborted. Some error in JSON or network!";
-      }
-      case CAMERA_PERMISSIONS_DENIED: {
-        return "Aziface SDK hasn't camera permissions denied!";
       }
       case LOCKED_OUT: {
         return "Aziface SDK is locked out!";
@@ -47,6 +47,9 @@ public class AzifaceError {
       case CAMERA_ERROR: {
         return "CameraError";
       }
+      case CAMERA_PERMISSIONS_DENIED: {
+        return "CameraPermissionsDenied";
+      }
       case USER_CANCELLED_ID_SCAN: {
         return "UserCancelledIdScan";
       }
@@ -55,9 +58,6 @@ public class AzifaceError {
       }
       case REQUEST_ABORTED: {
         return "RequestAborted";
-      }
-      case CAMERA_PERMISSIONS_DENIED: {
-        return "CameraPermissionsDenied";
       }
       case LOCKED_OUT: {
         return "LockedOut";
