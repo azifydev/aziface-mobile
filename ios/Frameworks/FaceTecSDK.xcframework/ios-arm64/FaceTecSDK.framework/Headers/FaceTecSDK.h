@@ -2,7 +2,7 @@
 //  FaceTecSDK.h
 //  FaceTecSDK
 //
-//  Copyright © 2020 FaceTec. All rights reserved.
+//  Copyright © 2025 FaceTec. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

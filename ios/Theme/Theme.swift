@@ -12,7 +12,6 @@ import UIKit
 public class Theme {
   private let color: Color
   private let image: Image
-  private let message: Message
   private let general: General
   private let frame: Frame
   private let guidance: Guidance
@@ -25,7 +24,6 @@ public class Theme {
   init() {
     self.color = Color()
     self.image = Image()
-    self.message = Message()
     self.general = General()
     self.frame = Frame()
     self.guidance = Guidance()
@@ -71,39 +69,6 @@ public class Theme {
       Config.retrieveDynamicDimmingConfigurationWizardCustomization()
 
     return currentDynamicDimmingCustomization
-  }
-
-  public func getAuthenticateMessage(_ key: String, defaultMessage: String) -> String {
-    return self.message.getMessage("authenticateMessage", key: key, defaultMessage: defaultMessage)
-  }
-
-  public func getEnrollmentMessage(_ key: String, defaultMessage: String) -> String {
-    return self.message.getMessage("enrollMessage", key: key, defaultMessage: defaultMessage)
-  }
-  
-  public func getLivenessMessage(_ key: String, defaultMessage: String) -> String {
-    return self.message.getMessage("livenessMessage", key: key, defaultMessage: defaultMessage)
-  }
-
-  public func getPhotoIDScanMessage(_ key: String, defaultMessage: String) -> String {
-    return self.message.getMessage("scanMessage", key: key, defaultMessage: defaultMessage)
-  }
-
-  public func getPhotoIDScanMessage(_ parent: String, key: String, defaultMessage: String) -> String
-  {
-    return self.message.getMessage(
-      "scanMessage", parent: parent, key: key, defaultMessage: defaultMessage)
-  }
-
-  public func getPhotoIDMatchMessage(_ key: String, defaultMessage: String) -> String {
-    return self.message.getMessage("matchMessage", key: key, defaultMessage: defaultMessage)
-  }
-
-  public func getPhotoIDMatchMessage(_ parent: String, key: String, defaultMessage: String)
-    -> String
-  {
-    return self.message.getMessage(
-      "matchMessage", parent: parent, key: key, defaultMessage: defaultMessage)
   }
 
   public func getColor(_ key: String) -> UIColor {

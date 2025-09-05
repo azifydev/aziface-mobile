@@ -30,12 +30,12 @@ class CommonParams {
     return parentValue[key]
   }
 
-  func isDeveloper() -> Bool {
-    guard let developerMode: Bool = self.getParam("isDeveloperMode") as? Bool else {
+  private func isDevelopment() -> Bool {
+    guard let isDev: Bool = self.getParam("isDevelopment") as? Bool else {
       return false
     }
 
-    return developerMode
+    return isDev
   }
 
   func isNull() -> Bool {
@@ -50,27 +50,13 @@ class CommonParams {
     Config.setHeaders(headers)
   }
 
-  func buildProcessorPathURL() {
-    if self.isNull() {
-      return
-    }
-
-    let basePathUrl = self.getParam(parent: "pathUrl", key: "base") ?? ""
-    let matchPathUrl = self.getParam(parent: "pathUrl", key: "match") ?? ""
-
-    Config.setProcessorPathURL("base", pathUrl: basePathUrl)
-    Config.setProcessorPathURL("match", pathUrl: matchPathUrl)
-  }
-
   func build() {
     if self.isNull() {
       return
     }
 
-    Config.setDevice(self.getParam("device") as? String ?? "")
-    Config.setUrl(self.getParam("url") as? String ?? "")
-    Config.setKey(self.getParam("key") as? String ?? "")
-    Config.setProductionKeyText(self.getParam("productionKey") as? String ?? "")
-    Config.setProcessId(self.getParam("processId") as? String ?? "")
+    Config.setDeviceKeyIdentifier(self.getParam("deviceKeyIdentifier") as? String ?? "")
+    Config.setBaseUrl(self.getParam("baseUrl") as? String ?? "")
+    Config.setIsDevelopment(self.isDevelopment())
   }
 }

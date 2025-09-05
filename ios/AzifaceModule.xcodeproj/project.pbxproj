@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7C076E312D13549A0082C4F9 /* FaceTecSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C076E302D13549A0082C4F9 /* FaceTecSDK.xcframework */; };
-		7C435D612BA1D46D00A5ADCD /* AzifaceMobileSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */; };
+		7C435D612BA1D46D00A5ADCD /* AzifaceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceModule.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
-		7C435D6A2BA1D69000A5ADCD /* AzifaceMobileSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */; };
+		7C435D6A2BA1D69000A5ADCD /* AzifaceModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceModule.m */; };
 		7C9ECD0A2BD1449C00638710 /* LivenessCheckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */; };
 		7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */; };
 		7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */; };
@@ -36,7 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libAzifaceMobileSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAzifaceMobileSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		134814201AA4EA6300B7C361 /* libAzifaceModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAzifaceModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C076E192D1347930082C4F9 /* FaceTecConfigurationForTestApplication.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = FaceTecConfigurationForTestApplication.xcconfig; sourceTree = "<group>"; };
 		7C076E1A2D1347930082C4F9 /* FaceTec-de.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "FaceTec-de.strings"; sourceTree = "<group>"; };
 		7C076E1B2D1347930082C4F9 /* FaceTec-es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "FaceTec-es.strings"; sourceTree = "<group>"; };
@@ -50,10 +50,10 @@
 		7C076E232D1347930082C4F9 /* FaceTec-el.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "FaceTec-el.strings"; sourceTree = "<group>"; };
 		7C076E242D1347930082C4F9 /* FaceTec-ru.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "FaceTec-ru.strings"; sourceTree = "<group>"; };
 		7C076E302D13549A0082C4F9 /* FaceTecSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FaceTecSDK.xcframework; sourceTree = "<group>"; };
-		7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzifaceMobileSdk.swift; sourceTree = "<group>"; };
+		7C435D602BA1D46D00A5ADCD /* AzifaceModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzifaceModule.swift; sourceTree = "<group>"; };
 		7C435D622BA1D56900A5ADCD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzifaceMobileSdk.m; sourceTree = "<group>"; };
-		7C435D6C2BA1D8DB00A5ADCD /* AzifaceMobileSdk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AzifaceMobileSdk-Bridging-Header.h"; sourceTree = "<group>"; };
+		7C435D692BA1D69000A5ADCD /* AzifaceModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzifaceModule.m; sourceTree = "<group>"; };
+		7C435D6C2BA1D8DB00A5ADCD /* AzifaceModule-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AzifaceModule-Bridging-Header.h"; sourceTree = "<group>"; };
 		7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivenessCheckProcessor.swift; sourceTree = "<group>"; };
 		7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentProcessor.swift; sourceTree = "<group>"; };
 		7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateProcessor.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libAzifaceMobileSdk.a */,
+				134814201AA4EA6300B7C361 /* libAzifaceModule.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,7 +92,7 @@
 				CEBC6EA22AA66FC900A76DE0 /* Processors */,
 				CEBC6E962AA66F4E00A76DE0 /* Utilities */,
 				CEBC6E932AA66F4000A76DE0 /* ViewController */,
-				7C435D602BA1D46D00A5ADCD /* AzifaceMobileSdk.swift */,
+				7C435D602BA1D46D00A5ADCD /* AzifaceModule.swift */,
 				7C076E202D1347930082C4F9 /* FaceTec-af.strings */,
 				7C076E212D1347930082C4F9 /* FaceTec-ar.strings */,
 				7C076E1A2D1347930082C4F9 /* FaceTec-de.strings */,
@@ -105,10 +105,10 @@
 				7C076E242D1347930082C4F9 /* FaceTec-ru.strings */,
 				7C076E1D2D1347930082C4F9 /* FaceTec.strings */,
 				7C076E192D1347930082C4F9 /* FaceTecConfigurationForTestApplication.xcconfig */,
-				7C435D692BA1D69000A5ADCD /* AzifaceMobileSdk.m */,
+				7C435D692BA1D69000A5ADCD /* AzifaceModule.m */,
 				7C435D622BA1D56900A5ADCD /* Config.swift */,
 				7C21A3AA2BA330360083BDB0 /* Frameworks */,
-				7C435D6C2BA1D8DB00A5ADCD /* AzifaceMobileSdk-Bridging-Header.h */,
+				7C435D6C2BA1D8DB00A5ADCD /* AzifaceModule-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -163,9 +163,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* AzifaceMobileSdk */ = {
+		58B511DA1A9E6C8500147676 /* AzifaceModule */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AzifaceMobileSdk" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AzifaceModule" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -175,9 +175,9 @@
 			);
 			dependencies = (
 			);
-			name = AzifaceMobileSdk;
+			name = AzifaceModule;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libAzifaceMobileSdk.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libAzifaceModule.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -194,7 +194,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AzifaceMobileSdk" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AzifaceModule" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -207,7 +207,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* AzifaceMobileSdk */,
+				58B511DA1A9E6C8500147676 /* AzifaceModule */,
 			);
 		};
 /* End PBXProject section */
@@ -222,9 +222,9 @@
 				CEBC6EAD2AA66FF300A76DE0 /* ProcesingDelegate.swift in Sources */,
 				CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */,
 				7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */,
-				7C435D6A2BA1D69000A5ADCD /* AzifaceMobileSdk.m in Sources */,
+				7C435D6A2BA1D69000A5ADCD /* AzifaceModule.m in Sources */,
 				7C435D632BA1D56900A5ADCD /* Config.swift in Sources */,
-				7C435D612BA1D46D00A5ADCD /* AzifaceMobileSdk.swift in Sources */,
+				7C435D612BA1D46D00A5ADCD /* AzifaceModule.swift in Sources */,
 				84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */,
 				CEBC6EAF2AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift in Sources */,
 				7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */,
@@ -348,9 +348,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = AzifaceMobileSdk;
+				PRODUCT_NAME = AzifaceModule;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "AzifaceMobileSdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "AzifaceModule-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -373,9 +373,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = AzifaceMobileSdk;
+				PRODUCT_NAME = AzifaceModule;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "AzifaceMobileSdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "AzifaceModule-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -383,7 +383,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AzifaceMobileSdk" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "AzifaceModule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -392,7 +392,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AzifaceMobileSdk" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "AzifaceModule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

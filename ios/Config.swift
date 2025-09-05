@@ -1,6 +1,6 @@
 //
 //  Config.swift
-//  AzifaceMobileSdk
+//  AzifaceModule
 //
 //  Created by Nayara Dias on 13/03/24.
 //  Copyright © 2024 Azify. All rights reserved.
@@ -11,57 +11,43 @@ import Foundation
 import UIKit
 
 public class Config {
+  public static var IsDevelopment: Bool = false
   public static var DeviceKeyIdentifier: String!
   public static var BaseURL: String!
-  public static var ProcessId: String!
-  public static var PublicFaceScanEncryptionKey: String!
-  public static var ProductionKeyText: String!
-  public static var ProcessorPathURL: [String: String]! = [:]
   public static var Headers: NSDictionary?
 
-  public static func setDevice(_ device: String) {
-    Config.DeviceKeyIdentifier = device
+  public static func setDeviceKeyIdentifier(_ deviceKeyIdentifier: String) {
+    Config.DeviceKeyIdentifier = deviceKeyIdentifier
   }
 
-  public static func setUrl(_ url: String) {
-    Config.BaseURL = url
+  public static func setBaseUrl(_ baseUrl: String) {
+    Config.BaseURL = baseUrl
   }
 
-  public static func setProcessId(_ id: String) {
-    Config.ProcessId = id
-  }
-
-  public static func setKey(_ key: String) {
-    Config.PublicFaceScanEncryptionKey = key
-  }
-
-  public static func setProductionKeyText(_ keyText: String) {
-    Config.ProductionKeyText = keyText
-  }
-
-  public static func setProcessorPathURL(_ key: String, pathUrl: String) {
-    Config.ProcessorPathURL[key] = pathUrl
+  public static func setIsDevelopment(_ isDevelopment: Bool) {
+    Config.IsDevelopment = isDevelopment
   }
 
   public static func setHeaders(_ headers: NSDictionary?) {
     Config.Headers = headers
   }
 
-  public static func hasConfig() -> Bool {
-    return Config.BaseURL != nil && Config.DeviceKeyIdentifier != nil
-      && Config.ProductionKeyText != nil && Config.PublicFaceScanEncryptionKey != nil
+  public static func isEmpty() -> Bool {
+    if Config.BaseURL == nil || Config.DeviceKeyIdentifier == nil {
+      return true
+    }
+    return Config.BaseURL.isEmpty || Config.DeviceKeyIdentifier.isEmpty
   }
 
-  public static func makeRequest(url: String, httpMethod: String) -> URLRequest {
-    let endpoint = BaseURL + url
-    let request = NSMutableURLRequest(url: NSURL(string: endpoint)! as URL)
-    request.httpMethod = httpMethod
+  public static func getRequest() -> URLRequest {
+    let request = NSMutableURLRequest(url: NSURL(string: BaseURL)! as URL)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue(DeviceKeyIdentifier, forHTTPHeaderField: "X-Device-Key")
-    request.addValue(
-      FaceTec.sdk.createFaceTecAPIUserAgentString(""), forHTTPHeaderField: "X-User-Agent")
 
-    if httpMethod != "GET" {
-      request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    if IsDevelopment {
+      request.addValue(
+        FaceTec.sdk.getTestingAPIHeader(), forHTTPHeaderField: "X-Testing-API-Header")
     }
 
     if Headers != nil {
@@ -72,24 +58,6 @@ public class Config {
     }
 
     return request as URLRequest
-  }
-
-  static func initialize(_ isDeveloper: Bool, completion: @escaping (Bool) -> Void) {
-    if isDeveloper {
-      FaceTec.sdk.initializeInDevelopmentMode(
-        deviceKeyIdentifier: DeviceKeyIdentifier,
-        faceScanEncryptionKey: PublicFaceScanEncryptionKey,
-        completion: { initializationSuccessful in
-          completion(initializationSuccessful)
-        })
-    } else {
-      FaceTec.sdk.initializeInProductionMode(
-        productionKeyText: ProductionKeyText, deviceKeyIdentifier: DeviceKeyIdentifier,
-        faceScanEncryptionKey: PublicFaceScanEncryptionKey,
-        completion: { initializationSuccessful in
-          completion(initializationSuccessful)
-        })
-    }
   }
 
   public static func retrieveConfigurationWizardCustomization() -> FaceTecCustomization {
@@ -168,10 +136,6 @@ public class Config {
       .getCaptureScreen().getForegroundColor()
     defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor = theme.getIdScan()
       .getCaptureScreen().getTextBackgroundColor()
-    defaultCustomization.idScanCustomization.captureScreenBackgroundColor = theme.getIdScan()
-      .getCaptureScreen().getBackgroundColor()
-    defaultCustomization.idScanCustomization.captureFrameStrokeColor = theme.getIdScan()
-      .getCaptureScreen().getFrameStrokeColor()
     defaultCustomization.idScanCustomization.buttonBackgroundNormalColor = theme.getIdScan()
       .getButton().getBackgroundNormalColor()
     defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor = theme.getIdScan()
@@ -184,6 +148,10 @@ public class Config {
       .getTextDisabledColor()
     defaultCustomization.idScanCustomization.buttonTextHighlightColor = theme.getIdScan()
       .getButton().getTextHighlightColor()
+    defaultCustomization.idScanCustomization.captureScreenBackgroundColor = theme.getIdScan()
+      .getCaptureScreen().getBackgroundColor()
+    defaultCustomization.idScanCustomization.captureFrameStrokeColor = theme.getIdScan()
+      .getCaptureScreen().getFrameStrokeColor()
 
     return defaultCustomization
   }
