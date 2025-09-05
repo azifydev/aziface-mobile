@@ -17,7 +17,7 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
   func send(sessionRequestBlob: String, data: NSDictionary?) {
     var sessionRequestCallPayload: [String: Any] = [:]
     sessionRequestCallPayload["requestBlob"] = sessionRequestBlob
-    
+
     if data != nil {
       sessionRequestCallPayload["data"] = data
     }
