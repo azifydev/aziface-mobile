@@ -1,5 +1,5 @@
 PODS:
-  - aziface-mobile-sdk (1.1.2):
+  - aziface-mobile-sdk (1.2.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1895,7 +1895,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  aziface-mobile-sdk: d920f77d33d12eba7b7bf99118f9763cf3fab37b
+  aziface-mobile-sdk: bb84bcdf7811e9efd309a356ff81be699cd052b6
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa
@@ -1967,6 +1967,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: fcc198acd4a55599b3468cfb6ebc526baff5f06e
 
-PODFILE CHECKSUM: 46f586661cbd740cbc36459e2a8d1a13d127af6b
+PODFILE CHECKSUM: 83fca535f670848a938d786cb1282695588b95c6
 
 COCOAPODS: 1.16.2
