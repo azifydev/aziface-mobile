@@ -76,7 +76,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         
         AzifaceModule.DemonstrationExternalDatabaseRefID = ""
         
-        let controller = AzifaceModule.SDKInstance.start3DLiveness(with: SessionRequestProcessor())
+        let controller = AzifaceModule.SDKInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
         viewController.present(controller, animated: true, completion: nil)
       } else {
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
@@ -98,7 +98,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
         
-        let controller = AzifaceModule.SDKInstance.start3DLiveness(with: SessionRequestProcessor())
+        let controller = AzifaceModule.SDKInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
         viewController.present(controller, animated: true, completion: nil)
       } else {
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
@@ -123,7 +123,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         }
         
         let controller = AzifaceModule.SDKInstance.start3DLivenessThen3DFaceMatch(
-          with: SessionRequestProcessor())
+          with: SessionRequestProcessor(data: data))
         viewController.present(controller, animated: true, completion: nil)
       } else {
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
@@ -145,8 +145,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
         
-        let controller = AzifaceModule.SDKInstance.start3DLivenessThen3D2DPhotoIDMatch(
-          with: SessionRequestProcessor())
+        let controller = AzifaceModule.SDKInstance.start3DLivenessThen3D2DPhotoIDMatch(with: SessionRequestProcessor(data: data))
         viewController.present(controller, animated: true, completion: nil)
       } else {
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
@@ -166,7 +165,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
         
-        let controller = AzifaceModule.SDKInstance.startIDScanOnly(with: SessionRequestProcessor())
+        let controller = AzifaceModule.SDKInstance.startIDScanOnly(with: SessionRequestProcessor(data: data))
         viewController.present(controller, animated: true, completion: nil)
       } else {
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)

@@ -14,9 +14,13 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
     super.init()
   }
 
-  func send(sessionRequestBlob: String) {
+  func send(sessionRequestBlob: String, data: NSDictionary?) {
     var sessionRequestCallPayload: [String: Any] = [:]
     sessionRequestCallPayload["requestBlob"] = sessionRequestBlob
+    
+    if data != nil {
+      sessionRequestCallPayload["data"] = data
+    }
 
     if !AzifaceModule.DemonstrationExternalDatabaseRefID.isEmpty {
       sessionRequestCallPayload["externalDatabaseRefID"] =
