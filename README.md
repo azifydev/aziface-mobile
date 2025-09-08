@@ -313,7 +313,7 @@ Here you can add your headers to send request when some method is called. Only v
 
 ### `Theme`
 
-This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors, between six and eight characters, because still we don't supported others color type.
+This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
 
 | `Theme`                  | type                                      | Platform | Required | Default     |
 | ------------------------ | ----------------------------------------- | -------- | -------- | ----------- |
