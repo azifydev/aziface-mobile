@@ -14,7 +14,10 @@ Azify SDK adapter to react native. 📱
 - [API](#api)
   - [`initialize`](#initialize)
   - [`enroll`](#enroll)
+  - [`authenticate`](#authenticate)
+  - [`liveness`](#liveness)
   - [`photoMatch`](#photomatch)
+  - [`photoScan`](#photoscan)
   - [`setTheme`](#settheme)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
@@ -187,17 +190,17 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods           | Return Type        | Platform    |
-| ----------------- | ------------------ | ----------- |
-| `initialize`      | `Promise<boolean>` | All         |
-| `enroll`          | `Promise<boolean>` | All         |
-| `authenticate`    | `Promise<boolean>` | In Progress |
-| `liveness`        | `Promise<boolean>` | In Progress |
-| `photoMatch`      | `Promise<boolean>` | All         |
-| `photoIDScanOnly` | `Promise<boolean>` | In Progress |
-| `vocal`           | `void`             | In Progress |
-| `isVocalEnabled`  | `boolean`          | In Progress |
-| `setTheme`        | `void`             | All         |
+| Methods          | Return Type        | Platform |
+| ---------------- | ------------------ | -------- |
+| `initialize`     | `Promise<boolean>` | All      |
+| `enroll`         | `Promise<boolean>` | All      |
+| `authenticate`   | `Promise<boolean>` | All      |
+| `liveness`       | `Promise<boolean>` | All      |
+| `photoMatch`     | `Promise<boolean>` | All      |
+| `photoScan`      | `Promise<boolean>` | All      |
+| `vocal`          | `void`             | Android  |
+| `isVocalEnabled` | `boolean`          | Android  |
+| `setTheme`       | `void`             | All      |
 
 ### `initialize`
 
@@ -216,9 +219,33 @@ This method makes a 3D reading of the user's face. But, you must use to **subscr
 | -------- | ----- | -------- | ----------- |
 | `data`   | `any` | ❌       | `undefined` |
 
+### `authenticate`
+
+This method makes a 3D reading of the user's face, it's an equal `enroll` method, but it must be used to **authenticate** your user. An important detail about it is, you must **subscribe** to your user **first**, after authenticating it with this method.
+
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
+
+### `liveness`
+
+This method makes a 3D reading of the user's face, ensuring the liveness check of the user.
+
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
+
 ### `photoMatch`
 
 This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
+
+| Property | type  | Required | Default     |
+| -------- | ----- | -------- | ----------- |
+| `data`   | `any` | ❌       | `undefined` |
+
+### `photoScan`
+
+This method makes to read from documents for user, checking in your server the veracity it.
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
