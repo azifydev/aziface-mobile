@@ -23,6 +23,8 @@ export const AzifaceModule: Methods = NativeModules?.AzifaceModule
  * of the Aziface SDK.
  *
  * @return {void}
+ *
+ * @platform Android
  */
 export function vocal(): void {
   AzifaceModule.vocal();
@@ -34,6 +36,8 @@ export function vocal(): void {
  *
  * @return {boolean} Returns true if the vocal guidance is activated,
  * otherwise false.
+ *
+ * @platform Android
  */
 export function isVocalEnabled(): boolean {
   return AzifaceModule.isVocalEnabled();
@@ -69,10 +73,31 @@ export async function initialize({
  * ID match. The data is optional.
  *
  * @return {Promise<boolean>} Represents if photo match was a successful.
+ *
  * @throws If photo ID match was a unsuccessful or occurred some interference.
  */
 export async function photoMatch(data?: any): Promise<boolean> {
   return await AzifaceModule.photoIDMatch(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
+
+/**
+ * @description This method makes to read from documents for user, checking
+ * in your server the veracity it.
+ *
+ * @param {any|undefined} data - The object with data to be will send on photo
+ * ID scan only. The data is optional.
+ *
+ * @return {Promise<boolean>} Represents if photo scan only was a successful.
+ *
+ * @throws If photo ID scan only was a unsuccessful or occurred some
+ * interference.
+ */
+export async function photoScan(data?: any): Promise<boolean> {
+  return await AzifaceModule.photoIDScanOnly(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -87,10 +112,51 @@ export async function photoMatch(data?: any): Promise<boolean> {
  * enrollment. The data is optional.
  *
  * @return {Promise<boolean>} Represents if enrollment was a successful.
+ *
  * @throws If enrollment was a unsuccessful or occurred some interference.
  */
 export async function enroll(data?: any): Promise<boolean> {
   return await AzifaceModule.enroll(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
+
+/**
+ * @description This method makes a 3D reading of the user's face, it's an
+ * equal `enroll` method, but it must be used to **authenticate** your user.
+ * An important detail about it is, you must **subscribe** to your user
+ * **first**, after authenticating it with this method.
+ *
+ * @param {any|undefined} data - The object with data to be will send on
+ * enrollment. The data is optional.
+ *
+ * @return {Promise<boolean>} Represents if authenticate was a successful.
+ *
+ * @throws If authenticate was a unsuccessful or occurred some interference.
+ */
+export async function authenticate(data?: any): Promise<boolean> {
+  return await AzifaceModule.authenticate(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
+
+/**
+ * @description This method makes a 3D reading of the user's face, ensuring
+ * the liveness check of the user.
+ *
+ * @param {any|undefined} data - The object with data to be will send on
+ * enrollment. The data is optional.
+ *
+ * @return {Promise<boolean>} Represents if liveness was a successful.
+ *
+ * @throws If liveness was a unsuccessful or occurred some interference.
+ */
+export async function liveness(data?: any): Promise<boolean> {
+  return await AzifaceModule.liveness(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);

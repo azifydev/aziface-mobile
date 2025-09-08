@@ -1,10 +1,13 @@
 export {
-  enroll,
   initialize,
   photoMatch,
-  setTheme,
+  photoScan,
+  enroll,
+  authenticate,
+  liveness,
   isVocalEnabled,
   vocal,
+  setTheme,
 } from './methods';
 export * from './components';
 export * from './types';

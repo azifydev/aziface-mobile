@@ -741,16 +741,31 @@ export interface Methods {
 
   /**
    * @description This method make to read from face and documents for user,
-   * after comparate face and face documents from user to check veracity.
+   * after compare face and face documents from user to check veracity.
    *
    * @param {any|undefined} data - The object with data to be will send on photo
    * ID match. The data is optional.
    *
    * @return {Promise<boolean>} Represents if photo match was a successful.
+   *
    * @throws If photo ID match was a unsuccessful or occurred some
    * interference.
    */
   photoIDMatch(data?: any): Promise<boolean>;
+
+  /**
+   * @description This method makes to read from documents for user, checking
+   * in your server the veracity it.
+   *
+   * @param {any|undefined} data - The object with data to be will send on photo
+   * ID scan only. The data is optional.
+   *
+   * @return {Promise<boolean>} Represents if photo scan only was a successful.
+   *
+   * @throws If photo ID scan only was a unsuccessful or occurred some
+   * interference.
+   */
+  photoIDScanOnly(data?: any): Promise<boolean>;
 
   /**
    * @description This method makes a 3D reading of the user's face. But, you
@@ -760,9 +775,38 @@ export interface Methods {
    * enrollment. The data is optional.
    *
    * @return {Promise<boolean>} Represents if enrollment was a successful.
+   *
    * @throws If enrollment was a unsuccessful or occurred some interference.
    */
   enroll(data?: any): Promise<boolean>;
+
+  /**
+   * @description This method makes a 3D reading of the user's face, it's an
+   * equal `enroll` method, but it must be used to **authenticate** your user.
+   * An important detail about it is, you must **subscribe** to your user
+   * **first**, after authenticating it with this method.
+   *
+   * @param {any|undefined} data - The object with data to be will send on
+   * enrollment. The data is optional.
+   *
+   * @return {Promise<boolean>} Represents if authenticate was a successful.
+   *
+   * @throws If authenticate was a unsuccessful or occurred some interference.
+   */
+  authenticate(data?: any): Promise<boolean>;
+
+  /**
+   * @description This method makes a 3D reading of the user's face, ensuring
+   * the liveness check of the user.
+   *
+   * @param {any|undefined} data - The object with data to be will send on
+   * enrollment. The data is optional.
+   *
+   * @return {Promise<boolean>} Represents if liveness was a successful.
+   *
+   * @throws If liveness was a unsuccessful or occurred some interference.
+   */
+  liveness(data?: any): Promise<boolean>;
 
   /**
    * @description This method must be used to **set** the **theme** of the
@@ -780,6 +824,8 @@ export interface Methods {
    * of the Aziface SDK.
    *
    * @return {void}
+   *
+   * @platform Android
    */
   vocal(): void;
 
@@ -789,6 +835,8 @@ export interface Methods {
    *
    * @return {boolean} Returns true if the vocal guidance is activated,
    * otherwise false.
+   *
+   * @platform Android
    */
   isVocalEnabled(): boolean;
 }
