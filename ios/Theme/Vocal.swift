@@ -10,24 +10,15 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
     case FULL
   }
 
-  public static var vocalGuidanceMode: VocalGuidanceMode!
+  public static var vocalGuidanceMode: VocalGuidanceMode! = .MINIMAL
   public var vocalGuidanceOnPlayer: AVAudioPlayer!
   public var vocalGuidanceOffPlayer: AVAudioPlayer!
   public var themeTransitionTextTimer: Timer!
   public var networkIssueDetected = false
-  internal let module: AzifaceViewController!
+  let module: UIViewController!
 
-  init(controller: AzifaceViewController) {
-    module = controller
-
-    if #available(iOS 13.0, *) {
-      if let roundedDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
-        .withDesign(.rounded)
-      {
-        let roundedMessageFont = UIFont(descriptor: roundedDescriptor, size: module.statusLabel.font.pointSize)
-        module.statusLabel.font = roundedMessageFont
-      }
-    }
+  init(controller: UIViewController) {
+    self.module = controller
   }
 
   func addDismissableImageToInterface(image: UIImage) {
@@ -48,7 +39,7 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
 
     imageView.isUserInteractionEnabled = true
 
-    module.view.addSubview(imageView)
+    self.module.view.addSubview(imageView)
   }
 
   func setUpVocalGuidancePlayers() {
@@ -69,6 +60,7 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       vocalGuidanceOnPlayer = try AVAudioPlayer(contentsOf: vocalGuidanceOnUrl)
       vocalGuidanceOffPlayer = try AVAudioPlayer(contentsOf: vocalGuidanceOffUrl)
     } catch let error {
+      print("Error setting up vocal guidance players")
       print(error.localizedDescription)
     }
   }
@@ -94,22 +86,16 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       switch Vocal.vocalGuidanceMode {
       case .OFF:
         Vocal.vocalGuidanceMode = .MINIMAL
-        self.module.vocalGuidanceSettingButton.setImage(
-          UIImage(named: "vocal_minimal.png"), for: .normal)
         self.vocalGuidanceOnPlayer.play()
         Config.currentCustomization.vocalGuidanceCustomization.mode =
           FaceTecVocalGuidanceMode.minimalVocalGuidance
       case .MINIMAL:
         Vocal.vocalGuidanceMode = .FULL
-        self.module.vocalGuidanceSettingButton.setImage(
-          UIImage(named: "vocal_full.png"), for: .normal)
         self.vocalGuidanceOnPlayer.play()
         Config.currentCustomization.vocalGuidanceCustomization.mode =
           FaceTecVocalGuidanceMode.fullVocalGuidance
       case .FULL:
         Vocal.vocalGuidanceMode = .OFF
-        self.module.vocalGuidanceSettingButton.setImage(
-          UIImage(named: "vocal_off.png"), for: .normal)
         self.vocalGuidanceOffPlayer.play()
         Config.currentCustomization.vocalGuidanceCustomization.mode =
           FaceTecVocalGuidanceMode.noVocalGuidance
