@@ -255,6 +255,8 @@ This method makes to read from documents for user, checking in your server the v
 
 This method must be used to **set** the **theme** of the Aziface SDK screen.
 
+**Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
+
 | Property  | type              | Required | Default     |
 | --------- | ----------------- | -------- | ----------- |
 | `options` | [`Theme`](#theme) | ❌       | `undefined` |
