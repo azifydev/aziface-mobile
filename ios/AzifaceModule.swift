@@ -240,7 +240,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
   }
 
   private func setupVocalGuidance() {
-    var viewController = self.getCurrentViewController()
+    let viewController = self.getCurrentViewController()
     self.vocalGuidance = Vocal(controller: viewController!)
   }
 
