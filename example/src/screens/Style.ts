@@ -76,4 +76,10 @@ export const styles = StyleSheet.create({
     color: '#ffffffff',
     fontWeight: 'bold',
   },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
 });

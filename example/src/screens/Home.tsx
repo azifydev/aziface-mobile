@@ -1,10 +1,20 @@
-import { Text, TouchableOpacity, Platform, TextInput } from 'react-native';
 import {
-  enroll,
+  Text,
+  TouchableOpacity,
+  Platform,
+  TextInput,
+  ScrollView,
+} from 'react-native';
+import {
   initialize,
+  enroll,
+  authenticate,
+  liveness,
   photoMatch,
-  setTheme,
+  photoScan,
+  vocal,
   FaceView,
+  type Params,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -16,23 +26,24 @@ import {
   syncUniqueId,
 } from 'react-native-device-info';
 import md5 from 'md5';
-import { useBiometricConfigs } from '../services/client.service';
 import { styles } from './Style';
 import Config from 'react-native-config';
 import { useState } from 'react';
 import { useUser } from '../hooks/useuser.hook';
+import type { FaceType } from '../types/home';
 
 export default function Home() {
-  const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, processId: process, logout } = useUser();
   const [processId, setProcessId] = useState(process);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isEnabledVocal, setIsEnabledVocal] = useState(false);
 
   const isDisabledActions = !isInitialized || !processId;
+  const opacity = !isDisabledActions ? 1 : 0.5;
+  const isAndroid = Platform.OS === 'android';
 
   const onPressInit = async () => {
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
-    const isAndroid = Platform.OS === 'android';
     const userAgent = await getUserAgent?.();
     const xForwardedFor = getIpAddressSync?.();
     const headers = {
@@ -50,86 +61,153 @@ export default function Home() {
       'x-only-raw-analysis': '1',
     };
 
-    const params = {
-      isDeveloperMode: true,
-      processId: processId || '',
-      device: configs?.device || '',
-      url: Config.API_URL_AZTECH,
-      key: configs?.key || '',
-      productionKey: configs?.productionKey || '',
+    const params: Params = {
+      deviceKeyIdentifier: Config.DEVICE_KEY,
+      baseUrl: Config.API_URL_AZTECH,
+      isDevelopment: false,
     };
 
     try {
-      setTheme({
-        image: {
-          logo: 'brand_logo',
-        },
-      });
-      const isInit = await initialize({ params, headers });
-      setIsInitialized(isInit);
-      console.log('isInitialized', isInit);
+      const initialized = await initialize({ params, headers });
+      setIsInitialized(initialized);
+      console.log('isInitialized', initialized);
     } catch (error) {
-      console.error('ERROR initializing SDK', error);
+      console.error('Initialize', error);
     }
   };
 
-  const onPressPhotoMatch = async () => {
+  const onFaceScan = async (type: FaceType, data?: any) => {
     try {
-      const isSuccess = await photoMatch();
-      console.log('onPressPhotoMatch', isSuccess);
+      let isSuccess = false;
+
+      switch (type) {
+        case 'enroll':
+          isSuccess = await enroll(data);
+          break;
+        case 'liveness':
+          isSuccess = await liveness(data);
+          break;
+        case 'authenticate':
+          isSuccess = await authenticate(data);
+          break;
+        case 'photoMatch':
+          isSuccess = await photoMatch(data);
+          break;
+        case 'photoScan':
+          isSuccess = await photoScan(data);
+          break;
+        default:
+          isSuccess = false;
+          break;
+      }
+
+      console.log(type, isSuccess);
     } catch (error: any) {
-      console.error('ERROR onPressPhotoMatch', error.message);
+      console.error(type, error.message);
     }
   };
 
-  const onPressEnroll = async () => {
-    try {
-      const isSuccess = await enroll();
-      console.log('onPressEnroll', isSuccess);
-    } catch (error: any) {
-      console.error('ERROR onPressEnroll', error.message);
-    }
+  const onVocal = () => {
+    setIsEnabledVocal((prev) => !prev);
+    vocal();
   };
 
   return (
-    <FaceView style={styles.azifaceContent}>
-      <TextInput
-        placeholder="Process ID"
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={styles.loginInput}
-        value={processId}
-        onChangeText={setProcessId}
-        placeholderTextColor="gray"
-        onSubmitEditing={onPressInit}
-      />
-      <TouchableOpacity
-        style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
-        activeOpacity={0.8}
-        disabled={!processId}
-        onPress={onPressInit}
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
+    >
+      <FaceView
+        style={styles.azifaceContent}
+        onInitialize={(event) => console.log('onInitialize', event)}
+        onOpen={(event) => console.log('onOpen', event)}
+        onClose={(event) => console.log('onClose', event)}
+        onCancel={(event) => console.log('onCancel', event)}
+        onError={(event) => console.log('onError', event)}
       >
-        <Text style={styles.buttonText}>Init Aziface sdk</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
-        activeOpacity={0.8}
-        onPress={onPressEnroll}
-        disabled={isDisabledActions}
-      >
-        <Text style={styles.buttonText}>Enrollment</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.button, { opacity: !isDisabledActions ? 1 : 0.5 }]}
-        activeOpacity={0.8}
-        onPress={onPressPhotoMatch}
-        disabled={isDisabledActions}
-      >
-        <Text style={styles.buttonText}>Photo Match</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
-        <Text style={styles.textLogout}>Logout</Text>
-      </TouchableOpacity>
-    </FaceView>
+        <TextInput
+          placeholder="Process ID"
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.loginInput}
+          value={processId}
+          onChangeText={setProcessId}
+          placeholderTextColor="gray"
+          onSubmitEditing={onPressInit}
+        />
+
+        <TouchableOpacity
+          style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
+          activeOpacity={0.8}
+          disabled={!processId}
+          onPress={onPressInit}
+        >
+          <Text style={styles.buttonText}>Init Aziface sdk</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('enroll')}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>Enrollment</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('liveness')}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>Liveness</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('authenticate')}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>Authenticate</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('photoMatch')}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>Photo Match</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('photoScan')}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>Photo Scan</Text>
+        </TouchableOpacity>
+
+        {isAndroid && (
+          <TouchableOpacity
+            style={[styles.button, { opacity }]}
+            activeOpacity={0.8}
+            onPress={onVocal}
+            disabled={isDisabledActions}
+          >
+            <Text style={styles.buttonText}>
+              Vocal {isEnabledVocal ? 'On' : 'Off'}
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
+          <Text style={styles.textLogout}>Logout</Text>
+        </TouchableOpacity>
+      </FaceView>
+    </ScrollView>
   );
 }
