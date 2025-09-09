@@ -227,11 +227,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   public void setTheme(ReadableMap style) {
     Theme.setStyle(style);
 
-    final Theme theme = new Theme(this.reactContext);
-
-    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
-
-    Theme.updateTheme();
+    this.updateTheme();
   }
 
   @ReactMethod
@@ -244,9 +240,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
 
   @ReactMethod
   public void vocal() {
-    final Theme theme = new Theme(this.reactContext);
-    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
-    Theme.updateTheme();
+    this.updateTheme();
 
     this.isEnabled = !this.isEnabled;
     Vocal.setVocalGuidanceMode(this);
@@ -255,6 +249,12 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   @ReactMethod
   public Boolean isVocalEnabled() {
     return this.isEnabled;
+  }
+
+  private void updateTheme() {
+    final Theme theme = new Theme(this.reactContext);
+    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
+    Theme.updateTheme();
   }
 
   private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
