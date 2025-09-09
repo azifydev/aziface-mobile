@@ -29,7 +29,6 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   private static final String EXTERNAL_ID = "android_azify_app_";
   public static final String NAME = "AzifaceModule";
   public static String DemonstrationExternalDatabaseRefID = "";
-  public static Theme AziTheme;
   private final AzifaceError error;
   public Boolean isInitialized = false;
   public Boolean isEnabled = false;
@@ -43,7 +42,6 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.reactContext = context;
     this.error = new AzifaceError(this);
 
-    AziTheme = new Theme(context);
     FaceTecSDK.preload(context);
   }
 
@@ -113,10 +111,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
       this.isInitialized = false;
       this.sendEvent("onInitialize", false);
       promise.reject("Configuration aren't provided", "ConfigNotProvided");
-      return;
     }
-
-    this.setTheme(Theme.Style);
   }
 
   @ReactMethod
@@ -182,6 +177,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     }
 
     this.setPromiseResult(promise);
+    this.sendOpenEvent();
 
     sdkInstance.start3DLivenessThen3DFaceMatch(this.getActivity(), new SessionRequestProcessor(data));
   }
@@ -228,8 +224,27 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   }
 
   @ReactMethod
-  public void setTheme(ReadableMap theme) {
-    Theme.setTheme(theme);
+  public void setTheme(ReadableMap style) {
+    Theme.setStyle(style);
+
+    final Theme theme = new Theme(this.reactContext);
+
+    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
+
+    Config.currentCustomization
+      .getIdScanCustomization().customNFCStartingAnimation = R.drawable.facetec_nfc_starting_animation;
+    Config.currentCustomization
+      .getIdScanCustomization().customNFCScanningAnimation = R.drawable.facetec_nfc_scanning_animation;
+    Config.currentCustomization
+      .getIdScanCustomization().customNFCCardStartingAnimation = R.drawable.facetec_nfc_card_starting_animation;
+    Config.currentCustomization
+      .getIdScanCustomization().customNFCCardScanningAnimation = R.drawable.facetec_nfc_card_scanning_animation;
+
+    Vocal.setVocalGuidanceSoundFiles();
+
+    FaceTecSDK.setCustomization(Config.currentCustomization);
+    FaceTecSDK.setLowLightCustomization(Config.currentCustomization);
+    FaceTecSDK.setDynamicDimmingCustomization(Config.currentCustomization);
   }
 
   @ReactMethod
@@ -258,6 +273,12 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
 
     Vocal.setVocalGuidanceSoundFiles();
     Vocal.setUpVocalGuidancePlayers(this);
+
+    if (Theme.Style != null) {
+      final Theme theme = new Theme(this.reactContext);
+      Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
+      Theme.setTheme();
+    }
   }
 
   private void setPromiseResult(Promise promise) {

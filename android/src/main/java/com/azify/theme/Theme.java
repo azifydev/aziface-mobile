@@ -1,10 +1,11 @@
 package com.azify.theme;
 
+import androidx.annotation.Nullable;
+
 import com.azify.R;
 import com.azify.Config;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
-import com.facetec.sdk.FaceTecCustomization;
 import com.facetec.sdk.FaceTecSDK;
 
 public class Theme {
@@ -17,7 +18,7 @@ public class Theme {
   private final Feedback feedback;
   private final ResultScreen resultScreen;
   private final IdScan idScan;
-  public static ReadableMap Style;
+  public static ReadableMap Style = null;
 
   public Theme(ReactApplicationContext context) {
     this.color = new Color();
@@ -31,39 +32,29 @@ public class Theme {
     this.image = new Image(context);
   }
 
-  static FaceTecCustomization getLowLightCustomizationForTheme() {
-    return getCustomizationForTheme();
+  public static void setStyle(@Nullable ReadableMap style) {
+    Style = style;
   }
 
-  static FaceTecCustomization getDynamicDimmingCustomizationForTheme() {
-    return getCustomizationForTheme();
-  }
+  public static void setTheme() {
+    if (Config.currentCustomization == null) {
+      return;
+    }
 
-  public static FaceTecCustomization getCustomizationForTheme() {
-    FaceTecCustomization currentCustomization = new FaceTecCustomization();
-    currentCustomization = Config.retrieveConfigurationWizardCustomization();
-    currentCustomization
+    Config.currentCustomization
       .getIdScanCustomization().customNFCStartingAnimation = R.drawable.facetec_nfc_starting_animation;
-    currentCustomization
+    Config.currentCustomization
       .getIdScanCustomization().customNFCScanningAnimation = R.drawable.facetec_nfc_scanning_animation;
-    currentCustomization
+    Config.currentCustomization
       .getIdScanCustomization().customNFCCardStartingAnimation = R.drawable.facetec_nfc_card_starting_animation;
-    currentCustomization
+    Config.currentCustomization
       .getIdScanCustomization().customNFCCardScanningAnimation = R.drawable.facetec_nfc_card_scanning_animation;
 
-    return currentCustomization;
-  }
-
-  public static void setTheme(ReadableMap style) {
-    Style = style;
-
-    Config.currentCustomization = getCustomizationForTheme();
-    Config.currentLowLightCustomization = getLowLightCustomizationForTheme();
-    Config.currentDynamicDimmingCustomization = getDynamicDimmingCustomizationForTheme();
+    Vocal.setVocalGuidanceSoundFiles();
 
     FaceTecSDK.setCustomization(Config.currentCustomization);
-    FaceTecSDK.setLowLightCustomization(Config.currentLowLightCustomization);
-    FaceTecSDK.setDynamicDimmingCustomization(Config.currentDynamicDimmingCustomization);
+    FaceTecSDK.setLowLightCustomization(Config.currentCustomization);
+    FaceTecSDK.setDynamicDimmingCustomization(Config.currentCustomization);
   }
 
   public int getColor(String key) {

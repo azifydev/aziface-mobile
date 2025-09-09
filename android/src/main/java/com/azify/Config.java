@@ -73,9 +73,7 @@ public class Config {
     return DeviceKeyIdentifier.isEmpty() || BaseURL.isEmpty();
   }
 
-  public static FaceTecCustomization retrieveConfigurationWizardCustomization() {
-    Theme theme = AzifaceModule.AziTheme;
-
+  public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
     FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
       .getButtonLocation("cancelButtonLocation");
 
@@ -164,15 +162,5 @@ public class Config {
     return defaultCustomization;
   }
 
-  public static FaceTecCustomization retrieveLowLightConfigurationWizardCustomization() {
-    return retrieveConfigurationWizardCustomization();
-  }
-
-  public static FaceTecCustomization retrieveDynamicDimmingConfigurationWizardCustomization() {
-    return retrieveConfigurationWizardCustomization();
-  }
-
-  public static FaceTecCustomization currentCustomization = retrieveConfigurationWizardCustomization();
-  public static FaceTecCustomization currentLowLightCustomization = retrieveLowLightConfigurationWizardCustomization();
-  public static FaceTecCustomization currentDynamicDimmingCustomization = retrieveDynamicDimmingConfigurationWizardCustomization();
+  public static FaceTecCustomization currentCustomization = null;
 }
