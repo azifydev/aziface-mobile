@@ -41,6 +41,10 @@ public class Theme {
       return;
     }
 
+    updateTheme();
+  }
+
+  public static void updateTheme() {
     Config.currentCustomization
       .getIdScanCustomization().customNFCStartingAnimation = R.drawable.facetec_nfc_starting_animation;
     Config.currentCustomization

@@ -231,20 +231,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
 
     Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
 
-    Config.currentCustomization
-      .getIdScanCustomization().customNFCStartingAnimation = R.drawable.facetec_nfc_starting_animation;
-    Config.currentCustomization
-      .getIdScanCustomization().customNFCScanningAnimation = R.drawable.facetec_nfc_scanning_animation;
-    Config.currentCustomization
-      .getIdScanCustomization().customNFCCardStartingAnimation = R.drawable.facetec_nfc_card_starting_animation;
-    Config.currentCustomization
-      .getIdScanCustomization().customNFCCardScanningAnimation = R.drawable.facetec_nfc_card_scanning_animation;
-
-    Vocal.setVocalGuidanceSoundFiles();
-
-    FaceTecSDK.setCustomization(Config.currentCustomization);
-    FaceTecSDK.setLowLightCustomization(Config.currentCustomization);
-    FaceTecSDK.setDynamicDimmingCustomization(Config.currentCustomization);
+    Theme.updateTheme();
   }
 
   @ReactMethod
