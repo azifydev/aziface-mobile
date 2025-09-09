@@ -18,6 +18,8 @@ Azify SDK adapter to react native. 📱
   - [`liveness`](#liveness)
   - [`photoMatch`](#photomatch)
   - [`photoScan`](#photoscan)
+  - [`vocal`](#vocal)
+  - [`isVocalEnabled`](#isvocalenabled)
   - [`setTheme`](#settheme)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
@@ -250,6 +252,14 @@ This method makes to read from documents for user, checking in your server the v
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
 | `data`   | `any` | ❌       | `undefined` |
+
+### `vocal`
+
+This method must be used to **activate** the vocal guidance of the Aziface SDK. Android only.
+
+### `isVocalEnabled`
+
+This method checks if the vocal guidance is activated in the Aziface SDK. Returns `true` if the vocal guidance is activated, otherwise `false`. Android only.
 
 ### `setTheme`
 
