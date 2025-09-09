@@ -244,6 +244,10 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
 
   @ReactMethod
   public void vocal() {
+    final Theme theme = new Theme(this.reactContext);
+    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
+    Theme.updateTheme();
+
     this.isEnabled = !this.isEnabled;
     Vocal.setVocalGuidanceMode(this);
   }
