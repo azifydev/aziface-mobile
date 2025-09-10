@@ -13,11 +13,11 @@ import LocalAuthentication
 @objc(AzifaceModule)
 class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallback {
   private static let NAME: String = "ios_azify_app_"
-  private static var error: AzifaceError!
-  private static var resolver: RCTPromiseResolveBlock?
-  private static var rejector: RCTPromiseRejectBlock?
-  private static var isEnabled: Bool = false
   public static var DemonstrationExternalDatabaseRefID: String = ""
+  private var error: AzifaceError!
+  private var resolver: RCTPromiseResolveBlock?
+  private var rejector: RCTPromiseRejectBlock?
+  private var isEnabled: Bool = false
   private var vocalGuidance: Vocal!
   public var isInitialized: Bool = false
   public var emitter: RCTEventEmitter!
@@ -26,31 +26,33 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
   override init() {
     super.init()
 
-    AzifaceModule.error = AzifaceError(module: self)
+    self.error = AzifaceError(module: self)
     self.emitter = self
 
     self.setupVocalGuidance()
   }
 
-  static func demonstrateHandlingFaceTecExit(_ status: FaceTecSessionStatus) {
+  func demonstrateHandlingFaceTecExit(_ status: FaceTecSessionStatus) {
     let isCompleted = status == .sessionCompleted
     if !isCompleted {
       AzifaceModule.DemonstrationExternalDatabaseRefID = ""
     }
 
-    let isError = AzifaceModule.error.isError(status: status)
+    let isError = self.error.isError(status: status)
     if isError {
-      let message = AzifaceModule.error.getMessage(status: status)
-      let code = AzifaceModule.error.getCode(status: status)
-      AzifaceModule.rejector?(message, code, nil)
+      let message = self.error.getMessage(status: status)
+      let code = self.error.getCode(status: status)
+      self.rejector?(message, code, nil)
     } else {
-      if AzifaceModule.isEnabled {
+      if self.isEnabled {
         Vocal.setUpVocalGuidancePlayers()
         Vocal.cleanUp()
-        AzifaceModule.isEnabled = false;
+        self.isEnabled = false
+
+        self.emitter.sendEvent(withName: "onVocal", body: false)
       }
-      
-      AzifaceModule.resolver?(true)
+
+      self.resolver?(true)
     }
   }
 
@@ -78,7 +80,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
       if !Config.isEmpty() {
         FaceTec.sdk.initializeWithSessionRequest(
           deviceKeyIdentifier: Config.DeviceKeyIdentifier,
-          sessionRequestProcessor: SessionRequestProcessor(),
+          sessionRequestProcessor: SessionRequestProcessor(module: self),
           completion: self
         )
       } else {
@@ -103,7 +105,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         self.setPromiseResult(resolve: resolve, reject: reject)
         AzifaceModule.DemonstrationExternalDatabaseRefID = ""
 
-        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(module: self, data: data))
 
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
@@ -128,7 +130,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         self.setPromiseResult(resolve: resolve, reject: reject)
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
 
-        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.start3DLiveness(with: SessionRequestProcessor(module: self, data: data))
 
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
@@ -157,7 +159,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
 
         self.setPromiseResult(resolve: resolve, reject: reject)
         let controller = self.sdkInstance.start3DLivenessThen3DFaceMatch(
-          with: SessionRequestProcessor(data: data))
+          with: SessionRequestProcessor(module: self, data: data))
 
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
@@ -183,7 +185,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         AzifaceModule.DemonstrationExternalDatabaseRefID = AzifaceModule.NAME + UUID().uuidString
 
         let controller = self.sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(
-          with: SessionRequestProcessor(data: data))
+          with: SessionRequestProcessor(module: self, data: data))
 
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
@@ -206,7 +208,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
         }
 
         self.setPromiseResult(resolve: resolve, reject: reject)
-        let controller = self.sdkInstance.startIDScanOnly(with: SessionRequestProcessor(data: data))
+        let controller = self.sdkInstance.startIDScanOnly(with: SessionRequestProcessor(module: self, data: data))
 
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
@@ -218,12 +220,14 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
   }
 
   @objc func vocal() {
-    AzifaceModule.isEnabled = !AzifaceModule.isEnabled
-    if AzifaceModule.isEnabled {
+    self.isEnabled = !self.isEnabled
+    if self.isEnabled {
       Vocal.setUpVocalGuidancePlayers()
     }
 
     Vocal.setVocalGuidanceMode()
+
+    self.emitter.sendEvent(withName: "onVocal", body: self.isEnabled)
   }
 
   @objc func setTheme(_ options: NSDictionary?) {
@@ -243,7 +247,7 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
   @objc override func stopObserving() {}
 
   @objc override func supportedEvents() -> [String]! {
-    return ["onOpen", "onClose", "onCancel", "onError", "onInitialize"]
+    return ["onOpen", "onClose", "onCancel", "onError", "onVocal", "onInitialize"]
   }
 
   private func setupVocalGuidance() {
@@ -288,28 +292,30 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
     self.isInitialized = true
 
     self.emitter.sendEvent(withName: "onInitialize", body: true)
+    self.emitter.sendEvent(withName: "onVocal", body: false)
     self.sdkInstance = sdkInstance
 
     Vocal.setVocalGuidanceSoundFiles()
     Vocal.setUpVocalGuidancePlayers()
     Vocal.setOCRLocalization()
 
-    AzifaceModule.resolver?(true)
+    self.resolver?(true)
   }
 
   func onFaceTecSDKInitializeError(error: FaceTecInitializationError) {
     self.isInitialized = false
 
     self.emitter.sendEvent(withName: "onInitialize", body: false)
+    self.emitter.sendEvent(withName: "onVocal", body: false)
 
-    AzifaceModule.resolver?(false)
+    self.resolver?(false)
   }
 
   func setPromiseResult(
     resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
   ) {
-    AzifaceModule.resolver = resolve
-    AzifaceModule.rejector = reject
+    self.resolver = resolve
+    self.rejector = reject
   }
 
   func sendOpenEvent() {

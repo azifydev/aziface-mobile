@@ -17,14 +17,16 @@ import Foundation
 // - Adding additional asynchronous calls to this code is not allowed.  Only make your own additional asynchronous calls once the FaceTec UI is closed.
 // - Adding code that modifies any App UI (Yours or FaceTec's) is not allowed.  Only add code that modifies your own App UI once the FaceTec UI is closed.
 class SessionRequestProcessor: NSObject, FaceTecSessionRequestProcessor, URLSessionTaskDelegate {
+  private let module: AzifaceModule
   private var data: NSDictionary?
   
-  public init(data: NSDictionary?) {
+  public init(module: AzifaceModule, data: NSDictionary?) {
+    self.module = module
     self.data = data
   }
   
-  public convenience override init() {
-    self.init(data: nil)
+  public convenience init(module: AzifaceModule) {
+    self.init(module: module, data: nil)
   }
   // onSessionRequest is the core method called by the FaceTec SDK when a request needs to be processed by the FaceTec SDK.
   // Your code must retrieve the Session Request Blob and send to your FaceTec Server.
@@ -67,7 +69,7 @@ class SessionRequestProcessor: NSObject, FaceTecSessionRequestProcessor, URLSess
   // For demonstration purposes, we are handling next steps in the ViewController.
   func onFaceTecExit(sessionResult: FaceTecSessionResult) {
     DispatchQueue.main.async {
-      AzifaceModule.demonstrateHandlingFaceTecExit(sessionResult.sessionStatus)
+      self.module.demonstrateHandlingFaceTecExit(sessionResult.sessionStatus)
     }
   }
 }
