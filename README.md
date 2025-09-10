@@ -19,7 +19,6 @@ Azify SDK adapter to react native. 📱
   - [`photoMatch`](#photomatch)
   - [`photoScan`](#photoscan)
   - [`vocal`](#vocal)
-  - [`isVocalEnabled`](#isvocalenabled)
   - [`setTheme`](#settheme)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
@@ -192,17 +191,16 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods          | Return Type        | Platform |
-| ---------------- | ------------------ | -------- |
-| `initialize`     | `Promise<boolean>` | All      |
-| `enroll`         | `Promise<boolean>` | All      |
-| `authenticate`   | `Promise<boolean>` | All      |
-| `liveness`       | `Promise<boolean>` | All      |
-| `photoMatch`     | `Promise<boolean>` | All      |
-| `photoScan`      | `Promise<boolean>` | All      |
-| `vocal`          | `void`             | Android  |
-| `isVocalEnabled` | `boolean`          | Android  |
-| `setTheme`       | `void`             | All      |
+| Methods        | Return Type        | Platform |
+| -------------- | ------------------ | -------- |
+| `initialize`   | `Promise<boolean>` | All      |
+| `enroll`       | `Promise<boolean>` | All      |
+| `authenticate` | `Promise<boolean>` | All      |
+| `liveness`     | `Promise<boolean>` | All      |
+| `photoMatch`   | `Promise<boolean>` | All      |
+| `photoScan`    | `Promise<boolean>` | All      |
+| `vocal`        | `void`             | All      |
+| `setTheme`     | `void`             | All      |
 
 ### `initialize`
 
@@ -255,11 +253,7 @@ This method makes to read from documents for user, checking in your server the v
 
 ### `vocal`
 
-This method must be used to **activate** the vocal guidance of the Aziface SDK. Android only.
-
-### `isVocalEnabled`
-
-This method checks if the vocal guidance is activated in the Aziface SDK. Returns `true` if the vocal guidance is activated, otherwise `false`. Android only.
+This method must be used to **activate** the vocal guidance of the Aziface SDK.
 
 ### `setTheme`
 
