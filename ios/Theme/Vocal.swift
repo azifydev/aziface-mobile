@@ -10,48 +10,68 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
     case FULL
   }
 
+  private static var module: UIViewController?
   public static var vocalGuidanceMode: VocalGuidanceMode! = .MINIMAL
-  public var vocalGuidanceOnPlayer: AVAudioPlayer!
-  public var vocalGuidanceOffPlayer: AVAudioPlayer!
+  public static var vocalGuidanceOnPlayer: AVAudioPlayer!
+  public static var vocalGuidanceOffPlayer: AVAudioPlayer!
   public var themeTransitionTextTimer: Timer!
   public var networkIssueDetected = false
-  let module: UIViewController!
 
   init(controller: UIViewController) {
-    self.module = controller
+    Vocal.module = controller
   }
 
-  func addDismissableImageToInterface(image: UIImage) {
-    let imageView = UIImageView(image: image)
-    imageView.frame = UIScreen.main.bounds
+  private static func copyBundleFileToURL(fileName: String, fileExtension: String) -> URL? {
+    guard let bundleUrl = Bundle.main.url(forResource: fileName, withExtension: fileExtension)
+    else {
+      return nil
+    }
 
-    let screenSize = UIScreen.main.bounds
-    let ratio = screenSize.width / image.size.width
-    let size = (image.size).applying(CGAffineTransform(scaleX: 0.5 * ratio, y: 0.5 * ratio))
-    let hasAlpha = false
-    let scale: CGFloat = 0.0
-    UIGraphicsBeginImageContextWithOptions(size, hasAlpha, scale)
-    image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-    let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    imageView.image = scaledImage
-    imageView.contentMode = .center
+    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let destinationUrl = documentsPath.appendingPathComponent("\(fileName).\(fileExtension)")
 
-    imageView.isUserInteractionEnabled = true
+    if FileManager.default.fileExists(atPath: destinationUrl.path) {
+      return destinationUrl
+    }
 
-    self.module.view.addSubview(imageView)
+    do {
+      try FileManager.default.copyItem(at: bundleUrl, to: destinationUrl)
+      return destinationUrl
+    } catch {
+      return nil
+    }
   }
 
-  func setUpVocalGuidancePlayers() {
+  public static func cleanUp() {
+    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let files = ["vocal_guidance_on.mp3", "vocal_guidance_off.mp3"]
+
+    for fileName in files {
+      let fileUrl = documentsPath.appendingPathComponent(fileName)
+      do {
+        if FileManager.default.fileExists(atPath: fileUrl.path) {
+          try FileManager.default.removeItem(at: fileUrl)
+        }
+      } catch {
+        print("Error removing \(fileName): \(error)")
+      }
+    }
+  }
+
+  public static func setUpVocalGuidancePlayers() {
     Vocal.vocalGuidanceMode = .MINIMAL
 
     guard
-      let vocalGuidanceOnUrl = Bundle.main.url(
-        forResource: "vocal_guidance_on", withExtension: "mp3")
+      let vocalGuidanceOnUrl = copyBundleFileToURL(
+        fileName: "vocal_guidance_on",
+        fileExtension: "mp3"
+      )
     else { return }
     guard
-      let vocalGuidanceOffUrl = Bundle.main.url(
-        forResource: "vocal_guidance_off", withExtension: "mp3")
+      let vocalGuidanceOffUrl = copyBundleFileToURL(
+        fileName: "vocal_guidance_off",
+        fileExtension: "mp3"
+      )
     else { return }
 
     do {
@@ -60,19 +80,18 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       vocalGuidanceOnPlayer = try AVAudioPlayer(contentsOf: vocalGuidanceOnUrl)
       vocalGuidanceOffPlayer = try AVAudioPlayer(contentsOf: vocalGuidanceOffUrl)
     } catch let error {
-      print("Error setting up vocal guidance players")
       print(error.localizedDescription)
     }
   }
 
-  func setVocalGuidanceMode() {
+  public static func setVocalGuidanceMode() {
     if !(AVAudioSession.sharedInstance().outputVolume > 0) {
       // TODO: Add custom message for UIAlertAction
       let alert = UIAlertController(
         title: nil, message: "Vocal Guidance is disabled when the device is muted",
         preferredStyle: UIAlertController.Style.alert)
       alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-      self.module.present(alert, animated: true, completion: nil)
+      self.module?.present(alert, animated: true, completion: nil)
       return
     }
 

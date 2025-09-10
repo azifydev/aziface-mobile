@@ -27,8 +27,7 @@ RCT_EXTERN_METHOD(photoIDMatch : (NSDictionary *)data resolve : (
 RCT_EXTERN_METHOD(photoIDScanOnly : (NSDictionary *)data resolve : (
     RCTPromiseResolveBlock)resolve reject : (RCTPromiseRejectBlock)reject)
 RCT_EXTERN_METHOD(setTheme : (NSDictionary *)options)
-// RCT_EXTERN_METHOD(vocal)
-// RCT_EXTERN_METHOD(isEnabledVocal)
+RCT_EXTERN_METHOD(vocal)
 RCT_EXTERN_METHOD(supportedEvents)
 
 @end
