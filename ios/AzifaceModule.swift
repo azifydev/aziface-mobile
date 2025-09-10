@@ -44,12 +44,13 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
       let code = AzifaceModule.error.getCode(status: status)
       AzifaceModule.rejector?(message, code, nil)
     } else {
+      if AzifaceModule.isEnabled {
+        Vocal.setUpVocalGuidancePlayers()
+        Vocal.cleanUp()
+        AzifaceModule.isEnabled = false;
+      }
+      
       AzifaceModule.resolver?(true)
-    }
-    
-    if AzifaceModule.isEnabled {
-      Vocal.cleanUp()
-      AzifaceModule.isEnabled = false;
     }
   }
 
@@ -218,6 +219,9 @@ class AzifaceModule: RCTEventEmitter, URLSessionDelegate, FaceTecInitializeCallb
 
   @objc func vocal() {
     AzifaceModule.isEnabled = !AzifaceModule.isEnabled
+    if AzifaceModule.isEnabled {
+      Vocal.setUpVocalGuidancePlayers()
+    }
 
     Vocal.setVocalGuidanceMode()
   }
