@@ -883,4 +883,13 @@ export interface FaceViewProps extends ViewProps {
    * @return {void}
    */
   onInitialize?: (initialized: boolean) => void;
+
+  /**
+   * @description Callback function called when the vocal guidance is activated.
+   *
+   * @param {boolean} activated - Indicates if the vocal guidance is activated.
+   *
+   * @returns {void}
+   */
+  onVocal?: (activated: boolean) => void;
 }

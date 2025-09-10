@@ -127,6 +127,7 @@ export default function Home() {
         onClose={(event) => console.log('onClose', event)}
         onCancel={(event) => console.log('onCancel', event)}
         onError={(event) => console.log('onError', event)}
+        onVocal={(event) => console.log('onVocal', event)}
       >
         <TextInput
           placeholder="Process ID"

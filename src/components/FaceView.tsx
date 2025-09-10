@@ -10,6 +10,7 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
     onClose,
     onError,
     onOpen,
+    onVocal,
     onInitialize,
     ...rest
   } = props;
@@ -23,6 +24,7 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
     emitter.addListener('onClose', (event: boolean) => onClose?.(event));
     emitter.addListener('onCancel', (event: boolean) => onCancel?.(event));
     emitter.addListener('onError', (event: boolean) => onError?.(event));
+    emitter.addListener('onVocal', (event: boolean) => onVocal?.(event));
     emitter.addListener('onInitialize', (event: boolean) =>
       onInitialize?.(event)
     );
@@ -32,9 +34,10 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
       emitter.removeAllListeners('onClose');
       emitter.removeAllListeners('onCancel');
       emitter.removeAllListeners('onError');
+      emitter.removeAllListeners('onVocal');
       emitter.removeAllListeners('onInitialize');
     };
-  }, [onCancel, onClose, onError, onOpen, onInitialize]);
+  }, [onCancel, onClose, onError, onVocal, onOpen, onInitialize]);
 
   return (
     <View ref={ref} {...rest}>
