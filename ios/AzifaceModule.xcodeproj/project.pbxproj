@@ -11,16 +11,15 @@
 		7C435D612BA1D46D00A5ADCD /* AzifaceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceModule.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
 		7C435D6A2BA1D69000A5ADCD /* AzifaceModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceModule.m */; };
-		7C9ECD0A2BD1449C00638710 /* LivenessCheckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD092BD1449C00638710 /* LivenessCheckProcessor.swift */; };
-		7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0B2BD144AC00638710 /* EnrollmentProcessor.swift */; };
-		7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9ECD0D2BD144BA00638710 /* AuthenticateProcessor.swift */; };
-		84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F1C9802AB2257700A8261D /* AziFaceViewController.swift */; };
-		CEBC6E982AA66F5800A76DE0 /* FaceTecUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6E972AA66F5800A76DE0 /* FaceTecUtilities.swift */; };
-		CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA42AA66FDD00A76DE0 /* ThemeHelpers.swift */; };
-		CEBC6EAD2AA66FF300A76DE0 /* ProcesingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA72AA66FF300A76DE0 /* ProcesingDelegate.swift */; };
-		CEBC6EAF2AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */; };
-		CEBC6EB02AA66FF300A76DE0 /* PhotoIDScanProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */; };
-		CEE455C32AA6869C0063FD54 /* ThemeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE455C22AA6869C0063FD54 /* ThemeUtils.swift */; };
+		DD9D60942E71AC8B0009EEB4 /* facescan_successful_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */; };
+		DD9D60952E71AC8B0009EEB4 /* please_frame_your_face_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */; };
+		DD9D60962E71AC8B0009EEB4 /* please_move_closer_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607A2E71A19A0009EEB4 /* please_move_closer_sound_file.mp3 */; };
+		DD9D60972E71AC8B0009EEB4 /* please_press_button_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607B2E71A19A0009EEB4 /* please_press_button_sound_file.mp3 */; };
+		DD9D60982E71AC8B0009EEB4 /* please_retry_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607C2E71A19A0009EEB4 /* please_retry_sound_file.mp3 */; };
+		DD9D60992E71AC8B0009EEB4 /* uploading_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607D2E71A19A0009EEB4 /* uploading_sound_file.mp3 */; };
+		DD9D609A2E71AC8B0009EEB4 /* vocal_guidance_off.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607E2E71A19A0009EEB4 /* vocal_guidance_off.mp3 */; };
+		DD9D609B2E71AC8B0009EEB4 /* vocal_guidance_on.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607F2E71A19A0009EEB4 /* vocal_guidance_on.mp3 */; };
+		DD9D609C2E71AC8B0009EEB4 /* FaceTec_OCR_Customization.json in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,6 +63,15 @@
 		CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDMatchProcessor.swift; sourceTree = "<group>"; };
 		CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDScanProcessor.swift; sourceTree = "<group>"; };
 		CEE455C22AA6869C0063FD54 /* ThemeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeUtils.swift; sourceTree = "<group>"; };
+		DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FaceTec_OCR_Customization.json; sourceTree = "<group>"; };
+		DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = facescan_successful_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = please_frame_your_face_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D607A2E71A19A0009EEB4 /* please_move_closer_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = please_move_closer_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D607B2E71A19A0009EEB4 /* please_press_button_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = please_press_button_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D607C2E71A19A0009EEB4 /* please_retry_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = please_retry_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D607D2E71A19A0009EEB4 /* uploading_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = uploading_sound_file.mp3; sourceTree = "<group>"; };
+		DD9D607E2E71A19A0009EEB4 /* vocal_guidance_off.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = vocal_guidance_off.mp3; sourceTree = "<group>"; };
+		DD9D607F2E71A19A0009EEB4 /* vocal_guidance_on.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = vocal_guidance_on.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +97,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				DD9D60802E71A19A0009EEB4 /* VocalGuidanceSoundFiles */,
+				DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */,
 				CEBC6EA22AA66FC900A76DE0 /* Processors */,
 				CEBC6E962AA66F4E00A76DE0 /* Utilities */,
 				CEBC6E932AA66F4000A76DE0 /* ViewController */,
@@ -160,6 +170,21 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DD9D60802E71A19A0009EEB4 /* VocalGuidanceSoundFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */,
+				DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */,
+				DD9D607A2E71A19A0009EEB4 /* please_move_closer_sound_file.mp3 */,
+				DD9D607B2E71A19A0009EEB4 /* please_press_button_sound_file.mp3 */,
+				DD9D607C2E71A19A0009EEB4 /* please_retry_sound_file.mp3 */,
+				DD9D607D2E71A19A0009EEB4 /* uploading_sound_file.mp3 */,
+				DD9D607E2E71A19A0009EEB4 /* vocal_guidance_off.mp3 */,
+				DD9D607F2E71A19A0009EEB4 /* vocal_guidance_on.mp3 */,
+			);
+			path = VocalGuidanceSoundFiles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -170,6 +195,7 @@
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
+				DD9D60932E71AC7E0009EEB4 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -212,24 +238,33 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		DD9D60932E71AC7E0009EEB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD9D60942E71AC8B0009EEB4 /* facescan_successful_sound_file.mp3 in Resources */,
+				DD9D60952E71AC8B0009EEB4 /* please_frame_your_face_sound_file.mp3 in Resources */,
+				DD9D60962E71AC8B0009EEB4 /* please_move_closer_sound_file.mp3 in Resources */,
+				DD9D60972E71AC8B0009EEB4 /* please_press_button_sound_file.mp3 in Resources */,
+				DD9D60982E71AC8B0009EEB4 /* please_retry_sound_file.mp3 in Resources */,
+				DD9D60992E71AC8B0009EEB4 /* uploading_sound_file.mp3 in Resources */,
+				DD9D609A2E71AC8B0009EEB4 /* vocal_guidance_off.mp3 in Resources */,
+				DD9D609B2E71AC8B0009EEB4 /* vocal_guidance_on.mp3 in Resources */,
+				DD9D609C2E71AC8B0009EEB4 /* FaceTec_OCR_Customization.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEBC6E982AA66F5800A76DE0 /* FaceTecUtilities.swift in Sources */,
-				CEE455C32AA6869C0063FD54 /* ThemeUtils.swift in Sources */,
-				CEBC6EAD2AA66FF300A76DE0 /* ProcesingDelegate.swift in Sources */,
-				CEBC6EA52AA66FDD00A76DE0 /* ThemeHelpers.swift in Sources */,
-				7C9ECD0C2BD144AC00638710 /* EnrollmentProcessor.swift in Sources */,
 				7C435D6A2BA1D69000A5ADCD /* AzifaceModule.m in Sources */,
 				7C435D632BA1D56900A5ADCD /* Config.swift in Sources */,
 				7C435D612BA1D46D00A5ADCD /* AzifaceModule.swift in Sources */,
-				84F1C9812AB2257700A8261D /* AziFaceViewController.swift in Sources */,
-				CEBC6EAF2AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift in Sources */,
-				7C9ECD0E2BD144BA00638710 /* AuthenticateProcessor.swift in Sources */,
-				CEBC6EB02AA66FF300A76DE0 /* PhotoIDScanProcessor.swift in Sources */,
-				7C9ECD0A2BD1449C00638710 /* LivenessCheckProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
