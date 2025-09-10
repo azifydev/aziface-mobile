@@ -1,4 +1,4 @@
-# @azify/aziface-mobile
+# @azify/aziface-mobile 📱
 
 <div align="center">
   <p>
@@ -622,6 +622,7 @@ The Aziface SDK provides the `vocal` method for you on vocal guidance. We recomm
 
 ```tsx
 import { useState } from 'react';
+// ...
 import {
   initialize,
   vocal,
@@ -681,8 +682,13 @@ In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Imag
 Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`logo` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
 
 ```tsx
+import { useEffect } from 'react';
 // ...
-import { initialize, setTheme, type Params /* ... */ } from '@azify/aziface-mobile';
+import {
+  initialize,
+  setTheme,
+  type Params /* ... */,
+} from '@azify/aziface-mobile';
 
 export default function App() {
   useEffect(() => {
@@ -696,9 +702,9 @@ export default function App() {
       // You call setTheme after initialize.
       setTheme({
         image: {
-          logo: 'brand_logo' // brand_logo.png
-          cancel: 'close' // close.png
-        }
+          logo: 'brand_logo', // brand_logo.png
+          cancel: 'close', // close.png
+        },
       });
 
       await initialize({ params });
