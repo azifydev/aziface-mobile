@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     minHeight: 60,
     backgroundColor: '#f0f0f0',
   },
-  azifaceContent: {
+  content: {
     gap,
     flex: 1,
     alignItems: 'center',

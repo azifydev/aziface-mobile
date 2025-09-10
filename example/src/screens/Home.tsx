@@ -15,6 +15,7 @@ import {
   vocal,
   FaceView,
   type Params,
+  type Headers,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -40,13 +41,14 @@ export default function Home() {
 
   const isDisabledActions = !isInitialized || !processId;
   const opacity = !isDisabledActions ? 1 : 0.5;
-  const isAndroid = Platform.OS === 'android';
 
-  const onPressInit = async () => {
+  const onInitialize = async () => {
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
     const userAgent = await getUserAgent?.();
     const xForwardedFor = getIpAddressSync?.();
-    const headers = {
+    const isAndroid = Platform.OS === 'android';
+
+    const headers: Headers = {
       'x-token-bearer': `${tokenBiometric}`,
       'clientInfo': clientInfo,
       'contentType': 'application/json',
@@ -121,7 +123,7 @@ export default function Home() {
       showsVerticalScrollIndicator={false}
     >
       <FaceView
-        style={styles.azifaceContent}
+        style={styles.content}
         onInitialize={(event) => console.log('onInitialize', event)}
         onOpen={(event) => console.log('onOpen', event)}
         onClose={(event) => console.log('onClose', event)}
@@ -137,16 +139,16 @@ export default function Home() {
           value={processId}
           onChangeText={setProcessId}
           placeholderTextColor="gray"
-          onSubmitEditing={onPressInit}
+          onSubmitEditing={onInitialize}
         />
 
         <TouchableOpacity
           style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
           activeOpacity={0.8}
           disabled={!processId}
-          onPress={onPressInit}
+          onPress={onInitialize}
         >
-          <Text style={styles.buttonText}>Init Aziface sdk</Text>
+          <Text style={styles.buttonText}>Initialize SDK</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

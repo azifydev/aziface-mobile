@@ -43,6 +43,7 @@ Azify SDK adapter to react native. 📱
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
+- [Vocal Guidance](#vocal-guidance)
 - [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
   - [How to add images in Android?](#how-to-add-images-in-android)
   - [How to add images in iOS?](#how-to-add-images-in-ios)
@@ -72,26 +73,32 @@ cd ios && pod install && cd ..
 ## Usage
 
 ```tsx
-import * as React from 'react';
-
+import { useState } from 'react';
+import { Text, TouchableOpacity, Platform, ScrollView } from 'react-native';
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import { enroll, initialize, photoMatch } from '@azify/aziface-mobile';
+  initialize,
+  enroll,
+  authenticate,
+  liveness,
+  photoMatch,
+  photoScan,
+  FaceView,
+  type Params,
+  type Headers,
+} from '@azify/aziface-mobile';
 
 export default function App() {
-  const init = async () => {
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  const opacity = isInitialized ? 1 : 0.5;
+
+  const onInitialize = async () => {
     /*
      * The SDK must be initialized first
      * so that the rest of the library
      * functions can work!
-     *
      * */
-    const headers = {
+    const headers: Headers = {
       'x-token-bearer': 'YOUR_X_TOKEN_BEARER',
       'x-api-key': 'YOUR_X_API_KEY',
       'clientInfo': 'YUOR_CLIENT_INFO',
@@ -104,85 +111,158 @@ export default function App() {
       'user-agent': 'YOUR_USER_AGENT',
       'x-only-raw-analysis': '1',
     };
-    const params = {
+
+    const params: Params = {
       isDevelopment: true,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };
 
     try {
-      const isInitialized = await initialize({
+      const initialized = await initialize({
         params,
         headers,
       });
 
-      console.log(isInitialized);
+      setIsInitialized(initialized);
+      console.log(initialized);
     } catch (error: any) {
-      console.error(error.message);
+      setIsInitialized(false);
+      console.error(error);
     }
   };
 
-  const onPressPhotoMatch = async () => {
+  const onFaceScan = async (type: string, data?: any) => {
     try {
-      const isSuccess = await photoMatch();
-      console.log(isSuccess);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
+      let isSuccess = false;
 
-  const onPressEnroll = async () => {
-    try {
-      const isSuccess = await enroll();
-      console.log(isSuccess);
+      switch (type) {
+        case 'enroll':
+          isSuccess = await enroll(data);
+          break;
+        case 'liveness':
+          isSuccess = await liveness(data);
+          break;
+        case 'authenticate':
+          isSuccess = await authenticate(data);
+          break;
+        case 'photoMatch':
+          isSuccess = await photoMatch(data);
+          break;
+        case 'photoScan':
+          isSuccess = await photoScan(data);
+          break;
+        default:
+          isSuccess = false;
+          break;
+      }
+
+      console.log(type, isSuccess);
     } catch (error: any) {
-      console.error(error.message);
+      console.error(type, error.message);
     }
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
+    >
+      <FaceView
+        style={styles.content}
+        onInitialize={(event) => console.log('onInitialize', event)}
+        onOpen={(event) => console.log('onOpen', event)}
+        onClose={(event) => console.log('onClose', event)}
+        onCancel={(event) => console.log('onCancel', event)}
+        onError={(event) => console.log('onError', event)}
+        onVocal={(event) => console.log('onVocal', event)}
+      >
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => await init()}
+          activeOpacity={0.8}
+          onPress={onInitialize}
         >
-          <Text style={styles.text}>Init Aziface Module</Text>
+          <Text style={styles.buttonText}>Initialize SDK</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onPressPhotoMatch}>
-          <Text style={styles.text}>Open Photo Match</Text>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('enroll')}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Enrollment</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onPressEnroll}>
-          <Text style={styles.text}>Open Enroll</Text>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('liveness')}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Liveness</Text>
         </TouchableOpacity>
-      </View>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('authenticate')}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Authenticate</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('photoMatch')}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Photo Match</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onFaceScan('photoScan')}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Photo Scan</Text>
+        </TouchableOpacity>
+      </FaceView>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scroll: {
     flex: 1,
-    padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 40 : 0,
+    backgroundColor: 'white',
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 30,
+    gap: 40,
+    backgroundColor: 'white',
   },
   button: {
     width: '100%',
-    backgroundColor: '#4a68b3',
-    padding: 20,
-    borderRadius: 15,
-    alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 20,
+    alignItems: 'center',
+    padding: 20,
+    borderRadius: 16,
+    backgroundColor: '#4a68b3',
   },
-  text: {
+  buttonText: {
+    fontSize,
+    fontWeight: 'bold',
     color: 'white',
-    fontWeight: '700',
-    fontSize: 22,
   },
 });
 ```
@@ -269,9 +349,9 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 ## Enums
 
-| Enums               | iOS | Android |
-| ------------------- | --- | ------- |
-| [`Errors`](#errors) | ✅  | ✅      |
+| Enums               | Platform |
+| ------------------- | -------- |
+| [`Errors`](#errors) | All      |
 
 <hr/>
 
@@ -536,6 +616,52 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 <hr/>
 
+## Vocal Guidance
+
+The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized.
+
+```tsx
+import { useState } from 'react';
+import {
+  initialize,
+  vocal,
+  type Params /* ... */,
+} from '@azify/aziface-mobile';
+
+export default function App() {
+  const [isInitialized, setIsInitialized] = useState(false);
+  // State to manager when vocal is enabled
+  const [isVocalEnabled, setIsVocalEnabled] = useState(false);
+
+  function onInitialize() {
+    const params: Params = {
+      isDevelopment: true,
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+      baseUrl: 'YOUR_BASE_URL',
+    };
+
+    try {
+      const initialized = await initialize({ params });
+      setIsInitialized(initialized);
+    } catch {
+      setIsInitialized(false);
+    } finally {
+      setIsVocalEnabled(false);
+    }
+  }
+
+  // Call onVocal function when SDK is initialized!
+  function onVocal() {
+    setIsVocalEnabled((previous) => !previous);
+    vocal();
+  }
+
+  // ...
+}
+```
+
+<hr/>
+
 ## How to add images in Aziface SDK module?
 
 The `logo` and `cancel` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
@@ -555,63 +681,33 @@ In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Imag
 Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`logo` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
 
 ```tsx
-import React, { useEffect } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { initialize, enroll, setTheme } from '@azify/aziface-mobile';
+// ...
+import { initialize, setTheme, type Params /* ... */ } from '@azify/aziface-mobile';
 
 export default function App() {
   useEffect(() => {
-    const params = {
+    const params: Params = {
       isDevelopment: true,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };
 
     async function initialize() {
+      // You call setTheme after initialize.
       setTheme({
         image: {
           logo: 'brand_logo' // brand_logo.png
           cancel: 'close' // close.png
         }
       });
+
       await initialize({ params });
     }
 
     initialize();
   }, []);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-      }}
-    >
-      <TouchableOpacity
-        style={{
-          width: '100%',
-          height: 64,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'black',
-        }}
-        onPress={async () => {
-          try {
-            const isSuccess = await enroll();
-            console.log(isSuccess);
-          } catch (error: any) {
-            console.error(error);
-          }
-        }}
-      >
-        <Text style={{ textAlign: 'center', fontSize: 24, color: 'white' }}>
-          Open!
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+  // ...
 }
 ```
 
