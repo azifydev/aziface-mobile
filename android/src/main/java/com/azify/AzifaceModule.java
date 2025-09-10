@@ -71,6 +71,8 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
       if (this.isEnabled) {
         Vocal.setUpVocalGuidancePlayers(this);
         this.isEnabled = false;
+
+        this.sendEvent("onVocal", false);
       }
 
       this.promiseResult.resolve(true);
@@ -102,6 +104,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
           isInitialized = true;
           onFaceTecSDKInitializationSuccess(sdkInstance);
           sendEvent("onInitialize", true);
+          sendEvent("onVocal", false);
           promise.resolve(true);
         }
 
@@ -109,6 +112,7 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
         public void onError(@NonNull FaceTecInitializationError error) {
           isInitialized = false;
           sendEvent("onInitialize", false);
+          sendEvent("onVocal", false);
           promise.resolve(false);
         }
       });
@@ -251,8 +255,10 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     if (this.isEnabled) {
       Vocal.setUpVocalGuidancePlayers(this);
     }
-    
+
     Vocal.setVocalGuidanceMode(this);
+
+    this.sendEvent("onVocal", this.isEnabled);
   }
 
   private void updateTheme() {
