@@ -68,6 +68,11 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
       final String code = this.error.getErrorCode(status);
       this.promiseResult.reject(message, code);
     } else {
+      if (this.isEnabled) {
+        Vocal.setUpVocalGuidancePlayers(this);
+        this.isEnabled = false;
+      }
+
       this.promiseResult.resolve(true);
     }
   }
@@ -243,12 +248,11 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
     this.updateTheme();
 
     this.isEnabled = !this.isEnabled;
+    if (this.isEnabled) {
+      Vocal.setUpVocalGuidancePlayers(this);
+    }
+    
     Vocal.setVocalGuidanceMode(this);
-  }
-
-  @ReactMethod
-  public Boolean isVocalEnabled() {
-    return this.isEnabled;
   }
 
   private void updateTheme() {
@@ -260,16 +264,13 @@ public class AzifaceModule extends ReactContextBaseJavaModule implements Activit
   private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
     this.sdkInstance = sdkInstance;
 
-    Vocal.setOCRLocalization(this.reactContext);
+    final Theme theme = new Theme(this.reactContext);
+    Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
+    Theme.setTheme();
 
+    Vocal.setOCRLocalization(this.reactContext);
     Vocal.setVocalGuidanceSoundFiles();
     Vocal.setUpVocalGuidancePlayers(this);
-
-    if (Theme.Style != null) {
-      final Theme theme = new Theme(this.reactContext);
-      Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
-      Theme.setTheme();
-    }
   }
 
   private void setPromiseResult(Promise promise) {
