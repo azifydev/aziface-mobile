@@ -531,6 +531,7 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 | `onClose`      | Callback function called when the Aziface SDK is closed.          | `boolean` | All      |
 | `onCancel`     | Callback function called when the Aziface SDK is cancelled.       | `boolean` | All      |
 | `onError`      | Callback function called when an error occurs in the Aziface SDK. | `boolean` | All      |
+| `onVocal`      | Callback function called when the vocal guidance is activated.    | `boolean` | All      |
 | `onInitialize` | Callback function called when the Aziface SDK is initialized.     | `boolean` | All      |
 
 <hr/>
