@@ -303,11 +303,11 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 Here must be passed to initialize the Aziface SDK! Case the parameters isn't provided the Aziface SDK goes to be not initialized.
 
-| `Params`              | type      | Required |
-| --------------------- | --------- | -------- |
-| `deviceKeyIdentifier` | `string`  | ✅       |
-| `baseUrl`             | `string`  | ✅       |
-| `isDevelopment`       | `boolean` | ❌       |
+| `Params`              | type      | Required | Default |
+| --------------------- | --------- | -------- | ------- |
+| `deviceKeyIdentifier` | `string`  | ✅       | -       |
+| `baseUrl`             | `string`  | ✅       | -       |
+| `isDevelopment`       | `boolean` | ❌       | `false` |
 
 ### `Headers`
 
