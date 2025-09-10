@@ -64,12 +64,13 @@ export default function Home() {
     const params: Params = {
       deviceKeyIdentifier: Config.DEVICE_KEY,
       baseUrl: Config.API_URL_AZTECH,
-      isDevelopment: false,
+      isDevelopment: true,
     };
 
     try {
       const initialized = await initialize({ params, headers });
       setIsInitialized(initialized);
+      setIsEnabledVocal(false);
       console.log('isInitialized', initialized);
     } catch (error) {
       console.error('Initialize', error);
