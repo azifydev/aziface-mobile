@@ -1895,7 +1895,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  aziface-mobile-sdk: f3b02b0732f53a6f42d12e34174201c2209e368c
+  aziface-mobile-sdk: 61962b28c11859410db8d0723c8e6442d38603e8
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa

@@ -101,6 +101,7 @@ export default function Home() {
           break;
       }
 
+      setIsEnabledVocal(false);
       console.log(type, isSuccess);
     } catch (error: any) {
       console.error(type, error.message);
@@ -191,18 +192,16 @@ export default function Home() {
           <Text style={styles.buttonText}>Photo Scan</Text>
         </TouchableOpacity>
 
-        {isAndroid && (
-          <TouchableOpacity
-            style={[styles.button, { opacity }]}
-            activeOpacity={0.8}
-            onPress={onVocal}
-            disabled={isDisabledActions}
-          >
-            <Text style={styles.buttonText}>
-              Vocal {isEnabledVocal ? 'On' : 'Off'}
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={onVocal}
+          disabled={isDisabledActions}
+        >
+          <Text style={styles.buttonText}>
+            Vocal {isEnabledVocal ? 'On' : 'Off'}
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonLogout} onPress={logout}>
           <Text style={styles.textLogout}>Logout</Text>

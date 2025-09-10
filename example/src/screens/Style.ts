@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const padding = 20;
 const borderRadius = 15;
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: height * 0.15,
-    backgroundColor: '#ffffffff',
+    backgroundColor: '#ffffff',
   },
   registerContent: {
     gap,
@@ -38,14 +38,14 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffffff',
+    backgroundColor: '#ffffff',
   },
   welcomeContent: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: gap,
-    backgroundColor: '#ffffffff',
+    backgroundColor: '#ffffff',
   },
   loginInput: {
     borderRadius,
@@ -62,22 +62,24 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffffff',
+    backgroundColor: '#ffffff',
   },
   buttonLogout: {
     padding,
     borderRadius,
     width: '100%',
-    backgroundColor: '#e04561ff',
+    backgroundColor: '#e04561',
     alignItems: 'center',
     justifyContent: 'center',
   },
   textLogout: {
-    color: '#ffffffff',
+    color: '#ffffff',
     fontWeight: 'bold',
   },
   scroll: {
+    paddingTop: Platform.OS === 'ios' ? gap : 0,
     flex: 1,
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     flexGrow: 1,
