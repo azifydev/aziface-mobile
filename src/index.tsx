@@ -5,7 +5,6 @@ export {
   enroll,
   authenticate,
   liveness,
-  isVocalEnabled,
   vocal,
   setTheme,
 } from './methods';

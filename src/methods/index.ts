@@ -31,19 +31,6 @@ export function vocal(): void {
 }
 
 /**
- * @description This method checks if the vocal guidance is activated in
- * the Aziface SDK.
- *
- * @return {boolean} Returns true if the vocal guidance is activated,
- * otherwise false.
- *
- * @platform Android
- */
-export function isVocalEnabled(): boolean {
-  return AzifaceModule.isVocalEnabled();
-}
-
-/**
  * @description This is the **principal** method to be called, he must be
  * **called first** to initialize the Aziface SDK. If he doesn't be called the
  * other methods **don't works!**

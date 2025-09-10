@@ -828,17 +828,6 @@ export interface Methods {
    * @platform Android
    */
   vocal(): void;
-
-  /**
-   * @description This method checks if the vocal guidance is activated in
-   * the Aziface SDK.
-   *
-   * @return {boolean} Returns true if the vocal guidance is activated,
-   * otherwise false.
-   *
-   * @platform Android
-   */
-  isVocalEnabled(): boolean;
 }
 
 /**
