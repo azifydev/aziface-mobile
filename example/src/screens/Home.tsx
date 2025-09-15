@@ -49,7 +49,7 @@ export default function Home() {
     const isAndroid = Platform.OS === 'android';
 
     const headers: Headers = {
-      'x-token-bearer': `${tokenBiometric}`,
+      'x-token-bearer': tokenBiometric,
       'clientInfo': clientInfo,
       'contentType': 'application/json',
       'device': md5(
@@ -66,7 +66,7 @@ export default function Home() {
     const params: Params = {
       deviceKeyIdentifier: Config.DEVICE_KEY,
       baseUrl: Config.API_URL_AZTECH,
-      isDevelopment: true,
+      isDevelopment: false,
     };
 
     try {
