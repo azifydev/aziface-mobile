@@ -2,8 +2,8 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  TextInput,
   ScrollView,
+  type TouchableOpacityProps,
 } from 'react-native';
 import {
   initialize,
@@ -36,13 +36,15 @@ import type { FaceType } from '../types/home';
 
 export default function Home() {
   const { data: configs } = useBiometricConfigs();
-  const { tokenBiometric, processId: process, logout } = useUser();
-  const [processId, setProcessId] = useState(process);
+  const { tokenBiometric, logout } = useUser();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
 
-  const isDisabledActions = !isInitialized || !processId;
-  const opacity = !isDisabledActions ? 1 : 0.5;
+  const commonButtonProps: TouchableOpacityProps = {
+    style: [styles.button, { opacity: isInitialized ? 1 : 0.5 }],
+    disabled: !isInitialized,
+    activeOpacity: 0.8,
+  };
 
   const onInitialize = async () => {
     const clientInfo = `${getSystemName?.()},${pkg?.version}`;
@@ -133,77 +135,50 @@ export default function Home() {
         onError={(event) => console.log('onError', event)}
         onVocal={(event) => console.log('onVocal', event)}
       >
-        <TextInput
-          placeholder="Process ID"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.loginInput}
-          value={processId}
-          onChangeText={setProcessId}
-          placeholderTextColor="black"
-          onSubmitEditing={onInitialize}
-        />
-
         <TouchableOpacity
-          style={[styles.button, { opacity: processId ? 1 : 0.5 }]}
+          style={styles.button}
           activeOpacity={0.8}
-          disabled={!processId}
           onPress={onInitialize}
         >
           <Text style={styles.buttonText}>Initialize SDK</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
+          {...commonButtonProps}
           onPress={() => onFaceScan('enroll')}
-          disabled={isDisabledActions}
         >
           <Text style={styles.buttonText}>Enrollment</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
+          {...commonButtonProps}
           onPress={() => onFaceScan('liveness')}
-          disabled={isDisabledActions}
         >
           <Text style={styles.buttonText}>Liveness</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
+          {...commonButtonProps}
           onPress={() => onFaceScan('authenticate')}
-          disabled={isDisabledActions}
         >
           <Text style={styles.buttonText}>Authenticate</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
+          {...commonButtonProps}
           onPress={() => onFaceScan('photoMatch')}
-          disabled={isDisabledActions}
         >
           <Text style={styles.buttonText}>Photo Match</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
+          {...commonButtonProps}
           onPress={() => onFaceScan('photoScan')}
-          disabled={isDisabledActions}
         >
           <Text style={styles.buttonText}>Photo Scan</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={onVocal}
-          disabled={isDisabledActions}
-        >
+        <TouchableOpacity {...commonButtonProps} onPress={onVocal}>
           <Text style={styles.buttonText}>
             Vocal {isEnabledVocal ? 'On' : 'Off'}
           </Text>

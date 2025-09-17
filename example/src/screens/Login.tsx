@@ -6,12 +6,10 @@ import {
   useCreateBiometric,
   useLogin,
 } from '../services/client.service';
-import { useUser } from '../hooks/useuser.hook';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { processId } = useUser();
   const { mutateAsync: login, isPending: isPendingLogin } = useLogin();
   const { mutateAsync: createBiometric, isPending: isPendingBiometric } =
     useCreateBiometric();
@@ -20,9 +18,7 @@ export default function Login() {
 
   const handleBiometric = async () => {
     try {
-      if (!processId) {
-        await createBiometric();
-      }
+      await createBiometric();
       await createSession();
     } catch (error: any) {
       Alert.alert('Generate Biometric Error');
