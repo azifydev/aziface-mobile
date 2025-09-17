@@ -46,11 +46,13 @@ export default function Login() {
         autoCapitalize="none"
         autoCorrect={false}
         style={styles.loginInput}
+        placeholderTextColor="black"
         onChangeText={setUsername}
       />
       <TextInput
         placeholder="Password"
         autoCapitalize="none"
+        placeholderTextColor="black"
         autoCorrect={false}
         secureTextEntry
         style={styles.loginInput}

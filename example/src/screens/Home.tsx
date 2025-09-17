@@ -31,9 +31,11 @@ import { styles } from './Style';
 import Config from 'react-native-config';
 import { useState } from 'react';
 import { useUser } from '../hooks/useuser.hook';
+import { useBiometricConfigs } from '../services/client.service';
 import type { FaceType } from '../types/home';
 
 export default function Home() {
+  const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, processId: process, logout } = useUser();
   const [processId, setProcessId] = useState(process);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -64,7 +66,7 @@ export default function Home() {
     };
 
     const params: Params = {
-      deviceKeyIdentifier: Config.DEVICE_KEY,
+      deviceKeyIdentifier: configs?.device || '',
       baseUrl: Config.API_URL_AZTECH,
       isDevelopment: false,
     };
@@ -138,7 +140,7 @@ export default function Home() {
           style={styles.loginInput}
           value={processId}
           onChangeText={setProcessId}
-          placeholderTextColor="gray"
+          placeholderTextColor="black"
           onSubmitEditing={onInitialize}
         />
 

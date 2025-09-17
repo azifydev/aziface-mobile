@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     minHeight: 60,
     backgroundColor: '#f0f0f0',
+    color: 'black',
   },
   content: {
     gap,
