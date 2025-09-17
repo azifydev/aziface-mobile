@@ -1,38 +1,24 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { styles } from './Style';
 import { useState } from 'react';
-import {
-  useBiometricSession,
-  useCreateBiometric,
-  useLogin,
-} from '../services/client.service';
+import { useBiometricSession, useLogin } from '../services/client.service';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { mutateAsync: login, isPending: isPendingLogin } = useLogin();
-  const { mutateAsync: createBiometric, isPending: isPendingBiometric } =
-    useCreateBiometric();
   const { mutateAsync: createSession, isPending: isPendingSession } =
     useBiometricSession();
 
-  const handleBiometric = async () => {
-    try {
-      await createBiometric();
-      await createSession();
-    } catch (error: any) {
-      Alert.alert('Generate Biometric Error');
-    }
-  };
   const handleLogin = async () => {
     try {
       await login({ username, password });
-      await handleBiometric();
+      await createSession();
     } catch (error: any) {
       Alert.alert('Login Error', error.message);
     }
   };
-  const isPending = isPendingBiometric || isPendingSession || isPendingLogin;
+  const isPending = isPendingSession || isPendingLogin;
   const isLoading = isPending || !password || !username;
   const opacity = isLoading ? 0.5 : 1;
   return (
