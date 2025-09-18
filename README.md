@@ -7,7 +7,7 @@
   </p>
 </div>
 
-Azify SDK adapter to react native. 📱
+Aziface SDK adapter to react native. 📱
 
 - [Installation](#installation)
 - [Usage](#usage)
