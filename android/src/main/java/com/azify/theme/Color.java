@@ -13,27 +13,46 @@ public class Color {
     this.theme = new Theme();
   }
 
+  private String parseColor(String color) {
+    final boolean isRRGGBBAA = color.length() == 9;
+    final boolean isRGBA = color.length() == 5;
+    final boolean isRGB = color.length() == 4;
+
+    if (isRRGGBBAA) {
+      color = "#" + color.substring(9 - 2) + color.substring(1, 9 - 2);
+    } else if (isRGBA) {
+      char red = color.charAt(1);
+      char green = color.charAt(2);
+      char blue = color.charAt(3);
+      char alpha = color.charAt(4);
+      color = "#" + alpha + "0" + red + red + green + green + blue + blue;
+    } else if (isRGB) {
+      char red = color.charAt(1);
+      char green = color.charAt(2);
+      char blue = color.charAt(3);
+      color = "#" + red + red + green + green + blue + blue;
+    }
+
+    return color;
+  }
+
   private int parseColor(String key, int defaultColor) {
-    final int hasAlpha = 9;
     String color = com.azify.theme.Theme.Style.getString(key);
 
     if (color == null) {
       return defaultColor;
     }
-    if (color.length() == hasAlpha) {
-      color = "#" + color.substring(hasAlpha - 2) + color.substring(1, hasAlpha - 2);
-    }
+
+    color = this.parseColor(color);
+
     return color.isEmpty() ? defaultColor : android.graphics.Color.parseColor(color);
   }
 
   private int parseColor(JSONObject theme, String key, int defaultColor) {
     try {
-      final int hasAlpha = 9;
       String color = theme.getString(key);
+      color = this.parseColor(color);
 
-      if (color.length() == hasAlpha) {
-        color = "#" + color.substring(hasAlpha - 2) + color.substring(1, hasAlpha - 2);
-      }
       return color.isEmpty() ? defaultColor : android.graphics.Color.parseColor(color);
     } catch (JSONException e) {
       return defaultColor;

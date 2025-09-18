@@ -11,11 +11,12 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "12.0" }
   s.source       = { :git => "https://github.com/azifydev/aziface-mobile.git", :tag => "#{s.version}" }
 
   s.vendored_frameworks = "ios/Frameworks/FaceTecSDK.xcframework"
-  s.source_files = "ios/**/*.{h,m,mm,swift}"
+  s.resources = ['ios/VocalGuidanceSoundFiles/*.mp3', 'ios/*.json']
+  s.source_files = "ios/**/*.{h,m,mm,swift,mp3,json}"
   s.requires_arc = true
 
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.

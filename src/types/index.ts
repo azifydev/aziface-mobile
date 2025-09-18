@@ -10,16 +10,6 @@ import { type ViewProps } from 'react-native';
 export type ButtonLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
 
 /**
- * @type
- *
- * @description The type of status bar color. Note: The status bar color is
- * `DEFAULT` if device is less than iOS 13.
- *
- * @default "DARK_CONTENT"
- */
-export type StatusBarColor = 'DARK_CONTENT' | 'DEFAULT' | 'LIGHT_CONTENT';
-
-/**
  * @interface Point
  *
  * @description Defines the drawn in the layer's coordinate space with axis X
@@ -81,444 +71,6 @@ export interface FeedbackBackgroundColor {
    * @default { x: 1, y: 0 }
    */
   endPoint?: Point;
-}
-
-/**
- * @interface DefaultMessage
- *
- * @description Represents the success message and loading data message
- * during to Aziface SDK flow. It interface is used **more** by processors's
- * `authenticate`, `enroll` and `liveness` processors.
- */
-export interface DefaultMessage {
-  /**
-   * @description Success message when the process is completed successfully.
-   *
-   * @description For Liveness flow.
-   *
-   * @default "Liveness Confirmed"
-   *
-   * @description For Enrollment and Photo ID Match flow.
-   *
-   * @default "Face Scanned\n3D Liveness Proven"
-   *
-   * @description For Authenticate flow.
-   *
-   * @default "Authenticated"
-   *
-   * @description For Photo ID Scan.
-   *
-   * @default undefined
-   */
-  successMessage?: string;
-
-  /**
-   * @description Success message when the process is completed successfully.
-   * This message is displayed only in Enrollment, Authenticate and Liveness
-   * flow.
-   *
-   * @default "Still Uploading..."
-   *
-   * @platform iOS
-   */
-  uploadMessage?: string;
-}
-
-/**
- * @interface DefaultScanMessageFrontSide
- *
- * @description Represents the front-side scan messages during to Aziface SDK
- * flow.
- */
-export interface DefaultScanMessageFrontSide {
-  /**
-   * @description Upload of ID front-side has started.
-   *
-   * @default "Uploading Encrypted ID Scan"
-   */
-  uploadStarted?: string;
-
-  /**
-   * @description Upload of ID front-side is still uploading to Server after
-   * an extended period of time.
-   *
-   * @default "Still Uploading... Slow Connection"
-   */
-  stillUploading?: string;
-
-  /**
-   * @description Upload of ID front-side to the Server is complete.
-   *
-   * @default "Upload Complete"
-   */
-  uploadCompleteAwaitingResponse?: string;
-
-  /**
-   * @description Upload of ID front-side is complete and we are waiting for
-   * the Server to finish processing and respond.
-   *
-   * @default "Processing ID Scan"
-   */
-  uploadCompleteAwaitingProcessing?: string;
-}
-
-/**
- * @interface DefaultScanMessageBackSide
- *
- * @description Represents the back-side scan messages during to Aziface SDK
- * flow.
- */
-export interface DefaultScanMessageBackSide {
-  /**
-   * @description Upload of ID back-side has started.
-   *
-   * @default "Uploading Encrypted ID Scan"
-   */
-  uploadStarted?: string;
-
-  /**
-   * @description Upload of ID back-side is still uploading to Server after
-   * an extended period of time.
-   *
-   * @default "Still Uploading... Slow Connection"
-   */
-  stillUploading?: string;
-
-  /**
-   * @description Upload of ID back-side to the Server is complete.
-   *
-   * @default "Upload Complete"
-   */
-  uploadCompleteAwaitingResponse?: string;
-
-  /**
-   * @description Upload of ID back-side is complete and we are waiting for
-   * the Server to finish processing and respond.
-   *
-   * @default "Processing Back of ID"
-   */
-  uploadCompleteAwaitingProcessing?: string;
-}
-
-/**
- * @interface DefaultScanMessageUserConfirmInfo
- *
- * @description Represents the user confirmed information messages during to
- * Aziface SDK flow.
- */
-export interface DefaultScanMessageUserConfirmInfo {
-  /**
-   * @description Upload of User Confirmed Info has started.
-   *
-   * @default "Uploading Your Confirmed Info"
-   */
-  uploadStarted?: string;
-
-  /**
-   * @description Upload of User Confirmed Info is still uploading to Server
-   * after an extended period of time.
-   *
-   * @default "Still Uploading... Slow Connection"
-   */
-  stillUploading?: string;
-
-  /**
-   * @description Upload of User Confirmed Info to the Server is complete.
-   *
-   * @default "Upload Complete"
-   */
-  uploadCompleteAwaitingResponse?: string;
-
-  /**
-   * @description Upload of User Confirmed Info is complete and we are waiting
-   * for the Server to finish processing and respond.
-   *
-   * @default "Processing"
-   */
-  uploadCompleteAwaitingProcessing?: string;
-}
-
-/**
- * @interface DefaultScanMessageNFC
- *
- * @description Represents the NFC scan messages during to Aziface SDK flow.
- */
-export interface DefaultScanMessageNFC {
-  /**
-   * @description Upload of NFC Details has started.
-   *
-   * @default "Uploading Encrypted NFC Details"
-   */
-  uploadStarted?: string;
-
-  /**
-   * @description Upload of NFC Details is still uploading to Server after an
-   * extended period of time.
-   *
-   * @default "Still Uploading... Slow Connection"
-   */
-  stillUploading?: string;
-
-  /**
-   * @description Upload of NFC Details to the Server is complete.
-   *
-   * @default "Upload Complete"
-   */
-  uploadCompleteAwaitingResponse?: string;
-
-  /**
-   * @description Upload of NFC Details is complete and we are waiting for the
-   * Server to finish processing and respond.
-   *
-   * @default "Processing NFC Details"
-   */
-  uploadCompleteAwaitingProcessing?: string;
-}
-
-/**
- * @interface DefaultScanMessageSkippedNFC
- *
- * @description Represents the skipped NFC scan messages during to Aziface SDK
- * flow.
- */
-export interface DefaultScanMessageSkippedNFC {
-  /**
-   * @description Upload of ID Details has started.
-   *
-   * @default "Uploading Encrypted ID Details"
-   */
-  uploadStarted?: string;
-
-  /**
-   * @description Upload of ID Details is still uploading to Server after an
-   * extended period of time.
-   *
-   * @default "Still Uploading... Slow Connection"
-   */
-  stillUploading?: string;
-
-  /**
-   * @description Upload of ID Details to the Server is complete.
-   *
-   * @default "Upload Complete"
-   */
-  uploadCompleteAwaitingResponse?: string;
-
-  /**
-   * @description Upload of ID Details is complete and we are waiting for the
-   * Server to finish processing and respond.
-   *
-   * @default "Processing ID Details"
-   */
-  uploadCompleteAwaitingProcessing?: string;
-}
-
-/**
- * @interface DefaultScanMessageSuccess
- *
- * @description Represents the success messages during the Aziface SDK flow.
- */
-export interface DefaultScanMessageSuccess {
-  /**
-   * @description Successful scan of ID front-side (ID Types with no
-   * back-side).
-   *
-   * @default "ID Scan Complete"
-   */
-  frontSide?: string;
-
-  /**
-   * @description Successful scan of ID front-side (ID Types that do have a
-   * back-side).
-   *
-   * @default "Front of ID Scanned"
-   */
-  frontSideBackNext?: string;
-
-  /**
-   * @description Successful scan of ID front-side (ID Types that do have
-   * NFC but do not have a back-side).
-   *
-   * @default "Front of ID Scanned"
-   */
-  frontSideNFCNext?: string;
-
-  /**
-   * @description Successful scan of the ID back-side (ID Types that do not
-   * have NFC).
-   *
-   * @default "ID Scan Complete"
-   */
-  backSide?: string;
-
-  /**
-   * @description Successful scan of the ID back-side (ID Types that do have
-   * NFC).
-   *
-   * @default "Back of ID Scanned"
-   */
-  backSideNFCNext?: string;
-
-  /**
-   * @description Successful scan of a Passport that does not have NFC.
-   *
-   * @default "Passport Scan Complete"
-   */
-  passport?: string;
-
-  /**
-   * @description Successful scan of a Passport that does have NFC.
-   *
-   * @default "Passport Scanned"
-   */
-  passportNFCNext?: string;
-
-  /**
-   * @description Successful upload of final IDScan containing
-   * User-Confirmed ID Text.
-   *
-   * @default "Photo ID Scan Complete"
-   */
-  userConfirmation?: string;
-
-  /**
-   * @description Successful upload of the scanned NFC chip information.
-   *
-   * @default "ID Scan Complete"
-   */
-  NFC?: string;
-}
-
-/**
- * @interface DefaultScanMessageRetry
- *
- * @description Represents the retry messages during the Aziface SDK flow.
- */
-export interface DefaultScanMessageRetry {
-  /**
-   * @description Case where a Retry is needed because the Face on the Photo
-   * ID did not Match the User's Face highly enough.
-   *
-   * @default "Face Didn’t Match Highly Enough"
-   */
-  faceDidNotMatch?: string;
-
-  /**
-   * @description Case where a Retry is needed because a Full ID was not
-   * detected with high enough confidence.
-   *
-   * @default "ID Document Not Fully Visible"
-   */
-  IDNotFullyVisible?: string;
-
-  /**
-   * @description Case where a Retry is needed because the OCR did not
-   * produce good enough results and the User should Retry with a better
-   * capture.
-   *
-   * @default "ID Text Not Legible"
-   */
-  OCRResultsNotGoodEnough?: string;
-
-  /**
-   * @description Case where there is likely no OCR Template installed for
-   * the document the User is attempting to scan.
-   *
-   * @default "ID Type Mismatch Please Try Again"
-   */
-  IDTypeNotSupported?: string;
-}
-
-/**
- * @interface DefaultScanMessage
- *
- * @description Represents the all scan messages during to Aziface SDK flow.
- * It interface is used by processors's `photoScan` and `photoMatch`
- * processors.
- */
-export interface DefaultScanMessage {
-  /**
-   * @description Case where NFC Scan was skipped due to the user's
-   * interaction or an unexpected error.
-   *
-   * @default "ID Details Uploaded"
-   */
-  skipOrErrorNFC?: string;
-
-  /**
-   * @description Configuration object for customizing UI messages during the
-   * front-side ID document upload and processing workflow. Contains localized
-   * text strings displayed to users at different stages of the upload process,
-   * from initial upload through server processing completion.
-   *
-   * @default undefined
-   */
-  frontSide?: DefaultScanMessageFrontSide;
-
-  /**
-   * @description Configuration object for customizing UI messages during the
-   * back-side ID document upload and processing workflow. Contains localized
-   * text strings displayed to users at different stages of the upload process,
-   * from initial upload through server processing completion.
-   *
-   * @default undefined
-   */
-  backSide?: DefaultScanMessageBackSide;
-
-  /**
-   * @description Configuration object for customizing UI messages during the
-   * user confirmed information upload and processing workflow. Contains
-   * localized text strings displayed to users at different stages of the
-   * upload process, from initial upload through server processing completion.
-   *
-   * @default undefined
-   */
-  userConfirmedInfo?: DefaultScanMessageUserConfirmInfo;
-
-  /**
-   * @description Configuration object for customizing UI messages during the
-   * NFC (Near Field Communication) data upload and processing workflow.
-   * Contains localized text strings displayed to users at different stages of
-   * the upload process, from initial upload through server processing
-   * completion.
-   *
-   * @default undefined
-   */
-  nfc?: DefaultScanMessageNFC;
-
-  /**
-   * @description Configuration object for customizing UI messages during the
-   * ID details upload and processing workflow when NFC scanning was skipped.
-   * Contains localized text strings displayed to users at different stages of
-   * the upload process, from initial upload through server processing
-   * completion, specifically for scenarios where NFC data reading was bypassed.
-   *
-   * @default undefined
-   */
-  skippedNFC?: DefaultScanMessageSkippedNFC;
-
-  /**
-   * @description Configuration object for customizing success messages
-   * displayed after successful completion of various ID scanning and
-   * processing stages. Contains localized text strings for different document
-   * types and scanning scenarios, including front/back sides, NFC chip
-   * reading, passports, and user confirmation steps. Messages are
-   * contextually displayed based on document type and available features.
-   *
-   * @default undefined
-   */
-  success?: DefaultScanMessageSuccess;
-
-  /**
-   * @description Configuration object for customizing error messages that
-   * prompt users to retry the ID scanning process. Contains localized text
-   * strings for various failure scenarios that require user action to rescan
-   * or recapture their ID document, including face matching issues,
-   * visibility problems, text legibility, and unsupported document types.
-   *
-   * @default undefined
-   */
-  retry?: DefaultScanMessageRetry;
 }
 
 /**
@@ -990,56 +542,6 @@ export interface Theme {
   cancelButtonLocation?: ButtonLocation;
 
   /**
-   * @description The status bar color style of the device during the Aziface
-   * SDK flow.
-   *
-   * @default "DARK_CONTENT"
-   *
-   * @platform iOS
-   */
-  statusBarColor?: StatusBarColor;
-
-  /**
-   * @description An object with all messages to will be used the during the
-   * authentication flow.
-   *
-   * @default undefined
-   */
-  authenticateMessage?: DefaultMessage;
-
-  /**
-   * @description An object with all messages to will be used the during the
-   * enrollment flow.
-   *
-   * @default undefined
-   */
-  enrollMessage?: DefaultMessage;
-
-  /**
-   * @description An object with all messages to will be used the during the
-   * liveness flow.
-   *
-   * @default undefined
-   */
-  livenessMessage?: DefaultMessage;
-
-  /**
-   * @description An object with all messages to will be used the during the
-   * photo ID scan flow.
-   *
-   * @default undefined
-   */
-  scanMessage?: DefaultScanMessage;
-
-  /**
-   * @description An object with all messages to will be used the during the
-   * photo ID match flow.
-   *
-   * @default undefined
-   */
-  matchMessage?: DefaultScanMessage & DefaultMessage;
-
-  /**
    * @description An object containing the image assets used in the Aziface
    * SDK.
    *
@@ -1131,81 +633,18 @@ export interface Params {
    * @description Your device to will be used to initialize Aziface SDK.
    * Available in your Aziface account.
    */
-  device: string;
+  deviceKeyIdentifier: string;
 
   /**
    * @description Your base URL to will be used to sent data.
    */
-  url: string;
-
-  /**
-   * @description Your public key to will be used to initialize Aziface SDK.
-   * Available in your Aziface account.
-   */
-  key: string;
-
-  /**
-   * @description Your production key to will be used to initialize Aziface SDK.
-   * Available in your Aziface account.
-   */
-  productionKey: string;
+  baseUrl: string;
 
   /**
    * @description Option to select production or development mode for
    * initialize Aziface SDK.
    */
-  isDeveloperMode: boolean;
-
-  /**
-   * @description The id of the user process.
-   */
-  processId: string;
-}
-
-/**
- * @interface SessionBasePathUrl
- *
- * @description This is target properties of the path session.
- */
-interface SessionBasePathUrl {
-  /**
-   * @description The base URL used for the session.
-   *
-   * @default undefined
-   */
-  base?: string;
-}
-
-/**
- * @interface SessionMatchPathUrl
- *
- * @description This is target properties of the session with multiple path
- * urls.
- */
-interface SessionMatchPathUrl extends SessionParams {
-  /**
-   * @description The match URL used for the session with multiple
-   * verifications.
-   *
-   * @default undefined
-   */
-  match?: string;
-}
-
-/**
- * @interface SessionParams
- *
- * @description This is the parameters for the session.
- */
-export interface SessionParams<T = 'base'> {
-  /**
-   * @description The object path URL for the session.
-   *
-   * @default undefined
-   */
-  pathUrl?: T extends 'base' ? SessionBasePathUrl : SessionMatchPathUrl;
-
-  [key: string]: any;
+  isDevelopment?: boolean;
 }
 
 /**
@@ -1215,51 +654,68 @@ export interface SessionParams<T = 'base'> {
  */
 export enum Errors {
   /**
-   * @description When some processors method is running, but Aziface SDK
-   * **has not been initialized!**.
+   * @description When trying to initialize a process, but SDK wasn't
+   * initialized.
    */
-  AziFaceHasNotBeenInitialized = 'AziFaceHasNotBeenInitialized',
+  NotInitialized = 'NotInitialized',
 
   /**
-   * @description When the image sent to the processors cannot be processed
-   * due to inconsistency.
+   * @description When `deviceKeyIdentifier` and `baseUrl` aren't provided.
    */
-  AziFaceValuesWereNotProcessed = 'AziFaceValuesWereNotProcessed',
+  ConfigNotProvided = 'ConfigNotProvided',
 
   /**
-   * @description When exists some network error.
+   * @description When parameters aren't provided, this case, it is `null`.
    */
-  HTTPSError = 'HTTPSError',
+  ParamsNotProvided = 'ParamsNotProvided',
 
   /**
-   * @description When exists some problem in getting data in request of
-   * **base URL** information.
-   *
-   * @platform Android
+   * @description When `authenticate` process is called, but `enroll` wasn't
+   * done first.
    */
-  JSONError = 'JSONError',
+  NotAuthenticated = 'NotAuthenticated',
 
   /**
-   * @description When session status is invalid.
-   *
-   * @platform Android
+   * @description When `Activity` (Android) or `ViewController` (iOS) aren't
+   * found on call processor.
    */
-  AziFaceInvalidSession = 'AziFaceInvalidSession',
+  NotFoundTargetView = 'NotFoundTargetView',
 
   /**
-   * @description When session status is different of success.
-   *
-   * @platform Android
+   * @description When an error on use the camera occurs.
    */
-  AziFaceTecDifferentStatus = 'AziFaceTecDifferentStatus',
+  CameraError = 'CameraError',
 
   /**
-   * @description When the image ID sent to the processors cannot be processed
-   * due to inconsistency.
-   *
-   * @platform Android
+   * @description When the user doesn't permit the use camera.
    */
-  AziFaceScanValuesWereNotProcessed = 'AziFaceScanValuesWereNotProcessed',
+  CameraPermissionsDenied = 'CameraPermissionsDenied',
+
+  /**
+   * @description When process was cancelled on ID scan.
+   */
+  UserCancelledIdScan = 'UserCancelledIdScan',
+
+  /**
+   * @description When process was cancelled on face scan.
+   */
+  UserCancelledFaceScan = 'UserCancelledFaceScan',
+
+  /**
+   * @description When process has request aborted. Some error in JSON or
+   * network.
+   */
+  RequestAborted = 'RequestAborted',
+
+  /**
+   * @description When process is locked out.
+   */
+  LockedOut = 'LockedOut',
+
+  /**
+   * @description When process has unknown internal error.
+   */
+  UnknownInternalError = 'UnknownInternalError',
 }
 
 /**
@@ -1285,40 +741,72 @@ export interface Methods {
 
   /**
    * @description This method make to read from face and documents for user,
-   * after comparate face and face documents from user to check veracity.
+   * after compare face and face documents from user to check veracity.
    *
-   * @param {Object|undefined} data - The object with data to be will send on
-   * photo ID match. The data is optional.
+   * @param {any|undefined} data - The object with data to be will send on photo
+   * ID match. The data is optional.
    *
    * @return {Promise<boolean>} Represents if photo match was a successful.
+   *
    * @throws If photo ID match was a unsuccessful or occurred some
    * interference.
    */
-  handlePhotoIDMatch(data?: Object): Promise<boolean>;
+  photoIDMatch(data?: any): Promise<boolean>;
+
+  /**
+   * @description This method makes to read from documents for user, checking
+   * in your server the veracity it.
+   *
+   * @param {any|undefined} data - The object with data to be will send on photo
+   * ID scan only. The data is optional.
+   *
+   * @return {Promise<boolean>} Represents if photo scan only was a successful.
+   *
+   * @throws If photo ID scan only was a unsuccessful or occurred some
+   * interference.
+   */
+  photoIDScanOnly(data?: any): Promise<boolean>;
 
   /**
    * @description This method makes a 3D reading of the user's face. But, you
    * must use to **subscribe** user in Aziface SDK or in your server.
    *
-   * @param {Object|undefined} data - The object with data to be will send on
+   * @param {any|undefined} data - The object with data to be will send on
    * enrollment. The data is optional.
    *
    * @return {Promise<boolean>} Represents if enrollment was a successful.
+   *
    * @throws If enrollment was a unsuccessful or occurred some interference.
    */
-  handleEnrollUser(data?: Object): Promise<boolean>;
+  enroll(data?: any): Promise<boolean>;
 
   /**
-   * @description This method makes a 3D reading of the user's face. But, you
-   * must use to **authenticate** user in Aziface SDK or in your server.
+   * @description This method makes a 3D reading of the user's face, it's an
+   * equal `enroll` method, but it must be used to **authenticate** your user.
+   * An important detail about it is, you must **subscribe** to your user
+   * **first**, after authenticating it with this method.
    *
-   * @param {Object|undefined} data - The object with data to be will send on
-   * authentication. The data is optional.
+   * @param {any|undefined} data - The object with data to be will send on
+   * enrollment. The data is optional.
    *
-   * @return {Promise<boolean>} Represents if authentication was a successful.
+   * @return {Promise<boolean>} Represents if authenticate was a successful.
+   *
    * @throws If authenticate was a unsuccessful or occurred some interference.
    */
-  // handleAuthenticateUser(data?: Object): Promise<boolean>;
+  authenticate(data?: any): Promise<boolean>;
+
+  /**
+   * @description This method makes a 3D reading of the user's face, ensuring
+   * the liveness check of the user.
+   *
+   * @param {any|undefined} data - The object with data to be will send on
+   * enrollment. The data is optional.
+   *
+   * @return {Promise<boolean>} Represents if liveness was a successful.
+   *
+   * @throws If liveness was a unsuccessful or occurred some interference.
+   */
+  liveness(data?: any): Promise<boolean>;
 
   /**
    * @description This method must be used to **set** the **theme** of the
@@ -1330,6 +818,16 @@ export interface Methods {
    * @return {void}
    */
   setTheme(options?: Theme): void;
+
+  /**
+   * @description This method must be used to **activate** the vocal guidance
+   * of the Aziface SDK.
+   *
+   * @return {void}
+   *
+   * @platform Android
+   */
+  vocal(): void;
 }
 
 /**
@@ -1385,4 +883,13 @@ export interface FaceViewProps extends ViewProps {
    * @return {void}
    */
   onInitialize?: (initialized: boolean) => void;
+
+  /**
+   * @description Callback function called when the vocal guidance is activated.
+   *
+   * @param {boolean} activated - Indicates if the vocal guidance is activated.
+   *
+   * @returns {void}
+   */
+  onVocal?: (activated: boolean) => void;
 }

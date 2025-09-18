@@ -14,8 +14,8 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AzifaceMobileSdkExample' do
-    project 'AzifaceMobileSdkExample.xcodeproj'
+target 'AzifaceModuleExample' do
+    project 'AzifaceModuleExample.xcodeproj'
   config = use_native_modules!
 
   use_react_native!(

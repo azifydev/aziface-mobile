@@ -1,5 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
-import type { Initialize, Methods, SessionParams, Theme } from '../types';
+import type { Initialize, Methods, Theme } from '../types';
 
 const LINKING_ERROR =
   `The package '@azify/aziface-mobile' doesn't seem to be linked. Make sure: \n\n` +
@@ -7,8 +7,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-export const AzifaceMobileSdk: Methods = NativeModules?.AzifaceMobileSdk
-  ? NativeModules.AzifaceMobileSdk
+export const AzifaceModule: Methods = NativeModules?.AzifaceModule
+  ? NativeModules.AzifaceModule
   : new Proxy(
       {},
       {
@@ -17,6 +17,18 @@ export const AzifaceMobileSdk: Methods = NativeModules?.AzifaceMobileSdk
         },
       }
     );
+
+/**
+ * @description This method must be used to **activate** the vocal guidance
+ * of the Aziface SDK.
+ *
+ * @return {void}
+ *
+ * @platform Android
+ */
+export function vocal(): void {
+  AzifaceModule.vocal();
+}
 
 /**
  * @description This is the **principal** method to be called, he must be
@@ -33,7 +45,7 @@ export async function initialize({
   params,
   headers,
 }: Initialize): Promise<boolean> {
-  return await AzifaceMobileSdk.initialize(params, headers)
+  return await AzifaceModule.initialize(params, headers)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -44,16 +56,35 @@ export async function initialize({
  * @description This method make to read from face and documents for user,
  * after comparate face and face documents from user to check veracity.
  *
- * @param {SessionParams<'match'>|undefined} data - The object
- * with data to be will send on photo ID match. The data is optional.
+ * @param {any|undefined} data - The object with data to be will send on photo
+ * ID match. The data is optional.
  *
  * @return {Promise<boolean>} Represents if photo match was a successful.
+ *
  * @throws If photo ID match was a unsuccessful or occurred some interference.
  */
-export async function photoMatch(
-  data?: SessionParams<'match'>
-): Promise<boolean> {
-  return await AzifaceMobileSdk.handlePhotoIDMatch(data)
+export async function photoMatch(data?: any): Promise<boolean> {
+  return await AzifaceModule.photoIDMatch(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
+
+/**
+ * @description This method makes to read from documents for user, checking
+ * in your server the veracity it.
+ *
+ * @param {any|undefined} data - The object with data to be will send on photo
+ * ID scan only. The data is optional.
+ *
+ * @return {Promise<boolean>} Represents if photo scan only was a successful.
+ *
+ * @throws If photo ID scan only was a unsuccessful or occurred some
+ * interference.
+ */
+export async function photoScan(data?: any): Promise<boolean> {
+  return await AzifaceModule.photoIDScanOnly(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -64,14 +95,15 @@ export async function photoMatch(
  * @description This method makes a 3D reading of the user's face. But, you must
  * use to **subscribe** user in Aziface SDK or in your server.
  *
- * @param {SessionParams<'base'>|undefined} data - The object
- * with data to be will send on enrollment. The data is optional.
+ * @param {any|undefined} data - The object with data to be will send on
+ * enrollment. The data is optional.
  *
  * @return {Promise<boolean>} Represents if enrollment was a successful.
+ *
  * @throws If enrollment was a unsuccessful or occurred some interference.
  */
-export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
-  return await AzifaceMobileSdk.handleEnrollUser(data)
+export async function enroll(data?: any): Promise<boolean> {
+  return await AzifaceModule.enroll(data)
     .then((successful: boolean) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
@@ -79,24 +111,44 @@ export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
 }
 
 /**
- * @description This method makes a 3D reading of the user's face. But, you must
- * use to **authenticate** user in Aziface SDK or in your server.
+ * @description This method makes a 3D reading of the user's face, it's an
+ * equal `enroll` method, but it must be used to **authenticate** your user.
+ * An important detail about it is, you must **subscribe** to your user
+ * **first**, after authenticating it with this method.
  *
- * @param {SessionParams<'base'>|undefined} data - The object
- * with data to be will send on authentication. The data is optional.
+ * @param {any|undefined} data - The object with data to be will send on
+ * enrollment. The data is optional.
  *
- * @return {Promise<boolean>} Represents if authentication was a successful.
+ * @return {Promise<boolean>} Represents if authenticate was a successful.
+ *
  * @throws If authenticate was a unsuccessful or occurred some interference.
  */
-// export async function authenticate(
-//   data?: SessionParams<'base'>
-// ): Promise<boolean> {
-//   return await AzifaceMobileSdk.handleAuthenticateUser(data)
-//     .then((successful: boolean) => successful)
-//     .catch((error: Error) => {
-//       throw new Error(error.message);
-//     });
-// }
+export async function authenticate(data?: any): Promise<boolean> {
+  return await AzifaceModule.authenticate(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
+
+/**
+ * @description This method makes a 3D reading of the user's face, ensuring
+ * the liveness check of the user.
+ *
+ * @param {any|undefined} data - The object with data to be will send on
+ * enrollment. The data is optional.
+ *
+ * @return {Promise<boolean>} Represents if liveness was a successful.
+ *
+ * @throws If liveness was a unsuccessful or occurred some interference.
+ */
+export async function liveness(data?: any): Promise<boolean> {
+  return await AzifaceModule.liveness(data)
+    .then((successful: boolean) => successful)
+    .catch((error: Error) => {
+      throw new Error(error.message);
+    });
+}
 
 /**
  * @description This method must be used to **set** the **theme** of the Aziface
@@ -108,5 +160,5 @@ export async function enroll(data?: SessionParams<'base'>): Promise<boolean> {
  * @return {void}
  */
 export function setTheme(options?: Theme): void {
-  AzifaceMobileSdk.setTheme(options);
+  AzifaceModule.setTheme(options);
 }

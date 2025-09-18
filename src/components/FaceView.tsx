@@ -1,7 +1,7 @@
 import React, { memo, forwardRef, useEffect } from 'react';
 import { View, NativeEventEmitter, type NativeModule } from 'react-native';
 import type { FaceViewProps } from '../types';
-import { AzifaceMobileSdk } from '../methods';
+import { AzifaceModule } from '../methods';
 
 const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
   const {
@@ -10,19 +10,21 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
     onClose,
     onError,
     onOpen,
+    onVocal,
     onInitialize,
     ...rest
   } = props;
 
   useEffect(() => {
     const emitter = new NativeEventEmitter(
-      AzifaceMobileSdk as unknown as NativeModule
+      AzifaceModule as unknown as NativeModule
     );
 
     emitter.addListener('onOpen', (event: boolean) => onOpen?.(event));
     emitter.addListener('onClose', (event: boolean) => onClose?.(event));
     emitter.addListener('onCancel', (event: boolean) => onCancel?.(event));
     emitter.addListener('onError', (event: boolean) => onError?.(event));
+    emitter.addListener('onVocal', (event: boolean) => onVocal?.(event));
     emitter.addListener('onInitialize', (event: boolean) =>
       onInitialize?.(event)
     );
@@ -32,9 +34,10 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
       emitter.removeAllListeners('onClose');
       emitter.removeAllListeners('onCancel');
       emitter.removeAllListeners('onError');
+      emitter.removeAllListeners('onVocal');
       emitter.removeAllListeners('onInitialize');
     };
-  }, [onCancel, onClose, onError, onOpen, onInitialize]);
+  }, [onCancel, onClose, onError, onVocal, onOpen, onInitialize]);
 
   return (
     <View ref={ref} {...rest}>

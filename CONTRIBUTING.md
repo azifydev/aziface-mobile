@@ -16,47 +16,27 @@ npm i
 
 While developing, you can run the [example app](/example/) to test your changes. Any changes you make in your library's JavaScript code will be reflected in the example app without a rebuild. If you change any native code, then you'll need to rebuild the example app.
 
-To start the packager:
-
-```sh
-npm run example start
-```
-
 To run the example app on Android:
 
 ```sh
-npm run example android
+npm run android
 ```
 
 To run the example app on iOS:
 
 ```sh
-npm run example ios
+npm run ios
 ```
 
-Make sure your code passes TypeScript and ESLint. Run the following to verify:
+Make sure your code passes TypeScript. Run the following to verify:
 
 ```sh
 npm run typecheck
-npm run lint
 ```
 
-To fix formatting errors, run the following:
-
-```sh
-npm run lint --fix
-```
-
-Remember to add tests for your change if possible. Run the unit tests by:
-
-```sh
-npm run test
-```
-
-To edit the Objective-C or Swift files, open `example/ios/AzifaceMobileSdkExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > @azify/aziface-mobile`.
+To edit the Objective-C or Swift files, open `example/ios/AzifaceModuleExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > @azify/aziface-mobile`.
 
 To edit the Java or Kotlin files, open `example/android` in Android studio and find the source files at `aziface-mobile-sdk` under `Android`.
-
 
 ### Commit message convention
 
@@ -68,6 +48,7 @@ We follow the [conventional commits specification](https://www.conventionalcommi
 - `docs`: changes into documentation, e.g. add usage example for the module..
 - `test`: adding or updating tests, e.g. add integration tests using detox.
 - `chore`: tooling changes, e.g. change CI config.
+- `perf`: use for performance adjustment.
 
 Our pre-commit hooks verify that your commit message matches this format when committing.
 
@@ -83,13 +64,13 @@ Our pre-commit hooks verify that the linter and tests pass when committing.
 
 The `package.json` file contains various scripts for common tasks:
 
-- `npm run bootstrap`: setup project by installing all dependencies and pods.
+- `npm run clean`: clean all project.
+- `npm run prepack`: pre-build the library.
+- `npm run release`: run [semantic-release](https://semantic-release.gitbook.io/semantic-release/) to release new version.
+- `npm run setup`: setup project by installing all dependencies and pods.
 - `npm run typecheck`: type-check files with TypeScript.
-- `npm run lint`: lint files with ESLint.
-- `npm run test`: run unit tests with Jest.
-- `npm run example start`: start the Metro server for the example app.
-- `npm run example android`: run the example app on Android.
-- `npm run example ios`: run the example app on iOS.
+- `npm run android`: run the example app on Android.
+- `npm run ios`: run the example app on iOS.
 
 ### Sending a pull request
 

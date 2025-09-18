@@ -55,20 +55,6 @@ export function useLogin() {
   });
 }
 
-export function useCreateBiometric() {
-  return useMutation({
-    mutationKey: ['biometric-auth'],
-    mutationFn: async () => {
-      const response = await clientApi.post('/biometrics/biometric-auth');
-      if (response.data.error) throw new Error(response.data.message);
-      if (response?.data?.processId) {
-        useUserStore.getState().setProcessId(response?.data?.processId);
-      }
-      return response?.data?.processId;
-    },
-  });
-}
-
 export function useBiometricSession() {
   return useMutation({
     mutationKey: ['biometric-session'],
