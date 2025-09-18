@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/azifydev/aziface-mobile/compare/v1.2.0...v2.0.0) (2025-09-18)
+
+
+### Documentation
+
+* change label ([a939744](https://github.com/azifydev/aziface-mobile/commit/a93974483342000a423bfb8b04e1d7aaeeb97468))
+
+
+### BREAKING CHANGES
+
+* trigger new version
+
 # [1.2.0](https://github.com/azifydev/aziface-mobile/compare/v1.1.2...v1.2.0) (2025-09-03)
 
 
