@@ -14,91 +14,103 @@
       "integrated": false
     },
     "@react-native-community/cli": {
-      "version": "15.0.1",
+      "version": "20.0.0",
       "integrated": false
     },
     "@react-native-community/cli-platform-android": {
-      "version": "15.0.1",
+      "version": "20.0.0",
       "integrated": false
     },
     "@react-native-community/cli-platform-ios": {
-      "version": "15.0.1",
+      "version": "20.0.0",
       "integrated": false
     },
     "@react-native/babel-preset": {
-      "version": "0.76.5",
-      "integrated": false
-    },
-    "@react-native/eslint-config": {
-      "version": "0.76.5",
+      "version": "0.81.1",
       "integrated": false
     },
     "@react-native/metro-config": {
-      "version": "0.76.5",
+      "version": "0.81.1",
       "integrated": false
     },
     "@react-native/typescript-config": {
-      "version": "0.76.5",
+      "version": "0.81.1",
+      "integrated": false
+    },
+    "@react-navigation/native": {
+      "version": "^7.1.17",
+      "integrated": false
+    },
+    "@react-navigation/native-stack": {
+      "version": "^7.3.26",
       "integrated": false
     },
     "@tanstack/react-query": {
-      "version": "^5.81.2",
+      "version": "^5.90.2",
       "integrated": false
     },
     "@types/md5": {
-      "version": "^2.3.2",
+      "version": "^2.3.5",
       "integrated": false
     },
     "@types/react": {
-      "version": "^18.2.6",
+      "version": "^19.1.0",
       "integrated": false
     },
     "axios": {
-      "version": "^1.10.0",
-      "integrated": false
-    },
-    "babel-plugin-module-resolver": {
-      "version": "^5.0.0",
+      "version": "^1.12.2",
       "integrated": false
     },
     "md5": {
       "version": "^2.3.0",
       "integrated": false
     },
-    "metro-react-native-babel-preset": {
-      "version": "0.76.8",
+    "react": {
+      "version": "19.1.0",
       "integrated": false
     },
-    "react": {
-      "version": "18.3.1",
+    "react-if": {
+      "version": "^4.1.6",
       "integrated": false
     },
     "react-native": {
-      "version": "0.76.5",
+      "version": "0.81.1",
+      "integrated": false
+    },
+    "react-native-builder-bob": {
+      "version": "^0.40.13",
       "integrated": false
     },
     "react-native-config": {
-      "version": "^1.5.5",
+      "version": "^1.5.9",
       "integrated": true
     },
     "react-native-device-info": {
-      "version": "^14.0.2",
+      "version": "^14.1.1",
       "integrated": false
     },
     "react-native-mmkv": {
-      "version": "^3.3.0",
+      "version": "^3.3.3",
+      "integrated": false
+    },
+    "react-native-monorepo-config": {
+      "version": "^0.1.9",
+      "integrated": false
+    },
+    "react-native-safe-area-context": {
+      "version": "^5.5.2",
+      "integrated": false
+    },
+    "react-native-screens": {
+      "version": "^4.16.0",
       "integrated": false
     },
     "react-native-user-agent": {
       "version": "^2.3.1",
       "integrated": false
     },
-    "react-native-uuid": {
-      "version": "^2.0.3",
-      "integrated": false
-    },
     "zustand": {
-      "version": "^5.0.6",
+      "version": "^5.0.8",
       "integrated": false
     }
   }

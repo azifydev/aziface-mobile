@@ -4,7 +4,6 @@ import {
   getSystemName,
 } from 'react-native-device-info';
 import { getUserAgent } from 'react-native-user-agent';
-import Config from 'react-native-config';
 
 import * as pkg from '../../package.json';
 
@@ -22,7 +21,6 @@ export function getAzifyHeaders() {
     'x-deviceid': deviceId,
     'x-user-agent': userAgent,
     'x-locale': 'pt-BR',
-    'x-client-id': Config.X_CLIENT_ID, // Replace with dynamic user Client ID
   };
   return result;
 }

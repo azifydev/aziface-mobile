@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize,
-    color: '#fff',
+    color: 'white',
     fontWeight: 'bold',
   },
   loginContent: {
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: height * 0.15,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   registerContent: {
     gap,
@@ -38,14 +38,14 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   welcomeContent: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: gap,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   loginInput: {
     borderRadius,
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   buttonLogout: {
     padding,
@@ -74,13 +74,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textLogout: {
-    color: '#ffffff',
+    color: 'white',
     fontWeight: 'bold',
   },
   scroll: {
     paddingTop: Platform.OS === 'ios' ? gap : 0,
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
   scrollContent: {
     flexGrow: 1,

@@ -1,3 +1,5 @@
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -14,8 +16,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AzifaceModuleExample' do
-    project 'AzifaceModuleExample.xcodeproj'
+target 'AzifaceMobileExample' do
   config = use_native_modules!
 
   use_react_native!(
@@ -29,6 +30,8 @@ target 'AzifaceModuleExample' do
     react_native_post_install(
       installer,
       config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
     )
   end
 end

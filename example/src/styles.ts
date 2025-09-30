@@ -6,6 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     padding,
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
   },
 });

@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import { styles } from './Style';
 import { useNavigation } from '@react-navigation/native';
-import type { ScreensProps } from '../types/types';
+import { styles } from './styles';
+import type { ScreensProps } from '../types';
 
-export default function Welcome() {
+export function Welcome() {
   const navigate = useNavigation<ScreensProps>();
   const goToRegister = () => navigate.navigate('register');
   const goToLogin = () => navigate.navigate('login');

@@ -1,7 +1,8 @@
 import Config from 'react-native-config';
-export const clientBaseURL = Config.API_CLIENT_API;
 import axios from 'axios';
 import { useUserStore } from '../hooks/useuser.hook';
+
+export const clientBaseURL = Config.API_CLIENT_API;
 
 export const clientApi = axios.create({
   baseURL: clientBaseURL,

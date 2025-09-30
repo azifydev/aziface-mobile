@@ -1,6 +1,6 @@
 import { ScrollView } from 'react-native';
 
-import { styles } from './Style';
+import { styles } from './styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes } from './routes';
 
