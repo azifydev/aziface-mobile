@@ -2,12 +2,26 @@
 
 Briefly describe what this PR does.
 
-### Manual Testing Scenarios
+### Checklist
 
-- [ ] Scenario 1 [**Android**]
+#### React Native Side
 
-- [ ] Scenario 1 [**iOS**]
+- [] Item 1
+- [] Item 2
+- [] Item N
 
-### Evidences (photos/gifs/links)
+#### Android
+
+- [] Item 1
+- [] Item 2
+- [] Item N
+
+#### iOS
+
+- [] Item 1
+- [] Item 2
+- [] Item N
+
+### Evidences (photos/gifs/links) (Optional)
 
 Add evidences here.
