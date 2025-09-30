@@ -41,5 +41,5 @@ jobs:
       - name: Configure NPM token and install dependencies
         run: |
           npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          yarn config get enableImmutableInstalls
+          yarn config set -H enableImmutableInstalls false
           yarn install
