@@ -18,7 +18,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Configure NPM and install dependencies
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Configure NPM token and install dependencies
         run: |
           yarn config set npmAuthToken $NPM_TOKEN
           yarn install
