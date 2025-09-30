@@ -1,5 +1,8 @@
 # @azify/aziface-mobile 📱
 
+> [!WARNING]
+> This package supports **only** [new architecture](https://reactnative.dev/blog/2024/10/23/the-new-architecture-is-here).
+
 <div align="center">
   <p>
     <img alt="Version" src="https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen">
