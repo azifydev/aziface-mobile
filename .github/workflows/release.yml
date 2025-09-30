@@ -18,16 +18,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies
+      - name: Configure NPM and install dependencies
         run: |
-          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          npm ci
+          yarn config set npmAuthToken $NPM_TOKEN
+          yarn install
 
       - name: Run build
-        run: npm run prepack
+        run: yarn prepack
 
       - name: Publish Release
-        run: npm run release
+        run: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN_V2 }}

@@ -1,10 +1,3 @@
-//
-//  IdScan.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class IdScan {
   private let button: Button
   private let selectionScreen: SelectionScreen

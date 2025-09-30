@@ -1,9 +1,17 @@
-import React, { memo, forwardRef, useEffect } from 'react';
-import { View, NativeEventEmitter, type NativeModule } from 'react-native';
-import type { FaceViewProps } from '../types';
-import { AzifaceModule } from '../methods';
+import { memo, useEffect } from 'react';
+import { View } from 'react-native';
+import {
+  onCancel as cancel,
+  onClose as close,
+  onError as error,
+  onInitialize as initialize,
+  onOpen as open,
+  onVocal as vocal,
+} from '../methods';
+import type { FaceViewProps } from '../@types';
+import type { EventSubscription } from 'react-native';
 
-const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
+function FaceView(props: FaceViewProps) {
   const {
     children,
     onCancel,
@@ -16,34 +24,21 @@ const FaceView = forwardRef<View, FaceViewProps>((props, ref) => {
   } = props;
 
   useEffect(() => {
-    const emitter = new NativeEventEmitter(
-      AzifaceModule as unknown as NativeModule
-    );
-
-    emitter.addListener('onOpen', (event: boolean) => onOpen?.(event));
-    emitter.addListener('onClose', (event: boolean) => onClose?.(event));
-    emitter.addListener('onCancel', (event: boolean) => onCancel?.(event));
-    emitter.addListener('onError', (event: boolean) => onError?.(event));
-    emitter.addListener('onVocal', (event: boolean) => onVocal?.(event));
-    emitter.addListener('onInitialize', (event: boolean) =>
-      onInitialize?.(event)
-    );
+    const subscriptions = [
+      onInitialize && initialize(onInitialize),
+      onOpen && open(onOpen),
+      onClose && close(onClose),
+      onCancel && cancel(onCancel),
+      onError && error(onError),
+      onVocal && vocal(onVocal),
+    ].filter(Boolean) as EventSubscription[];
 
     return () => {
-      emitter.removeAllListeners('onOpen');
-      emitter.removeAllListeners('onClose');
-      emitter.removeAllListeners('onCancel');
-      emitter.removeAllListeners('onError');
-      emitter.removeAllListeners('onVocal');
-      emitter.removeAllListeners('onInitialize');
+      subscriptions.forEach((subscription) => subscription.remove());
     };
   }, [onCancel, onClose, onError, onVocal, onOpen, onInitialize]);
 
-  return (
-    <View ref={ref} {...rest}>
-      {children}
-    </View>
-  );
-});
+  return <View {...rest}>{children}</View>;
+}
 
 export default memo(FaceView);

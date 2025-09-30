@@ -1,9 +1,10 @@
 import Foundation
+import FaceTecSDK
 
 public class AzifaceError {
-  private let module: AzifaceModule
+  private let module: Aziface
 
-  init(module: AzifaceModule) {
+  init(module: Aziface) {
     self.module = module
   }
 
@@ -39,24 +40,21 @@ public class AzifaceError {
   }
 
   public func isError(status: FaceTecSessionStatus) -> Bool {
+    module.emitter.emitOnOpen(false)
+    module.emitter.emitOnClose(true)
+    
     switch status {
     case .sessionCompleted:
-      module.emitter.sendEvent(withName: "onOpen", body: false)
-      module.emitter.sendEvent(withName: "onClose", body: true)
-      module.emitter.sendEvent(withName: "onCancel", body: false)
-      module.emitter.sendEvent(withName: "onError", body: false)
+      module.emitter.emitOnCancel(false)
+      module.emitter.emitOnError(false)
       return false
     case .userCancelledIDScan, .userCancelledFaceScan:
-      module.emitter.sendEvent(withName: "onOpen", body: false)
-      module.emitter.sendEvent(withName: "onClose", body: true)
-      module.emitter.sendEvent(withName: "onCancel", body: true)
-      module.emitter.sendEvent(withName: "onError", body: false)
+      module.emitter.emitOnCancel(true)
+      module.emitter.emitOnError(false)
       return true
     default:
-      module.emitter.sendEvent(withName: "onOpen", body: false)
-      module.emitter.sendEvent(withName: "onClose", body: true)
-      module.emitter.sendEvent(withName: "onCancel", body: false)
-      module.emitter.sendEvent(withName: "onError", body: true)
+      module.emitter.emitOnCancel(false)
+      module.emitter.emitOnError(true)
       return true
     }
   }

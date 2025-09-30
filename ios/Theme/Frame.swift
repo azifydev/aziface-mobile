@@ -1,10 +1,3 @@
-//
-//  Frame.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class Frame: CommonViewStyle {
   private static let KEY: String = "frame"
   private let theme: NSDictionary?

@@ -1,10 +1,3 @@
-//
-//  ResultScreen.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class ResultScreen: CommonViewStyle {
   private static let KEY: String = "resultScreen"
   private let theme: NSDictionary?

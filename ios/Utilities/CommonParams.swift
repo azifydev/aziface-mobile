@@ -1,10 +1,3 @@
-//
-//  CommonParams.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 11/08/25.
-//
-
 import Foundation
 
 class CommonParams {
