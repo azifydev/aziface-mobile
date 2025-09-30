@@ -40,5 +40,5 @@ jobs:
 
       - name: Configure NPM token and install dependencies
         run: |
-          yarn config set npmAuthToken $NPM_TOKEN
+          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
           yarn install
