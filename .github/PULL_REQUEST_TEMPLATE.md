@@ -6,21 +6,21 @@ Briefly describe what this PR does.
 
 #### React Native Side
 
-- [] Item 1
-- [] Item 2
-- [] Item N
+- [ ] Item 1
+- [ ] Item 2
+- [ ] Item ...
 
 #### Android
 
-- [] Item 1
-- [] Item 2
-- [] Item N
+- [ ] Item 1
+- [ ] Item 2
+- [ ] Item ...
 
 #### iOS
 
-- [] Item 1
-- [] Item 2
-- [] Item N
+- [ ] Item 1
+- [ ] Item 2
+- [ ] Item ...
 
 ### Evidences (photos/gifs/links) (Optional)
 
