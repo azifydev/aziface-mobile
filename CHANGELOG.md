@@ -1,3 +1,29 @@
+# [3.0.0](https://github.com/azifydev/aziface-mobile/compare/v2.0.0...v3.0.0) (2025-10-07)
+
+
+### Features
+
+* **WL-98:** Update the Legacy Architecture of React Native to the New Architecture ([#11](https://github.com/azifydev/aziface-mobile/issues/11)) ([ab5b1b6](https://github.com/azifydev/aziface-mobile/commit/ab5b1b651d8afdd6dfb32e433ac5b457b3e25778))
+
+
+### BREAKING CHANGES
+
+* **WL-98:** Update the Legacy Architecture of React Native to the New Architecture
+
+* docs: update pr request template
+
+* fix: remove `example/ios/.xcode.env.local` file of the git
+
+* docs: small grammar adjust in PR template
+
+* fix: resolve unsupported codegen types in spec interface
+
+* docs: adjust copyright year in license
+
+* ci: swap `yarn` by `npm`
+
+* chore: update pull request template
+
 # [2.0.0](https://github.com/azifydev/aziface-mobile/compare/v1.2.0...v2.0.0) (2025-09-18)
 
 
