@@ -1,10 +1,3 @@
-//
-//  SelectionScreen.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class SelectionScreen: CommonViewStyle {
 
   init(theme: NSDictionary?) {

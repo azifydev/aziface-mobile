@@ -1,9 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { styles } from './Style';
 import { useState } from 'react';
-import { useBiometricSession, useLogin } from '../services/client.service';
+import { useBiometricSession, useLogin } from '../services';
+import { styles } from './styles';
 
-export default function Login() {
+export function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { mutateAsync: login, isPending: isPendingLogin } = useLogin();

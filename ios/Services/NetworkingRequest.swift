@@ -22,9 +22,9 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
       sessionRequestCallPayload["data"] = data
     }
 
-    if !AzifaceModule.DemonstrationExternalDatabaseRefID.isEmpty {
+    if !Aziface.DemonstrationExternalDatabaseRefID.isEmpty {
       sessionRequestCallPayload["externalDatabaseRefID"] =
-        AzifaceModule.DemonstrationExternalDatabaseRefID
+      Aziface.DemonstrationExternalDatabaseRefID
     }
 
     var request = Config.getRequest()

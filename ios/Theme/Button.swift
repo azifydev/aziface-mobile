@@ -1,10 +1,3 @@
-//
-//  Button.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 import Foundation
 
 public class Button {

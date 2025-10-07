@@ -1,0 +1,28 @@
+package com.azifacemobile.theme;
+
+import com.azifacemobile.theme.abstracts.CommonStyle;
+import com.azifacemobile.utils.Theme;
+
+import org.json.JSONObject;
+
+public class Feedback extends CommonStyle {
+  private static final String KEY = "feedback";
+  private final JSONObject theme;
+  private final Color color;
+
+  public Feedback() {
+    super(KEY);
+
+    this.theme = new Theme().getTarget(KEY);
+    this.color = new Color();
+  }
+
+  @Override
+  public int getBackgroundColor() {
+    return this.getBackgroundColor("#026ff4");
+  }
+
+  public int getTextColor() {
+    return this.color.getColor(this.theme, "textColor");
+  }
+}

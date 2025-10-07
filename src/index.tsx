@@ -1,12 +1,12 @@
+export * from './@types';
+export * from './components';
 export {
+  authenticate,
+  enroll,
   initialize,
+  liveness,
   photoMatch,
   photoScan,
-  enroll,
-  authenticate,
-  liveness,
-  vocal,
   setTheme,
+  vocal,
 } from './methods';
-export * from './components';
-export * from './types';

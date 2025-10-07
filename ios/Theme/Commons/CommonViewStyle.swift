@@ -1,10 +1,3 @@
-//
-//  CommonSwift.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class CommonViewStyle {
   private let theme: NSDictionary?
   private let color: Color

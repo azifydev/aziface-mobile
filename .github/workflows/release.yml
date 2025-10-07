@@ -16,9 +16,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
-      - name: Install dependencies
+      - name: Configure NPM token and install dependencies
         run: |
           npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
           npm ci

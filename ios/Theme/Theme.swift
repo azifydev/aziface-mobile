@@ -1,10 +1,3 @@
-//
-//  Theme.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 import FaceTecSDK
 import Foundation
 import UIKit

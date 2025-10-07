@@ -1,10 +1,3 @@
-//
-//  Feedback.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class Feedback: CommonViewStyle {
   private static let KEY: String = "feedback"
   private let theme: NSDictionary?

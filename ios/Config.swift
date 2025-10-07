@@ -1,11 +1,3 @@
-//
-//  Config.swift
-//  AzifaceModule
-//
-//  Created by Nayara Dias on 13/03/24.
-//  Copyright © 2024 Azify. All rights reserved.
-//
-
 import FaceTecSDK
 import Foundation
 import UIKit

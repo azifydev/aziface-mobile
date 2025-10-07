@@ -1,13 +1,7 @@
-def RN_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim());
-def RN_VERSION_STRING = RN_VERSION.toString();
-def MINOR_VERSION = RN_VERSION_STRING.substring(RN_VERSION_STRING.indexOf(".") + 1, RN_VERSION_STRING.lastIndexOf("."));
-def USE_REACT_ANDROID = Integer.parseInt(MINOR_VERSION) >= 71;
-
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-
 buildscript {
-  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["AzifaceModule_kotlinVersion"]
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['AzifaceMobile_' + name]
+  }
 
   repositories {
     google()
@@ -15,56 +9,34 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:8.7.3"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "com.android.tools.build:gradle:8.7.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    classpath "com.facebook.react:react-native-gradle-plugin"
   }
 }
+
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
-// Commenting out the react plugin for now, as it is not needed for the current setup.
-// https://github.com/callstack/react-native-builder-bob/issues/774
-// def isNewArchitectureEnabled() {
-//   return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
-// }
-// if (isNewArchitectureEnabled()) {
-//   apply plugin: "com.facebook.react"
-// }
-
-def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["AzifaceModule_" + name]
-}
+apply plugin: "com.facebook.react"
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["AzifaceModule_" + name]).toInteger()
-}
-
-def supportsNamespace() {
-  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
-  def major = parsed[0].toInteger()
-  def minor = parsed[1].toInteger()
-
-  // Namespace support was added in 7.3.0
-  return (major == 7 && minor >= 3) || major >= 8
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["AzifaceMobile_" + name]).toInteger()
 }
 
 android {
-  if (supportsNamespace()) {
-    namespace "com.azify"
-
-    sourceSets {
-      main {
-        manifest.srcFile "src/main/AndroidManifest.xml"
-      }
-    }
-  }
+  namespace "com.azifacemobile"
 
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
   }
 
   buildTypes {
@@ -82,6 +54,15 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
 }
 
 repositories {
@@ -94,13 +75,7 @@ repositories {
 def kotlin_version = getExtOrDefault("kotlinVersion")
 
 dependencies {
-  // For < 0.71, this will be from the local maven repo
-  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-  if (USE_REACT_ANDROID) {
-    implementation "com.facebook.react:react-android:$RN_VERSION_STRING"
-  } else {
-    implementation 'com.facebook.react:react-native:+'
-  }
+  implementation "com.facebook.react:react-android:0.81.1"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.squareup.okhttp3:okhttp:3.12.13'
   implementation 'com.squareup.okio:okio:1.15.0'
@@ -108,4 +83,10 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.10'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
   implementation 'com.github.azifydev:facetec-aar:v1.1.0'
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "AzifaceMobile"
+  codegenJavaPackageName = "com.azifacemobile"
 }

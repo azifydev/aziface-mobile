@@ -5,6 +5,7 @@ import {
   ScrollView,
   type TouchableOpacityProps,
 } from 'react-native';
+import { useState } from 'react';
 import {
   initialize,
   enroll,
@@ -26,15 +27,14 @@ import {
   getUserAgent,
   syncUniqueId,
 } from 'react-native-device-info';
-import md5 from 'md5';
-import { styles } from './Style';
 import Config from 'react-native-config';
-import { useState } from 'react';
-import { useUser } from '../hooks/useuser.hook';
-import { useBiometricConfigs } from '../services/client.service';
-import type { FaceType } from '../types/home';
+import md5 from 'md5';
+import { styles } from './styles';
+import { useUser } from '../hooks';
+import { useBiometricConfigs } from '../services';
+import type { FaceType } from '../types';
 
-export default function Home() {
+export function Home() {
   const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, logout } = useUser();
   const [isInitialized, setIsInitialized] = useState(false);

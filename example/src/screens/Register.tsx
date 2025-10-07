@@ -5,12 +5,12 @@ import {
   Alert,
   KeyboardAvoidingView,
 } from 'react-native';
-import { styles } from './Style';
 import { useState } from 'react';
-import { useCreate } from '../services/client.service';
 import { useNavigation } from '@react-navigation/native';
+import { useCreate } from '../services';
+import { styles } from './styles';
 
-export default function Register() {
+export function Register() {
   const [name, setName] = useState('');
   const [assembleUserId, setAssembleUserId] = useState('');
   const [username, setUsername] = useState('');

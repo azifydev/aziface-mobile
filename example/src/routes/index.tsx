@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { When, Unless } from 'react-if';
 import { AppRoutes } from './app.route';
 import { AuthRoutes } from './auth.route';
-import { useUser } from '../hooks/useuser.hook';
+import { useUser } from '../hooks';
 
 export function Routes() {
   const { tokenBiometric, token } = useUser();

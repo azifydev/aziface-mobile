@@ -1,5 +1,5 @@
 import { useUserStore } from '../hooks/useuser.hook';
-import { clientApi } from './clientApi';
+import { clientApi } from './api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 interface ConfigsResponseData {
@@ -59,9 +59,7 @@ export function useBiometricSession() {
   return useMutation({
     mutationKey: ['biometric-session'],
     mutationFn: async () => {
-      const response = await clientApi.post(
-        '/biometrics/biometric-auth/session'
-      );
+      const response = await clientApi.post('/biometrics/session');
       if (response.data.error) throw new Error(response.data.message);
       if (response?.data?.token) {
         useUserStore.getState().setTokenBiometric(response?.data?.token);

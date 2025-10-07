@@ -1,10 +1,3 @@
-//
-//  CaptureScreen.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class CaptureScreen: CommonViewStyle {
   private static let KEY: String = "captureScreen"
   private let theme: NSDictionary?

@@ -1,10 +1,3 @@
-//
-//  Theme.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class Style {
   public func exists(_ key: String) -> Bool {
     return Theme.Style != nil && Theme.Style?[key] != nil

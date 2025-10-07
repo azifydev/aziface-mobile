@@ -1,10 +1,3 @@
-//
-//  RetryScreen.swift
-//  Pods
-//
-//  Created by Daniel Sansão Araldi on 15/08/25.
-//
-
 public class RetryScreen {
   private static let KEY: String = "retryScreen"
   private let theme: NSDictionary?
