@@ -221,5 +221,5 @@ export async function liveness(data?: object): Promise<boolean> {
  * @return {void}
  */
 export function setTheme(options?: Theme): void {
-  AzifaceMobile.setTheme(options as string);
+  AzifaceMobile.setTheme(options);
 }
