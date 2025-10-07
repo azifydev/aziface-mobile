@@ -16,22 +16,18 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-
-      - name: Install yarn
-        run: npm install -g yarn
+          node-version: 24
 
       - name: Configure NPM token and install dependencies
         run: |
           npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          yarn config set -H enableImmutableInstalls false
-          yarn install
+          npm ci
 
       - name: Run build
-        run: yarn prepack
+        run: npm run prepack
 
       - name: Publish Release
-        run: yarn release
+        run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN_V2 }}

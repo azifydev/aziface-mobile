@@ -39,9 +39,9 @@
     "release": "npx semantic-release --ci",
     "prepare": "bob build",
     "prepack": "bob build",
-    "setup": "yarn && yarn podspec && yarn prepack",
-    "android": "yarn setup && cd example && yarn && yarn start",
-    "ios": "yarn setup && cd example && yarn && cd ios && pod install && cd .. && yarn start"
+    "setup": "npm i && npm run podspec && npm run prepack",
+    "android": "npm run setup && cd example && npm i && npm run start",
+    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start"
   },
   "keywords": [
     "react-native",
@@ -100,7 +100,7 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "npm@10.9.2",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
