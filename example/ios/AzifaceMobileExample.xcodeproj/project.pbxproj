@@ -278,7 +278,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = azifacemobile.example;
+				PRODUCT_BUNDLE_IDENTIFIER = azifacemobile.example2;
 				PRODUCT_NAME = AzifaceMobileExample;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -306,7 +306,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = azifacemobile.example;
+				PRODUCT_BUNDLE_IDENTIFIER = azifacemobile.example2;
 				PRODUCT_NAME = AzifaceMobileExample;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
