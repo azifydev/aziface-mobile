@@ -59,11 +59,11 @@ RCT_EXPORT_MODULE()
   return [_aziface photoIDScanOnly:data resolve:resolve reject:reject];
 }
 
-- (void)setTheme:(nonnull NSDictionary *)options { 
+- (void)setTheme:(nonnull NSDictionary *)options {
   return [_aziface setTheme:options];
 }
 
-- (void)vocal { 
+- (void)vocal {
   return [_aziface vocal];
 }
 
