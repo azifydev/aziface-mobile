@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/azifydev/aziface-mobile/compare/v3.0.0...v3.0.1) (2025-10-09)
+
+
+### Bug Fixes
+
+* **WL-210:** resolves core animation problem in iOS ([#12](https://github.com/azifydev/aziface-mobile/issues/12)) ([c402719](https://github.com/azifydev/aziface-mobile/commit/c402719f8a6ff5eca34517f4f3768909b4dd3689))
+
 # [3.0.0](https://github.com/azifydev/aziface-mobile/compare/v2.0.0...v3.0.0) (2025-10-07)
 
 
