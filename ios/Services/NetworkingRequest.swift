@@ -29,9 +29,9 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
 
     var request = Config.getRequest()
 
-    request.httpBody = try! JSONSerialization.data(
-      withJSONObject: sessionRequestCallPayload,
-      options: JSONSerialization.WritingOptions(rawValue: 0))
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try! JSONSerialization.data(withJSONObject: sessionRequestCallPayload)
 
     let session = URLSession(
       configuration: URLSessionConfiguration.default, delegate: self,
