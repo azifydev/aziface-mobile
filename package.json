@@ -1,6 +1,6 @@
 {
   "name": "@azify/aziface-mobile",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A Aziface adapter to react native. 📱",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

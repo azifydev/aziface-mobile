@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/azifydev/aziface-mobile/compare/v3.0.1...v3.0.2) (2025-10-13)
+
+
+### Bug Fixes
+
+* **ios:** force media type on network request to send http body ([59b34ce](https://github.com/azifydev/aziface-mobile/commit/59b34cee33e8cce5294fc8b5319259b797cb4f01))
+
 ## [3.0.1](https://github.com/azifydev/aziface-mobile/compare/v3.0.0...v3.0.1) (2025-10-09)
 
 
