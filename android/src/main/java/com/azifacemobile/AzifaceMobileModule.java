@@ -273,13 +273,9 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void setTheme(ReadableMap style) {
-    if (isRunning) return;
-
-    isRunning = true;
     Theme.setStyle(style);
 
     this.updateTheme();
-    isRunning = false;
   }
 
   @ReactMethod
