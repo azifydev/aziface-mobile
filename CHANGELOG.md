@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/azifydev/aziface-mobile/compare/v3.0.2...v3.0.3) (2025-10-31)
+
+
+### Bug Fixes
+
+* **WL-237:** Remove the multiple calls to the methods ([#13](https://github.com/azifydev/aziface-mobile/issues/13)) ([f15afb8](https://github.com/azifydev/aziface-mobile/commit/f15afb837a96c99f7178482c8f723ab6d2e9d027))
+
 ## [3.0.2](https://github.com/azifydev/aziface-mobile/compare/v3.0.1...v3.0.2) (2025-10-13)
 
 
