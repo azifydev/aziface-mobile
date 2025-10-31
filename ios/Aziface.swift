@@ -6,6 +6,7 @@ import React
 @objc(Aziface)
 public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private static let NAME: String = "ios_azify_app_"
+  private static var IsRunning: Bool = false
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
   private var resolver: RCTPromiseResolveBlock?
@@ -15,10 +16,10 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   public var emitter: Emitter!
   public var isInitialized: Bool = false
   public var sdkInstance: FaceTecSDKInstance!
-  
+
   @objc public init(emit: Emitter) {
     super.init()
-    
+
     self.emitter = emit
     self.error = AzifaceError(module: self)
 
@@ -32,6 +33,11 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
       self.setPromiseResult(resolve: resolve, reject: reject)
       self.setTheme(Theme.Style)
 
@@ -40,6 +46,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       if paremeters.isNull() {
         self.isInitialized = false
         self.emitter.emitOnInitialize(false)
+        Aziface.IsRunning = false
         return reject("Parameters aren't provided", "ParamsNotProvided", nil)
       }
 
@@ -55,6 +62,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       } else {
         self.isInitialized = false
         self.emitter.emitOnInitialize(false)
+        Aziface.IsRunning = false
         return reject("Configuration aren't provided", "ConfigNotProvided", nil)
       }
     }
@@ -65,9 +73,16 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
+
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
@@ -81,6 +96,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         viewController.present(controller, animated: true, completion: nil)
       } else {
         self.emitter.emitOnError(true)
+        Aziface.IsRunning = false
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -91,9 +107,16 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
+
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
@@ -107,6 +130,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         viewController.present(controller, animated: true, completion: nil)
       } else {
         self.emitter.emitOnError(true)
+        Aziface.IsRunning = false
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -117,14 +141,22 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
+
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
         if Aziface.DemonstrationExternalDatabaseRefID.isEmpty {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("User isn't authenticated! You must enroll first!", "NotAuthenticated", nil)
         }
 
@@ -136,6 +168,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         viewController.present(controller, animated: true, completion: nil)
       } else {
         self.emitter.emitOnError(true)
+        Aziface.IsRunning = false
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -146,9 +179,16 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
+
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
@@ -162,6 +202,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         viewController.present(controller, animated: true, completion: nil)
       } else {
         self.emitter.emitOnError(true)
+        Aziface.IsRunning = false
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
@@ -172,9 +213,16 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     reject: @escaping RCTPromiseRejectBlock
   ) {
     DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
+      }
+
+      Aziface.IsRunning = true
+
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
           self.emitter.emitOnError(true)
+          Aziface.IsRunning = false
           return reject("AziFace SDK not found target View!", "NotFoundTargetView", nil)
         }
 
@@ -186,12 +234,28 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         viewController.present(controller, animated: true, completion: nil)
       } else {
         self.emitter.emitOnError(true)
+        Aziface.IsRunning = false
         return reject("AziFace SDK doesn't initialized!", "NotInitialized", nil)
       }
     }
   }
 
   @objc public func vocal() {
+    /**
+    * TODO: Fix crash when device is muted.
+    *
+    * Current workaround is to check if device is muted and skip vocal guidance
+    * toggle in that case.
+    */
+    let isMuted: Bool = Vocal.isDeviceMuted()
+
+    if Aziface.IsRunning || isMuted {
+      self.emitter.emitOnVocal(self.isEnabled)
+      return
+    }
+
+    Aziface.IsRunning = true
+
     self.isEnabled = !self.isEnabled
     if self.isEnabled {
       Vocal.setUpVocalGuidancePlayers()
@@ -200,6 +264,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     Vocal.setVocalGuidanceMode()
 
     self.emitter.emitOnVocal(self.isEnabled)
+    Aziface.IsRunning = false
   }
 
   @objc public func setTheme(_ options: NSDictionary?) {
@@ -250,6 +315,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       Aziface.DemonstrationExternalDatabaseRefID = ""
     }
 
+    Aziface.IsRunning = false
     let isError = self.error.isError(status: status)
     if isError {
       let message = self.error.getMessage(status: status)
@@ -280,6 +346,8 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     Vocal.setOCRLocalization()
 
     self.resolver?(true)
+
+    Aziface.IsRunning = false
   }
 
   public func onFaceTecSDKInitializeError(error: FaceTecInitializationError) {
@@ -289,6 +357,8 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.emitter.emitOnVocal(false)
 
     self.resolver?(false)
+
+    Aziface.IsRunning = false
   }
 
   public func setPromiseResult(
