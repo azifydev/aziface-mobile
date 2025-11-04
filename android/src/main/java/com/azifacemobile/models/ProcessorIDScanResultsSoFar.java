@@ -1,12 +1,12 @@
 package com.azifacemobile.models;
 
-import com.azifacemobile.models.abstracts.CommonParams;
+import com.azifacemobile.models.abstracts.JSONParams;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 
 import org.json.JSONObject;
 
-public class ProcessorIDScanResultsSoFar extends CommonParams {
+public class ProcessorIDScanResultsSoFar extends JSONParams {
   private final WritableMap object;
 
   public ProcessorIDScanResultsSoFar(JSONObject target) {

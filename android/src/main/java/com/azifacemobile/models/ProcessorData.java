@@ -2,13 +2,13 @@ package com.azifacemobile.models;
 
 import androidx.annotation.Nullable;
 
-import com.azifacemobile.models.abstracts.CommonParams;
+import com.azifacemobile.models.abstracts.JSONParams;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 
 import org.json.JSONObject;
 
-public class ProcessorData extends CommonParams {
+public class ProcessorData extends JSONParams {
   private final WritableMap object;
 
   public ProcessorData(JSONObject target) {
@@ -20,34 +20,34 @@ public class ProcessorData extends CommonParams {
   }
 
   @Nullable
-  private WritableMap parseJSONToHttpCallInfo(@Nullable JSONObject object) {
-    if (object == null) return null;
+  private WritableMap parseJSONToHttpCallInfo(@Nullable JSONObject target) {
+    if (target == null) return null;
 
-    final ProcessorHttpCallInfo processorHttpCallInfo = new ProcessorHttpCallInfo(object);
+    final ProcessorHttpCallInfo processorHttpCallInfo = new ProcessorHttpCallInfo(target);
     return processorHttpCallInfo.getMap();
   }
 
   @Nullable
-  private WritableMap parseJSONToAdditionalSessionData(@Nullable JSONObject object) {
-    if (object == null) return null;
+  private WritableMap parseJSONToAdditionalSessionData(@Nullable JSONObject target) {
+    if (target == null) return null;
 
-    final ProcessorAdditionalSessionData processorAdditionalSessionData = new ProcessorAdditionalSessionData(object);
+    final ProcessorAdditionalSessionData processorAdditionalSessionData = new ProcessorAdditionalSessionData(target);
     return processorAdditionalSessionData.getMap();
   }
 
   @Nullable
-  private WritableMap parseJSONToResult(@Nullable JSONObject object) {
-    if (object == null) return null;
+  private WritableMap parseJSONToResult(@Nullable JSONObject target) {
+    if (target == null) return null;
 
-    final ProcessorResult processorResult = new ProcessorResult(object);
+    final ProcessorResult processorResult = new ProcessorResult(target);
     return processorResult.getMap();
   }
 
   @Nullable
-  private WritableMap parseJSONToIDScanResultsSoFar(@Nullable JSONObject object) {
-    if (object == null) return null;
+  private WritableMap parseJSONToIDScanResultsSoFar(@Nullable JSONObject target) {
+    if (target == null) return null;
 
-    final ProcessorIDScanResultsSoFar processorIDScanResultsSoFar = new ProcessorIDScanResultsSoFar(object);
+    final ProcessorIDScanResultsSoFar processorIDScanResultsSoFar = new ProcessorIDScanResultsSoFar(target);
     return processorIDScanResultsSoFar.getMap();
   }
 

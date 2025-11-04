@@ -12,9 +12,7 @@ public class ProcessorResponse {
   public ProcessorResponse() {
     this.object = Arguments.createMap();
 
-    this.object.putBoolean("isSuccess", false);
-    this.object.putMap("data", null);
-    this.object.putMap("error", null);
+    this.reset();
   }
 
   private void parseJSON(JSONObject target) {

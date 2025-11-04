@@ -5,10 +5,10 @@ import androidx.annotation.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class CommonParams {
+public abstract class JSONParams {
   private final JSONObject target;
 
-  public CommonParams(JSONObject target) {
+  public JSONParams(JSONObject target) {
     this.target = target;
   }
 

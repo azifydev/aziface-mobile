@@ -17,7 +17,7 @@ export function vocal(): void {
  * other methods **don't works!**
  *
  * @param {Initialize} initialize - Initialize the Aziface SDK with
- * especific parameters and an optional headers.
+ * specific parameters and an optional headers.
  *
  * @return {Promise<boolean>} Represents if Aziface SDK initialized with
  * successful.
