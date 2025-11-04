@@ -100,7 +100,9 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     if (parameters.isNull()) {
       this.isInitialized = false;
       this.onInitialize(false);
+
       IsRunning = false;
+
       promise.reject("Parameters aren't provided", "ParamsNotProvided");
       return;
     }
@@ -112,27 +114,22 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       FaceTecSDK.initializeWithSessionRequest(this.getActivity(), Config.DeviceKeyIdentifier, new SessionRequestProcessor(), new FaceTecSDK.InitializeCallback() {
         @Override
         public void onSuccess(@NonNull FaceTecSDKInstance sdkInstance) {
-          isInitialized = true;
-          onFaceTecSDKInitializationSuccess(sdkInstance);
-          onInitialize(true);
-          onVocal(false);
-          IsRunning = false;
+          onInitializationSuccess(sdkInstance);
           promise.resolve(true);
         }
 
         @Override
         public void onError(@NonNull FaceTecInitializationError error) {
-          isInitialized = false;
-          onInitialize(false);
-          onVocal(false);
-          IsRunning = false;
+          onInitializationError();
           promise.resolve(false);
         }
       });
     } else {
       this.isInitialized = false;
       this.onInitialize(false);
+
       IsRunning = false;
+
       promise.reject("Configuration aren't provided", "ConfigNotProvided");
     }
   }
@@ -354,7 +351,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Theme.updateTheme();
   }
 
-  private void onFaceTecSDKInitializationSuccess(FaceTecSDKInstance sdkInstance) {
+  private void onInitializationSuccess(FaceTecSDKInstance sdkInstance) {
+    this.isInitialized = true;
     this.sdkInstance = sdkInstance;
 
     final Theme theme = new Theme(this.reactContext);
@@ -364,6 +362,19 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Vocal.setOCRLocalization(this.reactContext);
     Vocal.setVocalGuidanceSoundFiles();
     Vocal.setUpVocalGuidancePlayers(this);
+
+    this.onInitialize(true);
+    this.onVocal(false);
+
+    IsRunning = false;
+  }
+
+  private void onInitializationError() {
+    this.isInitialized = false;
+    this.onInitialize(false);
+    this.onVocal(false);
+
+    IsRunning = false;
   }
 
   private void setPromiseResult(Promise promise) {
