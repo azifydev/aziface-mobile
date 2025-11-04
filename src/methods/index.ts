@@ -1,85 +1,5 @@
-import type { EventSubscription } from 'react-native';
-import type { Initialize, Theme } from '../@types';
+import type { Theme, Initialize, Processor } from '../@types';
 import { AzifaceMobile } from '../turbo';
-
-type Listener<T = any> = (value: T) => void;
-
-/**
- * @description This method is used to **listen** when the Aziface SDK is
- * initialized.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onInitialize(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onInitialize(listener);
-}
-
-/**
- * @description This method is used to **listen** when the Aziface SDK is
- * opened.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onOpen(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onOpen(listener);
-}
-
-/**
- * @description This method is used to **listen** when the Aziface SDK is
- * closed.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onClose(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onClose(listener);
-}
-
-/**
- * @description This method is used to **listen** when the Aziface SDK is
- * cancelled.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onCancel(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onCancel(listener);
-}
-
-/**
- * @description This method is used to **listen** when the Aziface SDK has
- * error.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onError(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onError(listener);
-}
-
-/**
- * @description This method is used to **listen** the vocal guidance.
- *
- * @param listener - The listener function that will be called when the event
- * is emitted.
- *
- * @returns {EventSubscription}
- */
-export function onVocal(listener: Listener<boolean>): EventSubscription {
-  return AzifaceMobile.onVocal(listener);
-}
 
 /**
  * @description This method must be used to **activate** the vocal guidance
@@ -107,7 +27,7 @@ export async function initialize({
   headers,
 }: Initialize): Promise<boolean> {
   return await AzifaceMobile.initialize(params, headers)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -115,18 +35,18 @@ export async function initialize({
 
 /**
  * @description This method make to read from face and documents for user,
- * after comparate face and face documents from user to check veracity.
+ * after compare face and face documents from user to check veracity.
  *
  * @param {object|undefined} data - The object with data to be will send on
  * photo ID match. The data is optional.
  *
- * @return {Promise<boolean>} Represents if photo match was a successful.
+ * @return {Promise<Processor>} Represents if photo match was a successful.
  *
  * @throws If photo ID match was a unsuccessful or occurred some interference.
  */
-export async function photoMatch(data?: object): Promise<boolean> {
+export async function photoMatch(data?: object): Promise<Processor> {
   return await AzifaceMobile.photoIDMatch(data)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -139,14 +59,14 @@ export async function photoMatch(data?: object): Promise<boolean> {
  * @param {object|undefined} data - The object with data to be will send on
  * photo ID scan only. The data is optional.
  *
- * @return {Promise<boolean>} Represents if photo scan only was a successful.
+ * @return {Promise<Processor>} Represents if photo scan only was a successful.
  *
  * @throws If photo ID scan only was a unsuccessful or occurred some
  * interference.
  */
-export async function photoScan(data?: object): Promise<boolean> {
+export async function photoScan(data?: object): Promise<Processor> {
   return await AzifaceMobile.photoIDScanOnly(data)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -159,13 +79,13 @@ export async function photoScan(data?: object): Promise<boolean> {
  * @param {object|undefined} data - The object with data to be will send on
  * enrollment. The data is optional.
  *
- * @return {Promise<boolean>} Represents if enrollment was a successful.
+ * @return {Promise<Processor>} Represents if enrollment was a successful.
  *
  * @throws If enrollment was a unsuccessful or occurred some interference.
  */
-export async function enroll(data?: object): Promise<boolean> {
+export async function enroll(data?: object): Promise<Processor> {
   return await AzifaceMobile.enroll(data)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -180,13 +100,13 @@ export async function enroll(data?: object): Promise<boolean> {
  * @param {object|undefined} data - The object with data to be will send on
  * enrollment. The data is optional.
  *
- * @return {Promise<boolean>} Represents if authenticate was a successful.
+ * @return {Promise<Processor>} Represents if authenticate was a successful.
  *
  * @throws If authenticate was a unsuccessful or occurred some interference.
  */
-export async function authenticate(data?: object): Promise<boolean> {
+export async function authenticate(data?: object): Promise<Processor> {
   return await AzifaceMobile.authenticate(data)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -199,13 +119,13 @@ export async function authenticate(data?: object): Promise<boolean> {
  * @param {object|undefined} data - The object with data to be will send on
  * enrollment. The data is optional.
  *
- * @return {Promise<boolean>} Represents if liveness was a successful.
+ * @return {Promise<Processor>} Represents if liveness was a successful.
  *
  * @throws If liveness was a unsuccessful or occurred some interference.
  */
-export async function liveness(data?: object): Promise<boolean> {
+export async function liveness(data?: object): Promise<Processor> {
   return await AzifaceMobile.liveness(data)
-    .then((successful: boolean) => successful)
+    .then((successful) => successful as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });

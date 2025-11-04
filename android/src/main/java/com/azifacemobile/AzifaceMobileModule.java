@@ -25,7 +25,7 @@ import com.facetec.sdk.*;
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
   public static final String NAME = "AzifaceMobile";
-  private static Boolean isRunning = false;
+  private static Boolean IsRunning = false;
   public static String DemonstrationExternalDatabaseRefID = "";
   private final AzifaceError error;
   public Boolean isInitialized = false;
@@ -62,7 +62,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       DemonstrationExternalDatabaseRefID = "";
     }
 
-    isRunning = false;
+    IsRunning = false;
+
     final boolean isError = this.error.isError(status);
     if (isError) {
       final String message = this.error.getErrorMessage(status);
@@ -76,7 +77,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
         this.onVocal(false);
       }
 
-      this.promiseResult.resolve(true);
+      this.promiseResult.resolve(SessionRequestProcessor.Response.getMap());
     }
   }
 
@@ -86,15 +87,15 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void initialize(ReadableMap params, ReadableMap headers, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
     CommonParams parameters = new CommonParams(params);
 
     if (parameters.isNull()) {
       this.isInitialized = false;
       this.onInitialize(false);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("Parameters aren't provided", "ParamsNotProvided");
       return;
     }
@@ -110,7 +111,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
           onFaceTecSDKInitializationSuccess(sdkInstance);
           onInitialize(true);
           onVocal(false);
-          isRunning = false;
+          IsRunning = false;
           promise.resolve(true);
         }
 
@@ -119,34 +120,34 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
           isInitialized = false;
           onInitialize(false);
           onVocal(false);
-          isRunning = false;
+          IsRunning = false;
           promise.resolve(false);
         }
       });
     } else {
       this.isInitialized = false;
       this.onInitialize(false);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("Configuration aren't provided", "ConfigNotProvided");
     }
   }
 
   @ReactMethod
   public void liveness(ReadableMap data, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
 
     if (this.getActivity() == null) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -160,20 +161,20 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void enroll(ReadableMap data, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
 
     if (this.getActivity() == null) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -187,27 +188,27 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void authenticate(ReadableMap data, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
 
     if (this.getActivity() == null) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
 
     if (DemonstrationExternalDatabaseRefID.isEmpty()) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       return;
     }
@@ -220,20 +221,20 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void photoIDMatch(ReadableMap data, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
 
     if (this.getActivity() == null) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -247,20 +248,20 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void photoIDScanOnly(ReadableMap data, Promise promise) {
-    if (isRunning) return;
+    if (IsRunning) return;
 
-    isRunning = true;
+    IsRunning = true;
 
     if (this.getActivity() == null) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK not found target View!", "NotFoundTargetView");
       return;
     }
 
     if (!this.isInitialized) {
       this.onError(true);
-      isRunning = false;
+      IsRunning = false;
       promise.reject("AziFace SDK doesn't initialized!", "NotInitialized");
       return;
     }
@@ -280,7 +281,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void vocal() {
-    /**
+    /*
      * TODO: Fix crash when device is muted.
      *
      * Current workaround is to check if device is muted and skip vocal guidance
@@ -288,12 +289,12 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
      */
     final boolean isMuted = Vocal.isDeviceMuted(this);
 
-    if (isRunning || isMuted) {
+    if (IsRunning || isMuted) {
       this.onVocal(this.isEnabled);
       return;
-    };
+    }
 
-    isRunning = true;
+    IsRunning = true;
     this.updateTheme();
 
     this.isEnabled = !this.isEnabled;
@@ -304,7 +305,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Vocal.setVocalGuidanceMode(this);
 
     this.onVocal(this.isEnabled);
-    isRunning = false;
+    IsRunning = false;
   }
 
   private void updateTheme() {

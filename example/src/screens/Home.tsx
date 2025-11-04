@@ -85,7 +85,7 @@ export function Home() {
 
   const onFaceScan = async (type: FaceType, data?: any) => {
     try {
-      let isSuccess = false;
+      let isSuccess = null;
 
       switch (type) {
         case 'enroll':
