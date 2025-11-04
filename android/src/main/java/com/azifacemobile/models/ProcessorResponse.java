@@ -14,6 +14,7 @@ public class ProcessorResponse {
 
     this.object.putBoolean("isSuccess", false);
     this.object.putMap("data", null);
+    this.object.putMap("error", null);
   }
 
   private void parseJSON(JSONObject target) {
@@ -24,6 +25,7 @@ public class ProcessorResponse {
 
     this.object.putBoolean("isSuccess", responseBlob != null);
     this.object.putMap("data", data);
+    this.object.putMap("error", null);
   }
 
   public Boolean getSuccess() {
@@ -40,5 +42,19 @@ public class ProcessorResponse {
 
   public WritableMap getMap() {
     return this.object.copy();
+  }
+
+  public void setError(String message, String code) {
+    this.reset();
+
+    final ProcessorError processorError = new ProcessorError(message, code);
+
+    this.object.putMap("error", processorError.getMap());
+  }
+
+  public void reset() {
+    this.object.putBoolean("isSuccess", false);
+    this.object.putMap("data", null);
+    this.object.putMap("error", null);
   }
 }

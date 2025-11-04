@@ -1,5 +1,6 @@
 import type { TurboModule } from 'react-native';
 import type { Theme } from './styles';
+import type { Errors } from './errors';
 
 /**
  * @type
@@ -199,7 +200,7 @@ export interface ProcessorIDScanResultsSoFar {
   unexpectedMediaEncounteredAtLeastOnce: boolean;
 
   /**
-   * @description
+   * @description The document data in stringified JSON format.
    */
   documentData: string;
 
@@ -270,11 +271,11 @@ export interface ProcessorIDScanResultsSoFar {
 }
 
 /**
- * @interface Processor
+ * @interface ProcessorData
  *
- * @description The Processor response.
+ * @description The Processor data response.
  */
-export interface Processor {
+export interface ProcessorData {
   /**
    * @description The unique identifier for the ID scan session.
    *
@@ -337,6 +338,45 @@ export interface Processor {
    * @processors `photoScan` and `photoMatch` methods.
    */
   idScanResultsSoFar: ProcessorIDScanResultsSoFar | null;
+}
+
+/**
+ * @interface ProcessorError
+ *
+ * @description The Processor error response.
+ */
+export interface ProcessorError {
+  /**
+   * @description The error code.
+   */
+  code: Errors;
+
+  /**
+   * @description The error message.
+   */
+  message: string;
+}
+
+/**
+ * @interface Processor
+ *
+ * @description The Processor response.
+ */
+export interface Processor {
+  /**
+   * @description Indicates if the processing was successful.
+   */
+  isSuccess: boolean;
+
+  /**
+   * @description The processor data response.
+   */
+  data: ProcessorData | null;
+
+  /**
+   * @description The processor error response.
+   */
+  error: ProcessorError | null;
 }
 
 /**
