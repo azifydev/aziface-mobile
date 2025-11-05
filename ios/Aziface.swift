@@ -10,7 +10,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
   private var resolver: RCTPromiseResolveBlock?
-  private var rejector: RCTPromiseRejectBlock?
   private var isEnabled: Bool = false
   private var vocalGuidance: Vocal!
   public var emitter: Emitter!
@@ -38,7 +37,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       }
 
       Aziface.IsRunning = true
-      self.setPromiseResult(resolve: resolve, reject: reject)
+      self.setResolver(resolve: resolve)
       self.setTheme(Theme.Style)
 
       let paremeters = CommonParams(params: params)
@@ -70,10 +69,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func liveness(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
-    reject: @escaping RCTPromiseRejectBlock
-  ) {
+  @objc public func liveness(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock) {
     DispatchQueue.main.async {
       if Aziface.IsRunning {
         return
@@ -86,7 +82,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
           return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
-        self.setPromiseResult(resolve: resolve, reject: reject)
+        self.setResolver(resolve: resolve)
         Aziface.DemonstrationExternalDatabaseRefID = ""
 
         let controller = self.sdkInstance.start3DLiveness(
@@ -100,10 +96,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func enroll(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
-    reject: @escaping RCTPromiseRejectBlock
-  ) {
+  @objc public func enroll(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock) {
     DispatchQueue.main.async {
       if Aziface.IsRunning {
         return
@@ -116,7 +109,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
           return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
-        self.setPromiseResult(resolve: resolve, reject: reject)
+        self.setResolver(resolve: resolve)
         Aziface.DemonstrationExternalDatabaseRefID = Aziface.NAME + UUID().uuidString
 
         let controller = self.sdkInstance.start3DLiveness(
@@ -130,10 +123,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func authenticate(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
-    reject: @escaping RCTPromiseRejectBlock
-  ) {
+  @objc public func authenticate(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock) {
     DispatchQueue.main.async {
       if Aziface.IsRunning {
         return
@@ -150,7 +140,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
           return resolve(self.onCallProcessorError(message: "User isn't authenticated! You must enroll first!", code: "NotAuthenticated"))
         }
 
-        self.setPromiseResult(resolve: resolve, reject: reject)
+        self.setResolver(resolve: resolve)
         let controller = self.sdkInstance.start3DLivenessThen3DFaceMatch(
           with: SessionRequestProcessor(module: self, data: data))
 
@@ -162,10 +152,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func photoIDMatch(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
-    reject: @escaping RCTPromiseRejectBlock
-  ) {
+  @objc public func photoIDMatch(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock) {
     DispatchQueue.main.async {
       if Aziface.IsRunning {
         return
@@ -178,7 +165,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
           return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
-        self.setPromiseResult(resolve: resolve, reject: reject)
+        self.setResolver(resolve: resolve)
         Aziface.DemonstrationExternalDatabaseRefID = Aziface.NAME + UUID().uuidString
 
         let controller = self.sdkInstance.start3DLivenessThen3D2DPhotoIDMatch(
@@ -191,10 +178,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func photoIDScanOnly(
-    _ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
-    reject: @escaping RCTPromiseRejectBlock
-  ) {
+  @objc public func photoIDScanOnly(_ data: NSDictionary, resolve: @escaping RCTPromiseResolveBlock) {
     DispatchQueue.main.async {
       if Aziface.IsRunning {
         return
@@ -207,7 +191,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
           return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
-        self.setPromiseResult(resolve: resolve, reject: reject)
+        self.setResolver(resolve: resolve)
         let controller = self.sdkInstance.startIDScanOnly(
           with: SessionRequestProcessor(module: self, data: data))
 
@@ -339,11 +323,8 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     Aziface.IsRunning = false
   }
 
-  public func setPromiseResult(
-    resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
-  ) {
+  public func setResolver(resolve: @escaping RCTPromiseResolveBlock) {
     self.resolver = resolve
-    self.rejector = reject
   }
 
   public func sendOpenEvent() {

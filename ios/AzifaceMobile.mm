@@ -32,31 +32,31 @@ RCT_EXPORT_MODULE()
 - (void)authenticate:(nonnull NSDictionary *)data
              resolve:(nonnull RCTPromiseResolveBlock)resolve
               reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface authenticate:data resolve:resolve reject:reject];
+  return [_aziface authenticate:data resolve:resolve];
 }
 
 - (void)enroll:(nonnull NSDictionary *)data
        resolve:(nonnull RCTPromiseResolveBlock)resolve
         reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface enroll:data resolve:resolve reject:reject];
+  return [_aziface enroll:data resolve:resolve];
 }
 
 - (void)liveness:(nonnull NSDictionary *)data
          resolve:(nonnull RCTPromiseResolveBlock)resolve
           reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface liveness:data resolve:resolve reject:reject];
+  return [_aziface liveness:data resolve:resolve];
 }
 
 - (void)photoIDMatch:(nonnull NSDictionary *)data
              resolve:(nonnull RCTPromiseResolveBlock)resolve
               reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface photoIDMatch:data resolve:resolve reject:reject];
+  return [_aziface photoIDMatch:data resolve:resolve];
 }
 
 - (void)photoIDScanOnly:(nonnull NSDictionary *)data
                 resolve:(nonnull RCTPromiseResolveBlock)resolve
                  reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface photoIDScanOnly:data resolve:resolve reject:reject];
+  return [_aziface photoIDScanOnly:data resolve:resolve];
 }
 
 - (void)setTheme:(nonnull NSDictionary *)options {
