@@ -7,6 +7,7 @@
   <p>
     <img alt="Version" src="https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen">
     <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/%40azify%2Faziface-mobile?style=flat">
+    <img alt="Unpacked Size" src="https://img.shields.io/npm/unpacked-size/%40azify%2Faziface-mobile?style=flat&color=brightgreen">
   </p>
 </div>
 
