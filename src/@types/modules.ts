@@ -111,7 +111,7 @@ export interface ProcessorAdditionalSessionData {
  */
 export interface ProcessorResult {
   /**
-   * @description Indicates if the processing was successful.
+   * @description Indicates if it's liveness proven.
    */
   livenessProven: boolean;
 
@@ -128,7 +128,7 @@ export interface ProcessorResult {
   /**
    * @description The match level.
    */
-  matchLevel: number;
+  matchLevel?: number;
 }
 
 /**
@@ -281,14 +281,14 @@ export interface ProcessorData {
    *
    * @processors `photoScan` and `photoMatch` methods.
    */
-  idScanSessionId: string | null;
+  idScanSessionId?: string | null;
 
   /**
    * @description The unique identifier for the face session.
    *
    * @processors `enroll`, `authenticate`, `photoMatch` methods.
    */
-  externalDatabaseRefID: string | null;
+  externalDatabaseRefID?: string | null;
 
   /**
    * @description The additional session data.
@@ -302,7 +302,7 @@ export interface ProcessorData {
    *
    * @processors `enroll`, `authenticate`, and `liveness` methods.
    */
-  result: ProcessorResult | null;
+  result?: ProcessorResult | null;
 
   /**
    * @description The raw response blob from the server.
@@ -337,7 +337,7 @@ export interface ProcessorData {
    *
    * @processors `photoScan` and `photoMatch` methods.
    */
-  idScanResultsSoFar: ProcessorIDScanResultsSoFar | null;
+  idScanResultsSoFar?: ProcessorIDScanResultsSoFar | null;
 }
 
 /**
