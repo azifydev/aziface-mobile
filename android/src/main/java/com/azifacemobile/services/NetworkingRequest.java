@@ -80,7 +80,6 @@ public class NetworkingRequest {
         JSONObject responseJSON = new JSONObject(response.body().string());
 
         processorResponse.setData(responseJSON);
-        System.out.println(responseJSON.toString(2));
 
         response.close();
         return processorResponse;

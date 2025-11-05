@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.azifacemobile.models.abstracts.JSONParams;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
 import org.json.JSONObject;
@@ -60,6 +61,7 @@ public class ProcessorData extends JSONParams {
     JSONObject result = this.getParam("result", JSONObject.class);
     String idScanSessionId = this.getParam("idScanSessionId", String.class);
     JSONObject idScanResultsSoFar = this.getParam("idScanResultsSoFar", JSONObject.class);
+    ReadableMap serverInfo = this.getParam("serverInfo", ReadableMap.class);
 
     this.object.putBoolean("didError", Boolean.TRUE.equals(didError));
     this.object.putString("responseBlob", responseBlob);
@@ -69,6 +71,7 @@ public class ProcessorData extends JSONParams {
     this.object.putMap("result", this.parseJSONToResult(result));
     this.object.putString("idScanSessionId", idScanSessionId);
     this.object.putMap("idScanResultsSoFar", this.parseJSONToIDScanResultsSoFar(idScanResultsSoFar));
+    this.object.putMap("serverInfo", serverInfo);
   }
 
   public WritableMap getMap() {

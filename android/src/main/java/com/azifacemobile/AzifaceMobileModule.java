@@ -33,7 +33,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   public Boolean isInitialized = false;
   public Boolean isEnabled = false;
   public FaceTecSDKInstance sdkInstance;
-  public Promise promiseResult;
+  public Promise promise;
   ReactApplicationContext reactContext;
 
   public AzifaceMobileModule(ReactApplicationContext context) {
@@ -82,7 +82,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       }
     }
 
-    this.promiseResult.resolve(this.response.getMap());
+    this.promise.resolve(this.response.getMap());
     this.response.reset();
   }
 
@@ -141,26 +141,18 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK not found target View!", "NotFoundTargetView");
+      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (!this.isInitialized) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK doesn't initialized!", "NotInitialized");
+      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
       promise.resolve(this.response.getMap());
       return;
     }
 
-    this.setPromiseResult(promise);
+    this.setPromise(promise);
     this.sendOpenEvent();
 
     DemonstrationExternalDatabaseRefID = "";
@@ -174,26 +166,18 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK not found target View!", "NotFoundTargetView");
+      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (!this.isInitialized) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK doesn't initialized!", "NotInitialized");
+      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
       promise.resolve(this.response.getMap());
       return;
     }
 
-    this.setPromiseResult(promise);
+    this.setPromise(promise);
     this.sendOpenEvent();
 
     DemonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
@@ -207,36 +191,24 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK not found target View!", "NotFoundTargetView");
+      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (!this.isInitialized) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK doesn't initialized!", "NotInitialized");
+      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (DemonstrationExternalDatabaseRefID.isEmpty()) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("User isn't authenticated! You must enroll first!", "NotAuthenticated");
+      this.onCallProcessorError("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       promise.resolve(this.response.getMap());
       return;
     }
 
-    this.setPromiseResult(promise);
+    this.setPromise(promise);
     this.sendOpenEvent();
 
     sdkInstance.start3DLivenessThen3DFaceMatch(this.getActivity(), new SessionRequestProcessor(data));
@@ -249,27 +221,18 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK not found target View!", "NotFoundTargetView");
+      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (!this.isInitialized) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK doesn't initialized!", "NotInitialized");
+      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
       promise.resolve(this.response.getMap());
       return;
     }
 
-
-    this.setPromiseResult(promise);
+    this.setPromise(promise);
     this.sendOpenEvent();
 
     DemonstrationExternalDatabaseRefID = EXTERNAL_ID + randomUUID();
@@ -283,27 +246,19 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK not found target View!", "NotFoundTargetView");
+      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.response.getMap());
       return;
     }
 
     if (!this.isInitialized) {
-      IsRunning = false;
-
-      this.onError(true);
-      this.response.reset();
-      this.response.setError("AziFace SDK doesn't initialized!", "NotInitialized");
+      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
       promise.resolve(this.response.getMap());
       return;
     }
 
 
-    this.setPromiseResult(promise);
+    this.setPromise(promise);
     this.sendOpenEvent();
 
     sdkInstance.startIDScanOnly(this.getActivity(), new SessionRequestProcessor(data));
@@ -377,8 +332,16 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = false;
   }
 
-  private void setPromiseResult(Promise promise) {
-    this.promiseResult = promise;
+  private void onCallProcessorError(String message, String code) {
+    this.onError(true);
+    this.response.reset();
+    this.response.setError(message, code);
+
+    IsRunning = false;
+  }
+
+  private void setPromise(Promise promise) {
+    this.promise = promise;
   }
 
   private void sendOpenEvent() {
