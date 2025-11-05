@@ -371,12 +371,12 @@ export interface Processor {
   /**
    * @description The processor data response.
    */
-  data: ProcessorData | null;
+  data?: ProcessorData | null;
 
   /**
    * @description The processor error response.
    */
-  error: ProcessorError | null;
+  error?: ProcessorError | null;
 }
 
 /**

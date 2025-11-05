@@ -17,6 +17,7 @@ import {
   FaceView,
   type Params,
   type Headers,
+  type Processor,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -85,31 +86,31 @@ export function Home() {
 
   const onFaceScan = async (type: FaceType, data?: any) => {
     try {
-      let isSuccess = null;
+      let process: Processor | null = null;
 
       switch (type) {
         case 'enroll':
-          isSuccess = await enroll(data);
+          process = await enroll(data);
           break;
         case 'liveness':
-          isSuccess = await liveness(data);
+          process = await liveness(data);
           break;
         case 'authenticate':
-          isSuccess = await authenticate(data);
+          process = await authenticate(data);
           break;
         case 'photoMatch':
-          isSuccess = await photoMatch(data);
+          process = await photoMatch(data);
           break;
         case 'photoScan':
-          isSuccess = await photoScan(data);
+          process = await photoScan(data);
           break;
         default:
-          isSuccess = false;
+          process = null;
           break;
       }
 
       setIsEnabledVocal(false);
-      console.log(type, isSuccess);
+      console.log(type, process);
     } catch (error: any) {
       console.error(type, error.message);
     }

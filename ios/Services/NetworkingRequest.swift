@@ -2,6 +2,7 @@ import FaceTecSDK
 import Foundation
 
 public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
+  private var responseProcessor: NSMutableDictionary
   let referencingProcessor: SessionRequestProcessor
   let sessionRequestCallback: FaceTecSessionRequestProcessorCallback
 
@@ -9,9 +10,18 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
     referencingProcessor: SessionRequestProcessor,
     sessionRequestCallback: FaceTecSessionRequestProcessorCallback
   ) {
+    self.responseProcessor = NSMutableDictionary()
     self.referencingProcessor = referencingProcessor
     self.sessionRequestCallback = sessionRequestCallback
+
     super.init()
+
+    self.reset()
+  }
+
+  private func reset() {
+    self.responseProcessor.setValue(false, forKey: "isSuccess")
+    self.responseProcessor.setValue(nil, forKey: "data")
   }
 
   func send(sessionRequestBlob: String, data: NSDictionary?) {
@@ -24,7 +34,7 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
 
     if !Aziface.DemonstrationExternalDatabaseRefID.isEmpty {
       sessionRequestCallPayload["externalDatabaseRefID"] =
-      Aziface.DemonstrationExternalDatabaseRefID
+        Aziface.DemonstrationExternalDatabaseRefID
     }
 
     var request = Config.getRequest()
@@ -43,6 +53,9 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
         let responseBlob: String = self.getResponseBlobOrHandleError(data: data)
 
         if !responseBlob.isEmpty {
+          self.responseProcessor.setValue(true, forKey: "isSuccess")
+
+          self.referencingProcessor.onShared(data: self.responseProcessor)
           self.referencingProcessor.onResponseBlobReceived(
             responseBlob: responseBlob, sessionRequestCallback: self.sessionRequestCallback)
         }
@@ -60,7 +73,7 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
     guard
       let responseJSON = try? JSONSerialization.jsonObject(
         with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-        as! [String: AnyObject]
+        as? [String: AnyObject]
     else {
       callAbortAndClose()
       return ""
@@ -71,10 +84,15 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
       return ""
     }
 
+    self.responseProcessor.setValue(responseJSON, forKey: "data")
+
     return responseBlob
   }
 
   func callAbortAndClose() {
+    self.reset()
+
+    self.referencingProcessor.onShared(data: self.responseProcessor)
     self.referencingProcessor.onCatastrophicNetworkError(
       sessionRequestCallback: self.sessionRequestCallback)
   }
