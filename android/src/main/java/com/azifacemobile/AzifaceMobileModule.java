@@ -9,18 +9,26 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.azifacemobile.errors.AzifaceError;
-import com.azifacemobile.models.ProcessorResponse;
 import com.azifacemobile.theme.Theme;
 import com.azifacemobile.theme.Vocal;
 import com.azifacemobile.utils.CommonParams;
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
 
 import com.facetec.sdk.*;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 
 @ReactModule(name = AzifaceMobileModule.NAME)
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
@@ -29,7 +37,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   private static Boolean IsRunning = false;
   public static String DemonstrationExternalDatabaseRefID = "";
   private final AzifaceError error;
-  private ProcessorResponse response;
+  private WritableMap response;
   public Boolean isInitialized = false;
   public Boolean isEnabled = false;
   public FaceTecSDKInstance sdkInstance;
@@ -43,7 +51,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
     this.reactContext = context;
     this.error = new AzifaceError(this);
-    this.response = new ProcessorResponse();
+    this.response = Arguments.createMap();
 
     FaceTecSDK.preload(context);
   }
@@ -65,14 +73,11 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       DemonstrationExternalDatabaseRefID = "";
     }
 
-    IsRunning = false;
-    this.response = SessionRequestProcessor.Response;
-
     if (this.error.isError(status)) {
       final String message = this.error.getErrorMessage(status);
       final String code = this.error.getErrorCode(status);
 
-      this.response.setError(message, code);
+      this.onProcessorError(message, code);
     } else {
       if (this.isEnabled) {
         Vocal.setUpVocalGuidancePlayers(this);
@@ -80,10 +85,12 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
         this.onVocal(false);
       }
+
+      assert SessionRequestProcessor.Response != null;
+      this.onProcessorSuccess(SessionRequestProcessor.Response);
     }
 
-    this.promise.resolve(this.response.getMap());
-    this.response.reset();
+    this.promise.resolve(this.getStringifyResponse());
   }
 
   @Override
@@ -141,14 +148,14 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (!this.isInitialized) {
-      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
@@ -166,14 +173,14 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (!this.isInitialized) {
-      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
@@ -191,20 +198,20 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (!this.isInitialized) {
-      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (DemonstrationExternalDatabaseRefID.isEmpty()) {
-      this.onCallProcessorError("User isn't authenticated! You must enroll first!", "NotAuthenticated");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("User isn't authenticated! You must enroll first!", "NotAuthenticated");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
@@ -221,14 +228,14 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (!this.isInitialized) {
-      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
@@ -246,14 +253,14 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = true;
 
     if (this.getActivity() == null) {
-      this.onCallProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
     if (!this.isInitialized) {
-      this.onCallProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.response.getMap());
+      this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
+      promise.resolve(this.getStringifyResponse());
       return;
     }
 
@@ -332,12 +339,64 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     IsRunning = false;
   }
 
-  private void onCallProcessorError(String message, String code) {
-    this.onError(true);
-    this.response.reset();
-    this.response.setError(message, code);
+  private void onProcessorSuccess(JSONObject object) {
+    this.response = Arguments.createMap();
+    this.response.putBoolean("isSuccess", true);
+    this.response.putMap("data", this.convertJsonToWritableMap(object));
+    this.response.putMap("error", null);
 
     IsRunning = false;
+  }
+
+  private void onProcessorError(String message, String code) {
+    WritableMap error = Arguments.createMap();
+    error.putString("message", message);
+    error.putString("code", code);
+
+    this.response = Arguments.createMap();
+    this.response.putBoolean("isSuccess", false);
+    this.response.putMap("data", null);
+    this.response.putMap("error", error);
+
+    this.onError(true);
+
+    IsRunning = false;
+  }
+
+  private String getStringifyResponse() {
+    Gson gson = new Gson();
+
+    return gson.toJson(this.response.toHashMap());
+  }
+
+  private WritableMap convertJsonToWritableMap(JSONObject jsonObject) {
+    WritableMap map = new WritableNativeMap();
+    Iterator<String> iterator = jsonObject.keys();
+
+    while (iterator.hasNext()) {
+      String key = iterator.next();
+      Object value = null;
+
+      try {
+        value = jsonObject.get(key);
+      } catch (JSONException ignored) {}
+
+      if (value instanceof JSONObject) {
+        map.putMap(key, this.convertJsonToWritableMap((JSONObject) value));
+      } else if (value instanceof Boolean) {
+        map.putBoolean(key, (Boolean) value);
+      } else if (value instanceof Integer) {
+        map.putInt(key, (Integer) value);
+      } else if (value instanceof Double) {
+        map.putDouble(key, (Double) value);
+      } else if (value instanceof String)  {
+        map.putString(key, (String) value);
+      } else {
+        map.putNull(key);
+      }
+    }
+
+    return map;
   }
 
   private void setPromise(Promise promise) {

@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.azifacemobile.SessionRequestProcessor;
 import com.azifacemobile.AzifaceMobileModule;
 import com.azifacemobile.Config;
-import com.azifacemobile.models.ProcessorResponse;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
 
@@ -57,32 +56,36 @@ public class NetworkingRequest {
     NetworkingLib.getApiClient().newCall(request).enqueue(new okhttp3.Callback() {
       @Override
       public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-        ProcessorResponse processorResponse = getResponseBlobOrHandleError(response, referencingProcessor, sessionRequestCallback);
-        if (processorResponse.getSuccess()) {
-          referencingProcessor.onResponseBlobReceived(processorResponse, sessionRequestCallback);
+        JSONObject responseJSON = getResponseJSONOrHandleError(response, referencingProcessor, sessionRequestCallback);
+
+        String responseBlob = null;
+
+        try {
+          if (responseJSON != null) {
+            responseBlob = responseJSON.getString("responseBlob");
+          }
+        } catch (JSONException ignored) {}
+
+        if (responseBlob != null) {
+          referencingProcessor.onResponseBlobReceived(responseJSON, sessionRequestCallback);
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        ProcessorResponse processorResponse = new ProcessorResponse();
-
-        referencingProcessor.onCatastrophicNetworkError(processorResponse, sessionRequestCallback);
+        referencingProcessor.onCatastrophicNetworkError(null, sessionRequestCallback);
       }
     });
   }
 
-  static ProcessorResponse getResponseBlobOrHandleError(okhttp3.Response response, SessionRequestProcessor referencingProcessor, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) throws IOException {
-    ProcessorResponse processorResponse = new ProcessorResponse();
-
+  @Nullable
+  static JSONObject getResponseJSONOrHandleError(okhttp3.Response response, SessionRequestProcessor referencingProcessor, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) throws IOException {
     if (response.isSuccessful() && response.body() != null) {
       try {
         JSONObject responseJSON = new JSONObject(response.body().string());
 
-        processorResponse.setData(responseJSON);
-
         response.close();
-        return processorResponse;
+        return responseJSON;
       } catch (JSONException e) {
         callAbortAndClose(referencingProcessor, response, sessionRequestCallback);
       }
@@ -90,13 +93,11 @@ public class NetworkingRequest {
       callAbortAndClose(referencingProcessor, response, sessionRequestCallback);
     }
 
-    return processorResponse;
+    return null;
   }
 
   static void callAbortAndClose(SessionRequestProcessor referencingProcessor, okhttp3.Response response, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) {
-    ProcessorResponse processorResponse = new ProcessorResponse();
-
-    referencingProcessor.onCatastrophicNetworkError(processorResponse, sessionRequestCallback);
+    referencingProcessor.onCatastrophicNetworkError(null, sessionRequestCallback);
     response.close();
   }
 }

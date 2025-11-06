@@ -3,10 +3,12 @@ package com.azifacemobile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.azifacemobile.models.ProcessorResponse;
 import com.azifacemobile.services.NetworkingRequest;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 // This class demonstrates the most important integration point in the FaceTec Device SDK  -- The Session Request Processor.
 //
@@ -24,7 +26,8 @@ import com.facetec.sdk.FaceTecSessionRequestProcessor;
 // - Adding additional asynchronous calls to this code is not allowed.  Only make your own additional asynchronous calls once the FaceTec UI is closed.
 // - Adding code that modifies any App UI (Yours or FaceTec's) is not allowed.  Only add code that modifies your own App UI once the FaceTec UI is closed.
 final public class SessionRequestProcessor implements FaceTecSessionRequestProcessor {
-  public static ProcessorResponse Response;
+  @Nullable
+  public static JSONObject Response;
   @Nullable
   private final ReadableMap data;
 
@@ -48,11 +51,14 @@ final public class SessionRequestProcessor implements FaceTecSessionRequestProce
   // When the Response Blob is received, call processResponse with it.
   // Please note that onResponseBlobReceived is a convenience function set up on this class,
   // so that this function can be called asynchronously once you receive the Response Blob.
-  public void onResponseBlobReceived(@NonNull ProcessorResponse response, @NonNull Callback sessionRequestCallback) {
+  public void onResponseBlobReceived(@NonNull JSONObject response, @NonNull Callback sessionRequestCallback) {
     Response = response;
 
-    final String responseBlob = response.getData().getString("responseBlob");
-    assert responseBlob != null;
+    String responseBlob = "";
+
+    try {
+      responseBlob = response.getString("responseBlob");
+    } catch (JSONException ignored) {}
 
     sessionRequestCallback.processResponse(responseBlob);
   }
@@ -67,7 +73,7 @@ final public class SessionRequestProcessor implements FaceTecSessionRequestProce
   // When an unrecoverable network event occurs, call the FaceTec SDK abortOnCatastrophicError
   // Calling abortOnCatastrophicError is not allowed except for catastrophic network failures.
   // Calling abortOnCatastrophicError to exit the FaceTec UI with custom logic is not allowed.
-  public void onCatastrophicNetworkError(@NonNull ProcessorResponse response, @NonNull Callback sessionRequestCallback) {
+  public void onCatastrophicNetworkError(@Nullable JSONObject response, @NonNull Callback sessionRequestCallback) {
     Response = response;
 
     sessionRequestCallback.abortOnCatastrophicError();
