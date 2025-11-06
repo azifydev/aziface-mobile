@@ -13,11 +13,11 @@ export interface Spec extends TurboModule {
   readonly onVocal: EventEmitter<boolean>;
 
   initialize(params?: UnsafeObject, headers?: UnsafeObject): Promise<boolean>;
-  photoIDMatch(data?: UnsafeObject): Promise<UnsafeObject>;
-  photoIDScanOnly(data?: UnsafeObject): Promise<UnsafeObject>;
-  enroll(data?: UnsafeObject): Promise<UnsafeObject>;
-  authenticate(data?: UnsafeObject): Promise<UnsafeObject>;
-  liveness(data?: UnsafeObject): Promise<UnsafeObject>;
+  photoIDMatch(data?: UnsafeObject): Promise<string>;
+  photoIDScanOnly(data?: UnsafeObject): Promise<string>;
+  enroll(data?: UnsafeObject): Promise<string>;
+  authenticate(data?: UnsafeObject): Promise<string>;
+  liveness(data?: UnsafeObject): Promise<string>;
   setTheme(options?: UnsafeObject): void;
   vocal(): void;
 }

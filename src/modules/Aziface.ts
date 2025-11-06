@@ -46,7 +46,7 @@ export async function initialize({
  */
 export async function photoMatch(data?: object): Promise<Processor> {
   return await AzifaceMobile.photoIDMatch(data)
-    .then((successful) => successful as Processor)
+    .then((response) => JSON.parse(response) as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -66,7 +66,7 @@ export async function photoMatch(data?: object): Promise<Processor> {
  */
 export async function photoScan(data?: object): Promise<Processor> {
   return await AzifaceMobile.photoIDScanOnly(data)
-    .then((successful) => successful as Processor)
+    .then((response) => JSON.parse(response) as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -85,7 +85,7 @@ export async function photoScan(data?: object): Promise<Processor> {
  */
 export async function enroll(data?: object): Promise<Processor> {
   return await AzifaceMobile.enroll(data)
-    .then((successful) => successful as Processor)
+    .then((response) => JSON.parse(response) as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -106,7 +106,7 @@ export async function enroll(data?: object): Promise<Processor> {
  */
 export async function authenticate(data?: object): Promise<Processor> {
   return await AzifaceMobile.authenticate(data)
-    .then((successful) => successful as Processor)
+    .then((response) => JSON.parse(response) as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
@@ -125,7 +125,7 @@ export async function authenticate(data?: object): Promise<Processor> {
  */
 export async function liveness(data?: object): Promise<Processor> {
   return await AzifaceMobile.liveness(data)
-    .then((successful) => successful as Processor)
+    .then((response) => JSON.parse(response) as Processor)
     .catch((error: Error) => {
       throw new Error(error.message);
     });
