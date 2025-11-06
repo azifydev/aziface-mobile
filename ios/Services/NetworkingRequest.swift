@@ -55,7 +55,7 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
         if !responseBlob.isEmpty {
           self.responseProcessor.setValue(true, forKey: "isSuccess")
 
-          self.referencingProcessor.onShared(data: self.responseProcessor)
+          self.referencingProcessor.onResponse(response: self.responseProcessor)
           self.referencingProcessor.onResponseBlobReceived(
             responseBlob: responseBlob, sessionRequestCallback: self.sessionRequestCallback)
         }
@@ -92,7 +92,7 @@ public class NetworkingRequest: NSObject, URLSessionTaskDelegate {
   func callAbortAndClose() {
     self.reset()
 
-    self.referencingProcessor.onShared(data: self.responseProcessor)
+    self.referencingProcessor.onResponse(response: self.responseProcessor)
     self.referencingProcessor.onCatastrophicNetworkError(
       sessionRequestCallback: self.sessionRequestCallback)
   }

@@ -10,6 +10,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
   private var resolver: RCTPromiseResolveBlock?
+  private var response: NSMutableDictionary!
   private var isEnabled: Bool = false
   private var vocalGuidance: Vocal!
   public var emitter: Emitter!
@@ -21,6 +22,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
     self.emitter = emit
     self.error = AzifaceError(module: self)
+    self.response = NSMutableDictionary()
 
     self.setupVocalGuidance()
   }
@@ -79,7 +81,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
+          return resolve(self.onProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
         self.setResolver(resolve: resolve)
@@ -91,7 +93,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        return resolve(self.onCallProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
+        return resolve(self.onProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
       }
     }
   }
@@ -106,7 +108,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
+          return resolve(self.onProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
         self.setResolver(resolve: resolve)
@@ -118,7 +120,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        return resolve(self.onCallProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
+        return resolve(self.onProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
       }
     }
   }
@@ -133,11 +135,11 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
+          return resolve(self.onProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
         if Aziface.DemonstrationExternalDatabaseRefID.isEmpty {
-          return resolve(self.onCallProcessorError(message: "User isn't authenticated! You must enroll first!", code: "NotAuthenticated"))
+          return resolve(self.onProcessorError(message: "User isn't authenticated! You must enroll first!", code: "NotAuthenticated"))
         }
 
         self.setResolver(resolve: resolve)
@@ -147,7 +149,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        return resolve(self.onCallProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
+        return resolve(self.onProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
       }
     }
   }
@@ -162,7 +164,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
+          return resolve(self.onProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
         self.setResolver(resolve: resolve)
@@ -174,7 +176,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        return resolve(self.onCallProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))      }
+        return resolve(self.onProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))      }
     }
   }
 
@@ -188,7 +190,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       if self.isInitialized {
         guard let viewController = self.getCurrentViewController() else {
-          return resolve(self.onCallProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
+          return resolve(self.onProcessorError(message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
         self.setResolver(resolve: resolve)
@@ -198,7 +200,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.sendOpenEvent()
         viewController.present(controller, animated: true, completion: nil)
       } else {
-        return resolve(self.onCallProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
+        return resolve(self.onProcessorError(message: "AziFace SDK doesn't initialized!", code: "NotInitialized"))
       }
     }
   }
@@ -278,11 +280,13 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       Aziface.DemonstrationExternalDatabaseRefID = ""
     }
 
-    Aziface.IsRunning = false
-    let shared = SessionRequestProcessor.Shared
+    self.response = SessionRequestProcessor.Response
 
     if self.error.isError(status: status) {
-      self.resolver?(self.onProcessorError(data: shared, status: status))
+      let message = self.error.getMessage(status: status)
+      let code = self.error.getCode(status: status)
+      
+      self.resolver?(self.onProcessorError(message: message, code: code))
     } else {
       if self.isEnabled {
         Vocal.setUpVocalGuidancePlayers()
@@ -292,7 +296,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
         self.emitter.emitOnVocal(false)
       }
 
-      self.resolver?(self.onProcessorSuccess(data: shared))
+      self.resolver?(self.onProcessorSuccess())
     }
   }
 
@@ -334,46 +338,41 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.emitter.emitOnError(false)
   }
 
-  private func onProcessorSuccess(data: NSMutableDictionary) -> NSDictionary {
-    data.setValue(true, forKey: "isSuccess")
-    data.setValue(nil, forKey: "error")
-
-    return data
+  private func onProcessorSuccess() -> String {
+    self.response.setValue(true, forKey: "isSuccess")
+    self.response.setValue(nil, forKey: "error")
+    
+    Aziface.IsRunning = false
+    
+    return self.getStringifyResponse()
   }
 
-  private func onProcessorError(data: NSMutableDictionary, status: FaceTecSessionStatus)
-    -> NSDictionary
+  private func onProcessorError(message: String, code: String)
+    -> String
   {
-    let message = self.error.getMessage(status: status)
-    let code = self.error.getCode(status: status)
+    self.response = NSMutableDictionary()
 
     let error: NSMutableDictionary = NSMutableDictionary()
     error.setValue(message, forKey: "message")
     error.setValue(code, forKey: "code")
 
-    data.setValue(false, forKey: "isSuccess")
-    data.setValue(nil, forKey: "data")
-    data.setValue(error, forKey: "error")
+    self.response.setValue(false, forKey: "isSuccess")
+    self.response.setValue(nil, forKey: "data")
+    self.response.setValue(error, forKey: "error")
     
     self.emitter.emitOnError(true)
-
-    return data
-  }
-
-  private func onCallProcessorError(message: String, code: String) -> NSDictionary {
-    let error: NSMutableDictionary = NSMutableDictionary()
-    error.setValue(message, forKey: "message")
-    error.setValue(code, forKey: "code")
-
-    let processor: NSMutableDictionary = NSMutableDictionary()
-    processor.setValue(false, forKey: "isSuccess")
-    processor.setValue(nil, forKey: "data")
-    processor.setValue(error, forKey: "error")
-
-    self.emitter.emitOnError(true)
-
+    
     Aziface.IsRunning = false
 
-    return processor
+    return self.getStringifyResponse()
+  }
+  
+  private func getStringifyResponse() -> String {
+    guard let jsonData = try? JSONSerialization.data(withJSONObject: self.response, options: []),
+      let jsonString = String(data: jsonData, encoding: .utf8) else {
+      return "{\"isSuccess\":false}"
+    }
+    
+    return jsonString
   }
 }
