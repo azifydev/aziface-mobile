@@ -330,7 +330,7 @@ export interface ProcessorData {
    *
    * @processors All methods.
    */
-  serverInfo: unknown | null;
+  serverInfo?: unknown | null;
 
   /**
    * @description The ID scan results so far.

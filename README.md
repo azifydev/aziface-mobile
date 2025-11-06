@@ -441,7 +441,7 @@ This is data response processor. Each processor can give different responses.
 | `responseBlob`          | `string`                                                                                  | The raw response blob from the server.            |
 | `httpCallInfo`          | [`ProcessorHttpCallInfo`](#processorhttpcallinfo) or `null` or `undefined`                | The HTTP call information.                        |
 | `didError`              | `boolean`                                                                                 | Indicates if an error occurred during processing. |
-| `serverInfo`            | `unknown` or `null`                                                                       | The server information.                           |
+| `serverInfo`            | `unknown` or `null` or `undefined`                                                        | The server information.                           |
 | `idScanResultsSoFar`    | [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar) or or `null` or `undefined` | The ID scan results so far.                       |
 
 #### `ProcessorError`
