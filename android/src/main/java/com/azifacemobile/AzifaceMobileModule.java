@@ -280,7 +280,13 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void vocal() {
-    if (IsRunning || Vocal.isDeviceMuted(this)) {
+    final boolean isMuted = Vocal.isDeviceMuted(this);
+
+    if (IsRunning || isMuted) {
+      if (isMuted) {
+        this.isEnabled = false;
+      }
+
       this.onVocal(this.isEnabled);
       return;
     }
