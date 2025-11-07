@@ -116,9 +116,9 @@ export function Home() {
     }
   };
 
-  const onVocal = () => {
-    setIsEnabledVocal((prev) => !prev);
-    vocal();
+  const onVocal = (enabled: boolean) => {
+    console.log('onVocal', enabled);
+    setIsEnabledVocal(enabled);
   };
 
   return (
@@ -134,7 +134,7 @@ export function Home() {
         onClose={(event) => console.log('onClose', event)}
         onCancel={(event) => console.log('onCancel', event)}
         onError={(event) => console.log('onError', event)}
-        onVocal={(event) => console.log('onVocal', event)}
+        onVocal={onVocal}
       >
         <TouchableOpacity
           style={styles.button}
@@ -179,7 +179,7 @@ export function Home() {
           <Text style={styles.buttonText}>Photo Scan</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity {...commonButtonProps} onPress={onVocal}>
+        <TouchableOpacity {...commonButtonProps} onPress={vocal}>
           <Text style={styles.buttonText}>
             Vocal {isEnabledVocal ? 'On' : 'Off'}
           </Text>

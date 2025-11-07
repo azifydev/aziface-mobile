@@ -747,16 +747,15 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 ## Vocal Guidance
 
-The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized.
+The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized. The `vocal` method will always return `false` when the device is muted.
+
+**Note**: We recommend to use the `FaceView` component for control vocal guidance state with efficiently.
 
 ```tsx
 import { useState } from 'react';
+import { Button } from 'react-native';
 // ...
-import {
-  initialize,
-  vocal,
-  type Params /* ... */,
-} from '@azify/aziface-mobile';
+import { initialize, vocal, type Params } from '@azify/aziface-mobile';
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -781,12 +780,20 @@ export default function App() {
   }
 
   // Call onVocal function when SDK is initialized!
-  function onVocal() {
-    setIsVocalEnabled((previous) => !previous);
-    vocal();
+  function onVocal(enabled: boolean) {
+    setIsVocalEnabled(enabled);
   }
 
-  // ...
+  return (
+    <FaceView onVocal={onVocal}>
+      {/* ... */}
+
+      <Button
+        title={isVocalEnabled ? 'Vocal ON' : 'Vocal OFF'}
+        onPress={vocal}
+      />
+    </FaceView>
+  );
 }
 ```
 
