@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/azifydev/aziface-mobile/compare/v3.0.3...v3.1.0) (2025-11-07)
+
+
+### Features
+
+* **WL-95:** Response to all processors ([#14](https://github.com/azifydev/aziface-mobile/issues/14)) ([1d0bc07](https://github.com/azifydev/aziface-mobile/commit/1d0bc073d79a186091d6d042a1dd689f001036d8))
+
 ## [3.0.3](https://github.com/azifydev/aziface-mobile/compare/v3.0.2...v3.0.3) (2025-10-31)
 
 
