@@ -40,12 +40,6 @@ public class Vocal {
 
   public static void setVocalGuidanceMode(AzifaceMobileModule module) {
     if (isDeviceMuted(module)) {
-      // TODO: Add custom message for AlertDialog
-      AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(module.getContext(), android.R.style.Theme_Holo_Light)).create();
-      alertDialog.setMessage("Vocal Guidance is disabled when the device is muted");
-      alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-        (dialog, which) -> dialog.dismiss());
-      alertDialog.show();
       return;
     }
 

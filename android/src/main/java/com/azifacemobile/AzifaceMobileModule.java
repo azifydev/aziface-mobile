@@ -280,15 +280,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void vocal() {
-    /*
-     * TODO: Fix crash when device is muted.
-     *
-     * Current workaround is to check if device is muted and skip vocal guidance
-     * toggle in that case.
-     */
-    final boolean isMuted = Vocal.isDeviceMuted(this);
-
-    if (IsRunning || isMuted) {
+    if (IsRunning || Vocal.isDeviceMuted(this)) {
       this.onVocal(this.isEnabled);
       return;
     }
