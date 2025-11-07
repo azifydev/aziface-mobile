@@ -56,27 +56,36 @@ public class NetworkingRequest {
     NetworkingLib.getApiClient().newCall(request).enqueue(new okhttp3.Callback() {
       @Override
       public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-        String responseBlob = getResponseBlobOrHandleError(response, referencingProcessor, sessionRequestCallback);
+        JSONObject responseJSON = getResponseJSONOrHandleError(response, referencingProcessor, sessionRequestCallback);
+
+        String responseBlob = null;
+
+        try {
+          if (responseJSON != null) {
+            responseBlob = responseJSON.getString("responseBlob");
+          }
+        } catch (JSONException ignored) {}
+
         if (responseBlob != null) {
-          referencingProcessor.onResponseBlobReceived(responseBlob, sessionRequestCallback);
+          referencingProcessor.onResponseBlobReceived(responseJSON, sessionRequestCallback);
         }
       }
 
       @Override
       public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        referencingProcessor.onCatastrophicNetworkError(sessionRequestCallback);
+        referencingProcessor.onCatastrophicNetworkError(null, sessionRequestCallback);
       }
     });
   }
 
-  static String getResponseBlobOrHandleError(okhttp3.Response response, SessionRequestProcessor referencingProcessor, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) throws IOException {
+  @Nullable
+  static JSONObject getResponseJSONOrHandleError(okhttp3.Response response, SessionRequestProcessor referencingProcessor, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) throws IOException {
     if (response.isSuccessful() && response.body() != null) {
       try {
         JSONObject responseJSON = new JSONObject(response.body().string());
 
-        String responseBlob = responseJSON.getString("responseBlob");
         response.close();
-        return responseBlob;
+        return responseJSON;
       } catch (JSONException e) {
         callAbortAndClose(referencingProcessor, response, sessionRequestCallback);
       }
@@ -88,7 +97,7 @@ public class NetworkingRequest {
   }
 
   static void callAbortAndClose(SessionRequestProcessor referencingProcessor, okhttp3.Response response, @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback) {
-    referencingProcessor.onCatastrophicNetworkError(sessionRequestCallback);
+    referencingProcessor.onCatastrophicNetworkError(null, sessionRequestCallback);
     response.close();
   }
 }

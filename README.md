@@ -7,6 +7,7 @@
   <p>
     <img alt="Version" src="https://img.shields.io/github/package-json/v/azifydev/aziface-mobile?style=flat&color=brightgreen">
     <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/%40azify%2Faziface-mobile?style=flat">
+    <img alt="Unpacked Size" src="https://img.shields.io/npm/unpacked-size/%40azify%2Faziface-mobile?style=flat&color=brightgreen">
   </p>
 </div>
 
@@ -26,6 +27,14 @@ Aziface SDK adapter to react native. 📱
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
   - [`Headers`](#azifacesdkheaders)
+  - [`Processor`](#processor)
+    - [`ProcessorData`](#processordata)
+      - [`ProcessorAdditionalSessionData`](#processoradditionalsessiondata)
+      - [`ProcessorResult`](#processorresult)
+      - [`ProcessorHttpCallInfo`](#processorhttpcallinfo)
+        - [`ProcessorRequestMethod`](#processorrequestmethod)
+      - [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)
+    - [`ProcessorError`](#processorerror)
   - [`Theme`](#theme)
     - [`ButtonLocation`](#buttonlocation)
     - [`ThemeImage`](#themeimage)
@@ -88,6 +97,7 @@ import {
   FaceView,
   type Params,
   type Headers,
+  type Processor,
 } from '@azify/aziface-mobile';
 
 export default function App() {
@@ -137,30 +147,30 @@ export default function App() {
 
   const onFaceScan = async (type: string, data?: any) => {
     try {
-      let isSuccess = false;
+      let processor: Processor | null = null;
 
       switch (type) {
         case 'enroll':
-          isSuccess = await enroll(data);
+          processor = await enroll(data);
           break;
         case 'liveness':
-          isSuccess = await liveness(data);
+          processor = await liveness(data);
           break;
         case 'authenticate':
-          isSuccess = await authenticate(data);
+          processor = await authenticate(data);
           break;
         case 'photoMatch':
-          isSuccess = await photoMatch(data);
+          processor = await photoMatch(data);
           break;
         case 'photoScan':
-          isSuccess = await photoScan(data);
+          processor = await photoScan(data);
           break;
         default:
-          isSuccess = false;
+          processor = false;
           break;
       }
 
-      console.log(type, isSuccess);
+      console.log(type, processor);
     } catch (error: any) {
       console.error(type, error.message);
     }
@@ -274,16 +284,16 @@ const styles = StyleSheet.create({
 
 ## API
 
-| Methods        | Return Type        | Platform |
-| -------------- | ------------------ | -------- |
-| `initialize`   | `Promise<boolean>` | All      |
-| `enroll`       | `Promise<boolean>` | All      |
-| `authenticate` | `Promise<boolean>` | All      |
-| `liveness`     | `Promise<boolean>` | All      |
-| `photoMatch`   | `Promise<boolean>` | All      |
-| `photoScan`    | `Promise<boolean>` | All      |
-| `vocal`        | `void`             | All      |
-| `setTheme`     | `void`             | All      |
+| Methods        | Return Type          | Platform |
+| -------------- | -------------------- | -------- |
+| `initialize`   | `Promise<boolean>`   | All      |
+| `enroll`       | `Promise<Processor>` | All      |
+| `authenticate` | `Promise<Processor>` | All      |
+| `liveness`     | `Promise<Processor>` | All      |
+| `photoMatch`   | `Promise<Processor>` | All      |
+| `photoScan`    | `Promise<Processor>` | All      |
+| `vocal`        | `void`               | All      |
+| `setTheme`     | `void`               | All      |
 
 ### `initialize`
 
@@ -360,27 +370,35 @@ This method must be used to **set** the **theme** of the Aziface SDK screen.
 
 ## Types
 
-| Types                                                          | Platform |
-| -------------------------------------------------------------- | -------- |
-| [`Params`](#params)                                            | All      |
-| [`Headers`](#headers)                                          | All      |
-| [`Theme`](#theme)                                              | All      |
-| [`ButtonLocation`](#buttonlocation)                            | All      |
-| [`ThemeImage`](#themeimage)                                    | All      |
-| [`ThemeFrame`](#themeframe)                                    | All      |
-| [`ThemeButton`](#themebutton)                                  | All      |
-| [`ThemeGuidance`](#themeguidance)                              | All      |
-| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)        | All      |
-| [`ThemeOval`](#themeoval)                                      | All      |
-| [`ThemeFeedback`](#themefeedback)                              | All      |
-| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only) | iOS      |
-| [`Point`](#point-ios-only)                                     | iOS      |
-| [`ThemeResultScreen`](#themeresultscreen)                      | All      |
-| [`ThemeResultAnimation`](#themeresultanimation)                | All      |
-| [`ThemeIdScan`](#themeidscan)                                  | All      |
-| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)    | All      |
-| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)          | All      |
-| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)        | All      |
+| Types                                                               | Platform |
+| ------------------------------------------------------------------- | -------- |
+| [`Params`](#params)                                                 | All      |
+| [`Headers`](#headers)                                               | All      |
+| [`Processor`](#processor)                                           | All      |
+| [`ProcessorData`](#processordata)                                   | All      |
+| [`ProcessorError`](#processorerror)                                 | All      |
+| [`ProcessorAdditionalSessionData`](#processoradditionalsessiondata) | All      |
+| [`ProcessorResult`](#processorresult)                               | All      |
+| [`ProcessorHttpCallInfo`](#processorhttpcallinfo)                   | All      |
+| [`ProcessorRequestMethod`](#processorrequestmethod)                 | All      |
+| [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)       | All      |
+| [`Theme`](#theme)                                                   | All      |
+| [`ButtonLocation`](#buttonlocation)                                 | All      |
+| [`ThemeImage`](#themeimage)                                         | All      |
+| [`ThemeFrame`](#themeframe)                                         | All      |
+| [`ThemeButton`](#themebutton)                                       | All      |
+| [`ThemeGuidance`](#themeguidance)                                   | All      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)             | All      |
+| [`ThemeOval`](#themeoval)                                           | All      |
+| [`ThemeFeedback`](#themefeedback)                                   | All      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)      | iOS      |
+| [`Point`](#point-ios-only)                                          | iOS      |
+| [`ThemeResultScreen`](#themeresultscreen)                           | All      |
+| [`ThemeResultAnimation`](#themeresultanimation)                     | All      |
+| [`ThemeIdScan`](#themeidscan)                                       | All      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)         | All      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)               | All      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)             | All      |
 
 ### `Params`
 
@@ -396,9 +414,117 @@ Here must be passed to initialize the Aziface SDK! Case the parameters isn't pro
 
 Here you can add your headers to send request when some method is called. Only values from type **string**, **null** or **undefined** are accepts!
 
-| `Headers`       | type                            | Required | Default     |
-| --------------- | ------------------------------- | -------- | ----------- |
-| `[key: string]` | `string`, `null` or `undefined` | ❌       | `undefined` |
+| `Headers`       | type                              | Required | Default     |
+| --------------- | --------------------------------- | -------- | ----------- |
+| `[key: string]` | `string` or `null` or `undefined` | ❌       | `undefined` |
+
+### `Processor`
+
+A processor always return this properties.
+
+| `Processor` | type                                                         | Description                                 |
+| ----------- | ------------------------------------------------------------ | ------------------------------------------- |
+| `isSuccess` | `boolean`                                                    | Indicates if the processing was successful. |
+| `data`      | [`ProcessorData`](#processordata) or `null` or `undefined`   | The processor data response.                |
+| `error`     | [`ProcessorError`](#processorerror) or `null` or `undefined` | The processor error response.               |
+
+#### `ProcessorData`
+
+This is data response processor. Each processor can give different responses.
+
+| `ProcessorData`         | type                                                                                      | Description                                       |
+| ----------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `idScanSessionId`       | `string` or `null` or `undefined`                                                         | The unique identifier for the ID scan session.    |
+| `externalDatabaseRefID` | `string` or `null` or `undefined`                                                         | The unique identifier for the face session.       |
+| `additionalSessionData` | [`ProcessorAdditionalSessionData`](#processoradditionalsessiondata)                       | The additional session data.                      |
+| `result`                | [`ProcessorResult`](#processorresult) or `null` or `undefined`                            | The result of the processing.                     |
+| `responseBlob`          | `string`                                                                                  | The raw response blob from the server.            |
+| `httpCallInfo`          | [`ProcessorHttpCallInfo`](#processorhttpcallinfo) or `null` or `undefined`                | The HTTP call information.                        |
+| `didError`              | `boolean`                                                                                 | Indicates if an error occurred during processing. |
+| `serverInfo`            | `unknown` or `null` or `undefined`                                                        | The server information.                           |
+| `idScanResultsSoFar`    | [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar) or or `null` or `undefined` | The ID scan results so far.                       |
+
+#### `ProcessorError`
+
+This is error response processor.
+
+| `ProcessorError` | type                | Description        |
+| ---------------- | ------------------- | ------------------ |
+| `code`           | [`Errors`](#errors) | The error code.    |
+| `message`        | `string`            | The error message. |
+
+##### `ProcessorAdditionalSessionData`
+
+The additional session data are extra information about device and processor.
+
+| `ProcessorAdditionalSessionData` | type     | Description                 |
+| -------------------------------- | -------- | --------------------------- |
+| `platform`                       | `string` | The platform of the device. |
+| `appID`                          | `string` | The application ID.         |
+| `installationID`                 | `string` | The installation ID.        |
+| `deviceModel`                    | `string` | The device model.           |
+| `deviceSDKVersion`               | `string` | The device SDK version.     |
+| `userAgent`                      | `string` | The user agent.             |
+| `sessionID`                      | `string` | The session ID.             |
+
+##### `ProcessorResult`
+
+The result object of the face or scan analyze.
+
+| `ProcessorResult`   | type                    | Description                             |
+| ------------------- | ----------------------- | --------------------------------------- |
+| `livenessProven`    | `boolean`               | Indicates if it's liveness proven.      |
+| `auditTrailImage`   | `string`                | The audit trail image in base64 format. |
+| `ageV2GroupEnumInt` | `number`                | The age group enumeration integer.      |
+| `matchLevel`        | `number` or `undefined` | The match level.                        |
+
+##### `ProcessorHttpCallInfo`
+
+The HTTP information of the processor request.
+
+| `ProcessorHttpCallInfo` | type                                                | Description                      |
+| ----------------------- | --------------------------------------------------- | -------------------------------- |
+| `tid`                   | `string`                                            | The transaction ID.              |
+| `path`                  | `string`                                            | The request path.                |
+| `date`                  | `string`                                            | The date of the request.         |
+| `epochSecond`           | `number`                                            | The epoch second of the request. |
+| `requestMethod`         | [`ProcessorRequestMethod`](#processorrequestmethod) | The request method.              |
+
+###### `ProcessorRequestMethod`
+
+The request method of the processor.
+
+| `ProcessorRequestMethod` | Description   |
+| ------------------------ | ------------- |
+| `GET`                    | GET request.  |
+| `POST`                   | POST request. |
+
+##### `ProcessorIDScanResultsSoFar`
+
+The processor scan result. It's shown when you use `photoScan` or `photoMatch`.
+
+| `ProcessorIDScanResultsSoFar`                 | Type      | Description                                                   |
+| --------------------------------------------- | --------- | ------------------------------------------------------------- |
+| `photoIDNextStepEnumInt`                      | `number`  | The photo ID next step enumeration integer.                   |
+| `fullIDStatusEnumInt`                         | `number`  | The full ID status enumeration integer.                       |
+| `faceOnDocumentStatusEnumInt`                 | `number`  | The face on document status enumeration integer.              |
+| `textOnDocumentStatusEnumInt`                 | `number`  | The text on document status enumeration integer.              |
+| `expectedMediaStatusEnumInt`                  | `number`  | The expected media status enumeration integer.                |
+| `unexpectedMediaEncounteredAtLeastOnce`       | `boolean` | Indicates if unexpected media was encountered at least once.  |
+| `documentData`                                | `string`  | The document data in stringified JSON format.                 |
+| `nfcStatusEnumInt`                            | `number`  | The NFC status enumeration integer.                           |
+| `nfcAuthenticationStatusEnumInt`              | `number`  | The NFC authentication status enumeration integer.            |
+| `barcodeStatusEnumInt`                        | `number`  | The barcode status enumeration integer.                       |
+| `mrzStatusEnumInt`                            | `number`  | The MRZ status enumeration integer.                           |
+| `idFoundWithoutQualityIssueDetected`          | `boolean` | Indicates if the ID was found without quality issues.         |
+| `idFacePhotoFoundWithoutQualityIssueDetected` | `boolean` | Indicates if the face photo was found without quality issues. |
+| `idScanAgeV2GroupEnumInt`                     | `number`  | The ID scan age group enumeration integer.                    |
+| `didMatchIDScanToOCRTemplate`                 | `boolean` | Indicates if the ID scan matched the OCR template.            |
+| `isUniversalIDMode`                           | `boolean` | Indicates if the universal ID mode is enabled.                |
+| `matchLevel`                                  | `number`  | The match level.                                              |
+| `matchLevelNFCToFaceMap`                      | `number`  | The match level NFC to face map.                              |
+| `faceMapAgeV2GroupEnumInt`                    | `number`  | The face map age group enumeration integer.                   |
+| `watermarkAndHologramStatusEnumInt`           | `number`  | The watermark and hologram status enumeration integer.        |
 
 ### `Theme`
 
@@ -621,16 +747,15 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 ## Vocal Guidance
 
-The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized.
+The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized. The `vocal` method will always return `false` when the device is muted.
+
+**Note**: We recommend to use the `FaceView` component for control vocal guidance state with efficiently.
 
 ```tsx
 import { useState } from 'react';
+import { Button } from 'react-native';
 // ...
-import {
-  initialize,
-  vocal,
-  type Params /* ... */,
-} from '@azify/aziface-mobile';
+import { initialize, vocal, type Params } from '@azify/aziface-mobile';
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -655,12 +780,20 @@ export default function App() {
   }
 
   // Call onVocal function when SDK is initialized!
-  function onVocal() {
-    setIsVocalEnabled((previous) => !previous);
-    vocal();
+  function onVocal(enabled: boolean) {
+    setIsVocalEnabled(enabled);
   }
 
-  // ...
+  return (
+    <FaceView onVocal={onVocal}>
+      {/* ... */}
+
+      <Button
+        title={isVocalEnabled ? 'Vocal ON' : 'Vocal OFF'}
+        onPress={vocal}
+      />
+    </FaceView>
+  );
 }
 ```
 

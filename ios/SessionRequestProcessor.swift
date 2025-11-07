@@ -17,6 +17,7 @@ import Foundation
 // - Adding additional asynchronous calls to this code is not allowed.  Only make your own additional asynchronous calls once the FaceTec UI is closed.
 // - Adding code that modifies any App UI (Yours or FaceTec's) is not allowed.  Only add code that modifies your own App UI once the FaceTec UI is closed.
 class SessionRequestProcessor: NSObject, FaceTecSessionRequestProcessor, URLSessionTaskDelegate {
+  public static var Response: NSMutableDictionary = NSMutableDictionary()
   private let module: Aziface
   private var data: NSDictionary?
 
@@ -71,5 +72,9 @@ class SessionRequestProcessor: NSObject, FaceTecSessionRequestProcessor, URLSess
     DispatchQueue.main.async {
       self.module.demonstrateHandlingFaceTecExit(sessionResult.sessionStatus)
     }
+  }
+
+  func onResponse(response: NSMutableDictionary) {
+    SessionRequestProcessor.Response = response
   }
 }

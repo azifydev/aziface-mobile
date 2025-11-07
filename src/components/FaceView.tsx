@@ -7,7 +7,7 @@ import {
   onInitialize as initialize,
   onOpen as open,
   onVocal as vocal,
-} from '../methods';
+} from '../listeners';
 import type { FaceViewProps } from '../@types';
 import type { EventSubscription } from 'react-native';
 

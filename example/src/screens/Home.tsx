@@ -17,6 +17,7 @@ import {
   FaceView,
   type Params,
   type Headers,
+  type Processor,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -85,39 +86,39 @@ export function Home() {
 
   const onFaceScan = async (type: FaceType, data?: any) => {
     try {
-      let isSuccess = false;
+      let process: Processor | null = null;
 
       switch (type) {
         case 'enroll':
-          isSuccess = await enroll(data);
+          process = await enroll(data);
           break;
         case 'liveness':
-          isSuccess = await liveness(data);
+          process = await liveness(data);
           break;
         case 'authenticate':
-          isSuccess = await authenticate(data);
+          process = await authenticate(data);
           break;
         case 'photoMatch':
-          isSuccess = await photoMatch(data);
+          process = await photoMatch(data);
           break;
         case 'photoScan':
-          isSuccess = await photoScan(data);
+          process = await photoScan(data);
           break;
         default:
-          isSuccess = false;
+          process = null;
           break;
       }
 
       setIsEnabledVocal(false);
-      console.log(type, isSuccess);
+      console.log(type, process);
     } catch (error: any) {
       console.error(type, error.message);
     }
   };
 
-  const onVocal = () => {
-    setIsEnabledVocal((prev) => !prev);
-    vocal();
+  const onVocal = (enabled: boolean) => {
+    console.log('onVocal', enabled);
+    setIsEnabledVocal(enabled);
   };
 
   return (
@@ -133,7 +134,7 @@ export function Home() {
         onClose={(event) => console.log('onClose', event)}
         onCancel={(event) => console.log('onCancel', event)}
         onError={(event) => console.log('onError', event)}
-        onVocal={(event) => console.log('onVocal', event)}
+        onVocal={onVocal}
       >
         <TouchableOpacity
           style={styles.button}
@@ -178,7 +179,7 @@ export function Home() {
           <Text style={styles.buttonText}>Photo Scan</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity {...commonButtonProps} onPress={onVocal}>
+        <TouchableOpacity {...commonButtonProps} onPress={vocal}>
           <Text style={styles.buttonText}>
             Vocal {isEnabledVocal ? 'On' : 'Off'}
           </Text>
