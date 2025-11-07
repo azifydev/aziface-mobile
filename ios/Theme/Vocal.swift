@@ -83,19 +83,13 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
       print(error.localizedDescription)
     }
   }
-  
+
   public static func isDeviceMuted() -> Bool {
     return !(AVAudioSession.sharedInstance().outputVolume > 0)
   }
 
   public static func setVocalGuidanceMode() {
     if Vocal.isDeviceMuted() {
-      // TODO: Add custom message for UIAlertAction
-      let alert = UIAlertController(
-        title: nil, message: "Vocal Guidance is disabled when the device is muted",
-        preferredStyle: UIAlertController.Style.alert)
-      alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-      self.module?.present(alert, animated: true, completion: nil)
       return
     }
 

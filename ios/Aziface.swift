@@ -63,9 +63,9 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       } else {
         self.isInitialized = false
         self.emitter.emitOnInitialize(false)
-        
+
         Aziface.IsRunning = false
-        
+
         return reject("Configuration aren't provided", "ConfigNotProvided", nil)
       }
     }
@@ -206,15 +206,13 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   }
 
   @objc public func vocal() {
-    /**
-    * TODO: Fix crash when device is muted.
-    *
-    * Current workaround is to check if device is muted and skip vocal guidance
-    * toggle in that case.
-    */
-    let isMuted: Bool = Vocal.isDeviceMuted()
-
+    let isMuted = Vocal.isDeviceMuted()
+    
     if Aziface.IsRunning || isMuted {
+      if (isMuted) {
+        self.isEnabled = false
+      }
+      
       self.emitter.emitOnVocal(self.isEnabled)
       return
     }
@@ -285,7 +283,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     if self.error.isError(status: status) {
       let message = self.error.getMessage(status: status)
       let code = self.error.getCode(status: status)
-      
+
       self.resolver?(self.onProcessorError(message: message, code: code))
     } else {
       if self.isEnabled {
@@ -341,9 +339,9 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private func onProcessorSuccess() -> String {
     self.response.setValue(true, forKey: "isSuccess")
     self.response.setValue(nil, forKey: "error")
-    
+
     Aziface.IsRunning = false
-    
+
     return self.getStringifyResponse()
   }
 
@@ -359,20 +357,20 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.response.setValue(false, forKey: "isSuccess")
     self.response.setValue(nil, forKey: "data")
     self.response.setValue(error, forKey: "error")
-    
+
     self.emitter.emitOnError(true)
-    
+
     Aziface.IsRunning = false
 
     return self.getStringifyResponse()
   }
-  
+
   private func getStringifyResponse() -> String {
     guard let jsonData = try? JSONSerialization.data(withJSONObject: self.response, options: []),
       let jsonString = String(data: jsonData, encoding: .utf8) else {
       return "{\"isSuccess\":false}"
     }
-    
+
     return jsonString
   }
 }
