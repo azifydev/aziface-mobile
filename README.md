@@ -61,6 +61,8 @@ Aziface SDK adapter to react native. 📱
   - [How to add images in iOS?](#how-to-add-images-in-ios)
   - [Example with images added](#example-with-images-added)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
+- [Integration guide](#integration-guide)
+  - [`flutter`](./FLUTTER.MD).
 - [Contributing](#contributing)
 - [License](#license)
 
