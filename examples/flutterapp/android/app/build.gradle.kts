@@ -42,3 +42,18 @@ android {
 flutter {
     source = "../.."
 }
+
+repositories {
+    maven(url = "https://jitpack.io")
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.annotation:annotation:1.9.1")
+    implementation("com.github.azifydev:facetec-aar:v1.1.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.0")
+    implementation("com.squareup.okio:okio:3.16.2")
+}

@@ -69,6 +69,9 @@ public class AzifaceError {
   }
 
   public Boolean isError(FaceTecSessionStatus status) {
+    if (module == null) {
+      return true;
+    }
     module.onOpen(false);
     module.onClose(true);
 

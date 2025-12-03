@@ -2,17 +2,14 @@ package com.azifacemobile.services;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import com.facetec.sdk.FaceTecSessionRequestProcessor;
 import com.azifacemobile.SessionRequestProcessor;
 import com.azifacemobile.AzifaceMobileModule;
 import com.azifacemobile.Config;
-import com.facebook.react.bridge.ReadableMap;
-import com.facetec.sdk.FaceTecSessionRequestProcessor;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -24,13 +21,13 @@ public class NetworkingRequest {
     @NonNull SessionRequestProcessor referencingProcessor,
     @NonNull String sessionRequestBlob,
     @NonNull FaceTecSessionRequestProcessor.Callback sessionRequestCallback,
-    @Nullable ReadableMap data
+    @Nullable Map<String, Object> data
   ) {
     JSONObject sessionRequestCallPayload = new JSONObject();
 
     try {
       if (data != null) {
-        sessionRequestCallPayload.put("data", new JSONObject(data.toHashMap()));
+        sessionRequestCallPayload.put("data", new JSONObject(data));
       }
       sessionRequestCallPayload.put("requestBlob", sessionRequestBlob);
 

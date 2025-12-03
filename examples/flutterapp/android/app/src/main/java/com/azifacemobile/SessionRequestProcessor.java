@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.azifacemobile.services.NetworkingRequest;
-import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSessionRequestProcessor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // This class demonstrates the most important integration point in the FaceTec Device SDK  -- The Session Request Processor.
 //
@@ -29,14 +31,14 @@ final public class SessionRequestProcessor implements FaceTecSessionRequestProce
   @Nullable
   public static JSONObject Response;
   @Nullable
-  private final ReadableMap data;
+  private final Map<String, Object> data;
 
   public SessionRequestProcessor() {
     this.data = null;
   }
 
-  public SessionRequestProcessor(@Nullable ReadableMap data) {
-    this.data = data;
+  public SessionRequestProcessor(@Nullable Map<String, Object> data) {
+      this.data = data;
   }
 
   // onSessionRequest is the core method called by the FaceTec SDK when a request needs to be processed by the FaceTec SDK.

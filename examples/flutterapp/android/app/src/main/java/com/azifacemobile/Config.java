@@ -1,83 +1,83 @@
 package com.azifacemobile;
 
+import android.util.Log;
 import com.azifacemobile.theme.Theme;
-import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Request;
 
 public class Config {
-  public static Boolean IsDevelopment = false;
-  public static String DeviceKeyIdentifier = null;
-  public static String BaseURL = null;
-  public static ReadableMap Headers = null;
+    public static Boolean IsDevelopment = false;
+    public static String DeviceKeyIdentifier = null;
+    public static String BaseURL = null;
+    public static Map<String, Object> Headers = null;
 
-  private static Map<String, String> parseReadableMapToMap() {
-    Map<String, String> headers = new HashMap<>();
-    if (Headers == null) {
-      return headers;
+    private static Map<String, String> parseMapToHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        if (Headers == null) {
+            return headers;
+        }
+
+        for (Map.Entry<String, Object> entry : Headers.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            headers.put(key, value == null ? "" : value.toString());
+        }
+
+        return headers;
     }
 
-    for (Map.Entry<String, Object> entry : Headers.toHashMap().entrySet()) {
-      String key = entry.getKey();
-      Object value = entry.getValue();
-      headers.put(key, value == null ? "" : value.toString());
+    public static okhttp3.Headers getHeaders() {
+        Map<String, String> headers = parseMapToHeaders();
+
+        okhttp3.Request.Builder buildHeader = new Request.Builder()
+                .header("Content-Type", "application/json")
+                .header("X-Device-Key", Config.DeviceKeyIdentifier);
+
+        if (IsDevelopment) {
+           buildHeader.header("X-Testing-API-Header", FaceTecSDK.getTestingAPIHeader());
+        }
+
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+                  buildHeader = buildHeader.header(entry.getKey(), entry.getValue());
+        }
+
+        okhttp3.Request requestHeader = buildHeader
+                .url(Config.BaseURL)
+                .build();
+
+        return requestHeader.headers();
     }
 
-    return headers;
-  }
-
-  public static okhttp3.Headers getHeaders() {
-    Map<String, String> headers = parseReadableMapToMap();
-
-    okhttp3.Request.Builder buildHeader = new Request.Builder()
-      .header("Content-Type", "application/json")
-      .header("X-Device-Key", Config.DeviceKeyIdentifier);
-
-    if (IsDevelopment) {
-      buildHeader.header("X-Testing-API-Header", FaceTecSDK.getTestingAPIHeader());
+    public static void setDeviceKeyIdentifier(String deviceKeyIdentifier) {
+        DeviceKeyIdentifier = deviceKeyIdentifier;
     }
 
-    for (Map.Entry<String, String> entry : headers.entrySet()) {
-      buildHeader = buildHeader.header(entry.getKey(), entry.getValue());
+    public static void setBaseUrl(String baseUrl) {
+        BaseURL = baseUrl;
     }
 
-    okhttp3.Request requestHeader = buildHeader
-      .url(Config.BaseURL)
-      .build();
+    public static void setHeaders(Map<String, Object> headers) {
+        Headers = headers;
+    }
 
-    return requestHeader.headers();
-  }
+    public static void setIsDevelopment(Boolean isDevelopment) {
+        IsDevelopment = isDevelopment;
+    }
 
-  public static void setDeviceKeyIdentifier(String deviceKeyIdentifier) {
-    DeviceKeyIdentifier = deviceKeyIdentifier;
-  }
+    public static boolean isEmpty() {
+      if (DeviceKeyIdentifier == null || BaseURL == null) return true;
+      return DeviceKeyIdentifier.isEmpty() || BaseURL.isEmpty();
+    }
 
-  public static void setBaseUrl(String baseUrl) {
-    BaseURL = baseUrl;
-  }
 
-  public static void setHeaders(ReadableMap headers) {
-    Headers = headers;
-  }
-
-  public static void setIsDevelopment(Boolean isDevelopment) {
-    IsDevelopment = isDevelopment;
-  }
-
-  public static boolean isEmpty() {
-    if (DeviceKeyIdentifier == null || BaseURL == null) return true;
-    return DeviceKeyIdentifier.isEmpty() || BaseURL.isEmpty();
-  }
-
-  public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
+    public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
     FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
       .getButtonLocation("cancelButtonLocation");
 
-    FaceTecCustomization defaultCustomization = new FaceTecCustomization();
+        FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
     defaultCustomization.getFrameCustomization().cornerRadius = theme.getFrame().getCornerRadius();
     defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
@@ -160,7 +160,7 @@ public class Config {
       .getFrameStrokeColor();
 
     return defaultCustomization;
-  }
+    }
 
-  public static FaceTecCustomization currentCustomization = null;
+    public static FaceTecCustomization currentCustomization = null;
 }

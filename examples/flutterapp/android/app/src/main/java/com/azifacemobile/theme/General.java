@@ -32,8 +32,8 @@ public class General {
     if (!this.theme.exists(key)) {
       return defaultLocation;
     }
-
-    final String buttonLocation = com.azifacemobile.theme.Theme.Style.getString(key);
+    Object value = com.azifacemobile.theme.Theme.Style.get(key);
+    final String buttonLocation = (value instanceof String) ? (String) value : null;
     if (buttonLocation == null) {
       return defaultLocation;
     }
