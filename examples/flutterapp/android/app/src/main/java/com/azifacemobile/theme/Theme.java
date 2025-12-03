@@ -1,0 +1,99 @@
+package com.azifacemobile.theme;
+import android.content.Context;
+import com.example.flutterapp.R;
+import com.azifacemobile.Config;
+import com.facetec.sdk.FaceTecSDK;
+
+import java.util.Map;
+
+public class Theme {
+    private final Color color;
+    private final General general;
+    private final Image image;
+    private final Frame frame;
+    private final Guidance guidance;
+    private final Oval oval;
+    private final Feedback feedback;
+    private final ResultScreen resultScreen;
+    private final IdScan idScan;
+
+    public static Map<String, Object> Style = null;
+
+    public Theme(Context context) {
+        this.color = new Color();
+        this.general = new General();
+        this.frame = new Frame();
+        this.guidance = new Guidance();
+        this.oval = new Oval();
+        this.feedback = new Feedback();
+        this.resultScreen = new ResultScreen();
+        this.idScan = new IdScan();
+        this.image = new Image(context);
+    }
+
+    public static void setStyle(Map<String, Object> style) {
+        Style = style;
+    }
+
+    public static void setTheme() {
+    if (Config.currentCustomization == null) {
+      return;
+    }
+
+    updateTheme();
+  }
+
+  public static void updateTheme() {
+        Config.currentCustomization
+          .getIdScanCustomization().customNFCStartingAnimation = R.drawable.facetec_nfc_starting_animation;
+        Config.currentCustomization
+          .getIdScanCustomization().customNFCScanningAnimation = R.drawable.facetec_nfc_scanning_animation;
+        Config.currentCustomization
+          .getIdScanCustomization().customNFCCardStartingAnimation = R.drawable.facetec_nfc_card_starting_animation;
+        Config.currentCustomization
+          .getIdScanCustomization().customNFCCardScanningAnimation = R.drawable.facetec_nfc_card_scanning_animation;
+
+        Vocal.setVocalGuidanceSoundFiles();
+
+        FaceTecSDK.setCustomization(Config.currentCustomization);
+        FaceTecSDK.setLowLightCustomization(Config.currentCustomization);
+        FaceTecSDK.setDynamicDimmingCustomization(Config.currentCustomization);
+  }
+
+  public int getColor(String key) {
+    return this.color.getColor(key);
+  }
+
+  public int getImage(String key, int defaultImage) {
+    return this.image.getImage(key, defaultImage);
+  }
+
+  public General getGeneral() {
+    return this.general;
+  }
+
+
+  public Frame getFrame() {
+    return this.frame;
+  }
+
+  public Guidance getGuidance() {
+    return this.guidance;
+  }
+
+  public Oval getOval() {
+    return this.oval;
+  }
+
+  public Feedback getFeedback() {
+    return this.feedback;
+  }
+
+  public ResultScreen getResultScreen() {
+    return this.resultScreen;
+  }
+
+  public IdScan getIdScan() {
+    return this.idScan;
+  }
+}
