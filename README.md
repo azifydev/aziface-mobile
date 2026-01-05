@@ -61,6 +61,7 @@ Aziface SDK adapter to react native. 📱
   - [How to add images in iOS?](#how-to-add-images-in-ios)
   - [Example with images added](#example-with-images-added)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
+- [Flutter Devs](#flutter-devs)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -865,6 +866,12 @@ If you want to enable the camera, you need to add the following instructions in 
 ```
 
 > That's will be necessary to what iOS **works** correctly!
+
+<hr/>
+
+## Flutter Devs
+
+The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./FLUTTER.md).
 
 <hr/>
 

@@ -34,14 +34,14 @@
   "scripts": {
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/android/app/.cxx example/ios/build example/ios/Pods lib",
     "podspec": "pod ipc spec AzifaceMobile.podspec",
     "release": "npx semantic-release --ci",
     "prepare": "bob build",
     "prepack": "bob build",
     "setup": "npm i && npm run podspec && npm run prepack",
-    "android": "npm run setup && cd example && npm i && npm run start",
-    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start"
+    "android": "npm run setup && cd example && npm i && npm run start --reset-cache",
+    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start --reset-cache"
   },
   "keywords": [
     "react-native",
