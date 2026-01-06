@@ -870,6 +870,12 @@ If you want to enable the camera, you need to add the following instructions in 
 
 <hr/>
 
+## Integration guide
+
+The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./FLUTTER.md).
+
+<hr/>
+
 ## Contributing
 
 See the [contributing guide](./CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
