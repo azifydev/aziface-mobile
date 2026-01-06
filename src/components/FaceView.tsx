@@ -1,5 +1,5 @@
-import { memo, useEffect } from 'react';
-import { View } from 'react-native';
+import { useEffect } from 'react';
+import { View, type EventSubscription } from 'react-native';
 import {
   onCancel as cancel,
   onClose as close,
@@ -8,10 +8,9 @@ import {
   onOpen as open,
   onVocal as vocal,
 } from '../listeners';
-import type { FaceViewProps } from '../@types';
-import type { EventSubscription } from 'react-native';
+import type { FaceViewProps } from '../';
 
-function FaceView(props: FaceViewProps) {
+export function FaceView(props: FaceViewProps) {
   const {
     children,
     onCancel,
@@ -40,5 +39,3 @@ function FaceView(props: FaceViewProps) {
 
   return <View {...rest}>{children}</View>;
 }
-
-export default memo(FaceView);

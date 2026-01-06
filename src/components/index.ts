@@ -1,1 +1,1 @@
-export { default as FaceView } from './FaceView';
+export { FaceView } from './FaceView';

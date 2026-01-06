@@ -1,5 +1,5 @@
 import type { EventSubscription } from 'react-native';
-import { AzifaceMobile } from '../turbo';
+import AzifaceMobile from '../NativeAzifaceMobile';
 
 type Listener<T = any> = (value: T) => void;
 
