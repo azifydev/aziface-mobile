@@ -19,8 +19,10 @@ jobs:
           node-version: 24
 
       - name: Configure NPM token and install dependencies
+        env:
+          NPM_TOKEN_V2: ${{ secrets.NPM_TOKEN_V2 }}
         run: |
-          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN_V2
+          npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN_V2
           npm ci
 
       - name: Run build
