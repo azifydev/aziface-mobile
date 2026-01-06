@@ -1,21 +1,37 @@
 package com.azifacemobile;
 
 import static java.util.UUID.randomUUID;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
+
 import com.azifacemobile.errors.AzifaceError;
 import com.azifacemobile.theme.Theme;
 import com.azifacemobile.theme.Vocal;
 import com.azifacemobile.utils.CommonParams;
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.module.annotations.ReactModule;
+
 import com.facetec.sdk.*;
 import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.Iterator;
 
-public class AzifaceMobileModule {
+@ReactModule(name = AzifaceMobileModule.NAME)
+public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
   public static final String NAME = "AzifaceMobile";
   private static Boolean IsRunning = false;
@@ -423,5 +439,4 @@ public class AzifaceMobileModule {
   public void onVocal(Boolean value) {
     this.emitOnVocal(value);
   }
-
 }
