@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/azifydev/aziface-mobile/compare/v3.1.3...v3.1.4) (2026-01-06)
+
+
+### Bug Fixes
+
+* adjust readme ([f7f30b0](https://github.com/azifydev/aziface-mobile/commit/f7f30b05a612a42aa79cfa7bfe4216334cc9bb00))
+
 ## [3.1.3](https://github.com/azifydev/aziface-mobile/compare/v3.1.2...v3.1.3) (2026-01-06)
 
 
