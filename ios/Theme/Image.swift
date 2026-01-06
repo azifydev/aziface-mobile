@@ -7,7 +7,7 @@ public class Image {
     self.style = Style()
   }
 
-  public func getImage(_ key: String, defaultImage: String) -> UIImage? {
+  public func getImg(_ key: String, defaultImage: String) -> UIImage? {
     let theme = self.style.getTarget("image")
 
     if !self.style.exists(theme, key: key) {
@@ -20,5 +20,16 @@ public class Image {
     }
 
     return UIImage(named: imageName)
+  }
+
+  public func getShowBranding() -> Bool {
+    let KEY = "isShowBranding"
+    let theme = self.style.getTarget("image")
+
+    if !self.style.exists(theme, key: KEY) {
+      return true
+    }
+
+    return theme?[KEY] as! Bool
   }
 }

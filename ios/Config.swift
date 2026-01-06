@@ -61,8 +61,9 @@ public class Config {
     defaultCustomization.frameCustomization.backgroundColor = theme.getFrame().getBackgroundColor()
     defaultCustomization.frameCustomization.borderColor = theme.getFrame().getBorderColor()
 
-    defaultCustomization.overlayCustomization.brandingImage = theme.getImage(
-      "logo", defaultImage: "facetec_your_app_logo")
+    defaultCustomization.overlayCustomization.brandingImage = theme.getImage().getImg(
+      "branding", defaultImage: "facetec_your_app_logo")
+    defaultCustomization.overlayCustomization.showBrandingImage = theme.getImage().getShowBranding()
     defaultCustomization.overlayCustomization.backgroundColor = theme.getColor(
       "overlayBackgroundColor")
 
@@ -95,7 +96,7 @@ public class Config {
       .getGradientBackgroundColors()
     defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
 
-    defaultCustomization.cancelButtonCustomization.customImage = theme.getImage(
+    defaultCustomization.cancelButtonCustomization.customImage = theme.getImage().getImg(
       "cancel", defaultImage: "facetec_cancel")
     defaultCustomization.cancelButtonCustomization.location = theme.getGeneral().getButtonLocation(
       "cancelButtonLocation")

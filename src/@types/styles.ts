@@ -78,12 +78,20 @@ export interface FeedbackBackgroundColor {
  */
 export interface ThemeImage {
   /**
-   * @description The logo image to will be used in Aziface SDK screen.
+   * @description The branding image to will be used in Aziface SDK screen.
    * **Note**: The image name must be to inserted with no extension format.
    *
    * @default "facetec_your_app_logo.png"
    */
-  logo?: string;
+  branding?: string;
+
+  /**
+   * @description A boolean value to show or hide the branding image in
+   * Aziface SDK screen.
+   *
+   * @default undefined
+   */
+  isShowBranding?: boolean;
 
   /**
    * @description The icon cancel button to will be used in Aziface SDK screen.

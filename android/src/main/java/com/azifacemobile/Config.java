@@ -83,7 +83,8 @@ public class Config {
     defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
     defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
 
-    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage("logo", R.drawable.facetec_your_app_logo);
+    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage().getImg("branding", R.drawable.facetec_your_app_logo);
+    defaultCustomization.getOverlayCustomization().showBrandingImage = theme.getImage().getShowBranding();
     defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
 
     defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
@@ -112,7 +113,7 @@ public class Config {
     defaultCustomization.getFeedbackCustomization().backgroundColors = theme.getFeedback().getBackgroundColor();
     defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
 
-    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage("cancel", R.drawable.facetec_cancel);
+    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage().getImg("cancel", R.drawable.facetec_cancel);
     defaultCustomization.getCancelButtonCustomization().setLocation(cancelButtonLocation);
 
     defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();

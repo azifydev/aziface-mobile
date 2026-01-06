@@ -16,7 +16,7 @@ public class Image {
     this.theme = new Theme();
   }
 
-  public int getImage(String key, int defaultImage) {
+  public int getImg(String key, int defaultImage) {
     try {
       final JSONObject theme = this.theme.getTarget("image");
 
@@ -35,6 +35,21 @@ public class Image {
       return resourceId == 0 ? defaultImage : resourceId;
     } catch (JSONException e) {
       return defaultImage;
+    }
+  }
+
+  public boolean getShowBranding() {
+    try {
+      final String KEY = "isShowBranding";
+      final JSONObject theme = this.theme.getTarget("image");
+
+      if (!this.theme.exists(theme, KEY)) {
+        return true;
+      }
+
+      return theme.getBoolean(KEY);
+    } catch (JSONException e) {
+      return true;
     }
   }
 }

@@ -1,5 +1,5 @@
 PODS:
-  - AzifaceMobile (3.1.0):
+  - AzifaceMobile (3.1.7):
     - boost
     - DoubleConversion
     - fast_float
@@ -2738,7 +2738,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AzifaceMobile: 0b1c4d4ad4f88b4caac0966e1ecfad32ef3ad5f9
+  AzifaceMobile: ce9810cc73f08133065809c414660dc6af9127c0
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6

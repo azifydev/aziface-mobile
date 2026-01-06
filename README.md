@@ -558,10 +558,11 @@ This type must be used to position of the cancel button on screen.
 
 An object containing the image assets used in the Aziface SDK.
 
-| `ThemeImage` | type     | Platform | Required | Default                     |
-| ------------ | -------- | -------- | -------- | --------------------------- |
-| `logo`       | `string` | All      | ❌       | `facetec_your_app_logo.png` |
-| `cancel`     | `string` | All      | ❌       | `facetec_cancel.png`        |
+| `ThemeImage`     | type      | Platform | Required | Default                     |
+| ---------------- | --------- | -------- | -------- | --------------------------- |
+| `branding`       | `string`  | All      | ❌       | `facetec_your_app_logo.png` |
+| `isShowBranding` | `boolean` | All      | ❌       | `undefined`                 |
+| `cancel`         | `string`  | All      | ❌       | `facetec_cancel.png`        |
 
 #### `ThemeFrame`
 
@@ -803,7 +804,7 @@ export default function App() {
 
 ## How to add images in Aziface SDK module?
 
-The `logo` and `cancel` properties represents your logo and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the logo image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
+The `branding` and `cancel` properties represents your branding and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the branding image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
 
 ### How to add images in Android?
 
@@ -817,7 +818,7 @@ In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Imag
 
 ### Example with images added
 
-Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`logo` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
+Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`branding` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
 
 ```tsx
 import { useEffect } from 'react';
@@ -840,7 +841,7 @@ export default function App() {
       // You call setTheme after initialize.
       setTheme({
         image: {
-          logo: 'brand_logo', // brand_logo.png
+          branding: 'branding', // branding.png
           cancel: 'close', // close.png
         },
       });
