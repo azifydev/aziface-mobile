@@ -1,3 +1,11 @@
+## [3.1.1](https://github.com/azifydev/aziface-mobile/compare/v3.1.0...v3.1.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* remove unnecessary language and add metro config ([#16](https://github.com/azifydev/aziface-mobile/issues/16)) ([3f5432c](https://github.com/azifydev/aziface-mobile/commit/3f5432cf4357232df1755c4597ac96a183b2c5ea))
+* **WL-303:** Adjust `react-native` build  ([#18](https://github.com/azifydev/aziface-mobile/issues/18)) ([b9a849f](https://github.com/azifydev/aziface-mobile/commit/b9a849f0f89955bf6444cfa6e38f30f4e56a7e7a))
+
 # [3.1.0](https://github.com/azifydev/aziface-mobile/compare/v3.0.3...v3.1.0) (2025-11-07)
 
 
