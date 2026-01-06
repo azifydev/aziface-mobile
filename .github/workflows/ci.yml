@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 24
 
-      - name: PR Semantic Release Check
+      - name: Semantic Release Check
         uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
