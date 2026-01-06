@@ -35,7 +35,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
 
-      - name: Configure NPM token and install dependencies
+      - name: Install dependencies
+        env:
+          NPM_TOKEN_V2: ${{ secrets.NPM_TOKEN_V2 }}
         run: |
-          npm set //registry.npmjs.org/:_authToken $NPM_TOKEN_V2
+          npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN_V2
           npm ci
