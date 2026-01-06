@@ -1,3 +1,10 @@
+## [3.1.5](https://github.com/azifydev/aziface-mobile/compare/v3.1.4...v3.1.5) (2026-01-06)
+
+
+### Bug Fixes
+
+* adjust action ([dcecda8](https://github.com/azifydev/aziface-mobile/commit/dcecda8a41c59f0019c5d84efa409b6643243d13))
+
 ## [3.1.4](https://github.com/azifydev/aziface-mobile/compare/v3.1.3...v3.1.4) (2026-01-06)
 
 
