@@ -17,10 +17,5 @@ module.exports = {
         android: {},
       },
     },
-    'react-native-config': {
-      platforms: {
-        android: null,
-      },
-    },
   },
 };
