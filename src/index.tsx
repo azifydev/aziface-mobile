@@ -292,20 +292,20 @@ export interface ThemeImage {
   isShowBranding?: boolean;
 
   /**
-   * @description The icon cancel button to will be used in Aziface SDK screen.
-   * The image name must be to inserted with no extension format.
-   *
-   * @default "facetec_cancel.png"
-   */
-  cancel?: string;
-
-  /**
    * @description A boolean value to hide the cancel button when the app.
    *
    * @default false - Android
    * @default true - iOS
    */
   isHideForCameraPermissions?: boolean;
+
+  /**
+   * @description The icon cancel button to will be used in Aziface SDK screen.
+   * The image name must be to inserted with no extension format.
+   *
+   * @default "facetec_cancel.png"
+   */
+  cancel?: string;
 
   /**
    * @description The cancel location in Aziface SDK screen.
@@ -383,6 +383,13 @@ export interface ThemeOval {
   strokeColor?: string;
 
   /**
+   * @description Represents the border width style of the oval view border.
+   *
+   * @default undefined
+   */
+  strokeWidth?: number;
+
+  /**
    * @description Represents the first progress row color during the check
    * face or scan ID of the user. It's localize inside over view when the
    * user is making check face or scan ID.
@@ -399,13 +406,6 @@ export interface ThemeOval {
    * @default '#0264dc'
    */
   secondProgressColor?: string;
-
-  /**
-   * @description Represents the border width style of the oval view border.
-   *
-   * @default undefined
-   */
-  strokeWidth?: number;
 
   /**
    * @description Represents the radial offset style of the oval view
