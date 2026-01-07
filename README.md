@@ -1,6 +1,6 @@
 # @azify/aziface-mobile 📱
 
-> [!WARNING]
+> [!NOTE]
 > This package supports **only** [new architecture](https://reactnative.dev/blog/2024/10/23/the-new-architecture-is-here).
 
 <div align="center">
@@ -854,7 +854,8 @@ export default function App() {
 
 ## How to add images in Aziface SDK module? (Deprecated)
 
-> [WARNING!] We're working in best practices from communicate Turbo Modules with React Native side.
+> [!WARNING]
+> We're working in best practices from communicate Turbo Modules with React Native side.
 >
 > Currently, adding images is unstable, and it needs improvement. In the next versions, we'll go to available best strategies from swap images in each modules.
 
