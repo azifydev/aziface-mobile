@@ -1,5 +1,19 @@
-import type { TurboModule, ViewProps } from 'react-native';
+import { useEffect } from 'react';
+import {
+  View,
+  type EventSubscription,
+  type TurboModule,
+  type ViewProps,
+} from 'react-native';
 import AzifaceMobile from './NativeAzifaceMobile';
+import {
+  onCancel as handleCancel,
+  onClose as handleClose,
+  onError as handleError,
+  onInitialize as handleInitialize,
+  onOpen as handleOpen,
+  onVocal as handleVocal,
+} from './listeners';
 
 // Errors
 
@@ -1375,13 +1389,32 @@ export interface FaceViewProps extends ViewProps {
   onVocal?: (activated: boolean) => void;
 }
 
-export { FaceView } from './components';
+export function FaceView(props: FaceViewProps) {
+  const {
+    children,
+    onCancel,
+    onClose,
+    onError,
+    onOpen,
+    onVocal,
+    onInitialize,
+    ...rest
+  } = props;
 
-export {
-  onCancel,
-  onClose,
-  onError,
-  onInitialize,
-  onOpen,
-  onVocal,
-} from './listeners';
+  useEffect(() => {
+    const subscriptions = [
+      onInitialize && handleInitialize(onInitialize),
+      onOpen && handleOpen(onOpen),
+      onClose && handleClose(onClose),
+      onCancel && handleCancel(onCancel),
+      onError && handleError(onError),
+      onVocal && handleVocal(onVocal),
+    ].filter(Boolean) as EventSubscription[];
+
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove());
+    };
+  }, [onCancel, onClose, onError, onVocal, onOpen, onInitialize]);
+
+  return <View {...rest}>{children}</View>;
+}
