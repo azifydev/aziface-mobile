@@ -1,4 +1,3 @@
-import FaceTecSDK
 import Foundation
 
 public class General {
@@ -9,7 +8,7 @@ public class General {
   }
 
   public func getBorderRadius(_ theme: NSDictionary?, key: String) -> Int32 {
-    let defaultBorderRadius: Int32 = 10
+    let defaultBorderRadius: Int32 = 20
     if !self.style.exists(theme, key: key) {
       return defaultBorderRadius
     }
@@ -17,36 +16,14 @@ public class General {
     let borderRadius = (theme?[key] as? Int32) ?? defaultBorderRadius
     return borderRadius < 0 ? defaultBorderRadius : borderRadius
   }
-
-  public func getButtonLocation(_ key: String) -> FaceTecCancelButtonLocation {
-    let defaultButtonLocation = FaceTecCancelButtonLocation.topRight
-    if !self.style.exists(key) {
-      return defaultButtonLocation
+  
+  public func getBorderRadius(_ theme: NSDictionary?, key: String, defaultBorderRadius: Int32) -> Int32 {
+    if !self.style.exists(theme, key: key) {
+      return defaultBorderRadius
     }
 
-    let buttonLocation = (Theme.Style?[key] as? String) ?? ""
-    if buttonLocation.isEmpty {
-      return defaultButtonLocation
-    }
-
-    switch buttonLocation {
-    case "TOP_RIGHT":
-      do {
-        return FaceTecCancelButtonLocation.topRight
-      }
-    case "TOP_LEFT":
-      do {
-        return FaceTecCancelButtonLocation.topLeft
-      }
-    case "DISABLED":
-      do {
-        return FaceTecCancelButtonLocation.disabled
-      }
-    default:
-      do {
-        return defaultButtonLocation
-      }
-    }
+    let borderRadius = (theme?[key] as? Int32) ?? defaultBorderRadius
+    return borderRadius < 0 ? defaultBorderRadius : borderRadius
   }
 
   public func getStatusBarStyle(_ key: String) -> UIStatusBarStyle {

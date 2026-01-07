@@ -74,14 +74,15 @@ public class Config {
   }
 
   public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
-    FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
-      .getButtonLocation("cancelButtonLocation");
+    FaceTecCancelButtonCustomization.ButtonLocation buttonLocation = theme.getImage().getButtonLocation();
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
     defaultCustomization.getFrameCustomization().cornerRadius = theme.getFrame().getCornerRadius();
     defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
     defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
+    defaultCustomization.getFrameCustomization().borderWidth = theme.getFrame().getBorderWidth();
+    defaultCustomization.getFrameCustomization().elevation = theme.getFrame().getElevation();
 
     defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage().getImg("branding", R.drawable.facetec_your_app_logo);
     defaultCustomization.getOverlayCustomization().showBrandingImage = theme.getImage().getShowBranding();
@@ -109,12 +110,19 @@ public class Config {
     defaultCustomization.getOvalCustomization().strokeColor = theme.getOval().getStrokeColor();
     defaultCustomization.getOvalCustomization().progressColor1 = theme.getOval().getFirstProgressColor();
     defaultCustomization.getOvalCustomization().progressColor2 = theme.getOval().getSecondProgressColor();
+    defaultCustomization.getOvalCustomization().strokeWidth = theme.getOval().getStrokeWidth();
+    defaultCustomization.getOvalCustomization().progressRadialOffset = theme.getOval().getProgressRadialOffset();
+    defaultCustomization.getOvalCustomization().progressStrokeWidth = theme.getOval().getProgressStrokeWidth();
 
     defaultCustomization.getFeedbackCustomization().backgroundColors = theme.getFeedback().getBackgroundColor();
     defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
+    defaultCustomization.getFeedbackCustomization().cornerRadius = theme.getFeedback().getBorderRadius();
+    defaultCustomization.getFeedbackCustomization().elevation = theme.getFeedback().getElevation();
+    defaultCustomization.getFeedbackCustomization().enablePulsatingText = theme.getFeedback().getEnablePulsatingText();
 
     defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage().getImg("cancel", R.drawable.facetec_cancel);
-    defaultCustomization.getCancelButtonCustomization().setLocation(cancelButtonLocation);
+    defaultCustomization.getCancelButtonCustomization().hideForCameraPermissions = theme.getImage().getHideForCameraPermissions();
+    defaultCustomization.getCancelButtonCustomization().setLocation(buttonLocation);
 
     defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();
     defaultCustomization.getResultScreenCustomization().foregroundColor = theme.getResultScreen().getForegroundColor();

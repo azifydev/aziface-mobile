@@ -1,7 +1,6 @@
 package com.azifacemobile.theme;
 
 import com.azifacemobile.utils.Theme;
-import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,29 +26,45 @@ public class General {
     }
   }
 
-  public ButtonLocation getButtonLocation(String key) {
-    final ButtonLocation defaultLocation = ButtonLocation.TOP_RIGHT;
-    if (!this.theme.exists(key)) {
-      return defaultLocation;
-    }
+  public int getBorderRadius(JSONObject theme, String key, int defaultBorderRadius) {
+    try {
+      if (!this.theme.exists(theme, key)) {
+        return defaultBorderRadius;
+      }
 
-    final String buttonLocation = com.azifacemobile.theme.Theme.Style.getString(key);
-    if (buttonLocation == null) {
-      return defaultLocation;
+      final int borderRadius = theme.getInt(key);
+      return borderRadius < 0 ? defaultBorderRadius : borderRadius;
+    } catch (JSONException e) {
+      return defaultBorderRadius;
     }
-    if (buttonLocation.isEmpty()) {
-      return defaultLocation;
-    }
+  }
 
-    switch (buttonLocation) {
-      case "TOP_RIGHT":
-        return ButtonLocation.TOP_RIGHT;
-      case "TOP_LEFT":
-        return ButtonLocation.TOP_LEFT;
-      case "DISABLED":
-        return ButtonLocation.DISABLED;
-      default:
-        return defaultLocation;
+  public int getElevation(JSONObject theme, String key) {
+    final int maxElevation = 24;
+    final int defaultElevation = 0;
+    try {
+      if (!this.theme.exists(theme, key)) {
+        return defaultElevation;
+      }
+
+      final int elevation = theme.getInt(key);
+      return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
+    } catch (JSONException e) {
+      return defaultElevation;
+    }
+  }
+
+  public int getElevation(JSONObject theme, String key, int defaultElevation) {
+    final int maxElevation = 24;
+    try {
+      if (!this.theme.exists(theme, key)) {
+        return defaultElevation;
+      }
+
+      final int elevation = theme.getInt(key);
+      return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
+    } catch (JSONException e) {
+      return defaultElevation;
     }
   }
 }

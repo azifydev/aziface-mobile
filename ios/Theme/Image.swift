@@ -1,20 +1,22 @@
 import Foundation
+import FaceTecSDK
 
 public class Image {
   private let style: Style
+  private let target: NSDictionary?
 
   init() {
     self.style = Style()
+    
+    self.target = self.style.getTarget("image")
   }
 
   public func getImg(_ key: String, defaultImage: String) -> UIImage? {
-    let theme = self.style.getTarget("image")
-
-    if !self.style.exists(theme, key: key) {
+    if !self.style.exists(self.target, key: key) {
       return UIImage(named: defaultImage)
     }
 
-    let imageName = theme?[key] as? String ?? ""
+    let imageName = self.target?[key] as? String ?? ""
     if imageName.isEmpty {
       return UIImage(named: defaultImage)
     }
@@ -24,12 +26,54 @@ public class Image {
 
   public func getShowBranding() -> Bool {
     let KEY = "isShowBranding"
-    let theme = self.style.getTarget("image")
 
-    if !self.style.exists(theme, key: KEY) {
+    if !self.style.exists(self.target, key: KEY) {
       return true
     }
 
-    return theme?[KEY] as! Bool
+    return self.target?[KEY] as! Bool
+  }
+  
+  public func getHideForCameraPermissions() -> Bool {
+    let KEY = "isHideForCameraPermissions"
+
+    if !self.style.exists(self.target, key: KEY) {
+      return true
+    }
+
+    return self.target?[KEY] as! Bool
+  }
+  
+  public func getButtonLocation() -> FaceTecCancelButtonLocation {
+    let key = "cancelLocation"
+    let defaultLocation = FaceTecCancelButtonLocation.topRight
+    
+    if !self.style.exists(self.target, key: key) {
+      return defaultLocation
+    }
+
+    let buttonLocation = (self.target?[key] as? String) ?? ""
+    if buttonLocation.isEmpty {
+      return defaultLocation
+    }
+
+    switch buttonLocation {
+    case "TOP_RIGHT":
+      do {
+        return FaceTecCancelButtonLocation.topRight
+      }
+    case "TOP_LEFT":
+      do {
+        return FaceTecCancelButtonLocation.topLeft
+      }
+    case "DISABLED":
+      do {
+        return FaceTecCancelButtonLocation.disabled
+      }
+    default:
+      do {
+        return defaultLocation
+      }
+    }
   }
 }

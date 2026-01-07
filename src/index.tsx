@@ -93,11 +93,11 @@ export enum Errors {
 /**
  * @type
  *
- * @description The type of button location.
+ * @description The type of cancel location.
  *
  * @default "TOP_RIGHT"
  */
-export type ButtonLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
+export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
 
 /**
  * @interface Point
@@ -164,6 +164,112 @@ export interface FeedbackBackgroundColor {
 }
 
 /**
+ * @interface ThemeShadowInsets
+ *
+ * @description An object containing the shadow inset styles used in the
+ * Aziface SDK.
+ *
+ * @platform iOS
+ */
+export interface ThemeShadowInsets {
+  /**
+   * @description The top inset style of the shadow.
+   *
+   * @default 0
+   */
+  top?: number;
+
+  /**
+   * @description The left inset style of the shadow.
+   *
+   * @default 0
+   */
+  left?: number;
+
+  /**
+   * @description The bottom inset style of the shadow.
+   *
+   * @default 0
+   */
+  bottom?: number;
+
+  /**
+   * @description The right inset style of the shadow.
+   *
+   * @default 0
+   */
+  right?: number;
+}
+
+/**
+ * @interface ThemeShadowOffset
+ *
+ * @description An object containing the shadow offset styles used in the
+ * Aziface SDK.
+ *
+ * @platform iOS
+ */
+export interface ThemeShadowOffset {
+  /**
+   * @description The width offset style of the shadow.
+   *
+   * @default 0
+   */
+  width?: number;
+
+  /**
+   * @description The height offset style of the shadow.
+   *
+   * @default 0
+   */
+  height?: number;
+}
+
+/**
+ * @interface ThemeShadow
+ *
+ * @description An object containing the shadow styles used in the Aziface SDK.
+ *
+ * @platform iOS
+ */
+export interface ThemeShadow {
+  /**
+   * @description The shadow color style of the view.
+   *
+   * @default '#000000'
+   */
+  color?: string;
+
+  /**
+   * @description The shadow opacity style of the view.
+   *
+   * @default 1
+   */
+  opacity?: number;
+
+  /**
+   * @description The shadow radius style of the view.
+   *
+   * @default 10
+   */
+  radius?: number;
+
+  /**
+   * @description The shadow offset style of the view.
+   *
+   * @default undefined
+   */
+  offset?: ThemeShadowOffset;
+
+  /**
+   * @description The shadow insets style of the view.
+   *
+   * @default undefined
+   */
+  insets?: ThemeShadowInsets;
+}
+
+/**
  * @interface ThemeImage
  *
  * @description An object containing the image assets used in the Aziface SDK.
@@ -192,6 +298,21 @@ export interface ThemeImage {
    * @default "facetec_cancel.png"
    */
   cancel?: string;
+
+  /**
+   * @description A boolean value to hide the cancel button when the app.
+   *
+   * @default false - Android
+   * @default true - iOS
+   */
+  isHideForCameraPermissions?: boolean;
+
+  /**
+   * @description The cancel location in Aziface SDK screen.
+   *
+   * @default "TOP_RIGHT"
+   */
+  cancelLocation?: CancelLocation;
 }
 
 /**
@@ -221,6 +342,31 @@ export interface ThemeFrame {
    * @default '#ffffff'
    */
   backgroundColor?: string;
+
+  /**
+   * @description Represents the border width style of the frame view.
+   *
+   * @default undefined
+   */
+  borderWidth?: number;
+
+  /**
+   * @description Represents the elevation style of the frame view.
+   *
+   * @default 0
+   *
+   * @platform Android
+   */
+  elevation?: number;
+
+  /**
+   * @description The shadow styles of the view.
+   *
+   * @default undefined
+   *
+   * @platform iOS
+   */
+  shadow?: ThemeShadow;
 }
 
 /**
@@ -253,6 +399,27 @@ export interface ThemeOval {
    * @default '#0264dc'
    */
   secondProgressColor?: string;
+
+  /**
+   * @description Represents the border width style of the oval view border.
+   *
+   * @default undefined
+   */
+  strokeWidth?: number;
+
+  /**
+   * @description Represents the radial offset style of the oval view
+   *
+   * @default undefined
+   */
+  progressRadialOffset?: number;
+
+  /**
+   * @description Represents the stroke width style of the oval view
+   *
+   * @default undefined
+   */
+  progressStrokeWidth?: number;
 }
 
 /**
@@ -286,6 +453,38 @@ export interface ThemeFeedback {
    * @default '#ffffff'
    */
   textColor?: string;
+
+  /**
+   * @description Represents the border radius style of the feedback view.
+   *
+   * @default undefined
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the elevation style of the feedback view.
+   *
+   * @default 10
+   *
+   * @platform Android
+   */
+  elevation?: number;
+
+  /**
+   * @description The shadow styles of the view.
+   *
+   * @default undefined
+   *
+   * @platform iOS
+   */
+  shadow?: ThemeShadow;
+
+  /**
+   * @description A boolean value to enable or disable the pulsating text.
+   *
+   * @default true
+   */
+  isEnablePulsatingText?: boolean;
 }
 
 /**
@@ -631,13 +830,6 @@ export interface Theme {
    * @default '#ffffff'
    */
   overlayBackgroundColor?: string;
-
-  /**
-   * @description The button location in Aziface SDK screen.
-   *
-   * @default "TOP_RIGHT"
-   */
-  cancelButtonLocation?: ButtonLocation;
 
   /**
    * @description An object containing the image assets used in the Aziface

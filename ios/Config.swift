@@ -60,6 +60,8 @@ public class Config {
     defaultCustomization.frameCustomization.cornerRadius = theme.getFrame().getCornerRadius()
     defaultCustomization.frameCustomization.backgroundColor = theme.getFrame().getBackgroundColor()
     defaultCustomization.frameCustomization.borderColor = theme.getFrame().getBorderColor()
+    defaultCustomization.frameCustomization.borderWidth = theme.getFrame().getBorderWidth()
+    defaultCustomization.frameCustomization.shadow = theme.getFrame().getShadow()
 
     defaultCustomization.overlayCustomization.brandingImage = theme.getImage().getImg(
       "branding", defaultImage: "facetec_your_app_logo")
@@ -91,15 +93,21 @@ public class Config {
     defaultCustomization.ovalCustomization.strokeColor = theme.getOval().getStrokeColor()
     defaultCustomization.ovalCustomization.progressColor1 = theme.getOval().getFirstProgressColor()
     defaultCustomization.ovalCustomization.progressColor2 = theme.getOval().getSecondProgressColor()
+    defaultCustomization.ovalCustomization.strokeWidth = theme.getOval().getStrokeWidth()
+    defaultCustomization.ovalCustomization.progressStrokeWidth = theme.getOval().getProgressStrokeWidth()
+    defaultCustomization.ovalCustomization.progressRadialOffset = theme.getOval().getProgressRadialOffset()
 
     defaultCustomization.feedbackCustomization.backgroundColor = theme.getFeedback()
       .getGradientBackgroundColors()
     defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
+    defaultCustomization.feedbackCustomization.cornerRadius = theme.getFeedback().getBorderRadius()
+    defaultCustomization.feedbackCustomization.shadow = theme.getFeedback().getShadow()
+    defaultCustomization.feedbackCustomization.enablePulsatingText = theme.getFeedback().getEnablePulsatingText()
 
     defaultCustomization.cancelButtonCustomization.customImage = theme.getImage().getImg(
       "cancel", defaultImage: "facetec_cancel")
-    defaultCustomization.cancelButtonCustomization.location = theme.getGeneral().getButtonLocation(
-      "cancelButtonLocation")
+    defaultCustomization.cancelButtonCustomization.hideForCameraPermissions = theme.getImage().getHideForCameraPermissions()
+    defaultCustomization.cancelButtonCustomization.location = theme.getImage().getButtonLocation()
 
     defaultCustomization.resultScreenCustomization.backgroundColors = theme.getResultScreen()
       .getBackgroundColors()
