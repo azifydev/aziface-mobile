@@ -65,8 +65,8 @@ public class Theme {
     return this.color.getColor(key);
   }
 
-  public int getImage(String key, int defaultImage) {
-    return this.image.getImage(key, defaultImage);
+  public Image getImage() {
+    return this.image;
   }
 
   public General getGeneral() {

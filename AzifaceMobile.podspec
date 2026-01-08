@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/azifydev/aziface-mobile.git", :tag => "#{s.version}" }
 
   s.vendored_frameworks = "ios/Frameworks/FaceTecSDK.xcframework"
-  s.resources = ['ios/VocalGuidanceSoundFiles/*.mp3', 'ios/*.json']
-  s.source_files = "ios/**/*.{h,m,mm,swift,mp3,json}"
+  s.resources = ['ios/VocalGuidanceSoundFiles/*', 'ios/Assets/*', 'ios/*.json']
+  s.source_files = "ios/**/*.{h,m,mm,swift,json,png,mp3}"
   s.private_header_files = "ios/**/*.h"
   s.requires_arc = true
 

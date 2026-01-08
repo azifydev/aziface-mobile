@@ -1,7 +1,6 @@
 package com.azifacemobile.theme;
 
 import com.azifacemobile.utils.Theme;
-import com.facetec.sdk.FaceTecCancelButtonCustomization.ButtonLocation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +13,10 @@ public class General {
   }
 
   public int getBorderRadius(JSONObject theme, String key) {
-    final int defaultBorderRadius = 20;
+    return this.getBorderRadius(theme, key, 20);
+  }
+
+  public int getBorderRadius(JSONObject theme, String key, int defaultBorderRadius) {
     try {
       if (!this.theme.exists(theme, key)) {
         return defaultBorderRadius;
@@ -27,29 +29,21 @@ public class General {
     }
   }
 
-  public ButtonLocation getButtonLocation(String key) {
-    final ButtonLocation defaultLocation = ButtonLocation.TOP_RIGHT;
-    if (!this.theme.exists(key)) {
-      return defaultLocation;
-    }
+  public int getElevation(JSONObject theme, String key) {
+    return this.getElevation(theme, key, 0);
+  }
 
-    final String buttonLocation = com.azifacemobile.theme.Theme.Style.getString(key);
-    if (buttonLocation == null) {
-      return defaultLocation;
-    }
-    if (buttonLocation.isEmpty()) {
-      return defaultLocation;
-    }
+  public int getElevation(JSONObject theme, String key, int defaultElevation) {
+    final int maxElevation = 24;
+    try {
+      if (!this.theme.exists(theme, key)) {
+        return defaultElevation;
+      }
 
-    switch (buttonLocation) {
-      case "TOP_RIGHT":
-        return ButtonLocation.TOP_RIGHT;
-      case "TOP_LEFT":
-        return ButtonLocation.TOP_LEFT;
-      case "DISABLED":
-        return ButtonLocation.DISABLED;
-      default:
-        return defaultLocation;
+      final int elevation = theme.getInt(key);
+      return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
+    } catch (JSONException e) {
+      return defaultElevation;
     }
   }
 }

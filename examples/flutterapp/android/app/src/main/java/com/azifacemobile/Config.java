@@ -83,7 +83,7 @@ public class Config {
     defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
     defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
 
-    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage("logo", R.drawable.facetec_your_app_logo);
+    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage("branding", R.drawable.facetec_your_app_logo);
     defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
 
     defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
