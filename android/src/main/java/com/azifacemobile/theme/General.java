@@ -13,17 +13,7 @@ public class General {
   }
 
   public int getBorderRadius(JSONObject theme, String key) {
-    final int defaultBorderRadius = 20;
-    try {
-      if (!this.theme.exists(theme, key)) {
-        return defaultBorderRadius;
-      }
-
-      final int borderRadius = theme.getInt(key);
-      return borderRadius < 0 ? defaultBorderRadius : borderRadius;
-    } catch (JSONException e) {
-      return defaultBorderRadius;
-    }
+    return this.getBorderRadius(theme, key, 20);
   }
 
   public int getBorderRadius(JSONObject theme, String key, int defaultBorderRadius) {
@@ -40,18 +30,7 @@ public class General {
   }
 
   public int getElevation(JSONObject theme, String key) {
-    final int maxElevation = 24;
-    final int defaultElevation = 0;
-    try {
-      if (!this.theme.exists(theme, key)) {
-        return defaultElevation;
-      }
-
-      final int elevation = theme.getInt(key);
-      return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
-    } catch (JSONException e) {
-      return defaultElevation;
-    }
+    return this.getElevation(theme, key, 0);
   }
 
   public int getElevation(JSONObject theme, String key, int defaultElevation) {

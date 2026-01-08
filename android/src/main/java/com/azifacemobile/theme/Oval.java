@@ -17,23 +17,26 @@ public class Oval {
     this.target = this.theme.getTarget("oval");
   }
 
+  private int getInt(String key) {
+    final int defaultParamValue = -1;
+    try {
+      if (!this.theme.exists(this.target, key)) {
+        return defaultParamValue;
+      }
+
+      final int paramValue = this.target.getInt(key);
+      return paramValue < 0 ? defaultParamValue : paramValue;
+    } catch (JSONException e) {
+      return defaultParamValue;
+    }
+  }
+
   public int getStrokeColor() {
     return this.color.getColor(this.target, "strokeColor", "#026ff4");
   }
 
   public int getStrokeWidth() {
-    final String key = "strokeWidth";
-    final int defaultStrokeWidth = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultStrokeWidth;
-      }
-
-      final int strokeWidth = this.target.getInt(key);
-      return strokeWidth < 0 ? defaultStrokeWidth : strokeWidth;
-    } catch (JSONException e) {
-      return defaultStrokeWidth;
-    }
+    return this.getInt("strokeWidth");
   }
 
   public int getFirstProgressColor() {
@@ -45,32 +48,10 @@ public class Oval {
   }
 
   public int getProgressRadialOffset() {
-    final String key = "progressRadialOffset";
-    final int defaultProgressRadialOffset = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultProgressRadialOffset;
-      }
-
-      final int progressRadialOffset = this.target.getInt(key);
-      return progressRadialOffset < 0 ? defaultProgressRadialOffset : progressRadialOffset;
-    } catch (JSONException e) {
-      return defaultProgressRadialOffset;
-    }
+    return this.getInt("progressRadialOffset");
   }
 
   public int getProgressStrokeWidth() {
-    final String key = "progressStrokeWidth";
-    final int defaultProgressStrokeWidth = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultProgressStrokeWidth;
-      }
-
-      final int progressStrokeWidth = this.target.getInt(key);
-      return progressStrokeWidth < 0 ? defaultProgressStrokeWidth : progressStrokeWidth;
-    } catch (JSONException e) {
-      return defaultProgressStrokeWidth;
-    }
+    return this.getInt("progressStrokeWidth");
   }
 }

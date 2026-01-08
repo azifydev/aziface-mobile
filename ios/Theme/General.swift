@@ -8,13 +8,7 @@ public class General {
   }
 
   public func getBorderRadius(_ theme: NSDictionary?, key: String) -> Int32 {
-    let defaultBorderRadius: Int32 = 20
-    if !self.style.exists(theme, key: key) {
-      return defaultBorderRadius
-    }
-
-    let borderRadius = (theme?[key] as? Int32) ?? defaultBorderRadius
-    return borderRadius < 0 ? defaultBorderRadius : borderRadius
+    return self.getBorderRadius(theme, key: key, defaultBorderRadius: 20)
   }
   
   public func getBorderRadius(_ theme: NSDictionary?, key: String, defaultBorderRadius: Int32) -> Int32 {

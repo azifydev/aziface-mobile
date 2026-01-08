@@ -9,21 +9,24 @@ public class Oval {
     
     self.target = self.style.getTarget("oval")
   }
+  
+  private func getInt(key: String) -> Int32 {
+    let defaultParamValue: Int32 = -1
+    
+    if !self.style.exists(self.target, key: key) {
+      return defaultParamValue
+    }
+
+    let paramValue = (self.target?[key] as? Int32) ?? defaultParamValue
+    return paramValue < 0 ? defaultParamValue : paramValue
+  }
 
   public func getStrokeColor() -> UIColor {
     return self.color.getColor(self.target, key: "strokeColor", defaultColor: "#026ff4")
   }
   
   public func getStrokeWidth() -> Int32 {
-    let key = "strokeWidth"
-    let defaultStrokeWidth: Int32 = -1
-    
-    if !self.style.exists(self.target, key: key) {
-      return defaultStrokeWidth
-    }
-
-    let strokeWidth = (self.target?[key] as? Int32) ?? defaultStrokeWidth
-    return strokeWidth < 0 ? defaultStrokeWidth : strokeWidth
+    return self.getInt(key: "strokeWidth")
   }
 
   public func getFirstProgressColor() -> UIColor {
@@ -35,26 +38,10 @@ public class Oval {
   }
   
   public func getProgressRadialOffset() -> Int32 {
-    let key = "progressRadialOffset"
-    let defaultProgressRadialOffset: Int32 = -1
-    
-    if !self.style.exists(self.target, key: key) {
-      return defaultProgressRadialOffset
-    }
-
-    let progressRadialOffset = (self.target?[key] as? Int32) ?? defaultProgressRadialOffset
-    return progressRadialOffset < 0 ? defaultProgressRadialOffset : progressRadialOffset
+    return self.getInt(key: "progressRadialOffset")
   }
   
   public func getProgressStrokeWidth() -> Int32 {
-    let key = "progressStrokeWidth"
-    let defaultProgressStrokeWidth: Int32 = -1
-    
-    if !self.style.exists(self.target, key: key) {
-      return defaultProgressStrokeWidth
-    }
-
-    let progressStrokeWidth = (self.target?[key] as? Int32) ?? defaultProgressStrokeWidth
-    return progressStrokeWidth < 0 ? defaultProgressStrokeWidth : progressStrokeWidth
+    return self.getInt(key: "progressStrokeWidth")
   }
 }

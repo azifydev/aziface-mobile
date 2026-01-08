@@ -32,7 +32,7 @@ public class Image {
       final String packageName = reactContext.getPackageName();
       final int resourceId = reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
       return resourceId == 0 ? defaultImage : resourceId;
-    } catch (JSONException e) {
+    } catch (NullPointerException | JSONException e) {
       return defaultImage;
     }
   }
@@ -40,7 +40,7 @@ public class Image {
   public boolean getShowBranding() {
     try {
       return this.theme.getBoolean("isShowBranding");
-    } catch (JSONException e) {
+    } catch (NullPointerException | JSONException e) {
       return true;
     }
   }
@@ -48,7 +48,7 @@ public class Image {
   public boolean getHideForCameraPermissions() {
     try {
       return this.theme.getBoolean("isHideForCameraPermissions");
-    } catch (JSONException e) {
+    } catch (NullPointerException | JSONException e) {
       return false;
     }
   }
@@ -57,9 +57,6 @@ public class Image {
     final FaceTecCancelButtonCustomization.ButtonLocation defaultLocation = FaceTecCancelButtonCustomization.ButtonLocation.TOP_RIGHT;
     try {
       final String cancelLocation = this.theme.getString("cancelLocation");
-      if (cancelLocation.isEmpty()) {
-        return defaultLocation;
-      }
 
       switch (cancelLocation) {
         case "TOP_RIGHT":
@@ -71,7 +68,7 @@ public class Image {
         default:
           return defaultLocation;
       }
-    } catch (JSONException e) {
+    } catch (NullPointerException | JSONException e) {
       return defaultLocation;
     }
   }

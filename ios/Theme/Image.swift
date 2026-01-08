@@ -10,6 +10,14 @@ public class Image {
     
     self.target = self.style.getTarget("image")
   }
+  
+  private func getBool(key: String) -> Bool {
+    if !self.style.exists(self.target, key: key) {
+      return true
+    }
+
+    return self.target?[key] as! Bool
+  }
 
   public func getImg(_ key: String, defaultImage: String) -> UIImage? {
     if !self.style.exists(self.target, key: key) {
@@ -25,23 +33,11 @@ public class Image {
   }
 
   public func getShowBranding() -> Bool {
-    let KEY = "isShowBranding"
-
-    if !self.style.exists(self.target, key: KEY) {
-      return true
-    }
-
-    return self.target?[KEY] as! Bool
+    return self.getBool(key: "isShowBranding")
   }
   
   public func getHideForCameraPermissions() -> Bool {
-    let KEY = "isHideForCameraPermissions"
-
-    if !self.style.exists(self.target, key: KEY) {
-      return true
-    }
-
-    return self.target?[KEY] as! Bool
+    return self.getBool(key: "isHideForCameraPermissions")
   }
   
   public func getButtonLocation() -> FaceTecCancelButtonLocation {
