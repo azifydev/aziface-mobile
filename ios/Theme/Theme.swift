@@ -68,8 +68,8 @@ public class Theme {
     return self.color.getColor(key)
   }
 
-  public func getImage(_ key: String, defaultImage: String) -> UIImage? {
-    return self.image.getImage(key, defaultImage: defaultImage)
+  public func getImage() -> Image {
+    return self.image
   }
 
   public func getGeneral() -> General {
