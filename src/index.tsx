@@ -287,7 +287,7 @@ export interface ThemeImage {
    * @description A boolean value to show or hide the branding image in
    * Aziface SDK screen.
    *
-   * @default undefined
+   * @default true
    */
   isShowBranding?: boolean;
 
