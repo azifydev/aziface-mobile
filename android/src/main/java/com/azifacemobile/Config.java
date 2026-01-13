@@ -1,5 +1,7 @@
 package com.azifacemobile;
 
+import android.graphics.Rect;
+
 import com.azifacemobile.theme.Theme;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
@@ -74,6 +76,7 @@ public class Config {
   }
 
   public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
+    Rect buttonPosition = theme.getImage().getButtonPosition();
     FaceTecCancelButtonCustomization.ButtonLocation buttonLocation = theme.getImage().getButtonLocation();
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
@@ -84,12 +87,15 @@ public class Config {
     defaultCustomization.getFrameCustomization().borderWidth = theme.getFrame().getBorderWidth();
     defaultCustomization.getFrameCustomization().elevation = theme.getFrame().getElevation();
 
-    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage().getImg("branding", R.drawable.facetec_your_app_logo);
+    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage().getSource("branding", R.drawable.facetec_your_app_logo);
     defaultCustomization.getOverlayCustomization().showBrandingImage = theme.getImage().getShowBranding();
     defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
 
     defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
     defaultCustomization.getGuidanceCustomization().foregroundColor = theme.getGuidance().getForegroundColor();
+    defaultCustomization.getGuidanceCustomization().buttonBorderWidth = theme.getGuidance().getButton().getBorderWidth();
+    defaultCustomization.getGuidanceCustomization().buttonBorderColor = theme.getGuidance().getButton().getBorderColor();
+    defaultCustomization.getGuidanceCustomization().buttonCornerRadius = theme.getGuidance().getButton().getCornerRadius();
     defaultCustomization.getGuidanceCustomization().buttonBackgroundNormalColor = theme.getGuidance()
       .getButton().getBackgroundNormalColor();
     defaultCustomization.getGuidanceCustomization().buttonBackgroundDisabledColor = theme.getGuidance()
@@ -102,10 +108,22 @@ public class Config {
       .getTextDisabledColor();
     defaultCustomization.getGuidanceCustomization().buttonTextHighlightColor = theme.getGuidance().getButton()
       .getTextHighlightColor();
+    defaultCustomization.getGuidanceCustomization().cameraPermissionsScreenImage = theme.getImage().getSource("cameraPermission", R.drawable.facetec_camera);
+    // Fix duplicate header text in the future
+    defaultCustomization.getGuidanceCustomization().readyScreenHeaderAttributedString = theme.getGuidance().getReadyScreen().getHeaderText();
+    defaultCustomization.getGuidanceCustomization().readyScreenHeaderTextColor = theme.getGuidance().getReadyScreen().getHeaderTextColor();
+    defaultCustomization.getGuidanceCustomization().readyScreenOvalFillColor = theme.getGuidance().getReadyScreen().getOvalFillColor();
+    // Fix duplicate subtext in the future
+    defaultCustomization.getGuidanceCustomization().readyScreenSubtextAttributedString = theme.getGuidance().getReadyScreen().getSubtext();
+    defaultCustomization.getGuidanceCustomization().readyScreenSubtextTextColor = theme.getGuidance().getReadyScreen().getSubtextColor();
     defaultCustomization.getGuidanceCustomization().retryScreenImageBorderColor = theme.getGuidance().getRetryScreen()
       .getImageBorderColor();
     defaultCustomization.getGuidanceCustomization().retryScreenOvalStrokeColor = theme.getGuidance().getRetryScreen()
       .getOvalStrokeColor();
+    defaultCustomization.getGuidanceCustomization().retryScreenIdealImage = theme.getImage().getSource("ideal");
+    defaultCustomization.getGuidanceCustomization().retryScreenSubtextTextColor = theme.getGuidance().getRetryScreen().getSubtextColor();
+    defaultCustomization.getGuidanceCustomization().retryScreenImageBorderWidth = theme.getGuidance().getRetryScreen().getImageBorderWidth();
+    defaultCustomization.getGuidanceCustomization().retryScreenImageCornerRadius = theme.getGuidance().getRetryScreen().getImageCornerRadius();
 
     defaultCustomization.getOvalCustomization().strokeColor = theme.getOval().getStrokeColor();
     defaultCustomization.getOvalCustomization().progressColor1 = theme.getOval().getFirstProgressColor();
@@ -116,13 +134,14 @@ public class Config {
 
     defaultCustomization.getFeedbackCustomization().backgroundColors = theme.getFeedback().getBackgroundColor();
     defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
-    defaultCustomization.getFeedbackCustomization().cornerRadius = theme.getFeedback().getBorderRadius();
+    defaultCustomization.getFeedbackCustomization().cornerRadius = theme.getFeedback().getCornerRadius();
     defaultCustomization.getFeedbackCustomization().elevation = theme.getFeedback().getElevation();
     defaultCustomization.getFeedbackCustomization().enablePulsatingText = theme.getFeedback().getEnablePulsatingText();
 
-    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage().getImg("cancel", R.drawable.facetec_cancel);
+    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage().getSource("cancel", R.drawable.facetec_cancel);
     defaultCustomization.getCancelButtonCustomization().hideForCameraPermissions = theme.getImage().getHideForCameraPermissions();
     defaultCustomization.getCancelButtonCustomization().setLocation(buttonLocation);
+    defaultCustomization.getCancelButtonCustomization().setCustomLocation(buttonPosition);
 
     defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();
     defaultCustomization.getResultScreenCustomization().foregroundColor = theme.getResultScreen().getForegroundColor();

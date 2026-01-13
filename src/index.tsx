@@ -94,10 +94,36 @@ export enum Errors {
  * @type
  *
  * @description The type of cancel location.
- *
- * @default "TOP_RIGHT"
  */
 export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
+
+/**
+ * @interface CancelPosition
+ *
+ * @description This type must be used to set the custom position of the cancel
+ * button.
+ */
+export interface CancelPosition {
+  /**
+   * @description The left position of the cancel button.
+   */
+  left: number;
+
+  /**
+   * @description The top position of the cancel button.
+   */
+  top: number;
+
+  /**
+   * @description The right position of the cancel button.
+   */
+  right: number;
+
+  /**
+   * @description The bottom position of the cancel button.
+   */
+  bottom: number;
+}
 
 /**
  * @interface Point
@@ -270,18 +296,40 @@ export interface ThemeShadow {
 }
 
 /**
- * @interface ThemeImage
+ * @interface ThemeImages
  *
  * @description An object containing the image assets used in the Aziface SDK.
  */
-export interface ThemeImage {
+export interface ThemeImages {
   /**
    * @description The branding image to will be used in Aziface SDK screen.
    * **Note**: The image name must be to inserted with no extension format.
    *
-   * @default "facetec_your_app_logo.png"
+   * @default undefined
    */
   branding?: string;
+
+  /**
+   * @description The icon cancel button to will be used in Aziface SDK screen.
+   * The image name must be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  cancel?: string;
+
+  /**
+   * @description The image to will be used in camera permissions screen.
+   *
+   * @default undefined
+   */
+  cameraPermission?: string;
+
+  /**
+   * @description The image to will be used in retry screen as ideal photo.
+   *
+   * @default undefined
+   */
+  ideal?: string;
 
   /**
    * @description A boolean value to show or hide the branding image in
@@ -300,19 +348,19 @@ export interface ThemeImage {
   isHideForCameraPermissions?: boolean;
 
   /**
-   * @description The icon cancel button to will be used in Aziface SDK screen.
-   * The image name must be to inserted with no extension format.
-   *
-   * @default "facetec_cancel.png"
-   */
-  cancel?: string;
-
-  /**
    * @description The cancel location in Aziface SDK screen.
    *
    * @default "TOP_RIGHT"
    */
   cancelLocation?: CancelLocation;
+
+  /**
+   * @description The custom position to the cancel button in Aziface SDK
+   * screen.
+   *
+   * @default undefined
+   */
+  cancelPosition?: CancelPosition;
 }
 
 /**
@@ -538,6 +586,27 @@ export interface ThemeButton {
    * @default '#ffffff'
    */
   textHighlightColor?: string;
+
+  /**
+   * @description Represents the border radius style of the button.
+   *
+   * @default undefined
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the border width style of the button.
+   *
+   * @default undefined
+   */
+  borderWidth?: number;
+
+  /**
+   * @description Represents the border color style of the button.
+   *
+   * @default undefined
+   */
+  borderColor?: string;
 }
 
 /**
@@ -580,12 +649,82 @@ export interface ThemeGuidanceRetryScreen {
   imageBorderColor?: string;
 
   /**
+   * @description Represents the border width style of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  imageBorderWidth?: number;
+
+  /**
+   * @description Represents the corner radius style of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  imageCornerRadius?: number;
+
+  /**
    * @description Represents the border color style of the oval view row
    * of the guidance retry.
    *
    * @default '#ffffff'
    */
   ovalStrokeColor?: string;
+
+  /**
+   * @description Represents the subtext color style of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  subtextColor?: string;
+}
+
+/**
+ * @interface ThemeGuidanceReadyScreen
+ *
+ * @description An object containing the styles used in the guidance ready
+ * screen.
+ */
+export interface ThemeGuidanceReadyScreen {
+  /**
+   * @description Represents the header text of the guidance ready screen.
+   *
+   * @default undefined
+   */
+  headerText?: string;
+
+  /**
+   * @description Represents the header text color style of the guidance ready
+   * screen.
+   *
+   * @default undefined
+   */
+  headerTextColor?: string;
+
+  /**
+   * @description Represents the oval fill color style of the guidance ready
+   * screen.
+   *
+   * @default 'transparent'
+   */
+  ovalFillColor?: string;
+
+  /**
+   * @description Represents the subtext of the guidance ready screen.
+   *
+   * @default undefined
+   */
+  subtext?: string;
+
+  /**
+   * @description Represents the subtext color style of the guidance ready
+   * screen.
+   *
+   * @default undefined
+   */
+  subtextColor?: string;
 }
 
 /**
@@ -631,6 +770,14 @@ export interface ThemeGuidance {
    * @default undefined
    */
   retryScreen?: ThemeGuidanceRetryScreen;
+
+  /**
+   * @description An object containing the styles used in the guidance ready
+   * screen.
+   *
+   * @default undefined
+   */
+  readyScreen?: ThemeGuidanceReadyScreen;
 }
 
 /**
@@ -837,7 +984,7 @@ export interface Theme {
    *
    * @default undefined
    */
-  image?: ThemeImage;
+  images?: ThemeImages;
 
   /**
    * @description An object containing the frame styles used in the Aziface

@@ -9,6 +9,7 @@ public class Guidance extends CommonStyle {
   private static final String KEY = "guidance";
   private final Button button;
   private final RetryScreen retryScreen;
+  private final ReadyScreen readyScreen;
 
   public Guidance() {
     super(KEY);
@@ -17,6 +18,7 @@ public class Guidance extends CommonStyle {
 
     this.button = new Button(theme);
     this.retryScreen = new RetryScreen(theme);
+    this.readyScreen = new ReadyScreen(theme);
   }
 
   @Override
@@ -30,5 +32,9 @@ public class Guidance extends CommonStyle {
 
   public RetryScreen getRetryScreen() {
     return this.retryScreen;
+  }
+
+  public ReadyScreen getReadyScreen() {
+    return this.readyScreen;
   }
 }

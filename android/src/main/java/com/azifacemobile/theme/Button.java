@@ -1,16 +1,30 @@
 package com.azifacemobile.theme;
 
+import com.azifacemobile.theme.abstracts.CommonStyle;
 import com.azifacemobile.utils.Theme;
 
 import org.json.JSONObject;
 
-public class Button {
+public class Button extends CommonStyle {
+  private static final String KEY = "button";
   private final JSONObject theme;
   private final Color color;
 
   public Button(JSONObject theme) {
+    super(theme, KEY);
+
     this.theme = new Theme().getTarget(theme, "button");
     this.color = new Color();
+  }
+
+  @Override
+  public int getCornerRadius() {
+    return this.getCornerRadius(-1);
+  }
+
+  @Override
+  public int getBorderColor() {
+    return this.getBorderColor("#000000");
   }
 
   public int getBackgroundNormalColor() {
