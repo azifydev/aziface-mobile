@@ -10,26 +10,28 @@ public class RetryScreen {
   private final JSONObject target;
   private final Color color;
 
-  public RetryScreen(JSONObject theme) {
+  public RetryScreen(JSONObject target) {
     this.theme = new Theme();
     this.color = new Color();
 
-    this.target = this.theme.getTarget(theme, "retryScreen");
+    this.target = this.theme.getTarget(target, "retryScreen");
+  }
+
+  private int getInt(String key) {
+    final int defaultCornerRadius = -1;
+    try {
+      if (!this.theme.exists(this.target, key)) {
+        return defaultCornerRadius;
+      }
+
+      return this.target.getInt(key);
+    } catch (JSONException e) {
+      return defaultCornerRadius;
+    }
   }
 
   public int getImageBorderWidth() {
-    final String key = "imageBorderWidth";
-    final int defaultBorderWidth = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultBorderWidth;
-      }
-
-      final int borderWidth = this.target.getInt(key);
-      return borderWidth < 0 ? defaultBorderWidth : borderWidth;
-    } catch (JSONException e) {
-      return defaultBorderWidth;
-    }
+    return this.getInt("imageBorderWidth");
   }
 
   public int getImageBorderColor() {
@@ -37,18 +39,7 @@ public class RetryScreen {
   }
 
   public int getImageCornerRadius() {
-    final String key = "imageCornerRadius";
-    final int defaultCornerRadius = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultCornerRadius;
-      }
-
-      final int cornerRadius = this.target.getInt(key);
-      return cornerRadius < 0 ? defaultCornerRadius : cornerRadius;
-    } catch (JSONException e) {
-      return defaultCornerRadius;
-    }
+    return this.getInt("imageCornerRadius");
   }
 
   public int getSubtextColor() {

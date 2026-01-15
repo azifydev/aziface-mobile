@@ -22,10 +22,10 @@ public class Theme {
   public Theme(ReactApplicationContext context) {
     this.color = new Color();
     this.frame = new Frame();
-    this.guidance = new Guidance();
+    this.guidance = new Guidance(context);
     this.oval = new Oval();
     this.feedback = new Feedback();
-    this.resultScreen = new ResultScreen();
+    this.resultScreen = new ResultScreen(context);
     this.idScan = new IdScan();
     this.image = new Image(context);
   }

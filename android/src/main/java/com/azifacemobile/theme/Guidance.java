@@ -1,33 +1,40 @@
 package com.azifacemobile.theme;
 
-import com.azifacemobile.theme.abstracts.CommonStyle;
+import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
+import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONObject;
 
-public class Guidance extends CommonStyle {
+public class Guidance extends ViewStyle {
   private static final String KEY = "guidance";
   private final Button button;
+  private final Image image;
   private final RetryScreen retryScreen;
   private final ReadyScreen readyScreen;
 
-  public Guidance() {
+  public Guidance(ReactApplicationContext context) {
     super(KEY);
 
-    final JSONObject theme = new Theme().getTarget(KEY);
+    final JSONObject target = new Theme().getTarget(KEY);
 
-    this.button = new Button(theme);
-    this.retryScreen = new RetryScreen(theme);
-    this.readyScreen = new ReadyScreen(theme);
+    this.button = new Button(target);
+    this.image = new Image(context, target, "images");
+    this.retryScreen = new RetryScreen(target);
+    this.readyScreen = new ReadyScreen(target);
   }
 
   @Override
   public int getForegroundColor() {
-    return this.getForegroundColor("#272937");
+    return super.getForegroundColor("#272937");
   }
 
   public Button getButton() {
     return this.button;
+  }
+
+  public Image getImage() {
+    return this.image;
   }
 
   public RetryScreen getRetryScreen() {

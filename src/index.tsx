@@ -296,11 +296,11 @@ export interface ThemeShadow {
 }
 
 /**
- * @interface ThemeImages
+ * @interface ThemeImage
  *
  * @description An object containing the image assets used in the Aziface SDK.
  */
-export interface ThemeImages {
+export interface ThemeImage {
   /**
    * @description The branding image to will be used in Aziface SDK screen.
    * **Note**: The image name must be to inserted with no extension format.
@@ -316,20 +316,6 @@ export interface ThemeImages {
    * @default undefined
    */
   cancel?: string;
-
-  /**
-   * @description The image to will be used in camera permissions screen.
-   *
-   * @default undefined
-   */
-  cameraPermission?: string;
-
-  /**
-   * @description The image to will be used in retry screen as ideal photo.
-   *
-   * @default undefined
-   */
-  ideal?: string;
 
   /**
    * @description A boolean value to show or hide the branding image in
@@ -631,6 +617,86 @@ export interface ThemeResultAnimation {
    * @default '#ffffff'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the display time style of the result animation in
+   * seconds.
+   *
+   * @default 2.5
+   */
+  displayTime?: number;
+
+  /**
+   * @description Represents the background color style of the success result
+   * animation.
+   *
+   * @default '#026ff4'
+   */
+  IDScanSuccessForegroundColor?: string;
+
+  /**
+   * @description Represents the success image of the success result animation.
+   *
+   * @default undefined
+   */
+  successImage?: string;
+
+  /**
+   * @description Represents the unsuccess image of the success result
+   * animation.
+   *
+   * @default undefined
+   */
+  unsuccessImage?: string;
+
+  /**
+   * @description Represents the background color style of the unsuccess result
+   * animation.
+   *
+   * @default '#cc0044'
+   */
+  unsuccessBackgroundColor?: string;
+
+  /**
+   * @description Represents the foreground color style of the unsuccess result
+   * animation.
+   *
+   * @default '#ffffff'
+   */
+  unsuccessForegroundColor?: string;
+}
+
+/**
+ * @interface ThemeSessionAbortAnimation
+ *
+ * @description An object containing the animation styles used in the Aziface
+ * SDK session abort animation.
+ */
+export interface ThemeSessionAbortAnimation {
+  /**
+   * @description Represents the foreground color style of the session abort
+   * animation.
+   *
+   * @default '#ffffff'
+   */
+  foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the session abort
+   * animation.
+   *
+   * @default '#cc0044'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description Represents the background image asset name of the session
+   * abort animation. The image name must be to inserted with no extension
+   * format.
+   *
+   * @default undefined
+   */
+  image?: string;
 }
 
 /**
@@ -679,6 +745,28 @@ export interface ThemeGuidanceRetryScreen {
    * @default undefined
    */
   subtextColor?: string;
+}
+
+/**
+ * @interface ThemeGuidanceImages
+ *
+ * @description An object containing the image assets used in the Aziface
+ * SDK.
+ */
+export interface ThemeGuidanceImages {
+  /**
+   * @description The image to will be used in camera permissions screen.
+   *
+   * @default undefined
+   */
+  cameraPermission?: string;
+
+  /**
+   * @description The image to will be used in retry screen as ideal photo.
+   *
+   * @default undefined
+   */
+  ideal?: string;
 }
 
 /**
@@ -778,6 +866,14 @@ export interface ThemeGuidance {
    * @default undefined
    */
   readyScreen?: ThemeGuidanceReadyScreen;
+
+  /**
+   * @description An object containing the image assets used in the Aziface
+   * SDK.
+   *
+   * @default undefined
+   */
+  images?: ThemeGuidanceImages;
 }
 
 /**
@@ -818,6 +914,15 @@ export interface ThemeResultScreen {
   activityIndicatorColor?: string;
 
   /**
+   * @description Represents the indicator image asset name of the result
+   * screen during loading. The image name must be to inserted with no
+   * extension format.
+   *
+   * @default undefined
+   */
+  indicatorImage?: string;
+
+  /**
    * @description Represents the progress bar fill color style of the result
    * screen during loading.
    *
@@ -826,11 +931,67 @@ export interface ThemeResultScreen {
   uploadProgressFillColor?: string;
 
   /**
+   * @description Represents the progress bar track color style of the result
+   * screen during loading.
+   *
+   * @default '#b3d4fc'
+   */
+  uploadProgressTrackColor?: string;
+
+  /**
+   * @description A boolean value to show or hide the upload progress bar in
+   * the result screen during loading.
+   *
+   * @default true
+   */
+  isShowUploadProgressBar?: boolean;
+
+  /**
+   * @description Represents the animation relative scale style of the result
+   * screen.
+   *
+   * @default 1
+   */
+  animationRelativeScale?: number;
+
+  /**
+   * @description Represents the delay time style of the face scan still
+   * uploading message in seconds.
+   *
+   * @default 6
+   */
+  faceScanStillUploadingMessageDelayTime?: number;
+
+  /**
+   * @description Represents the delay time style of the ID scan still
+   * uploading message in seconds.
+   *
+   * @default 8
+   */
+  idScanStillUploadingMessageDelayTime?: number;
+
+  /**
+   * @description Represents the indicator rotation interval style of the
+   * result screen during loading in milliseconds.
+   *
+   * @default 1000
+   */
+  indicatorRotationInterval?: number;
+
+  /**
    * @description Represents the result animation styles of the result screen.
    *
    * @default undefined
    */
   resultAnimation?: ThemeResultAnimation;
+
+  /**
+   * @description Represents the session abort animation styles of the result
+   * screen.
+   *
+   * @default undefined
+   */
+  sessionAbortAnimation?: ThemeSessionAbortAnimation;
 }
 
 /**
@@ -984,7 +1145,7 @@ export interface Theme {
    *
    * @default undefined
    */
-  images?: ThemeImages;
+  image?: ThemeImage;
 
   /**
    * @description An object containing the frame styles used in the Aziface

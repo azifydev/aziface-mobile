@@ -6,23 +6,35 @@ import com.azifacemobile.utils.Theme;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class CommonStyle {
+public abstract class ViewStyle {
   private final Theme theme;
   private final JSONObject target;
   private final Color color;
 
-  public CommonStyle(String key) {
+  public ViewStyle(String key) {
     this.theme = new Theme();
     this.color = new Color();
 
     this.target = this.theme.getTarget(key);
   }
 
-  public CommonStyle(JSONObject theme, String key) {
+  public ViewStyle(JSONObject target, String key) {
     this.theme = new Theme();
     this.color = new Color();
 
-    this.target = this.theme.getTarget(theme, key);
+    this.target = this.theme.getTarget(target, key);
+  }
+
+  private int getInt(String key, int defaultValue) {
+    try {
+      if (!this.theme.exists(this.target, key)) {
+        return defaultValue;
+      }
+
+      return this.target.getInt(key);
+    } catch (JSONException e) {
+      return defaultValue;
+    }
   }
 
   public int getBackgroundColor() {
@@ -54,36 +66,18 @@ public abstract class CommonStyle {
   }
 
   public int getBorderWidth() {
-    final String key = "borderWidth";
     final int defaultBorderWidth = -1;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultBorderWidth;
-      }
-
-      final int borderWidth = this.target.getInt(key);
-      return borderWidth < 0 ? defaultBorderWidth : borderWidth;
-    } catch (JSONException e) {
-      return defaultBorderWidth;
-    }
+    final int borderWidth = this.getInt("borderWidth", defaultBorderWidth);
+    return borderWidth < 0 ? defaultBorderWidth : borderWidth;
   }
 
   public int getCornerRadius() {
     return this.getCornerRadius(20);
   }
 
-  public int getCornerRadius(int defaultBorderRadius) {
-    final String key = "cornerRadius";
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultBorderRadius;
-      }
-
-      final int borderRadius = this.target.getInt(key);
-      return borderRadius < 0 ? defaultBorderRadius : borderRadius;
-    } catch (JSONException e) {
-      return defaultBorderRadius;
-    }
+  public int getCornerRadius(int defaultCornerRadius) {
+    final int cornerRadius = this.getInt("cornerRadius", defaultCornerRadius);
+    return cornerRadius < 0 ? defaultCornerRadius : cornerRadius;
   }
 
   public int getElevation() {
@@ -91,17 +85,8 @@ public abstract class CommonStyle {
   }
 
   public int getElevation(int defaultElevation) {
-    final String key = "elevation";
     final int maxElevation = 24;
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultElevation;
-      }
-
-      final int elevation = this.target.getInt(key);
-      return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
-    } catch (JSONException e) {
-      return defaultElevation;
-    }
+    final int elevation = this.getInt("elevation", defaultElevation);
+    return elevation < 0 ? defaultElevation : Math.clamp(elevation, defaultElevation, maxElevation);
   }
 }

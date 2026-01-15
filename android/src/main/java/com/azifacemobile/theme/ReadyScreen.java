@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ReadyScreen {
-  private static final String KEY = "readyScreen";
   private final Theme theme;
   private final JSONObject target;
   private final Color color;
@@ -18,21 +17,21 @@ public class ReadyScreen {
     this.target = this.theme.getTarget(target, "readyScreen");
   }
 
-  public int getTextBackgroundColor() {
-    return this.color.getColor(this.target, "textBackgroundColor", "#000000");
-  }
-
-  public String getHeaderText() {
-    final String key = "headerText";
+  private String getString(String key) {
+    final String empty = "";
     try {
       if (!this.theme.exists(this.target, key)) {
-        return "";
+        return empty;
       }
 
       return this.target.getString(key);
     } catch (JSONException e) {
-      return "";
+      return empty;
     }
+  }
+
+  public String getHeaderText() {
+    return this.getString("headerText");
   }
 
   public int getHeaderTextColor() {
@@ -40,16 +39,7 @@ public class ReadyScreen {
   }
 
   public String getSubtext() {
-    final String key = "subtext";
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return "";
-      }
-
-      return this.target.getString(key);
-    } catch (JSONException e) {
-      return "";
-    }
+    return this.getString("subtext");
   }
 
   public int getSubtextColor() {
@@ -57,7 +47,8 @@ public class ReadyScreen {
   }
 
   public int getOvalFillColor() {
-    return this.color.getColor(this.target, "ovalFillColor", "#00000000");
+    final String transparent = "#00000000";
+    return this.color.getColor(this.target, "ovalFillColor", transparent);
   }
 }
 

@@ -1,12 +1,12 @@
 package com.azifacemobile.theme;
 
-import com.azifacemobile.theme.abstracts.CommonStyle;
+import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Feedback extends CommonStyle {
+public class Feedback extends ViewStyle {
   private static final String KEY = "feedback";
   private final Theme theme;
   private final JSONObject target;
@@ -23,12 +23,12 @@ public class Feedback extends CommonStyle {
 
   @Override
   public int getBackgroundColor() {
-    return this.getBackgroundColor("#026ff4");
+    return super.getBackgroundColor("#026ff4");
   }
 
   @Override
   public int getCornerRadius() {
-    return this.getCornerRadius(-1);
+    return super.getCornerRadius(-1);
   }
 
   @Override

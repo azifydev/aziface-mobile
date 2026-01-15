@@ -2,6 +2,7 @@ package com.azifacemobile.theme;
 
 import android.graphics.Rect;
 
+import com.azifacemobile.theme.abstracts.ImageStyle;
 import com.azifacemobile.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facetec.sdk.FaceTecCancelButtonCustomization;
@@ -11,77 +12,52 @@ import org.json.JSONObject;
 
 import javax.annotation.Nullable;
 
-public class Image {
-  private static ReactApplicationContext reactContext;
-  private final JSONObject theme;
+public class Image extends ImageStyle {
+  private final static String KEY = "image";
+  private final JSONObject target;
   private boolean isPosition;
 
   public Image(ReactApplicationContext context) {
-    reactContext = context;
+    super(context, KEY);
 
-    this.theme = new Theme().getTarget("images");
+    this.target = new Theme().getTarget(KEY);
     this.isPosition = false;
   }
 
-  public int getSource(String key) {
-    try {
-      if (reactContext == null) {
-        return 0;
-      }
+  public Image(ReactApplicationContext context, JSONObject target) {
+    super(context, target);
 
-      final String imageName = this.theme.getString(key);
-
-      if (imageName.isEmpty()) {
-        return 0;
-      }
-
-      final String packageName = reactContext.getPackageName();
-      return reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
-    } catch (NullPointerException | JSONException e) {
-      return 0;
-    }
+    this.target = target;
+    this.isPosition = false;
   }
 
-  public int getSource(String key, int defaultImage) {
+  public Image(ReactApplicationContext context, JSONObject target, String key) {
+    super(context, target, key);
+
+    this.target = target;
+    this.isPosition = false;
+  }
+
+  private boolean getBoolean(String key, boolean defaultValue) {
     try {
-      if (reactContext == null) {
-        return defaultImage;
-      }
-
-      final String imageName = this.theme.getString(key);
-
-      if (imageName.isEmpty()) {
-        return defaultImage;
-      }
-
-      final String packageName = reactContext.getPackageName();
-      final int resourceId = reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
-      return resourceId == 0 ? defaultImage : resourceId;
+      return this.target.getBoolean(key);
     } catch (NullPointerException | JSONException e) {
-      return defaultImage;
+      return defaultValue;
     }
   }
 
   public boolean getShowBranding() {
-    try {
-      return this.theme.getBoolean("isShowBranding");
-    } catch (NullPointerException | JSONException e) {
-      return true;
-    }
+    return this.getBoolean("isShowBranding", true);
   }
 
   public boolean getHideForCameraPermissions() {
-    try {
-      return this.theme.getBoolean("isHideForCameraPermissions");
-    } catch (NullPointerException | JSONException e) {
-      return false;
-    }
+    return this.getBoolean("isHideForCameraPermissions", false);
   }
 
   @Nullable
   public Rect getButtonPosition() {
     try {
-      final JSONObject cancelPosition = this.theme.getJSONObject("cancelPosition");
+      final JSONObject cancelPosition = this.target.getJSONObject("cancelPosition");
 
       final int left = cancelPosition.getInt("left");
       final int top = cancelPosition.getInt("top");
@@ -101,7 +77,7 @@ public class Image {
   public FaceTecCancelButtonCustomization.ButtonLocation getButtonLocation() {
     final FaceTecCancelButtonCustomization.ButtonLocation defaultLocation = FaceTecCancelButtonCustomization.ButtonLocation.TOP_RIGHT;
     try {
-      final String cancelLocation = this.isPosition ? "CUSTOM" : this.theme.getString("cancelLocation");
+      final String cancelLocation = this.isPosition ? "CUSTOM" : this.target.getString("cancelLocation");
 
       switch (cancelLocation) {
         case "TOP_RIGHT":
