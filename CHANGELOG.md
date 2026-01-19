@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/azifydev/aziface-mobile/compare/v3.2.0...v3.3.0) (2026-01-16)
+
+
+### Features
+
+* update SDK ([#20](https://github.com/azifydev/aziface-mobile/issues/20)) ([b7ba664](https://github.com/azifydev/aziface-mobile/commit/b7ba664d07ab14c4464a9d17a3f5fe99000ac32b))
+
 # [3.2.0](https://github.com/azifydev/aziface-mobile/compare/v3.1.7...v3.2.0) (2026-01-12)
 
 
