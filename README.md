@@ -67,6 +67,7 @@ Aziface SDK adapter to react native.
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
 - [Integration guide](#integration-guide)
   - [`flutter`](./FLUTTER.md)
+- [Expo](#expo)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -929,6 +930,12 @@ If you want to enable the camera, you need to add the following instructions in 
 ## Integration guide
 
 The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./FLUTTER.md).
+
+<hr/>
+
+## Expo
+
+In Expo, you need to convert to a [custom development build](https://docs.expo.dev/develop/development-builds/introduction/) or use [prebuild](https://docs.expo.dev/workflow/continuous-native-generation/). You can use also React Native without Expo.
 
 <hr/>
 
