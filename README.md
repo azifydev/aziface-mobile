@@ -17,13 +17,20 @@ Aziface SDK adapter to react native.
 - [Usage](#usage)
 - [API](#api)
   - [`initialize`](#initialize)
+    - [Properties](#properties)
   - [`enroll`](#enroll)
+    - [Properties](#properties-1)
   - [`authenticate`](#authenticate)
+    - [Properties](#properties-2)
   - [`liveness`](#liveness)
+    - [Properties](#properties-3)
   - [`photoMatch`](#photomatch)
+    - [Properties](#properties-4)
   - [`photoScan`](#photoscan)
+    - [Properties](#properties-5)
   - [`vocal`](#vocal)
   - [`setTheme`](#settheme)
+    - [Properties](#properties-6)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
   - [`Headers`](#azifacesdkheaders)
@@ -58,7 +65,7 @@ Aziface SDK adapter to react native.
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
-    - [Properties](#properties)
+    - [Properties](#properties-7)
 - [Vocal Guidance](#vocal-guidance)
 - [How to add images in Aziface SDK module? (Deprecated)](#how-to-add-images-in-aziface-sdk-module-deprecated)
   - [How to add images in Android?](#how-to-add-images-in-android)
@@ -304,7 +311,30 @@ const styles = StyleSheet.create({
 
 ### `initialize`
 
-This is the **principal** method to be called, he must be **called first** to initialize the Aziface SDK. If he doens't be called the other methods **don't works!**
+The `initialize` of the Aziface SDK is the process of configuring and preparing the SDK for use before any face capture, liveness, authentication, or identity verification sessions can begin.
+
+During initialization, the application provides the SDK with the required configuration data, such as the device key identifier, base URL, and `x-token-bearer`. The SDK validates these parameters, performs internal setup, and prepares the necessary resources for secure camera access, biometric processing, and user interface rendering.
+
+A successful initialization confirms that the SDK is correctly licensed, properly configured for the target environment, and ready to start user sessions. If initialization fails due to invalid keys, network issues, or unsupported device conditions, the SDK returns boolean information (true or false) so the application can handle the failure gracefully and prevent session startup.
+
+Initialization is a **mandatory step** and must be completed once during the application lifecycle (or as required by the platform) before invoking any Aziface SDK workflows.
+
+```tsx
+const initialized = await initialize({
+  params: {
+    deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+    baseUrl: 'YOUR_BASE_URL',
+  },
+  headers: {
+    'x-token-bearer': 'YOUR_TOKEN_BEARER',
+    // your headers...
+  },
+});
+
+console.log(initialized);
+```
+
+#### Properties
 
 | `Initialize` | type                  | Required |
 | ------------ | --------------------- | -------- |
@@ -313,7 +343,19 @@ This is the **principal** method to be called, he must be **called first** to in
 
 ### `enroll`
 
-This method makes a 3D reading of the user's face. But, you must use to **subscribe** user in Aziface SDK or in your server.
+The `enroll` method in the Aziface SDK is responsible for registering a user’s face for the first time and creating a secure biometric identity. During enrollment, the SDK guides the user through a liveness detection process to ensure that a real person is present and not a photo, video, or spoofing attempt.
+
+While the user follows on-screen instructions (such as positioning their face within the oval and performing natural movements), the SDK captures a set of facial data and generates a secure face scan. This face scan is then encrypted and sent to the backend for processing and storage.
+
+The result of a successful enrollment is a trusted biometric template associated with the user’s identity, which can later be used for authentication, verification, or ongoing identity checks. If the enrollment fails due to poor lighting, incorrect positioning, or liveness issues, the SDK returns detailed status and error information so the application can handle retries or user feedback appropriately.
+
+```tsx
+const result = await enroll();
+
+console.log(result);
+```
+
+#### Properties
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
@@ -321,7 +363,19 @@ This method makes a 3D reading of the user's face. But, you must use to **subscr
 
 ### `authenticate`
 
-This method makes a 3D reading of the user's face, it's an equal `enroll` method, but it must be used to **authenticate** your user. An important detail about it is, you must **subscribe** to your user **first**, after authenticating it with this method.
+The authentication method in the Aziface SDK is used to verify a user’s identity by comparing a newly captured face scan against a previously enrolled biometric template. This process confirms that the person attempting to access the system is the same individual who completed the enrollment.
+
+During authentication, the SDK performs an active liveness check while guiding the user through simple on-screen instructions. A fresh face scan is captured, encrypted, and securely transmitted to the backend, where it is matched against the stored enrollment data.
+
+If the comparison is successful and the liveness checks pass, the authentication is approved and the user is granted access. If the process fails due to a mismatch, spoofing attempt, or poor capture conditions, the SDK returns detailed result and error codes so the application can handle denial, retries, or alternative verification flows.
+
+```tsx
+const result = await authenticate();
+
+console.log(result);
+```
+
+#### Properties
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
@@ -329,7 +383,19 @@ This method makes a 3D reading of the user's face, it's an equal `enroll` method
 
 ### `liveness`
 
-This method makes a 3D reading of the user's face, ensuring the liveness check of the user.
+The `liveness` method in the Aziface SDK is designed to determine whether the face presented to the camera belongs to a real, live person at the time of capture, without necessarily verifying their identity against a stored template.
+
+In this flow, the SDK guides the user through a short interaction to capture facial movements and depth cues that are difficult to replicate with photos, videos, or masks. The resulting face scan is encrypted and sent to the backend, where advanced liveness detection algorithms analyze it for signs of spoofing or fraud.
+
+A successful liveness result confirms real human presence and can be used as a standalone security check or as part of broader workflows such as authentication, onboarding, or high-risk transactions. If the liveness check fails, the SDK provides detailed feedback to allow the application to respond appropriately.
+
+```tsx
+const result = await liveness();
+
+console.log(result);
+```
+
+#### Properties
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
@@ -337,7 +403,19 @@ This method makes a 3D reading of the user's face, ensuring the liveness check o
 
 ### `photoMatch`
 
-This method make to read from face and documents for user, after compare face and face documents from user to check veracity.
+The `photoMatch` method in the Aziface SDK is used to verify a user’s identity by analyzing a government-issued identity document and comparing it with the user’s live facial biometric data.
+
+In this flow, the SDK first guides the user to capture high-quality images of their identity document. Then, a face scan is collected through a liveness-enabled facial capture. Both the document images and the face scan are encrypted and securely transmitted to the backend.
+
+A successful result provides strong identity assurance, combining document authenticity and biometric verification. This flow is commonly used in regulated onboarding, KYC, and high-security access scenarios. If any step fails, the SDK returns detailed results and error information to support retries or alternative verification paths.
+
+```tsx
+const result = await photoMatch();
+
+console.log(result);
+```
+
+#### Properties
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
@@ -345,7 +423,19 @@ This method make to read from face and documents for user, after compare face an
 
 ### `photoScan`
 
-This method makes to read from documents for user, checking in your server the veracity it.
+The `photoScan` method in the Aziface SDK is used to verify the authenticity and validity of a government-issued identity document without performing facial biometric verification.
+
+In this flow, the SDK guides the user to capture images of the identity document, ensuring proper framing, focus, and lighting. The captured document images are encrypted and securely sent to the backend for analysis.
+
+A successful document-only verification is suitable for lower-risk scenarios or cases where biometric capture is not required. If the verification fails due to image quality issues, unsupported documents, or suspected tampering, the SDK provides detailed feedback for proper error handling and user guidance.
+
+```tsx
+const result = await photoScan();
+
+console.log(result);
+```
+
+#### Properties
 
 | Property | type  | Required | Default     |
 | -------- | ----- | -------- | ----------- |
@@ -353,13 +443,32 @@ This method makes to read from documents for user, checking in your server the v
 
 ### `vocal`
 
-This method must be used to **activate** the vocal guidance of the Aziface SDK.
+The Vocal Guidance feature in the FaceTec SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
+
+During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
+
+```tsx
+vocal();
+```
 
 ### `setTheme`
 
-This method must be used to **set** the **theme** of the Aziface SDK screen.
+This method customize your SDK theme during session.
+
+```tsx
+// It's recommended to use it before calling the initialize method
+setTheme({
+  // ...
+});
+
+await initialize({
+  // ...
+});
+```
 
 **Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
+
+#### Properties
 
 | Property  | type              | Required | Default     |
 | --------- | ----------------- | -------- | ----------- |
