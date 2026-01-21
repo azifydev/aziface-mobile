@@ -899,6 +899,11 @@ export type ProcessorRequestMethod = 'GET' | 'POST';
  * @description Headers your requests, to each request it's sent.
  */
 export interface Headers {
+  /**
+   * @description The token bearer to authorize your requests.
+   */
+  'x-token-bearer': string;
+
   [key: string]: string | null | undefined;
 }
 
@@ -915,11 +920,10 @@ export interface Initialize {
   params: Params;
 
   /**
-   * @description Headers your requests, to each request it's sent.
-   *
-   * @default undefined
+   * @description Headers your requests, to each request it's sent. This
+   * property is required.
    */
-  headers?: Headers;
+  headers: Headers;
 }
 
 /**
@@ -1276,11 +1280,11 @@ export interface Methods extends TurboModule {
    *
    * @param {Params} params - Initialization SDK parameters.
    * @param {Headers} headers - Headers your requests, to each
-   * request it's sent. The headers is optional.
+   * request it's sent.
    *
    * @return {Promise<boolean>} Represents if initialization was a successful.
    */
-  initialize(params: Params, headers?: Headers): Promise<boolean>;
+  initialize(params: Params, headers: Headers): Promise<boolean>;
 
   /**
    * @description This method make to read from face and documents for user,
@@ -1388,7 +1392,7 @@ export function vocal(): void {
  * other methods **don't works!**
  *
  * @param {Initialize} initialize - Initialize the Aziface SDK with
- * specific parameters and an optional headers.
+ * specific parameters and headers.
  *
  * @return {Promise<boolean>} Represents if Aziface SDK initialized with
  * successful.

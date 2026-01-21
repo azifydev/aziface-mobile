@@ -306,10 +306,10 @@ const styles = StyleSheet.create({
 
 This is the **principal** method to be called, he must be **called first** to initialize the Aziface SDK. If he doens't be called the other methods **don't works!**
 
-| `Initialize` | type                  | Required | Default     |
-| ------------ | --------------------- | -------- | ----------- |
-| `params`     | [`Params`](#params)   | ✅       | -           |
-| `headers`    | [`Headers`](#headers) | ❌       | `undefined` |
+| `Initialize` | type                  | Required |
+| ------------ | --------------------- | -------- |
+| `params`     | [`Params`](#params)   | ✅       |
+| `headers`    | [`Headers`](#headers) | ✅       |
 
 ### `enroll`
 
@@ -424,9 +424,10 @@ Here must be passed to initialize the Aziface SDK! Case the parameters isn't pro
 
 Here you can add your headers to send request when some method is called. Only values from type **string**, **null** or **undefined** are accepts!
 
-| `Headers`       | type                              | Required | Default     |
-| --------------- | --------------------------------- | -------- | ----------- |
-| `[key: string]` | `string` or `null` or `undefined` | ❌       | `undefined` |
+| `Headers`        | type                              | Required | Default     |
+| ---------------- | --------------------------------- | -------- | ----------- |
+| `x-token-bearer` | `string`                          | ✅       | -           |
+| `[key: string]`  | `string` or `null` or `undefined` | ❌       | `undefined` |
 
 ### `Processor`
 
