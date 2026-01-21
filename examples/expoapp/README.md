@@ -1,50 +1,71 @@
-# Welcome to your Expo app 👋
+# Expo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## A basic Expo App
 
-## Get started
+This example contains initialize, enroll, authenticate, liveness, photo match, photo scan and vocal guidance methods.
 
-1. Install dependencies
+##### Prepare your environment:
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npm install # or yarn install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+##### Install pods:
 
-## Learn more
+```sh
+cd ios && pod install && cd ..
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+##### Before, run prebuild command:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```sh
+npx expo prebuild
+```
 
-## Join the community
+##### In the `./android` folder, you must create the `local.properties` file, which is required to work in Android:
 
-Join our community of developers creating universal apps.
+```properties
+sdk.dir=ANDROID_SDK_DIR
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+##### Now, in the `./app/index.tsx` file, search for the `onInitialize` function. You must add your credentials to initialize Aziface SDK correctly:
+
+```tsx
+async function onInitialize() {
+  // ...
+
+  const headers: Headers = {
+    'x-token-bearer': 'YOUR_TOKEN_BEARER',
+    // ...
+  };
+
+  const initialized = await initialize({
+    headers,
+    params: {
+      baseUrl: 'YOUR_BASE_URL',
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+    },
+  });
+
+  // ...
+}
+
+// ...
+```
+
+The processors will be available when the SDK is initialized.
+
+##### Clean your Gradle (Recommended):
+
+```sh
+# ./android
+./gradlew clean
+```
+
+##### Finally, start Expo App and execute to each platform:
+
+```sh
+npm run start # or yarn start
+npm run android # or yarn android
+npm run ios # or yarn ios
+```

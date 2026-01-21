@@ -935,7 +935,7 @@ The Azify offers an example App for Flutter developers. Currently, this example 
 
 ## Expo
 
-In Expo, you need to convert to a [custom development build](https://docs.expo.dev/develop/development-builds/introduction/) or use [prebuild](https://docs.expo.dev/workflow/continuous-native-generation/). You can use also React Native without Expo.
+In Expo, you need to convert to a [custom development build](https://docs.expo.dev/develop/development-builds/introduction/) or use [prebuild](https://docs.expo.dev/workflow/continuous-native-generation/). You can use also React Native without Expo. Check Expo example App [here](./examples/expoapp/README.md).
 
 <hr/>
 
