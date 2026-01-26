@@ -72,6 +72,9 @@ Aziface SDK adapter to react native.
   - [How to add images in iOS?](#how-to-add-images-in-ios)
   - [Example with images added](#example-with-images-added)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
+- [Internationalization](#internationalization)
+  - [Android](#android)
+  - [iOS](#ios)
 - [Integration guide](#integration-guide)
   - [`flutter`](./FLUTTER.md)
 - [Expo](#expo)
@@ -1034,6 +1037,34 @@ If you want to enable the camera, you need to add the following instructions in 
 ```
 
 > That's will be necessary to what iOS **works** correctly!
+
+<hr/>
+
+## Internationalization
+
+The Aziface SDK offers translations for better user experience and accessibility.
+
+### Android
+
+In Android, the Aziface SDK use system configuration by default.
+
+### iOS
+
+In iOS, the Aziface SDK get the region configured on `Info.plist` file. But, you can change it if necessary.
+
+```plist
+<!-- ios/YOUR_PROJECT_NAME/Info.plist -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <!-- Change your region here! -->
+  <string>en</string>
+</dict>
+</plist>
+```
 
 <hr/>
 
