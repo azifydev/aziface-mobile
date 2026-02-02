@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/azifydev/aziface-mobile/compare/v3.3.0...v3.3.1) (2026-02-02)
+
+
+### Bug Fixes
+
+* **ios:** multiple commands produce error ([#21](https://github.com/azifydev/aziface-mobile/issues/21)) ([0bc9294](https://github.com/azifydev/aziface-mobile/commit/0bc929413d0cc1368ef3f2078833ee96c9fbc430))
+
 # [3.3.0](https://github.com/azifydev/aziface-mobile/compare/v3.2.0...v3.3.0) (2026-01-16)
 
 
