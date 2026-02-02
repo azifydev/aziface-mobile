@@ -1,5 +1,10 @@
 #import "AzifaceMobile.h"
+
+#if __has_include("AzifaceMobile-Swift.h")
 #import "AzifaceMobile-Swift.h"
+#else
+#import <AzifaceMobile/AzifaceMobile-Swift.h>
+#endif
 
 @interface AzifaceMobile () <Emitter>
 @end
