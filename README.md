@@ -111,6 +111,7 @@ import {
   liveness,
   photoMatch,
   photoScan,
+  setLocale,
   FaceView,
   type Params,
   type Headers,
