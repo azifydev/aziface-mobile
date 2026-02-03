@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 
 import { styles } from './styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +9,8 @@ const queryClient = new QueryClient();
 export default function Index() {
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar barStyle="dark-content" />
+
       <ScrollView contentContainerStyle={styles.container}>
         <Routes />
       </ScrollView>
