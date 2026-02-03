@@ -88,6 +88,32 @@ export enum Errors {
   UnknownInternalError = 'UnknownInternalError',
 }
 
+// Language & Region
+
+/**
+ * @type
+ *
+ * @description The locale options available in Aziface SDK.
+ *
+ * @default "default"
+ */
+export type Locale =
+  | 'default'
+  | 'en'
+  | 'af'
+  | 'ar'
+  | 'de'
+  | 'el'
+  | 'es'
+  | 'fr'
+  | 'ja'
+  | 'kk'
+  | 'nb'
+  | 'pt-BR'
+  | 'ru'
+  | 'vi'
+  | 'zh';
+
 // Styles
 
 /**
@@ -1357,6 +1383,16 @@ export interface Methods extends TurboModule {
   liveness(data?: any): Promise<Processor>;
 
   /**
+   * @description This method must be used to **set** the **locale** of the
+   * Aziface SDK screen.
+   *
+   * @param {Locale} locale - The locale to be set in Aziface SDK screen.
+   *
+   * @return {void}
+   */
+  setLocale(locale: Locale): void;
+
+  /**
    * @description This method must be used to **set** the **theme** of the
    * Aziface SDK screen.
    *
@@ -1507,8 +1543,22 @@ export async function liveness(data?: object): Promise<Processor> {
 }
 
 /**
+ * @description This method must be used to **set** the **locale** of the
+ * Aziface SDK.
+ *
+ * @param {Locale|undefined} locale - The locale to be set in Aziface SDK
+ * screen.
+ *
+ * @return {void}
+ */
+export function setLocale(locale?: Locale): void {
+  AzifaceMobile.setLocale(locale);
+}
+
+/**
  * @description This method must be used to **set** the **theme** of the Aziface
- * SDK screen.
+ * SDK screen. It's recommend called this method **before** the `initialize`
+ * method.
  *
  * @param {Theme|undefined} options - The object theme options. All options are
  * optional.

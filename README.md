@@ -28,9 +28,11 @@ Aziface SDK adapter to react native.
     - [Properties](#properties-4)
   - [`photoScan`](#photoscan)
     - [Properties](#properties-5)
-  - [`vocal`](#vocal)
   - [`setTheme`](#settheme)
     - [Properties](#properties-6)
+  - [`setLocale`](#setlocale)
+    - [Properties](#properties-7)
+  - [`vocal`](#vocal)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
   - [`Headers`](#azifacesdkheaders)
@@ -42,6 +44,7 @@ Aziface SDK adapter to react native.
         - [`ProcessorRequestMethod`](#processorrequestmethod)
       - [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)
     - [`ProcessorError`](#processorerror)
+  - [`Locale`](#locale)
   - [`Theme`](#theme)
     - [`CancelLocation`](#cancellocation)
     - [`ThemeImage`](#themeimage)
@@ -65,16 +68,13 @@ Aziface SDK adapter to react native.
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
-    - [Properties](#properties-7)
+    - [Properties](#properties-8)
 - [Vocal Guidance](#vocal-guidance)
 - [How to add images in Aziface SDK module? (Deprecated)](#how-to-add-images-in-aziface-sdk-module-deprecated)
   - [How to add images in Android?](#how-to-add-images-in-android)
   - [How to add images in iOS?](#how-to-add-images-in-ios)
   - [Example with images added](#example-with-images-added)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
-- [Internationalization](#internationalization)
-  - [Android](#android)
-  - [iOS](#ios)
 - [Integration guide](#integration-guide)
   - [`flutter`](./FLUTTER.md)
 - [Expo](#expo)
@@ -111,14 +111,17 @@ import {
   liveness,
   photoMatch,
   photoScan,
+  setLocale,
   FaceView,
   type Params,
   type Headers,
   type Processor,
+  type Locale,
 } from '@azify/aziface-mobile';
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
+  const [localization, setLocalization] = useState<Locale>('default');
 
   const opacity = isInitialized ? 1 : 0.5;
 
@@ -193,6 +196,15 @@ export default function App() {
     }
   };
 
+  const onLocale = () => {
+    const LOCALES: Locale[] = ['default', 'en', 'es', 'pt-BR'];
+    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
+    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+
+    setLocalization(value);
+    setLocale(value);
+  };
+
   return (
     <ScrollView
       style={styles.scroll}
@@ -260,6 +272,15 @@ export default function App() {
         >
           <Text style={styles.buttonText}>Photo Scan</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { opacity }]}
+          activeOpacity={0.8}
+          onPress={() => onLocale()}
+          disabled={!isInitialized}
+        >
+          <Text style={styles.buttonText}>Localization: {localization}</Text>
+        </TouchableOpacity>
       </FaceView>
     </ScrollView>
   );
@@ -309,8 +330,9 @@ const styles = StyleSheet.create({
 | `liveness`     | `Promise<Processor>` | All      |
 | `photoMatch`   | `Promise<Processor>` | All      |
 | `photoScan`    | `Promise<Processor>` | All      |
-| `vocal`        | `void`               | All      |
 | `setTheme`     | `void`               | All      |
+| `setLocale`    | `void`               | All      |
+| `vocal`        | `void`               | All      |
 
 ### `initialize`
 
@@ -444,16 +466,6 @@ console.log(result);
 | -------- | ----- | -------- | ----------- |
 | `data`   | `any` | ❌       | `undefined` |
 
-### `vocal`
-
-The Vocal Guidance feature in the FaceTec SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
-
-During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
-
-```tsx
-vocal();
-```
-
 ### `setTheme`
 
 This method customize your SDK theme during session.
@@ -476,6 +488,36 @@ await initialize({
 | Property  | type              | Required | Default     |
 | --------- | ----------------- | -------- | ----------- |
 | `options` | [`Theme`](#theme) | ❌       | `undefined` |
+
+### `setLocale`
+
+The `setLocale` method in the Aziface SDK is used to define the language and locale used by the SDK’s user interface and vocal guidance during verification sessions.
+
+By calling this method, the application specifies which language the SDK should use for on-screen text, voice prompts, and user instructions. This allows the SDK to present a localized experience that matches the user’s preferred or device language.
+
+The selected language applies to all Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. The language must be set **before starting** a session to ensure consistent localization throughout the user interaction.
+
+If an unsupported or invalid language code is provided, the SDK falls back to a default language (en-US) and returns appropriate status or error information, depending on the platform implementation.
+
+```tsx
+setLocale('en');
+```
+
+#### Properties
+
+| Property | type                | Required |
+| -------- | ------------------- | -------- |
+| `locale` | [`Locale`](#locale) | ✅       |
+
+### `vocal`
+
+The Vocal Guidance feature in the FaceTec SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
+
+During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
+
+```tsx
+vocal();
+```
 
 <hr/>
 
@@ -501,6 +543,7 @@ await initialize({
 | [`ProcessorHttpCallInfo`](#processorhttpcallinfo)                   | All      |
 | [`ProcessorRequestMethod`](#processorrequestmethod)                 | All      |
 | [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)       | All      |
+| [`Locale`](#locale)                                                 | All      |
 | [`Theme`](#theme)                                                   | All      |
 | [`CancelLocation`](#cancellocation)                                 | All      |
 | [`ThemeImage`](#themeimage)                                         | All      |
@@ -648,6 +691,28 @@ The processor scan result. It's shown when you use `photoScan` or `photoMatch`.
 | `matchLevelNFCToFaceMap`                      | `number`  | The match level NFC to face map.                              |
 | `faceMapAgeV2GroupEnumInt`                    | `number`  | The face map age group enumeration integer.                   |
 | `watermarkAndHologramStatusEnumInt`           | `number`  | The watermark and hologram status enumeration integer.        |
+
+### `Locale`
+
+The `Locale` type use the [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) language codes pattern.
+
+| type      | Description                     | Platform |
+| --------- | ------------------------------- | -------- |
+| `af`      | Afrikaans language.             | All      |
+| `ar`      | Arabic language.                | All      |
+| `de`      | German language.                | All      |
+| `default` | English language.               | All      |
+| `en`      | English language.               | All      |
+| `el`      | Greek language.                 | All      |
+| `es`      | Spanish and Castilian language. | All      |
+| `fr`      | French language.                | All      |
+| `ja`      | Japanese language.              | All      |
+| `kk`      | Kazakh language.                | All      |
+| `nb`      | Norwegian Bokmål language.      | All      |
+| `pt-BR`   | Portuguese Brazilian language.  | All      |
+| `ru`      | Russian language.               | All      |
+| `vi`      | Vietnamese language.            | All      |
+| `zh`      | Chinese language.               | All      |
 
 ### `Theme`
 
@@ -1037,34 +1102,6 @@ If you want to enable the camera, you need to add the following instructions in 
 ```
 
 > That's will be necessary to what iOS **works** correctly!
-
-<hr/>
-
-## Internationalization
-
-The Aziface SDK offers translations for better user experience and accessibility.
-
-### Android
-
-In Android, the Aziface SDK use system configuration by default.
-
-### iOS
-
-In iOS, the Aziface SDK get the region configured on `Info.plist` file. But, you can change it if necessary.
-
-```plist
-<!-- ios/YOUR_PROJECT_NAME/Info.plist -->
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>CFBundleDevelopmentRegion</key>
-  <!-- Change your region here! -->
-  <string>en</string>
-</dict>
-</plist>
-```
 
 <hr/>
 

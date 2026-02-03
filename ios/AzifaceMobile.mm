@@ -10,7 +10,7 @@
 @end
 
 @implementation AzifaceMobile {
-  Aziface * _aziface;
+  Aziface *_aziface;
 }
 
 RCT_EXPORT_MODULE()
@@ -31,7 +31,10 @@ RCT_EXPORT_MODULE()
            headers:(nonnull NSDictionary *)headers
            resolve:(nonnull RCTPromiseResolveBlock)resolve
             reject:(nonnull RCTPromiseRejectBlock)reject {
-  return [_aziface initialize:params headers:headers resolve:resolve reject:reject];
+  return [_aziface initialize:params
+                      headers:headers
+                      resolve:resolve
+                       reject:reject];
 }
 
 - (void)authenticate:(nonnull NSDictionary *)data
@@ -64,6 +67,10 @@ RCT_EXPORT_MODULE()
   return [_aziface photoIDScanOnly:data resolve:resolve];
 }
 
+- (void)setLocale:(NSString *)locale {
+  return [_aziface setLocale:locale];
+}
+
 - (void)setTheme:(nonnull NSDictionary *)options {
   return [_aziface setTheme:options];
 }
@@ -76,8 +83,7 @@ RCT_EXPORT_MODULE()
   return true;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
   _aziface = nil;
 }
 
