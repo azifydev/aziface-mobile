@@ -58,7 +58,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     this.reactContext = context;
     this.error = new AzifaceError(this);
     this.response = Arguments.createMap();
-    this.preload();
+
+    this.setupI18n();
 
     FaceTecSDK.preload(context);
   }
@@ -125,7 +126,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     parameters.build();
 
     if (!Config.isEmpty()) {
-      this.preload();
+      this.setupI18n();
 
       FaceTecSDK.initializeWithSessionRequest(this.getActivity(), Config.DeviceKeyIdentifier, new SessionRequestProcessor(), new FaceTecSDK.InitializeCallback() {
         @Override
@@ -284,7 +285,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   public void setLocale(String locale) {
     I18n.setLocale(locale);
 
-    this.preload();
+    this.setupI18n();
   }
 
   @ReactMethod
@@ -327,7 +328,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Theme.updateTheme();
   }
 
-  private void preload() {
+  private void setupI18n() {
     Locale locale = new Locale(I18n.getLocale());
 
     final Resources resources = this.reactContext.getBaseContext().getResources();
