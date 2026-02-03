@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/azifydev/aziface-mobile/compare/v3.3.1...v3.4.0) (2026-02-03)
+
+
+### Features
+
+* **WL-329:** add i18n ([#22](https://github.com/azifydev/aziface-mobile/issues/22)) ([56f3d35](https://github.com/azifydev/aziface-mobile/commit/56f3d35a2e65b8b753d1f9985975955c276af62e))
+
 ## [3.3.1](https://github.com/azifydev/aziface-mobile/compare/v3.3.0...v3.3.1) (2026-02-02)
 
 
