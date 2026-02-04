@@ -298,6 +298,13 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   }
 
   @ReactMethod
+  public void resetDynamicStrings() {
+    Strings.setStrings(null)
+      .load()
+      .build();
+  }
+
+  @ReactMethod
   public void setTheme(ReadableMap style) {
     Theme.setStyle(style);
 
