@@ -39,7 +39,7 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
 
 <hr/>
 
-### Usage
+## Usage
 
 ```tsx
 // It's recommended to use it before calling the initialize method
@@ -55,17 +55,17 @@ await initialize({
 
 <hr/>
 
-### API
+## API
 
 | Methods    | Return Type | Platform |
 | ---------- | ----------- | -------- |
 | `setTheme` | `void`      | All      |
 
-#### `setTheme`
+### `setTheme`
 
 This method customize your SDK theme during session. **Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
 
-##### Properties
+#### Properties
 
 | Property  | type              | Required | Default     |
 | --------- | ----------------- | -------- | ----------- |
@@ -73,7 +73,7 @@ This method customize your SDK theme during session. **Note**: Currently, it's r
 
 <hr/>
 
-### Types
+## Types
 
 | Types                                                          | Platform |
 | -------------------------------------------------------------- | -------- |
@@ -100,7 +100,7 @@ This method customize your SDK theme during session. **Note**: Currently, it's r
 
 <hr/>
 
-#### `Theme`
+### `Theme`
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
 
@@ -115,7 +115,7 @@ This is a list of theme properties that can be used to styling. Note, we recomme
 | `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
 | `idScan`                 | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
 
-##### `CancelLocation`
+#### `CancelLocation`
 
 This type must be used to position of the cancel button on screen.
 
@@ -125,7 +125,7 @@ This type must be used to position of the cancel button on screen.
 | `TOP_LEFT`       | Position cancel button in top right.                            |
 | `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
 
-##### `ThemeImage`
+#### `ThemeImage`
 
 An object containing the image assets used in the Aziface SDK.
 
@@ -137,7 +137,7 @@ An object containing the image assets used in the Aziface SDK.
 | `cancel`                     | `string`                            | All      | ❌       | `facetec_cancel.png`               |
 | `cancelLocation`             | [`CancelLocation`](#cancellocation) | All      | ❌       | `TOP_RIGHT`                        |
 
-##### `ThemeFrame`
+#### `ThemeFrame`
 
 An object containing the frame styles used in the Aziface SDK.
 
@@ -150,7 +150,7 @@ An object containing the frame styles used in the Aziface SDK.
 | `elevation`       | `number`                               | Android  | ❌       | `0`         |
 | `shadow`          | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
 
-##### `ThemeButton`
+#### `ThemeButton`
 
 An object containing the button styles used in the Aziface SDK.
 
@@ -163,7 +163,7 @@ An object containing the button styles used in the Aziface SDK.
 | `textDisabledColor`        | `string` | All      | ❌       | `#ffffff` |
 | `textHighlightColor`       | `string` | All      | ❌       | `#ffffff` |
 
-##### `ThemeGuidance`
+#### `ThemeGuidance`
 
 An object containing the styles used in the guidance view.
 
@@ -174,7 +174,7 @@ An object containing the styles used in the guidance view.
 | `button`          | [`ThemeButton`](#themebutton)                           | All      | ❌       | `undefined`                                            |
 | `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | All      | ❌       | `undefined`                                            |
 
-###### `ThemeGuidanceRetryScreen`
+##### `ThemeGuidanceRetryScreen`
 
 An object containing the styles used in the guidance retry screen.
 
@@ -183,7 +183,7 @@ An object containing the styles used in the guidance retry screen.
 | `imageBorderColor`         | `string` | All      | ❌       | `#ffffff` |
 | `ovalStrokeColor`          | `string` | All      | ❌       | `#ffffff` |
 
-##### `ThemeOval`
+#### `ThemeOval`
 
 An object containing the oval styles used in the Aziface SDK.
 
@@ -196,7 +196,7 @@ An object containing the oval styles used in the Aziface SDK.
 | `progressRadialOffset` | `number` | All      | ❌       | `undefined` |
 | `progressStrokeWidth`  | `number` | All      | ❌       | `undefined` |
 
-##### `ThemeFeedback`
+#### `ThemeFeedback`
 
 An object containing the oval styles used in the Aziface SDK.
 
@@ -210,7 +210,7 @@ An object containing the oval styles used in the Aziface SDK.
 | `shadow`                                                | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
 | `isEnablePulsatingText`                                 | `boolean`                              | All      | ❌       | `true`      |
 
-###### `FeedbackBackgroundColor` (iOS only)
+##### `FeedbackBackgroundColor` (iOS only)
 
 This type must be used to **set** the **theme** of the feedback box.
 
@@ -230,7 +230,7 @@ This interface defines the drawn in the layer's coordinate space.
 | `x`     | `number` | ❌       | `0`     |
 | `y`     | `number` | ❌       | `0`     |
 
-##### `ThemeResultScreen`
+#### `ThemeResultScreen`
 
 An object containing the styles used in the result screen.
 
@@ -242,7 +242,7 @@ An object containing the styles used in the result screen.
 | `uploadProgressFillColor` | `string`                                        | All      | ❌       | `#026ff4`                                              |
 | `resultAnimation`         | [`ThemeResultAnimation`](#themeresultanimation) | All      | ❌       | `undefined`                                            |
 
-###### `ThemeResultAnimation`
+##### `ThemeResultAnimation`
 
 An object containing the animation styles used in the Aziface SDK result animation.
 
@@ -251,7 +251,7 @@ An object containing the animation styles used in the Aziface SDK result animati
 | `backgroundColor`      | `string` | All      | ❌       | `#026ff4` |
 | `foregroundColor`      | `string` | All      | ❌       | `#ffffff` |
 
-##### `ThemeIdScan`
+#### `ThemeIdScan`
 
 An object containing the styles used in the ID scan screens.
 
@@ -262,7 +262,7 @@ An object containing the styles used in the ID scan screens.
 | `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | All      | ❌       | `undefined` |
 | `button`          | [`ThemeButton`](#themebutton)                               | All      | ❌       | `undefined` |
 
-###### `ThemeIdScanSelectionScreen`
+##### `ThemeIdScanSelectionScreen`
 
 An object containing the styles used in the ID scan selection screen.
 
@@ -271,7 +271,7 @@ An object containing the styles used in the ID scan selection screen.
 | `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
 | `foregroundColor`            | `string`               | All      | ❌       | `#272937`                                              |
 
-###### `ThemeIdScanReviewScreen`
+##### `ThemeIdScanReviewScreen`
 
 An object containing the styles used in the ID scan review screen.
 
@@ -280,7 +280,7 @@ An object containing the styles used in the ID scan review screen.
 | `foregroundColor`         | `string` | All      | ❌       | `#ffffff` |
 | `textBackgroundColor`     | `string` | All      | ❌       | `#026ff4` |
 
-###### `ThemeIdScanCaptureScreen`
+##### `ThemeIdScanCaptureScreen`
 
 An object containing the styles used in the ID scan capture screen.
 
@@ -291,7 +291,7 @@ An object containing the styles used in the ID scan capture screen.
 | `backgroundColor`          | `string` | All      | ❌       | `#026ff4` |
 | `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff` |
 
-##### `ThemeShadow` (iOS only)
+#### `ThemeShadow` (iOS only)
 
 An object containing the shadow styles used during capture screen. If you want to use shadow in Android App, you the `elevation` property in the `frame` or `feedback` objects.
 
@@ -303,7 +303,7 @@ An object containing the shadow styles used during capture screen. If you want t
 | `offset`      | [`ThemeShadowInsets`](#themeshadowoffset) | iOS      | ❌       | `undefined` |
 | `insets`      | [`ThemeShadowOffset`](#themeshadowinsets) | iOS      | ❌       | `undefined` |
 
-###### `ThemeShadowInsets`
+##### `ThemeShadowInsets`
 
 An object containing the shadow inset styles used in screen.
 
@@ -314,7 +314,7 @@ An object containing the shadow inset styles used in screen.
 | `bottom`            | `number` | iOS      | ❌       | `0`     |
 | `right`             | `number` | iOS      | ❌       | `0`     |
 
-###### `ThemeShadowOffset`
+##### `ThemeShadowOffset`
 
 An object containing the shadow offset styles used in screen.
 
@@ -325,7 +325,7 @@ An object containing the shadow offset styles used in screen.
 
 <hr/>
 
-### How to add images in Aziface SDK module? (Deprecated)
+## How to add images in Aziface SDK module? (Deprecated)
 
 > [!WARNING]
 > We're working in best practices from communicate Turbo Modules with React Native side.
@@ -334,17 +334,17 @@ An object containing the shadow offset styles used in screen.
 
 The `branding` and `cancel` properties represents your branding and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the branding image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
 
-#### How to add images in Android?
+### How to add images in Android?
 
 To add your images in `Android`, you must go to your project's `android/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
 
 **Important**: The filename of the image can't have uppercase letters, Android doesn't accept these characters in the image name.
 
-#### How to add images in iOS?
+### How to add images in iOS?
 
 In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Images.xcassets` directory. Open the `Images.xcassets` folder and only put your images inside there.
 
-##### Example with images added
+#### Example with images added
 
 Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`branding` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
 
@@ -386,7 +386,7 @@ export default function App() {
 
 <hr/>
 
-### Colors Support
+## Colors Support
 
 Currently, the Aziface SDK theme accepts only hexadecimal colors in this format:
 

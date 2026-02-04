@@ -13,6 +13,8 @@
 
 Aziface SDK adapter to react native.
 
+## Summary
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
@@ -47,6 +49,7 @@ Aziface SDK adapter to react native.
 - [Components](#components)
   - [`FaceView`](#faceview)
     - [Properties](#properties-7)
+- [Dynamic Strings](#dynamic-strings)
 - [Theme](#theme)
 - [Vocal Guidance](#vocal-guidance)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
@@ -462,7 +465,7 @@ setLocale('en');
 
 ### `vocal`
 
-The Vocal Guidance feature in the FaceTec SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
+The Vocal Guidance feature in the Aziface SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
 
 During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
 
@@ -683,9 +686,23 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 <hr/>
 
+## Dynamic Strings
+
+The `setDynamicStrings` method in the Azfaice SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
+
+This method enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
+
+The dynamic strings defined through this method apply across Azfaice SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, setDynamicStrings should be called before starting a session so that all UI elements display the customized text.
+
+If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
+
+We separated another documentation about the dynamic strings, see more [here](./DYNAMIC_STRINGS.md)!
+
+<hr/>
+
 ## Theme
 
-The Aziface SDK provides the ability to change the theme of each flow. We separated another documentation about the theme, know more [here](./THEME.md)!
+The Aziface SDK provides the ability to change the theme of each flow. We separated another documentation about the theme, see more [here](./THEME.md)!
 
 <hr/>
 
