@@ -688,11 +688,11 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 
 ## Dynamic Strings
 
-The `setDynamicStrings` method in the Azfaice SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
+The `setDynamicStrings` method in the Aziface SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
 
 This method enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
 
-The dynamic strings defined through this method apply across Azfaice SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, setDynamicStrings should be called before starting a session so that all UI elements display the customized text.
+The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, setDynamicStrings should be called before starting a session so that all UI elements display the customized text.
 
 If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
 
