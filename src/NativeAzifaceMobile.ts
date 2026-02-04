@@ -21,6 +21,7 @@ export interface Spec extends TurboModule {
   liveness(data?: UnsafeObject): Promise<string>;
   setLocale(locale?: WithDefault<string, 'default'>): void;
   setDynamicStrings(strings?: UnsafeObject): void;
+  resetDynamicStrings(): void;
   setTheme(options?: UnsafeObject): void;
   vocal(): void;
 }

@@ -2672,6 +2672,14 @@ export interface Methods extends TurboModule {
   setDynamicStrings(strings?: DynamicStrings): void;
 
   /**
+   * @description This method must be used to **reset** the **dynamic strings**
+   * of the Aziface SDK screen.
+   *
+   * @return {void}
+   */
+  resetDynamicStrings(): void;
+
+  /**
    * @description This method must be used to **set** the **theme** of the
    * Aziface SDK screen.
    *
@@ -2844,6 +2852,16 @@ export function setLocale(locale?: Locale): void {
  */
 export function setDynamicStrings(strings?: DynamicStrings): void {
   AzifaceMobile.setDynamicStrings(strings);
+}
+
+/**
+ * @description This method must be used to **reset** the **dynamic strings**
+ * of the Aziface SDK screen.
+ *
+ * @return {void}
+ */
+export function resetDynamicStrings(): void {
+  AzifaceMobile.resetDynamicStrings();
 }
 
 /**
