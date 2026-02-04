@@ -13,12 +13,12 @@ import {
   liveness,
   photoMatch,
   photoScan,
+  setLocale,
   vocal,
   FaceView,
   type Params,
   type Headers,
   type Processor,
-  setLocale,
   type Locale,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
@@ -35,25 +35,8 @@ import md5 from 'md5';
 import { styles } from './styles';
 import { useUser } from '../hooks';
 import { useBiometricConfigs } from '../services';
+import { LOCALES } from '../constants';
 import type { FaceType } from '../types';
-
-const LOCALES: Locale[] = [
-  'default',
-  'en',
-  'af',
-  'ar',
-  'de',
-  'el',
-  'es',
-  'fr',
-  'ja',
-  'kk',
-  'nb',
-  'pt-BR',
-  'ru',
-  'vi',
-  'zh',
-];
 
 export function Home() {
   const { data: configs } = useBiometricConfigs();
