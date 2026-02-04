@@ -390,7 +390,7 @@ export default function App() {
 
 Currently, the Aziface SDK theme accepts only hexadecimal colors in this format:
 
-- `#000`
-- `#000A`
-- `#000000`
-- `#000000AA`
+- `#RGB`
+- `#RGBA`
+- `#RRGGBB`
+- `#RRGGBBAA`
