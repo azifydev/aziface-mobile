@@ -2,7 +2,7 @@
 
 The Aziface SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
 
-This it enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
+This enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
 
 The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, you should be called before starting a session so that all UI elements display the customized text.
 
