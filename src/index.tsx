@@ -902,6 +902,12 @@ export interface DynamicStringsResultFaceScanSuccess3d {
   livenessAndOfficialIdPhoto?: string;
 }
 
+/**
+ * @interface DynamicStringsResultFaceScan
+ *
+ * @description An object containing the face scan dynamic strings used in the
+ * Aziface SDK.
+ */
 export interface DynamicStringsResultFaceScan {
   /**
    * @description The upload string.
@@ -1080,35 +1086,35 @@ export interface DynamicStringsResultIdScan {
    *
    * @default undefined
    */
-  uploadFrontSide?: DynamicStringsResultUpload;
+  uploadFrontSide?: DynamicStringsResultIdScanUpload;
 
   /**
    * @description The back side upload string.
    *
    * @default undefined
    */
-  uploadBackSide?: DynamicStringsResultUpload;
+  uploadBackSide?: DynamicStringsResultIdScanUpload;
 
   /**
    * @description The upload user confirmed info string.
    *
    * @default undefined
    */
-  uploadUserConfirmedInfo?: DynamicStringsResultUpload;
+  uploadUserConfirmedInfo?: DynamicStringsResultIdScanUpload;
 
   /**
    * @description The upload NFC string.
    *
    * @default undefined
    */
-  uploadNfc?: DynamicStringsResultUpload;
+  uploadNfc?: DynamicStringsResultIdScanUpload;
 
   /**
    * @description The upload skipped NFC string.
    *
    * @default undefined
    */
-  uploadSkippedNfc?: DynamicStringsResultUpload;
+  uploadSkippedNfc?: DynamicStringsResultIdScanUpload;
 
   /**
    * @description An object containing the ID scan success dynamic strings
@@ -1128,12 +1134,12 @@ export interface DynamicStringsResultIdScan {
 }
 
 /**
- * @interface DynamicStringsResultUpload
+ * @interface DynamicStringsResultIdScanUpload
  *
- * @description An object containing the upload dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the ID scan upload dynamic strings used in
+ * the Aziface SDK.
  */
-export interface DynamicStringsResultUpload {
+export interface DynamicStringsResultIdScanUpload {
   /**
    * @description The upload started string.
    *
