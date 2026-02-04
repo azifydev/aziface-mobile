@@ -13,9 +13,11 @@ import {
   liveness,
   photoScan,
   photoMatch,
+  setLocale,
   vocal,
   type Processor,
   type Headers,
+  type Locale,
 } from '@azify/aziface-mobile';
 import {
   getDeviceId,
@@ -27,6 +29,7 @@ import {
 } from 'react-native-device-info';
 import md5 from 'md5';
 import { useState } from 'react';
+import { LOCALES } from '../constants';
 
 type FaceType =
   | 'enroll'
@@ -38,6 +41,7 @@ type FaceType =
 export default function Screen() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
+  const [localization, setLocalization] = useState<Locale>('default');
 
   async function onInitialize() {
     const clientInfo = getSystemName();
@@ -111,6 +115,19 @@ export default function Screen() {
     setIsEnabledVocal(enabled);
   }
 
+  const onLocale = () => {
+    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
+    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+
+    setLocalization(value);
+    setLocale(value);
+  };
+
+  const onResetLocale = () => {
+    setLocalization('default');
+    setLocale('default');
+  };
+
   const opacityStyle = { opacity: isInitialized ? 1 : 0.5 };
   const vocalStyle = {
     backgroundColor: isEnabledVocal ? 'green' : 'red',
@@ -169,6 +186,15 @@ export default function Screen() {
         style={[styles.button, opacityStyle]}
       >
         <Text style={styles.text}>Photo Scan</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        disabled={!isInitialized}
+        style={[styles.button, opacityStyle]}
+        onPress={onLocale}
+        onLongPress={onResetLocale}
+      >
+        <Text style={styles.text}>Localization: {localization}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={vocal} style={[styles.button, vocalStyle]}>

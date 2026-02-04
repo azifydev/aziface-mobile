@@ -114,6 +114,1281 @@ export type Locale =
   | 'vi'
   | 'zh';
 
+// Strings & Texts
+
+/**
+ * @interface DynamicStringsAccessibility
+ *
+ * @description An object containing the accessibility dynamic strings used in
+ * the Aziface SDK.
+ */
+export interface DynamicStringsAccessibility {
+  /**
+   * @description The cancel button accessibility string.
+   *
+   * @default undefined
+   */
+  cancelButton?: string;
+
+  /**
+   * @description The torch button accessibility string.
+   *
+   * @default undefined
+   */
+  torchButton?: string;
+
+  /**
+   * @description The tap guidance accessibility string.
+   *
+   * @default undefined
+   */
+  tapGuidance?: string;
+}
+
+/**
+ * @interface DynamicStringsAccessibilityFeedbackFace
+ *
+ * @description An object containing the face feedback accessibility dynamic
+ * strings used in the Aziface SDK.
+ */
+export interface DynamicStringsAccessibilityFeedbackFace {
+  /**
+   * @description The too far left accessibility string.
+   *
+   * @default undefined
+   */
+  tooFarLeft?: string;
+
+  /**
+   * @description The too far right accessibility string.
+   *
+   * @default undefined
+   */
+  tooFarRight?: string;
+
+  /**
+   * @description The too low accessibility string.
+   *
+   * @default undefined
+   */
+  tooLow?: string;
+
+  /**
+   * @description The too high accessibility string.
+   *
+   * @default undefined
+   */
+  tooHigh?: string;
+
+  /**
+   * @description The rotated too far left accessibility string.
+   *
+   * @default undefined
+   */
+  rotatedTooFarLeft?: string;
+
+  /**
+   * @description The rotated too far right accessibility string.
+   *
+   * @default undefined
+   */
+  rotatedTooFarRight?: string;
+
+  /**
+   * @description The pointing too far left accessibility string.
+   *
+   * @default undefined
+   */
+  pointingTooFarLeft?: string;
+
+  /**
+   * @description The pointing too far right accessibility string.
+   *
+   * @default undefined
+   */
+  pointingTooFarRight?: string;
+
+  /**
+   * @description The not on camera accessibility string.
+   *
+   * @default undefined
+   */
+  notOnCamera?: string;
+}
+
+/**
+ * @interface DynamicStringsAccessibilityFeedback
+ *
+ * @description An object containing the accessibility feedback dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsAccessibilityFeedback {
+  /**
+   * @description The move phone away accessibility string.
+   *
+   * @default undefined
+   */
+  movePhoneAway?: string;
+
+  /**
+   * @description The move phone closer accessibility string.
+   *
+   * @default undefined
+   */
+  movePhoneCloser?: string;
+
+  /**
+   * @description The hold device to eye level accessibility string.
+   *
+   * @default undefined
+   */
+  holdDeviceToEyeLevel?: string;
+
+  /**
+   * @description An object containing the face feedback accessibility dynamic
+   * strings used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  face?: DynamicStringsAccessibilityFeedbackFace;
+}
+
+/**
+ * @interface DynamicStringsAction
+ *
+ * @description An object containing the action dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsAction {
+  /**
+   * @description The OK action string.
+   *
+   * @default undefined
+   */
+  ok?: string;
+
+  /**
+   * @description The I'm Ready action string.
+   *
+   * @default undefined
+   */
+  imReady?: string;
+
+  /**
+   * @description The Try Again action string.
+   *
+   * @default undefined
+   */
+  tryAgain?: string;
+
+  /**
+   * @description The Continue action string.
+   *
+   * @default undefined
+   */
+  continue?: string;
+
+  /**
+   * @description The Take Photo action string.
+   *
+   * @default undefined
+   */
+  takePhoto?: string;
+
+  /**
+   * @description The Retake Photo action string.
+   *
+   * @default undefined
+   */
+  retakePhoto?: string;
+
+  /**
+   * @description The Accept Photo action string.
+   *
+   * @default undefined
+   */
+  acceptPhoto?: string;
+
+  /**
+   * @description The Confirm action string.
+   *
+   * @default undefined
+   */
+  confirm?: string;
+
+  /**
+   * @description The Scan NFC action string.
+   *
+   * @default undefined
+   */
+  scanNfc?: string;
+
+  /**
+   * @description The Scan NFC Card action string.
+   *
+   * @default undefined
+   */
+  scanNfcCard?: string;
+
+  /**
+   * @description The Skip NFC action string.
+   *
+   * @default undefined
+   */
+  skipNfc?: string;
+}
+
+/**
+ * @interface DynamicStringsCameraPermission
+ *
+ * @description An object containing the camera permission dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsCameraPermission {
+  /**
+   * @description The header string.
+   *
+   * @default undefined
+   */
+  header?: string;
+
+  /**
+   * @description The enroll string.
+   *
+   * @default undefined
+   */
+  enroll?: string;
+
+  /**
+   * @description The auth string.
+   *
+   * @default undefined
+   */
+  auth?: string;
+
+  /**
+   * @description The enable camera string.
+   *
+   * @default undefined
+   */
+  enableCamera?: string;
+
+  /**
+   * @description The launch settings string.
+   *
+   * @default undefined
+   */
+  launchSettings?: string;
+}
+
+/**
+ * @interface DynamicStringsCamera
+ *
+ * @description An object containing the camera dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsCamera {
+  /**
+   * @description The initializing camera string.
+   *
+   * @default undefined
+   */
+  initializingCamera?: string;
+
+  /**
+   * @description An object containing the camera permission dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  permission?: DynamicStringsCameraPermission;
+}
+
+/**
+ * @interface DynamicStringsFeedbackMove
+ *
+ * @description An object containing the move feedback dynamic strings used
+ * in the Aziface SDK.
+ */
+export interface DynamicStringsFeedbackMove {
+  /**
+   * @description The phone away string.
+   *
+   * @default undefined
+   */
+  phoneAway?: string;
+
+  /**
+   * @description The phone closer string.
+   *
+   * @default undefined
+   */
+  phoneCloser?: string;
+
+  /**
+   * @description The phone to eye level string.
+   *
+   * @default undefined
+   */
+  phoneToEyeLevel?: string;
+}
+
+/**
+ * @interface DynamicStringsFeedbackFace
+ *
+ * @description An object containing the face feedback dynamic strings used
+ * in the Aziface SDK.
+ */
+export interface DynamicStringsFeedbackFace {
+  /**
+   * @description The not found string.
+   *
+   * @default undefined
+   */
+  notFound?: string;
+
+  /**
+   * @description The not looking straight ahead string.
+   *
+   * @default undefined
+   */
+  notLookingStraightAhead?: string;
+
+  /**
+   * @description The not upright string.
+   *
+   * @default undefined
+   */
+  notUpright?: string;
+}
+
+/**
+ * @interface DynamicStringsFeedback
+ *
+ * @description An object containing the feedback dynamic strings used in
+ * the Aziface SDK.
+ */
+export interface DynamicStringsFeedback {
+  /**
+   * @description The center face string.
+   *
+   * @default undefined
+   */
+  centerFace?: string;
+
+  /**
+   * @description The hold steady string.
+   *
+   * @default undefined
+   */
+  holdSteady?: string;
+
+  /**
+   * @description The use even lighting string.
+   *
+   * @default undefined
+   */
+  useEvenLighting?: string;
+
+  /**
+   * @description An object containing the face feedback dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  face?: DynamicStringsFeedbackFace;
+
+  /**
+   * @description An object containing the move feedback dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  move?: DynamicStringsFeedbackMove;
+}
+
+/**
+ * @interface DynamicStringsIdScanCapture
+ *
+ * @description An object containing the ID scan capture dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsIdScanCapture {
+  /**
+   * @description The tap to focus string.
+   *
+   * @default undefined
+   */
+  tapToFocus?: string;
+
+  /**
+   * @description The hold steady string.
+   *
+   * @default undefined
+   */
+  holdSteady?: string;
+
+  /**
+   * @description The ID front instruction string.
+   *
+   * @default undefined
+   */
+  idFrontInstruction?: string;
+
+  /**
+   * @description The ID back instruction string.
+   *
+   * @default undefined
+   */
+  idBackInstruction?: string;
+}
+
+/**
+ * @interface DynamicStringsIdScanReview
+ *
+ * @description An object containing the ID scan review dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsIdScanReview {
+  /**
+   * @description The ID front instruction string.
+   *
+   * @default undefined
+   */
+  idFrontInstruction?: string;
+
+  /**
+   * @description The ID back instruction string.
+   *
+   * @default undefined
+   */
+  idBackInstruction?: string;
+}
+
+/**
+ * @interface DynamicStringsIdScanOcr
+ *
+ * @description An object containing the ID scan OCR dynamic strings used
+ * in the Aziface SDK.
+ */
+export interface DynamicStringsIdScanOcr {
+  /**
+   * @description The confirmation main header string.
+   *
+   * @default undefined
+   */
+  confirmationMainHeader?: string;
+
+  /**
+   * @description The confirmation scroll instruction string.
+   *
+   * @default undefined
+   */
+  confirmationScroll?: string;
+}
+
+/**
+ * @interface DynamicStringsIdScanNfc
+ *
+ * @description An object containing the ID scan NFC dynamic strings used
+ * in the Aziface SDK.
+ */
+export interface DynamicStringsIdScanNfc {
+  /**
+   * @description The status disabled string.
+   *
+   * @default undefined
+   */
+  statusDisabled?: string;
+
+  /**
+   * @description The card status disabled string.
+   *
+   *  @default undefined
+   */
+  statusReady?: string;
+
+  /**
+   * @description The card status ready string.
+   *
+   * @default undefined
+   */
+  cardStatusReady?: string;
+
+  /**
+   * @description The status starting string.
+   *
+   * @default undefined
+   */
+  statusStarting?: string;
+
+  /**
+   * @description The card status starting string.
+   *
+   * @default undefined
+   */
+  cardStatusStarting?: string;
+
+  /**
+   * @description The status scanning string.
+   *
+   * @default undefined
+   */
+  statusScanning?: string;
+
+  /**
+   * @description The card status scanning string.
+   *
+   * @default undefined
+   */
+  statusWeakConnection?: string;
+
+  /**
+   * @description The card status weak connection string.
+   *
+   * @default undefined
+   */
+  statusFinishedWithSuccess?: string;
+
+  /**
+   * @description The card status finished with success string.
+   *
+   * @default undefined
+   */
+  statusFinishedWithError?: string;
+
+  /**
+   * @description The card status finished with error string.
+   *
+   * @default undefined
+   */
+  cardStatusFinishedWithError?: string;
+
+  /**
+   * @description The status skipped string.
+   *
+   * @default undefined
+   */
+  statusSkipped?: string;
+}
+
+/**
+ * @interface DynamicStringsIdScanFeedback
+ *
+ * @description An object containing the ID scan feedback dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsIdScanFeedback {
+  /**
+   * @description The flip ID to back string.
+   *
+   * @default undefined
+   */
+  flipIdToBack?: string;
+
+  /**
+   * @description The flip ID to front string.
+   *
+   * @default undefined
+   */
+  flipIdToFront?: string;
+}
+
+/**
+ * @interface DynamicStringsIdScan
+ *
+ * @description An object containing the ID scan dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsIdScan {
+  /**
+   * @description The type selection header string.
+   *
+   * @default undefined
+   */
+  typeSelectionHeader?: string;
+
+  /**
+   * @description The type selection instruction string.
+   *
+   * @default undefined
+   */
+  additionalReview?: string;
+
+  /**
+   * @description An object containing the ID scan capture dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  capture?: DynamicStringsIdScanCapture;
+
+  /**
+   * @description An object containing the ID scan review dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  review?: DynamicStringsIdScanReview;
+
+  /**
+   * @description An object containing the ID scan OCR dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  ocr?: DynamicStringsIdScanOcr;
+
+  /**
+   * @description An object containing the ID scan NFC dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  nfc?: DynamicStringsIdScanNfc;
+
+  /**
+   * @description An object containing the ID scan feedback dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  feedback?: DynamicStringsIdScanFeedback;
+}
+
+/**
+ * @interface DynamicStringsLabel
+ *
+ * @description An object containing label dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsLabel {
+  /**
+   * @description The primary label string.
+   *
+   * @default undefined
+   */
+  primary?: string;
+
+  /**
+   * @description The secondary label string.
+   *
+   * @default undefined
+   */
+  secondary?: string;
+
+  /**
+   * @description The tertiary label string.
+   *
+   * @default undefined
+   */
+  tertiary?: string;
+}
+
+/**
+ * @interface DynamicStringsInstructions
+ *
+ * @description An object containing the instructions dynamic strings used in
+ * the Aziface SDK.
+ */
+export interface DynamicStringsInstructions {
+  /**
+   * @description An object containing the header label dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  header?: Omit<DynamicStringsLabel, 'tertiary'>;
+
+  /**
+   * @description An object containing the message label dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  message?: Omit<DynamicStringsLabel, 'tertiary'>;
+}
+
+/**
+ * @interface DynamicStringsPresession
+ *
+ * @description An object containing the presession dynamic strings used in
+ * the Aziface SDK.
+ */
+export interface DynamicStringsPresession {
+  /**
+   * @description The orientation string.
+   *
+   * @default undefined
+   */
+  orientation?: string;
+
+  /**
+   * @description The frame your face string.
+   *
+   * @default undefined
+   */
+  frameYourFace?: string;
+
+  /**
+   * @description The position face straight in oval string.
+   *
+   * @default undefined
+   */
+  positionFaceStraightInOval?: string;
+
+  /**
+   * @description The remove dark glasses string.
+   *
+   * @default undefined
+   */
+  removeDarkGlasses?: string;
+
+  /**
+   * @description The neutral expression string.
+   *
+   * @default undefined
+   */
+  neutralExpression?: string;
+
+  /**
+   * @description The conditions too bright string.
+   *
+   * @default undefined
+   */
+  conditionsTooBright?: string;
+
+  /**
+   * @description The brighten your environment string.
+   *
+   * @default undefined
+   */
+  brightenYourEnvironment?: string;
+}
+
+/**
+ * @interface DynamicStringsResultFaceScanSuccess3d
+ *
+ * @description An object containing the face scan success 3D dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsResultFaceScanSuccess3d {
+  /**
+   * @description The enrollment string.
+   *
+   * @default undefined
+   */
+  enrollment?: string;
+
+  /**
+   * @description The reverification string.
+   *
+   * @default undefined
+   */
+  reverification?: string;
+
+  /**
+   * @description The liveness prior to ID scan string.
+   *
+   * @default undefined
+   */
+  livenessPriorToIdScan?: string;
+
+  /**
+   * @description The liveness and official ID photo string.
+   *
+   * @default undefined
+   */
+  livenessAndOfficialIdPhoto?: string;
+}
+
+/**
+ * @interface DynamicStringsResultFaceScan
+ *
+ * @description An object containing the face scan dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsResultFaceScan {
+  /**
+   * @description The upload string.
+   *
+   * @default undefined
+   */
+  upload?: string;
+
+  /**
+   * @description The still uploading string.
+   *
+   * @default undefined
+   */
+  uploadStillUploading?: string;
+
+  /**
+   * @description An object containing the face scan success 3D dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  success3d?: DynamicStringsResultFaceScanSuccess3d;
+}
+
+/**
+ * @interface DynamicStringsResultIdScanSuccess
+ *
+ * @description An object containing the ID scan success dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsResultIdScanSuccess {
+  /**
+   * @description The front side string.
+   *
+   * @default undefined
+   */
+  frontSide?: string;
+
+  /**
+   * @description The front side back next string.
+   *
+   * @default undefined
+   */
+  frontSideBackNext?: string;
+
+  /**
+   * @description The front side NFC next string.
+   *
+   * @default undefined
+   */
+  frontSideNfcNext?: string;
+
+  /**
+   * @description The back side string.
+   *
+   * @default undefined
+   */
+  backSide?: string;
+
+  /**
+   * @description The back side NFC next string.
+   *
+   * @default undefined
+   */
+  backSideNfcNext?: string;
+
+  /**
+   * @description The passport string.
+   *
+   * @default undefined
+   */
+  passport?: string;
+
+  /**
+   * @description The passport NFC next string.
+   *
+   * @default undefined
+   */
+  passportNfcNext?: string;
+
+  /**
+   * @description The user confirmation string.
+   *
+   * @default undefined
+   */
+  userConfirmation?: string;
+
+  /**
+   * @description The NFC string.
+   *
+   * @default undefined
+   */
+  nfc?: string;
+
+  /**
+   * @description The additional review tag string.
+   *
+   * @default undefined
+   */
+  additionalReviewTag?: string;
+}
+
+/**
+ * @interface DynamicStringsResultIdScanRetry
+ *
+ * @description An object containing the ID scan retry dynamic strings
+ * used in the Aziface SDK.
+ */
+export interface DynamicStringsResultIdScanRetry {
+  /**
+   * @description The face did not match string.
+   *
+   * @default undefined
+   */
+  faceDidNotMatch?: string;
+
+  /**
+   * @description The ID not fully visible string.
+   *
+   * @default undefined
+   */
+  idNotFullyVisible?: string;
+
+  /**
+   * @description The OCR results not good enough string.
+   *
+   * @default undefined
+   */
+  ocrResultsNotGoodEnough?: string;
+
+  /**
+   * @description The ID type not supported string.
+   *
+   * @default undefined
+   */
+  idTypeNotSupported?: string;
+
+  /**
+   * @description The barcode not readable string.
+   *
+   * @default undefined
+   */
+  barcodeNotReadable?: string;
+}
+
+/**
+ * @interface DynamicStringsResultIdScan
+ *
+ * @description An object containing the ID scan dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsResultIdScan {
+  /**
+   * @description The success string.
+   *
+   * @default undefined
+   */
+  unsuccess?: string;
+
+  /**
+   * @description The skip or error NFC string.
+   *
+   * @default undefined
+   */
+  skipOrErrorNfc?: string;
+
+  /**
+   * @description The additional review tag string.
+   *
+   * @default undefined
+   */
+  additionalReviewTag?: string;
+
+  /**
+   * @description The front side upload string.
+   *
+   * @default undefined
+   */
+  uploadFrontSide?: DynamicStringsResultIdScanUpload;
+
+  /**
+   * @description The back side upload string.
+   *
+   * @default undefined
+   */
+  uploadBackSide?: DynamicStringsResultIdScanUpload;
+
+  /**
+   * @description The upload user confirmed info string.
+   *
+   * @default undefined
+   */
+  uploadUserConfirmedInfo?: DynamicStringsResultIdScanUpload;
+
+  /**
+   * @description The upload NFC string.
+   *
+   * @default undefined
+   */
+  uploadNfc?: DynamicStringsResultIdScanUpload;
+
+  /**
+   * @description The upload skipped NFC string.
+   *
+   * @default undefined
+   */
+  uploadSkippedNfc?: DynamicStringsResultIdScanUpload;
+
+  /**
+   * @description An object containing the ID scan success dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  success?: DynamicStringsResultIdScanSuccess;
+
+  /**
+   * @description An object containing the ID scan retry dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  retry?: DynamicStringsResultIdScanRetry;
+}
+
+/**
+ * @interface DynamicStringsResultIdScanUpload
+ *
+ * @description An object containing the ID scan upload dynamic strings used in
+ * the Aziface SDK.
+ */
+export interface DynamicStringsResultIdScanUpload {
+  /**
+   * @description The upload started string.
+   *
+   * @default undefined
+   */
+  uploadStarted?: string;
+
+  /**
+   * @description The still uploading string.
+   *
+   * @default undefined
+   */
+  stillUploading?: string;
+
+  /**
+   * @description The upload complete awaiting response string.
+   *
+   * @default undefined
+   */
+  uploadCompleteAwaitingResponse?: string;
+
+  /**
+   * @description The upload complete awaiting processing string.
+   *
+   * @default undefined
+   */
+  uploadCompleteAwaitingProcessing?: string;
+}
+
+/**
+ * @interface DynamicStringsResult
+ *
+ * @description An object containing the result dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsResult {
+  /**
+   * @description The NFC upload string.
+   *
+   * @default undefined
+   */
+  nfcUpload?: string;
+
+  /**
+   * @description The session abort string.
+   *
+   * @default undefined
+   */
+  sessionAbort?: string;
+
+  /**
+   * @description An object containing the face scan result dynamic strings
+   * used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  faceScan?: DynamicStringsResultFaceScan;
+
+  /**
+   * @description An object containing the ID scan dynamic strings used in the
+   * Aziface SDK.
+   */
+  idScan?: DynamicStringsResultIdScan;
+}
+
+/**
+ * @interface DynamicStringsRetryOfficialIdPhoto
+ *
+ * @description An object containing the retry official ID photo dynamic
+ * strings used in the Aziface SDK.
+ */
+export interface DynamicStringsRetryOfficialIdPhoto {
+  /**
+   * @description The header string.
+   *
+   * @default undefined
+   */
+  header?: string;
+
+  /**
+   * @description The sub header string.
+   *
+   * @default undefined
+   */
+
+  subHeader?: string;
+
+  /**
+   * @description The instruction label string.
+   *
+   * @default undefined
+   */
+  instruction?: string;
+
+  /**
+   * @description The your image label string.
+   *
+   * @default undefined
+   */
+  yourImageLabel?: string;
+
+  /**
+   * @description The ideal image label string.
+   *
+   * @default undefined
+   */
+  idealImageLabel?: string;
+}
+
+/**
+ * @interface DynamicStringsRetry
+ *
+ * @description An object containing the retry dynamic strings used in the
+ * Aziface SDK.
+ */
+export interface DynamicStringsRetry {
+  /**
+   * @description The header string.
+   *
+   * @default undefined
+   */
+  header?: string;
+
+  /**
+   * @description The sub header string.
+   *
+   * @default undefined
+   */
+
+  subHeader?: string;
+
+  /**
+   * @description The your image label string.
+   *
+   * @default undefined
+   */
+  yourImageLabel?: string;
+
+  /**
+   * @description The ideal image label string.
+   *
+   * @default undefined
+   */
+  idealImageLabel?: string;
+
+  /**
+   * @description The instruction label string.
+   *
+   * @default undefined
+   */
+  instruction?: DynamicStringsLabel;
+
+  /**
+   * @description An object containing the retry official ID photo dynamic
+   * strings used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  officialIdPhoto?: DynamicStringsRetryOfficialIdPhoto;
+}
+
+/**
+ * @interface DynamicStrings
+ *
+ * @description An object with all the dynamic strings to will be used in the
+ * Aziface SDK screen. All properties are optional.
+ */
+export interface DynamicStrings {
+  /**
+   * @description An object containing the accessibility dynamic strings used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  accessibility?: DynamicStringsAccessibility;
+
+  /**
+   * @description An object containing the accessibility feedback dynamic
+   * strings used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  accessibilityFeedback?: DynamicStringsAccessibilityFeedback;
+
+  /**
+   * @description An object containing the action dynamic strings used in the
+   * Aziface SDK.
+   *
+   * @default undefined
+   */
+  action?: DynamicStringsAction;
+
+  /**
+   * @description An object containing the camera dynamic strings used in the
+   * Aziface SDK.
+   *
+   * @default undefined
+   */
+  camera?: DynamicStringsCamera;
+
+  /**
+   * @description An object containing the feedback dynamic strings used in
+   * the Aziface SDK.
+   *
+   * @default undefined
+   */
+  feedback?: DynamicStringsFeedback;
+
+  /**
+   * @description An object containing the ID scan dynamic strings used in the
+   * Aziface SDK.
+   *
+   * @default undefined
+   */
+  idScan?: DynamicStringsIdScan;
+
+  /**
+   * @description An object containing label dynamic strings used in the
+   * Aziface SDK.
+   *
+   * @default undefined
+   */
+  instructions?: DynamicStringsInstructions;
+
+  /**
+   * @description An object containing the presession dynamic strings used in
+   * the Aziface SDK.
+   *
+   * @default undefined
+   */
+  presession?: DynamicStringsPresession;
+
+  /**
+   * @description An object containing the result dynamic strings used in the
+   * Aziface SDK.
+   *
+   * @default undefined
+   */
+  result?: DynamicStringsResult;
+
+  /**
+   * @description An object containing the retry dynamic strings used in
+   * the Aziface SDK.
+   *
+   * @default undefined
+   */
+  retry?: DynamicStringsRetry;
+}
+
 // Styles
 
 /**
@@ -1393,6 +2668,24 @@ export interface Methods extends TurboModule {
   setLocale(locale: Locale): void;
 
   /**
+   * @description This method must be used to **set** the **dynamic strings**
+   * of the Aziface SDK screen.
+   *
+   * @param {DynamicStrings} strings - An object with dynamic strings.
+   *
+   * @return {void}
+   */
+  setDynamicStrings(strings?: DynamicStrings): void;
+
+  /**
+   * @description This method must be used to **reset** the **dynamic strings**
+   * of the Aziface SDK screen.
+   *
+   * @return {void}
+   */
+  resetDynamicStrings(): void;
+
+  /**
    * @description This method must be used to **set** the **theme** of the
    * Aziface SDK screen.
    *
@@ -1553,6 +2846,28 @@ export async function liveness(data?: object): Promise<Processor> {
  */
 export function setLocale(locale?: Locale): void {
   AzifaceMobile.setLocale(locale);
+}
+
+/**
+ * @description This method must be used to **set** the **dynamic strings**
+ * of the Aziface SDK screen.
+ *
+ * @param {DynamicStrings} strings - An object with dynamic strings.
+ *
+ * @return {void}
+ */
+export function setDynamicStrings(strings?: DynamicStrings): void {
+  AzifaceMobile.setDynamicStrings(strings);
+}
+
+/**
+ * @description This method must be used to **reset** the **dynamic strings**
+ * of the Aziface SDK screen.
+ *
+ * @return {void}
+ */
+export function resetDynamicStrings(): void {
+  AzifaceMobile.resetDynamicStrings();
 }
 
 /**

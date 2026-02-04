@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.azifacemobile.errors.AzifaceError;
 import com.azifacemobile.i18n.Localization;
+import com.azifacemobile.strings.DynamicStrings;
 import com.azifacemobile.theme.Theme;
 import com.azifacemobile.theme.Vocal;
 import com.azifacemobile.utils.CommonParams;
@@ -39,6 +40,7 @@ import java.util.Locale;
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
   private static final Localization I18n = Localization.DEFAULT;
+  private static final DynamicStrings Strings = new DynamicStrings();
   public static final String NAME = "AzifaceMobile";
   private static Boolean IsRunning = false;
   public static String DemonstrationExternalDatabaseRefID = "";
@@ -286,6 +288,20 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     I18n.setLocale(locale);
 
     this.setupI18n();
+  }
+
+  @ReactMethod
+  public void setDynamicStrings(ReadableMap strings) {
+    Strings.setStrings(strings)
+      .load()
+      .build();
+  }
+
+  @ReactMethod
+  public void resetDynamicStrings() {
+    Strings.setStrings(null)
+      .load()
+      .build();
   }
 
   @ReactMethod

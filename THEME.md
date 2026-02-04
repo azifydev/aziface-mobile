@@ -1,0 +1,396 @@
+# Theme 💅
+
+The Aziface SDK provides the ability to change the theme of each flow. You can modify background colors, borders, text, border radius, among other things. We recommend changing the theme before calling the `initialized` method so that the style changes are applied.
+
+<hr/>
+
+## Summary
+
+- [Usage](#usage)
+- [API](#api)
+  - [`setTheme`](#settheme)
+    - [Properties](#properties)
+- [Types](#types)
+  - [`Theme`](#theme)
+    - [`CancelLocation`](#cancellocation)
+    - [`ThemeImage`](#themeimage)
+    - [`ThemeFrame`](#themeframe)
+    - [`ThemeButton`](#themebutton)
+    - [`ThemeGuidance`](#themeguidance)
+      - [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)
+    - [`ThemeOval`](#themeoval)
+    - [`ThemeFeedback`](#themefeedback)
+      - [`FeedbackBackgroundColor` (iOS only)](#feedbackbackgroundcolor-ios-only)
+        - [`Point`](#point)
+    - [`ThemeResultScreen`](#themeresultscreen)
+      - [`ThemeResultAnimation`](#themeresultanimation)
+    - [`ThemeIdScan`](#themeidscan)
+      - [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)
+      - [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)
+      - [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)
+    - [`ThemeShadow` (iOS only)](#themeshadow-ios-only)
+      - [`ThemeShadowInsets`](#themeshadowinsets)
+      - [`ThemeShadowOffset`](#themeshadowoffset)
+- [How to add images in Aziface SDK module? (Deprecated)](#how-to-add-images-in-aziface-sdk-module-deprecated)
+  - [How to add images in Android?](#how-to-add-images-in-android)
+  - [How to add images in iOS?](#how-to-add-images-in-ios)
+  - [Example with images added](#example-with-images-added)
+- [Colors Support](#colors-support)
+
+<hr/>
+
+## Usage
+
+```tsx
+// It's recommended to use it before calling the initialize method
+setTheme({
+  overlayBackgroundColor: '#f1f1f1',
+  // ...
+});
+
+await initialize({
+  // ...
+});
+```
+
+<hr/>
+
+## API
+
+| Methods    | Return Type | Platform |
+| ---------- | ----------- | -------- |
+| `setTheme` | `void`      | All      |
+
+### `setTheme`
+
+This method customize your SDK theme during session. **Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
+
+#### Properties
+
+| Property  | type              | Required | Default     |
+| --------- | ----------------- | -------- | ----------- |
+| `options` | [`Theme`](#theme) | ❌       | `undefined` |
+
+<hr/>
+
+## Types
+
+| Types                                                          | Platform |
+| -------------------------------------------------------------- | -------- |
+| [`Theme`](#theme)                                              | All      |
+| [`CancelLocation`](#cancellocation)                            | All      |
+| [`ThemeImage`](#themeimage)                                    | All      |
+| [`ThemeFrame`](#themeframe)                                    | All      |
+| [`ThemeButton`](#themebutton)                                  | All      |
+| [`ThemeGuidance`](#themeguidance)                              | All      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)        | All      |
+| [`ThemeOval`](#themeoval)                                      | All      |
+| [`ThemeFeedback`](#themefeedback)                              | All      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only) | iOS      |
+| [`Point`](#point)                                              | iOS      |
+| [`ThemeResultScreen`](#themeresultscreen)                      | All      |
+| [`ThemeResultAnimation`](#themeresultanimation)                | All      |
+| [`ThemeIdScan`](#themeidscan)                                  | All      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)    | All      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)          | All      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)        | All      |
+| [`ThemeShadow`](#themeshadow-ios-only)                         | iOS      |
+| [`ThemeShadowInsets`](#themeshadowinsets)                      | iOS      |
+| [`ThemeShadowOffset`](#themeshadowoffset)                      | iOS      |
+
+<hr/>
+
+### `Theme`
+
+This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
+
+| `Theme`                  | type                                      | Platform | Required | Default     |
+| ------------------------ | ----------------------------------------- | -------- | -------- | ----------- |
+| `overlayBackgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
+| `image`                  | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
+| `frame`                  | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
+| `guidance`               | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
+| `oval`                   | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
+| `feedback`               | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
+| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
+| `idScan`                 | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
+
+#### `CancelLocation`
+
+This type must be used to position of the cancel button on screen.
+
+| `CancelLocation` | Description                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| `DISABLED`       | Disable cancel button and doesn't show it.                      |
+| `TOP_LEFT`       | Position cancel button in top right.                            |
+| `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
+
+#### `ThemeImage`
+
+An object containing the image assets used in the Aziface SDK.
+
+| `ThemeImage`                 | type                                | Platform | Required | Default                            |
+| ---------------------------- | ----------------------------------- | -------- | -------- | ---------------------------------- |
+| `branding`                   | `string`                            | All      | ❌       | `facetec_your_app_logo.png`        |
+| `isShowBranding`             | `boolean`                           | All      | ❌       | `undefined`                        |
+| `isHideForCameraPermissions` | `boolean`                           | All      | ❌       | `true` (iOS) and `false` (Android) |
+| `cancel`                     | `string`                            | All      | ❌       | `facetec_cancel.png`               |
+| `cancelLocation`             | [`CancelLocation`](#cancellocation) | All      | ❌       | `TOP_RIGHT`                        |
+
+#### `ThemeFrame`
+
+An object containing the frame styles used in the Aziface SDK.
+
+| `ThemeFrame`      | type                                   | Platform | Required | Default     |
+| ----------------- | -------------------------------------- | -------- | -------- | ----------- |
+| `cornerRadius`    | `number`                               | All      | ❌       | `20`        |
+| `borderColor`     | `string`                               | All      | ❌       | `#ffffff`   |
+| `borderWidth`     | `number`                               | All      | ❌       | `undefined` |
+| `backgroundColor` | `string`                               | All      | ❌       | `#ffffff`   |
+| `elevation`       | `number`                               | Android  | ❌       | `0`         |
+| `shadow`          | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
+
+#### `ThemeButton`
+
+An object containing the button styles used in the Aziface SDK.
+
+| `ThemeButton`              | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `backgroundNormalColor`    | `string` | All      | ❌       | `#026ff4` |
+| `backgroundDisabledColor`  | `string` | All      | ❌       | `#b3d4fc` |
+| `backgroundHighlightColor` | `string` | All      | ❌       | `#0264dc` |
+| `textNormalColor`          | `string` | All      | ❌       | `#ffffff` |
+| `textDisabledColor`        | `string` | All      | ❌       | `#ffffff` |
+| `textHighlightColor`       | `string` | All      | ❌       | `#ffffff` |
+
+#### `ThemeGuidance`
+
+An object containing the styles used in the guidance view.
+
+| `ThemeGuidance`   | type                                                    | Platform | Required | Default                                                |
+| ----------------- | ------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor` | `string` or `string[]`                                  | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor` | `string`                                                | All      | ❌       | `#272937`                                              |
+| `button`          | [`ThemeButton`](#themebutton)                           | All      | ❌       | `undefined`                                            |
+| `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | All      | ❌       | `undefined`                                            |
+
+##### `ThemeGuidanceRetryScreen`
+
+An object containing the styles used in the guidance retry screen.
+
+| `ThemeGuidanceRetryScreen` | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `imageBorderColor`         | `string` | All      | ❌       | `#ffffff` |
+| `ovalStrokeColor`          | `string` | All      | ❌       | `#ffffff` |
+
+#### `ThemeOval`
+
+An object containing the oval styles used in the Aziface SDK.
+
+| `ThemeOval`            | type     | Platform | Required | Default     |
+| ---------------------- | -------- | -------- | -------- | ----------- |
+| `strokeColor`          | `string` | All      | ❌       | `#026ff4`   |
+| `strokeWidth`          | `number` | All      | ❌       | `undefined` |
+| `firstProgressColor`   | `string` | All      | ❌       | `#0264dc`   |
+| `secondProgressColor`  | `string` | All      | ❌       | `#0264dc`   |
+| `progressRadialOffset` | `number` | All      | ❌       | `undefined` |
+| `progressStrokeWidth`  | `number` | All      | ❌       | `undefined` |
+
+#### `ThemeFeedback`
+
+An object containing the oval styles used in the Aziface SDK.
+
+| `ThemeFeedback`                                         | type                                   | Platform | Required | Default     |
+| ------------------------------------------------------- | -------------------------------------- | -------- | -------- | ----------- |
+| `backgroundColor`                                       | `string`                               | Android  | ❌       | `#026ff4`   |
+| [`backgroundColors`](#feedbackbackgroundcolor-ios-only) | `string`                               | iOS      | ❌       | `undefined` |
+| `textColor`                                             | `string`                               | All      | ❌       | `#ffffff`   |
+| `cornerRadius`                                          | `number`                               | All      | ❌       | `undefined` |
+| `elevation`                                             | `number`                               | Android  | ❌       | `0`         |
+| `shadow`                                                | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
+| `isEnablePulsatingText`                                 | `boolean`                              | All      | ❌       | `true`      |
+
+##### `FeedbackBackgroundColor` (iOS only)
+
+This type must be used to **set** the **theme** of the feedback box.
+
+| `FeedbackBackgroundColor` | Description                                                                                        | type                       | Required | Default                  |
+| ------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------- | -------- | ------------------------ |
+| `colors`                  | An array of colors defining the color of each gradient stop.                                       | `string[]`                 | ❌       | `["#026FF4", "#026FF4"]` |
+| `locations`               | It's accepts only two values between `0` and `1` that defining the location of each gradient stop. | `[number, number]`         | ❌       | `[0, 1]`                 |
+| `startPoint`              | The start point of the gradient when drawn in the layer’s coordinate space.                        | [`Point`](#point-ios-only) | ❌       | `{ x: 0, y: 0 }`         |
+| `endPoint`                | The end point of the gradient when drawn in the layer’s coordinate space.                          | [`Point`](#point-ios-only) | ❌       | `{ x: 1, y: 0 }`         |
+
+###### `Point`
+
+This interface defines the drawn in the layer's coordinate space.
+
+| `Point` | type     | Required | Default |
+| ------- | -------- | -------- | ------- |
+| `x`     | `number` | ❌       | `0`     |
+| `y`     | `number` | ❌       | `0`     |
+
+#### `ThemeResultScreen`
+
+An object containing the styles used in the result screen.
+
+| `ThemeResultScreen`       | type                                            | Platform | Required | Default                                                |
+| ------------------------- | ----------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`         | `string` or `string[]`                          | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`         | `string`                                        | All      | ❌       | `#272937`                                              |
+| `activityIndicatorColor`  | `string`                                        | All      | ❌       | `#026ff4`                                              |
+| `uploadProgressFillColor` | `string`                                        | All      | ❌       | `#026ff4`                                              |
+| `resultAnimation`         | [`ThemeResultAnimation`](#themeresultanimation) | All      | ❌       | `undefined`                                            |
+
+##### `ThemeResultAnimation`
+
+An object containing the animation styles used in the Aziface SDK result animation.
+
+| `ThemeResultAnimation` | type     | Platform | Required | Default   |
+| ---------------------- | -------- | -------- | -------- | --------- |
+| `backgroundColor`      | `string` | All      | ❌       | `#026ff4` |
+| `foregroundColor`      | `string` | All      | ❌       | `#ffffff` |
+
+#### `ThemeIdScan`
+
+An object containing the styles used in the ID scan screens.
+
+| `ThemeIdScan`     | type                                                        | Platform | Required | Default     |
+| ----------------- | ----------------------------------------------------------- | -------- | -------- | ----------- |
+| `selectionScreen` | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen) | All      | ❌       | `undefined` |
+| `reviewScreen`    | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)       | All      | ❌       | `undefined` |
+| `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | All      | ❌       | `undefined` |
+| `button`          | [`ThemeButton`](#themebutton)                               | All      | ❌       | `undefined` |
+
+##### `ThemeIdScanSelectionScreen`
+
+An object containing the styles used in the ID scan selection screen.
+
+| `ThemeIdScanSelectionScreen` | type                   | Platform | Required | Default                                                |
+| ---------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`            | `string`               | All      | ❌       | `#272937`                                              |
+
+##### `ThemeIdScanReviewScreen`
+
+An object containing the styles used in the ID scan review screen.
+
+| `ThemeIdScanReviewScreen` | type     | Platform | Required | Default   |
+| ------------------------- | -------- | -------- | -------- | --------- |
+| `foregroundColor`         | `string` | All      | ❌       | `#ffffff` |
+| `textBackgroundColor`     | `string` | All      | ❌       | `#026ff4` |
+
+##### `ThemeIdScanCaptureScreen`
+
+An object containing the styles used in the ID scan capture screen.
+
+| `ThemeIdScanCaptureScreen` | type     | Platform | Required | Default   |
+| -------------------------- | -------- | -------- | -------- | --------- |
+| `foregroundColor`          | `string` | All      | ❌       | `#ffffff` |
+| `textBackgroundColor`      | `string` | All      | ❌       | `#ffffff` |
+| `backgroundColor`          | `string` | All      | ❌       | `#026ff4` |
+| `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff` |
+
+#### `ThemeShadow` (iOS only)
+
+An object containing the shadow styles used during capture screen. If you want to use shadow in Android App, you the `elevation` property in the `frame` or `feedback` objects.
+
+| `ThemeShadow` | type                                      | Platform | Required | Default     |
+| ------------- | ----------------------------------------- | -------- | -------- | ----------- |
+| `color`       | `string`                                  | iOS      | ❌       | `#000000`   |
+| `opacity`     | `number`                                  | iOS      | ❌       | `1`         |
+| `radius`      | `number`                                  | iOS      | ❌       | `10`        |
+| `offset`      | [`ThemeShadowInsets`](#themeshadowoffset) | iOS      | ❌       | `undefined` |
+| `insets`      | [`ThemeShadowOffset`](#themeshadowinsets) | iOS      | ❌       | `undefined` |
+
+##### `ThemeShadowInsets`
+
+An object containing the shadow inset styles used in screen.
+
+| `ThemeShadowInsets` | type     | Platform | Required | Default |
+| ------------------- | -------- | -------- | -------- | ------- |
+| `top`               | `number` | iOS      | ❌       | `0`     |
+| `left`              | `number` | iOS      | ❌       | `0`     |
+| `bottom`            | `number` | iOS      | ❌       | `0`     |
+| `right`             | `number` | iOS      | ❌       | `0`     |
+
+##### `ThemeShadowOffset`
+
+An object containing the shadow offset styles used in screen.
+
+| `ThemeShadowOffset` | type     | Platform | Required | Default |
+| ------------------- | -------- | -------- | -------- | ------- |
+| `width`             | `number` | iOS      | ❌       | `0`     |
+| `height`            | `number` | iOS      | ❌       | `0`     |
+
+<hr/>
+
+## How to add images in Aziface SDK module? (Deprecated)
+
+> [!WARNING]
+> We're working in best practices from communicate Turbo Modules with React Native side.
+>
+> Currently, adding images is unstable, and it needs improvement. In the next versions, we'll go to available best strategies from swap images in each modules.
+
+The `branding` and `cancel` properties represents your branding and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the branding image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
+
+### How to add images in Android?
+
+To add your images in `Android`, you must go to your project's `android/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
+
+**Important**: The filename of the image can't have uppercase letters, Android doesn't accept these characters in the image name.
+
+### How to add images in iOS?
+
+In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Images.xcassets` directory. Open the `Images.xcassets` folder and only put your images inside there.
+
+#### Example with images added
+
+Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`branding` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
+
+```tsx
+import { useEffect } from 'react';
+// ...
+import {
+  initialize,
+  setTheme,
+  type Params /* ... */,
+} from '@azify/aziface-mobile';
+
+export default function App() {
+  useEffect(() => {
+    const params: Params = {
+      isDevelopment: true,
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+      baseUrl: 'YOUR_BASE_URL',
+    };
+
+    async function initialize() {
+      // You call setTheme after initialize.
+      setTheme({
+        image: {
+          branding: 'branding', // branding.png
+          cancel: 'close', // close.png
+        },
+      });
+
+      await initialize({ params });
+    }
+
+    initialize();
+  }, []);
+
+  // ...
+}
+```
+
+<hr/>
+
+## Colors Support
+
+Currently, the Aziface SDK theme accepts only hexadecimal colors in this format:
+
+- `#RGB`
+- `#RGBA`
+- `#RRGGBB`
+- `#RRGGBBAA`
