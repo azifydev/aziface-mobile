@@ -88,6 +88,32 @@ export enum Errors {
   UnknownInternalError = 'UnknownInternalError',
 }
 
+// Language & Region
+
+/**
+ * @type
+ *
+ * @description The locale options available in Aziface SDK.
+ *
+ * @default "default"
+ */
+export type Locale =
+  | 'default'
+  | 'en'
+  | 'af'
+  | 'ar'
+  | 'de'
+  | 'el'
+  | 'es'
+  | 'fr'
+  | 'ja'
+  | 'kk'
+  | 'nb'
+  | 'pt-BR'
+  | 'ru'
+  | 'vi'
+  | 'zh';
+
 // Styles
 
 /**
@@ -1207,6 +1233,11 @@ export type ProcessorRequestMethod = 'GET' | 'POST';
  * @description Headers your requests, to each request it's sent.
  */
 export interface Headers {
+  /**
+   * @description The token bearer to authorize your requests.
+   */
+  'x-token-bearer': string;
+
   [key: string]: string | null | undefined;
 }
 
@@ -1223,11 +1254,10 @@ export interface Initialize {
   params: Params;
 
   /**
-   * @description Headers your requests, to each request it's sent.
-   *
-   * @default undefined
+   * @description Headers your requests, to each request it's sent. This
+   * property is required.
    */
-  headers?: Headers;
+  headers: Headers;
 }
 
 /**
@@ -1584,11 +1614,11 @@ export interface Methods extends TurboModule {
    *
    * @param {Params} params - Initialization SDK parameters.
    * @param {Headers} headers - Headers your requests, to each
-   * request it's sent. The headers is optional.
+   * request it's sent.
    *
    * @return {Promise<boolean>} Represents if initialization was a successful.
    */
-  initialize(params: Params, headers?: Headers): Promise<boolean>;
+  initialize(params: Params, headers: Headers): Promise<boolean>;
 
   /**
    * @description This method make to read from face and documents for user,
@@ -1661,6 +1691,16 @@ export interface Methods extends TurboModule {
   liveness(data?: any): Promise<Processor>;
 
   /**
+   * @description This method must be used to **set** the **locale** of the
+   * Aziface SDK screen.
+   *
+   * @param {Locale} locale - The locale to be set in Aziface SDK screen.
+   *
+   * @return {void}
+   */
+  setLocale(locale: Locale): void;
+
+  /**
    * @description This method must be used to **set** the **theme** of the
    * Aziface SDK screen.
    *
@@ -1696,7 +1736,7 @@ export function vocal(): void {
  * other methods **don't works!**
  *
  * @param {Initialize} initialize - Initialize the Aziface SDK with
- * specific parameters and an optional headers.
+ * specific parameters and headers.
  *
  * @return {Promise<boolean>} Represents if Aziface SDK initialized with
  * successful.
@@ -1811,8 +1851,22 @@ export async function liveness(data?: object): Promise<Processor> {
 }
 
 /**
+ * @description This method must be used to **set** the **locale** of the
+ * Aziface SDK.
+ *
+ * @param {Locale|undefined} locale - The locale to be set in Aziface SDK
+ * screen.
+ *
+ * @return {void}
+ */
+export function setLocale(locale?: Locale): void {
+  AzifaceMobile.setLocale(locale);
+}
+
+/**
  * @description This method must be used to **set** the **theme** of the Aziface
- * SDK screen.
+ * SDK screen. It's recommend called this method **before** the `initialize`
+ * method.
  *
  * @param {Theme|undefined} options - The object theme options. All options are
  * optional.

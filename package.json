@@ -1,6 +1,6 @@
 {
   "name": "@azify/aziface-mobile",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "A Aziface adapter to react native. 📱",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -37,11 +37,12 @@
     "clean": "del-cli android/build example/android/build example/android/app/build example/android/app/.cxx example/ios/build example/ios/Pods lib",
     "podspec": "pod ipc spec AzifaceMobile.podspec",
     "release": "npx semantic-release --ci",
-    "prepare": "bob build",
+    "prepare": "npm run expo && bob build",
     "prepack": "bob build",
     "setup": "npm i && npm run podspec && npm run prepack",
     "android": "npm run setup && cd example && npm i && npm run start --reset-cache",
-    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start --reset-cache"
+    "ios": "npm run setup && cd example && npm i && cd ios && pod install && cd .. && npm run start --reset-cache",
+    "expo": "cd examples/expoapp && npm i && cd ../.."
   },
   "keywords": [
     "react-native",

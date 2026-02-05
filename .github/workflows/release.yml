@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: 24
 
+      - name: Setup Examples
+        run: |
+          cd examples/expoapp
+          npm install
+          cd ../..
+
       - name: Configure NPM token and install dependencies
         env:
           NPM_TOKEN_V2: ${{ secrets.NPM_TOKEN_V2 }}

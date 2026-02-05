@@ -1,6 +1,6 @@
-# flutterapp
+# Flutter App
 
-### A basic Flutter application demonstrating the use of Aziface Mobile SDK.
+## A basic Flutter App
 
 ##### This example shows how to initialize the Aziface Mobile SDK and start an enrollment flow using Flutter's native communication layer (MethodChannel).
 

@@ -2,7 +2,7 @@ import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const padding = 20;
 const borderRadius = 15;
-const gap = 2 * padding;
+const gap = 32;
 const fontSize = 16;
 const height = Dimensions.get('window').height;
 
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     gap,
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -79,10 +79,11 @@ export const styles = StyleSheet.create({
   },
   scroll: {
     paddingTop: Platform.OS === 'ios' ? gap : 0,
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: 'white',
   },
   scrollContent: {
+    paddingVertical: 48,
     flexGrow: 1,
   },
 });

@@ -18,6 +18,8 @@ import {
   type Params,
   type Headers,
   type Processor,
+  setLocale,
+  type Locale,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -35,11 +37,30 @@ import { useUser } from '../hooks';
 import { useBiometricConfigs } from '../services';
 import type { FaceType } from '../types';
 
+const LOCALES: Locale[] = [
+  'default',
+  'en',
+  'af',
+  'ar',
+  'de',
+  'el',
+  'es',
+  'fr',
+  'ja',
+  'kk',
+  'nb',
+  'pt-BR',
+  'ru',
+  'vi',
+  'zh',
+];
+
 export function Home() {
   const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, logout } = useUser();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
+  const [localization, setLocalization] = useState<Locale>('default');
 
   const commonButtonProps: TouchableOpacityProps = {
     style: [styles.button, { opacity: isInitialized ? 1 : 0.5 }],
@@ -116,6 +137,19 @@ export function Home() {
     }
   };
 
+  const onLocale = () => {
+    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
+    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+
+    setLocalization(value);
+    setLocale(value);
+  };
+
+  const onResetLocale = () => {
+    setLocalization('default');
+    setLocale('default');
+  };
+
   const onVocal = (enabled: boolean) => {
     console.log('onVocal', enabled);
     setIsEnabledVocal(enabled);
@@ -177,6 +211,14 @@ export function Home() {
           onPress={() => onFaceScan('photoScan')}
         >
           <Text style={styles.buttonText}>Photo Scan</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          {...commonButtonProps}
+          onPress={onLocale}
+          onLongPress={onResetLocale}
+        >
+          <Text style={styles.buttonText}>Localization: {localization}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity {...commonButtonProps} onPress={vocal}>

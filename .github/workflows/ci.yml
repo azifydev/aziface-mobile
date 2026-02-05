@@ -35,6 +35,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_V2 }}
 
+      - name: Setup Examples
+        run: |
+          cd examples/expoapp
+          npm install
+          cd ../..
+
       - name: Install dependencies
         env:
           NPM_TOKEN_V2: ${{ secrets.NPM_TOKEN_V2 }}
