@@ -2,7 +2,7 @@ package com.azifacemobile;
 
 import android.graphics.Rect;
 
-import com.azifacemobile.theme.Theme;
+import com.azifacemobile.theme.*;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.*;
 
@@ -76,134 +76,126 @@ public class Config {
   }
 
   public static FaceTecCustomization retrieveConfigurationCustomization(Theme theme) {
-    Rect buttonPosition = theme.getImage().getButtonPosition();
-    FaceTecCancelButtonCustomization.ButtonLocation buttonLocation = theme.getImage().getButtonLocation();
+    Image image = theme.getImage();
+    Rect buttonPosition = image.getButtonPosition();
+    FaceTecCancelButtonCustomization.ButtonLocation buttonLocation = image.getButtonLocation();
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
-    defaultCustomization.getFrameCustomization().cornerRadius = theme.getFrame().getCornerRadius();
-    defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
-    defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
-    defaultCustomization.getFrameCustomization().borderWidth = theme.getFrame().getBorderWidth();
-    defaultCustomization.getFrameCustomization().elevation = theme.getFrame().getElevation();
+    FaceTecFrameCustomization frameCustomization = defaultCustomization.getFrameCustomization();
+    Frame frame = theme.getFrame();
+    frameCustomization.cornerRadius = frame.getCornerRadius();
+    frameCustomization.backgroundColor = frame.getBackgroundColor();
+    frameCustomization.borderColor = frame.getBorderColor();
+    frameCustomization.borderWidth = frame.getBorderWidth();
+    frameCustomization.elevation = frame.getElevation();
 
-    defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage().getSource("branding", R.drawable.facetec_your_app_logo);
-    defaultCustomization.getOverlayCustomization().showBrandingImage = theme.getImage().getShowBranding();
-    defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
+    FaceTecOverlayCustomization overlayCustomization = defaultCustomization.getOverlayCustomization();
+    overlayCustomization.brandingImage = image.getSource("branding", R.drawable.facetec_your_app_logo);
+    overlayCustomization.showBrandingImage = image.getShowBranding();
+    overlayCustomization.backgroundColor = theme.getColor("overlayBackgroundColor");
 
-    defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
-    defaultCustomization.getGuidanceCustomization().foregroundColor = theme.getGuidance().getForegroundColor();
-    defaultCustomization.getGuidanceCustomization().buttonBorderWidth = theme.getGuidance().getButton().getBorderWidth();
-    defaultCustomization.getGuidanceCustomization().buttonBorderColor = theme.getGuidance().getButton().getBorderColor();
-    defaultCustomization.getGuidanceCustomization().buttonCornerRadius = theme.getGuidance().getButton().getCornerRadius();
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundNormalColor = theme.getGuidance()
-      .getButton().getBackgroundNormalColor();
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundDisabledColor = theme.getGuidance()
-      .getButton().getBackgroundDisabledColor();
-    defaultCustomization.getGuidanceCustomization().buttonBackgroundHighlightColor = theme.getGuidance()
-      .getButton().getBackgroundHighlightColor();
-    defaultCustomization.getGuidanceCustomization().buttonTextNormalColor = theme.getGuidance().getButton()
-      .getTextNormalColor();
-    defaultCustomization.getGuidanceCustomization().buttonTextDisabledColor = theme.getGuidance().getButton()
-      .getTextDisabledColor();
-    defaultCustomization.getGuidanceCustomization().buttonTextHighlightColor = theme.getGuidance().getButton()
-      .getTextHighlightColor();
-    defaultCustomization.getGuidanceCustomization().cameraPermissionsScreenImage = theme.getGuidance().getImage().getSource("cameraPermission", R.drawable.facetec_camera);
-    // TODO: Fix duplicate header text in the future
-    defaultCustomization.getGuidanceCustomization().readyScreenHeaderAttributedString = theme.getGuidance().getReadyScreen().getHeaderText();
-    defaultCustomization.getGuidanceCustomization().readyScreenHeaderTextColor = theme.getGuidance().getReadyScreen().getHeaderTextColor();
-    defaultCustomization.getGuidanceCustomization().readyScreenOvalFillColor = theme.getGuidance().getReadyScreen().getOvalFillColor();
-    // TODO: Fix duplicate subtext in the future
-    defaultCustomization.getGuidanceCustomization().readyScreenSubtextAttributedString = theme.getGuidance().getReadyScreen().getSubtext();
-    defaultCustomization.getGuidanceCustomization().readyScreenSubtextTextColor = theme.getGuidance().getReadyScreen().getSubtextColor();
-    defaultCustomization.getGuidanceCustomization().retryScreenImageBorderColor = theme.getGuidance().getRetryScreen()
-      .getImageBorderColor();
-    defaultCustomization.getGuidanceCustomization().retryScreenOvalStrokeColor = theme.getGuidance().getRetryScreen()
-      .getOvalStrokeColor();
-    defaultCustomization.getGuidanceCustomization().retryScreenIdealImage = theme.getGuidance().getImage().getSource("ideal");
-    defaultCustomization.getGuidanceCustomization().retryScreenSubtextTextColor = theme.getGuidance().getRetryScreen().getSubtextColor();
-    defaultCustomization.getGuidanceCustomization().retryScreenImageBorderWidth = theme.getGuidance().getRetryScreen().getImageBorderWidth();
-    defaultCustomization.getGuidanceCustomization().retryScreenImageCornerRadius = theme.getGuidance().getRetryScreen().getImageCornerRadius();
+    FaceTecGuidanceCustomization guidanceCustomization = defaultCustomization.getGuidanceCustomization();
+    Guidance guidance = theme.getGuidance();
+    Button guidanceButton = guidance.getButton();
+    Image guidanceImage = guidance.getImage();
+    ReadyScreen guidanceReadyScreen = guidance.getReadyScreen();
+    RetryScreen guidanceRetryScreen = guidance.getRetryScreen();
+    guidanceCustomization.backgroundColors = guidance.getBackgroundColor();
+    guidanceCustomization.foregroundColor = guidance.getForegroundColor();
+    guidanceCustomization.buttonBorderWidth = guidanceButton.getBorderWidth();
+    guidanceCustomization.buttonBorderColor = guidanceButton.getBorderColor();
+    guidanceCustomization.buttonCornerRadius = guidanceButton.getCornerRadius();
+    guidanceCustomization.buttonBackgroundNormalColor = guidanceButton.getBackgroundNormalColor();
+    guidanceCustomization.buttonBackgroundDisabledColor = guidanceButton.getBackgroundDisabledColor();
+    guidanceCustomization.buttonBackgroundHighlightColor = guidanceButton.getBackgroundHighlightColor();
+    guidanceCustomization.buttonTextNormalColor = guidanceButton.getTextNormalColor();
+    guidanceCustomization.buttonTextDisabledColor = guidanceButton.getTextDisabledColor();
+    guidanceCustomization.buttonTextHighlightColor = guidanceButton.getTextHighlightColor();
+    guidanceCustomization.cameraPermissionsScreenImage = guidanceImage.getSource("cameraPermission", R.drawable.facetec_camera);
+    guidanceCustomization.readyScreenHeaderTextColor = guidanceReadyScreen.getHeaderTextColor();
+    guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor();
+    guidanceCustomization.readyScreenSubtextTextColor = guidanceReadyScreen.getSubtextColor();
+    guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor();
+    guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor();
+    guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal");
+    guidanceCustomization.retryScreenSubtextTextColor = guidanceRetryScreen.getSubtextColor();
+    guidanceCustomization.retryScreenImageBorderWidth = guidanceRetryScreen.getImageBorderWidth();
+    guidanceCustomization.retryScreenImageCornerRadius = guidanceRetryScreen.getImageCornerRadius();
 
-    defaultCustomization.getOvalCustomization().strokeColor = theme.getOval().getStrokeColor();
-    defaultCustomization.getOvalCustomization().progressColor1 = theme.getOval().getFirstProgressColor();
-    defaultCustomization.getOvalCustomization().progressColor2 = theme.getOval().getSecondProgressColor();
-    defaultCustomization.getOvalCustomization().strokeWidth = theme.getOval().getStrokeWidth();
-    defaultCustomization.getOvalCustomization().progressRadialOffset = theme.getOval().getProgressRadialOffset();
-    defaultCustomization.getOvalCustomization().progressStrokeWidth = theme.getOval().getProgressStrokeWidth();
+    FaceTecOvalCustomization ovalCustomization = defaultCustomization.getOvalCustomization();
+    Oval oval = theme.getOval();
+    ovalCustomization.strokeColor = oval.getStrokeColor();
+    ovalCustomization.progressColor1 = oval.getFirstProgressColor();
+    ovalCustomization.progressColor2 = oval.getSecondProgressColor();
+    ovalCustomization.strokeWidth = oval.getStrokeWidth();
+    ovalCustomization.progressRadialOffset = oval.getProgressRadialOffset();
+    ovalCustomization.progressStrokeWidth = oval.getProgressStrokeWidth();
 
-    defaultCustomization.getFeedbackCustomization().backgroundColors = theme.getFeedback().getBackgroundColor();
-    defaultCustomization.getFeedbackCustomization().textColor = theme.getFeedback().getTextColor();
-    defaultCustomization.getFeedbackCustomization().cornerRadius = theme.getFeedback().getCornerRadius();
-    defaultCustomization.getFeedbackCustomization().elevation = theme.getFeedback().getElevation();
-    defaultCustomization.getFeedbackCustomization().enablePulsatingText = theme.getFeedback().getEnablePulsatingText();
+    FaceTecFeedbackCustomization feedbackCustomization = defaultCustomization.getFeedbackCustomization();
+    Feedback feedback = theme.getFeedback();
+    feedbackCustomization.backgroundColors = feedback.getBackgroundColor();
+    feedbackCustomization.textColor = feedback.getTextColor();
+    feedbackCustomization.cornerRadius = feedback.getCornerRadius();
+    feedbackCustomization.elevation = feedback.getElevation();
+    feedbackCustomization.enablePulsatingText = feedback.getEnablePulsatingText();
 
-    defaultCustomization.getCancelButtonCustomization().customImage = theme.getImage().getSource("cancel", R.drawable.facetec_cancel);
-    defaultCustomization.getCancelButtonCustomization().hideForCameraPermissions = theme.getImage().getHideForCameraPermissions();
-    defaultCustomization.getCancelButtonCustomization().setLocation(buttonLocation);
-    defaultCustomization.getCancelButtonCustomization().setCustomLocation(buttonPosition);
+    FaceTecCancelButtonCustomization cancelButtonCustomization = defaultCustomization.getCancelButtonCustomization();
+    cancelButtonCustomization.customImage = image.getSource("cancel", R.drawable.facetec_cancel);
+    cancelButtonCustomization.hideForCameraPermissions = image.getHideForCameraPermissions();
+    cancelButtonCustomization.setLocation(buttonLocation);
+    cancelButtonCustomization.setCustomLocation(buttonPosition);
 
-    defaultCustomization.getResultScreenCustomization().backgroundColors = theme.getResultScreen().getBackgroundColor();
-    defaultCustomization.getResultScreenCustomization().foregroundColor = theme.getResultScreen().getForegroundColor();
-    defaultCustomization.getResultScreenCustomization().activityIndicatorColor = theme.getResultScreen()
-      .getActivityIndicatorColor();
-    defaultCustomization.getResultScreenCustomization().showUploadProgressBar = theme.getResultScreen()
-      .getShowUploadProgressBar();
-    defaultCustomization.getResultScreenCustomization().uploadProgressFillColor = theme.getResultScreen()
-      .getUploadProgressFillColor();
-    defaultCustomization.getResultScreenCustomization().uploadProgressTrackColor = theme.getResultScreen()
-      .getUploadProgressTrackColor();
-    defaultCustomization.getResultScreenCustomization().animationRelativeScale = theme.getResultScreen().getAnimationRelativeScale();
-    defaultCustomization.getResultScreenCustomization().customActivityIndicatorImage = theme.getResultScreen().getActivityIndicatorImage();
-    defaultCustomization.getResultScreenCustomization().customActivityIndicatorRotationInterval = theme.getResultScreen().getIndicatorRotationInterval();
-    defaultCustomization.getResultScreenCustomization().faceScanStillUploadingMessageDelayTime = theme.getResultScreen().getFaceScanStillUploadingMessageDelayTime();
-    defaultCustomization.getResultScreenCustomization().idScanStillUploadingMessageDelayTime = theme.getResultScreen().getIdScanStillUploadingMessageDelayTime();
-    defaultCustomization.getResultScreenCustomization().resultAnimationBackgroundColor = theme.getResultScreen()
-      .getResultAnimation().getBackgroundColor();
-    defaultCustomization.getResultScreenCustomization().resultAnimationForegroundColor = theme.getResultScreen()
-      .getResultAnimation().getForegroundColor();
-    defaultCustomization.getResultScreenCustomization().resultAnimationDisplayTime = theme.getResultScreen().getResultAnimation().getDisplayTime();
-    defaultCustomization.getResultScreenCustomization().resultAnimationIDScanSuccessForegroundColor = theme.getResultScreen().getResultAnimation().getIDScanSuccessForegroundColor();
-    defaultCustomization.getResultScreenCustomization().resultAnimationSuccessBackgroundImage = theme.getResultScreen().getResultAnimation().getSuccessBackgroundImage();
-    defaultCustomization.getResultScreenCustomization().resultAnimationUnsuccessBackgroundColor = theme.getResultScreen().getResultAnimation().getUnsuccessBackgroundColor();
-    defaultCustomization.getResultScreenCustomization().resultAnimationUnsuccessBackgroundImage = theme.getResultScreen().getResultAnimation().getUnsuccessBackgroundImage();
-    defaultCustomization.getResultScreenCustomization().resultAnimationUnsuccessForegroundColor = theme.getResultScreen().getResultAnimation().getUnsuccessForegroundColor();
-    defaultCustomization.getResultScreenCustomization().sessionAbortAnimationBackgroundColor = theme.getResultScreen().getSessionAbortAnimation().getBackgroundColor();
-    defaultCustomization.getResultScreenCustomization().sessionAbortAnimationBackgroundImage = theme.getResultScreen().getSessionAbortAnimation().getBackgroundImage();
-    defaultCustomization.getResultScreenCustomization().sessionAbortAnimationForegroundColor = theme.getResultScreen().getSessionAbortAnimation().getForegroundColor();
+    FaceTecResultScreenCustomization resultScreenCustomization = defaultCustomization.getResultScreenCustomization();
+    ResultScreen resultScreen = theme.getResultScreen();
+    ResultAnimation resultScreenResultAnimation = resultScreen.getResultAnimation();
+    SessionAbortAnimation resultScreenSessionAbortAnimation = resultScreen.getSessionAbortAnimation();
+    resultScreenCustomization.backgroundColors = resultScreen.getBackgroundColor();
+    resultScreenCustomization.foregroundColor = resultScreen.getForegroundColor();
+    resultScreenCustomization.activityIndicatorColor = resultScreen.getActivityIndicatorColor();
+    resultScreenCustomization.showUploadProgressBar = resultScreen.getShowUploadProgressBar();
+    resultScreenCustomization.uploadProgressFillColor = resultScreen.getUploadProgressFillColor();
+    resultScreenCustomization.uploadProgressTrackColor = resultScreen.getUploadProgressTrackColor();
+    resultScreenCustomization.animationRelativeScale = resultScreen.getAnimationRelativeScale();
+    resultScreenCustomization.customActivityIndicatorImage = resultScreen.getActivityIndicatorImage();
+    resultScreenCustomization.customActivityIndicatorRotationInterval = resultScreen.getIndicatorRotationInterval();
+    resultScreenCustomization.faceScanStillUploadingMessageDelayTime = resultScreen.getFaceScanStillUploadingMessageDelayTime();
+    resultScreenCustomization.idScanStillUploadingMessageDelayTime = resultScreen.getIdScanStillUploadingMessageDelayTime();
+    resultScreenCustomization.resultAnimationBackgroundColor = resultScreenResultAnimation.getBackgroundColor();
+    resultScreenCustomization.resultAnimationForegroundColor = resultScreenResultAnimation.getForegroundColor();
+    resultScreenCustomization.resultAnimationDisplayTime = resultScreenResultAnimation.getDisplayTime();
+    resultScreenCustomization.resultAnimationIDScanSuccessForegroundColor = resultScreenResultAnimation.getIDScanSuccessForegroundColor();
+    resultScreenCustomization.resultAnimationSuccessBackgroundImage = resultScreenResultAnimation.getSuccessBackgroundImage();
+    resultScreenCustomization.resultAnimationUnsuccessBackgroundColor = resultScreenResultAnimation.getUnsuccessBackgroundColor();
+    resultScreenCustomization.resultAnimationUnsuccessBackgroundImage = resultScreenResultAnimation.getUnsuccessBackgroundImage();
+    resultScreenCustomization.resultAnimationUnsuccessForegroundColor = resultScreenResultAnimation.getUnsuccessForegroundColor();
+    resultScreenCustomization.sessionAbortAnimationBackgroundColor = resultScreenSessionAbortAnimation.getBackgroundColor();
+    resultScreenCustomization.sessionAbortAnimationBackgroundImage = resultScreenSessionAbortAnimation.getBackgroundImage();
+    resultScreenCustomization.sessionAbortAnimationForegroundColor = resultScreenSessionAbortAnimation.getForegroundColor();
 
     defaultCustomization.securityWatermarkImage = FaceTecSecurityWatermarkImage.FACETEC;
 
-    defaultCustomization.getIdScanCustomization().selectionScreenBackgroundColors = theme.getIdScan()
-      .getSelectionScreen().getBackgroundColor();
-    defaultCustomization.getIdScanCustomization().selectionScreenForegroundColor = theme.getIdScan()
-      .getSelectionScreen().getForegroundColor();
-    defaultCustomization.getIdScanCustomization().reviewScreenBackgroundColors = theme.getIdScan().getReviewScreen()
-      .getBackgroundColor();
-    defaultCustomization.getIdScanCustomization().reviewScreenForegroundColor = theme.getIdScan().getReviewScreen()
-      .getForegroundColor();
-    defaultCustomization.getIdScanCustomization().reviewScreenTextBackgroundColor = theme.getIdScan().getReviewScreen()
-      .getTextBackgroundColor();
-    defaultCustomization.getIdScanCustomization().captureScreenForegroundColor = theme.getIdScan().getCaptureScreen()
-      .getForegroundColor();
-    defaultCustomization.getIdScanCustomization().captureScreenTextBackgroundColor = theme.getIdScan().getCaptureScreen()
-      .getTextBackgroundColor();
-    defaultCustomization.getIdScanCustomization().buttonBackgroundNormalColor = theme.getIdScan().getButton()
-      .getBackgroundNormalColor();
-    defaultCustomization.getIdScanCustomization().buttonBackgroundDisabledColor = theme.getIdScan().getButton()
-      .getBackgroundDisabledColor();
-    defaultCustomization.getIdScanCustomization().buttonBackgroundHighlightColor = theme.getIdScan().getButton()
-      .getBackgroundHighlightColor();
-    defaultCustomization.getIdScanCustomization().buttonTextNormalColor = theme.getIdScan().getButton()
-      .getTextNormalColor();
-    defaultCustomization.getIdScanCustomization().buttonTextDisabledColor = theme.getIdScan().getButton()
-      .getTextDisabledColor();
-    defaultCustomization.getIdScanCustomization().buttonTextHighlightColor = theme.getIdScan().getButton()
-      .getTextHighlightColor();
-    defaultCustomization.getIdScanCustomization().captureScreenBackgroundColor = theme.getIdScan().getCaptureScreen()
-      .getBackgroundColor();
-    defaultCustomization.getIdScanCustomization().captureFrameStrokeColor = theme.getIdScan().getCaptureScreen()
-      .getFrameStrokeColor();
+    FaceTecIDScanCustomization idScanCustomization = defaultCustomization.getIdScanCustomization();
+    IdScan idScan = theme.getIdScan();
+    SelectionScreen idScanSelectionScreen = idScan.getSelectionScreen();
+    ReviewScreen idScanReviewScreen = idScan.getReviewScreen();
+    CaptureScreen idScanCaptureScreen = idScan.getCaptureScreen();
+    Button idScanButton = idScan.getButton();
+    idScanCustomization.selectionScreenBackgroundColors = idScanSelectionScreen.getBackgroundColor();
+    idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor();
+    idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColor();
+    idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor();
+    idScanCustomization.reviewScreenTextBackgroundColor = idScanReviewScreen.getTextBackgroundColor();
+    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
+    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
+    idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor();
+    idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor();
+    idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor();
+    idScanCustomization.buttonTextNormalColor = idScanButton.getTextNormalColor();
+    idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor();
+    idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor();
+    idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor();
+    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor();
 
     return defaultCustomization;
   }

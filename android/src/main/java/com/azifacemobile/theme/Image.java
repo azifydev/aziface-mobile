@@ -58,11 +58,12 @@ public class Image extends ImageStyle {
   public Rect getButtonPosition() {
     try {
       final JSONObject cancelPosition = this.target.getJSONObject("cancelPosition");
+      final JSONObject android = cancelPosition.getJSONObject("android");
 
-      final int left = cancelPosition.getInt("left");
-      final int top = cancelPosition.getInt("top");
-      final int right = cancelPosition.getInt("right");
-      final int bottom = cancelPosition.getInt("bottom");
+      final int left = android.getInt("left");
+      final int top = android.getInt("top");
+      final int right = android.getInt("right");
+      final int bottom = android.getInt("bottom");
 
       this.isPosition = true;
 

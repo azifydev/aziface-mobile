@@ -7,15 +7,15 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import org.json.JSONObject;
 
 public class SessionAbortAnimation extends ViewStyle {
-  private final static String KEY = "selectionScreen";
+  private final static String KEY = "sessionAbortAnimation";
   private final Image image;
 
   public SessionAbortAnimation(ReactApplicationContext context, JSONObject target) {
     super(target, KEY);
 
-    JSONObject targetTheme = new Theme().getTarget(KEY);
+    JSONObject currentTarget = new Theme().getTarget(KEY);
 
-    this.image = new Image(context, targetTheme);
+    this.image = new Image(context, currentTarget);
   }
 
   @Override

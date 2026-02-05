@@ -18,15 +18,15 @@ public class RetryScreen {
   }
 
   private int getInt(String key) {
-    final int defaultCornerRadius = -1;
+    final int defaultValue = -1;
     try {
       if (!this.theme.exists(this.target, key)) {
-        return defaultCornerRadius;
+        return defaultValue;
       }
 
       return this.target.getInt(key);
     } catch (JSONException e) {
-      return defaultCornerRadius;
+      return defaultValue;
     }
   }
 

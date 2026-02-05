@@ -22,11 +22,6 @@ public class Button extends ViewStyle {
     return super.getCornerRadius(-1);
   }
 
-  @Override
-  public int getBorderColor() {
-    return super.getBorderColor("#000000");
-  }
-
   public int getBackgroundNormalColor() {
     return this.color.getColor(this.theme, "backgroundNormalColor", "#026ff4");
   }

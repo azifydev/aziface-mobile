@@ -1,6 +1,5 @@
 package com.azifacemobile.theme;
 
-import com.azifacemobile.R;
 import com.azifacemobile.utils.Theme;
 import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.facebook.react.bridge.ReactApplicationContext;

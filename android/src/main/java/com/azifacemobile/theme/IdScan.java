@@ -20,7 +20,7 @@ public class IdScan {
   }
 
   public Button getButton() {
-    return button;
+    return this.button;
   }
 
   public SelectionScreen getSelectionScreen() {
@@ -28,10 +28,10 @@ public class IdScan {
   }
 
   public CaptureScreen getCaptureScreen() {
-    return captureScreen;
+    return this.captureScreen;
   }
 
   public ReviewScreen getReviewScreen() {
-    return reviewScreen;
+    return this.reviewScreen;
   }
 }
