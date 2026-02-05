@@ -121,7 +121,77 @@ export type Locale =
  *
  * @description The type of cancel location.
  */
-export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
+export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT' | 'CUSTOM';
+
+/**
+ * @interface CancelPositionAndroid
+ *
+ * @description The cancel button position for Android.
+ */
+export interface CancelPositionAndroid {
+  /**
+   * @description The left position of the cancel button.
+   *
+   * @platform android
+   */
+  left: number;
+
+  /**
+   * @description The top position of the cancel button.
+   *
+   * @platform android
+   */
+  top: number;
+
+  /**
+   * @description The right position of the cancel button.
+   *
+   * @platform android
+   */
+  right: number;
+
+  /**
+   * @description The bottom position of the cancel button.
+   *
+   * @platform android
+   */
+  bottom: number;
+}
+
+/**
+ * @interface CancelPositionIOS
+ *
+ * @description The cancel button position for iOS.
+ */
+export interface CancelPositionIOS {
+  /**
+   * @description The X coordinate of the cancel button.
+   *
+   * @platform iOS
+   */
+  x: number;
+
+  /**
+   * @description The Y coordinate of the cancel button.
+   *
+   * @platform iOS
+   */
+  y: number;
+
+  /**
+   * @description The width of the cancel button.
+   *
+   * @platform iOS
+   */
+  width: number;
+
+  /**
+   * @description The height of the cancel button.
+   *
+   * @platform iOS
+   */
+  height: number;
+}
 
 /**
  * @interface CancelPosition
@@ -131,24 +201,18 @@ export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
  */
 export interface CancelPosition {
   /**
-   * @description The left position of the cancel button.
+   * @description The cancel button position for Android.
+   *
+   * @default undefined
    */
-  left: number;
+  android?: CancelPositionAndroid;
 
   /**
-   * @description The top position of the cancel button.
+   * @description The cancel button position for iOS.
+   *
+   * @default undefined
    */
-  top: number;
-
-  /**
-   * @description The right position of the cancel button.
-   */
-  right: number;
-
-  /**
-   * @description The bottom position of the cancel button.
-   */
-  bottom: number;
+  ios?: CancelPositionIOS;
 }
 
 /**
@@ -803,13 +867,6 @@ export interface ThemeGuidanceImages {
  */
 export interface ThemeGuidanceReadyScreen {
   /**
-   * @description Represents the header text of the guidance ready screen.
-   *
-   * @default undefined
-   */
-  headerText?: string;
-
-  /**
    * @description Represents the header text color style of the guidance ready
    * screen.
    *
@@ -824,13 +881,6 @@ export interface ThemeGuidanceReadyScreen {
    * @default 'transparent'
    */
   ovalFillColor?: string;
-
-  /**
-   * @description Represents the subtext of the guidance ready screen.
-   *
-   * @default undefined
-   */
-  subtext?: string;
 
   /**
    * @description Represents the subtext color style of the guidance ready
@@ -1073,6 +1123,22 @@ export interface ThemeIdScanReviewScreen {
    * @default '#ffffff'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the review screen.
+   * The review screen is above the view and it's showed to before check face
+   * or scan ID of the user. In Android you must provide a string color, but in
+   * iOS you must provide an array of colors.
+   *
+   * @description Default value in **Android** is:
+   *
+   * @default '#ffffff'
+   *
+   * @description Default value in **iOS** is:
+   *
+   * @default ['#ffffff', '#ffffff']
+   */
+  backgroundColor?: string | string[];
 
   /**
    * @description Represents the background color style of the ID scan
