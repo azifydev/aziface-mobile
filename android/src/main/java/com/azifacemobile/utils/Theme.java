@@ -5,6 +5,10 @@ import com.facebook.react.bridge.ReadableMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import javax.annotation.Nullable;
+
 public class Theme {
 
   public Boolean exists(String key) {
@@ -16,6 +20,18 @@ public class Theme {
     return theme != null && theme.has(key) && !theme.isNull(key);
   }
 
+  @Nullable
+  public JSONObject getTheme() {
+    try {
+      final HashMap<String, Object> map = com.azifacemobile.theme.Theme.Style.toHashMap();
+
+      return new JSONObject(map);
+    } catch (NullPointerException e) {
+      return null;
+    }
+  }
+
+  @Nullable
   public JSONObject getTarget(String key) {
     try {
       if (!this.exists(key)) {
@@ -29,6 +45,7 @@ public class Theme {
     }
   }
 
+  @Nullable
   public JSONObject getTarget(JSONObject theme, String key) {
     try {
       if (!this.exists(theme, key)) {

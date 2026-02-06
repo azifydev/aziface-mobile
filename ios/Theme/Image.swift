@@ -1,14 +1,37 @@
 import Foundation
 import FaceTecSDK
 
-public class Image {
+public class Image: ImageStyle {
+  private static let KEY: String = "image"
   private let style: Style
   private let target: NSDictionary?
+  private var isPosition: Bool
 
   init() {
     self.style = Style()
     
-    self.target = self.style.getTarget("image")
+    self.target = self.style.getTarget(Image.KEY)
+    self.isPosition = false
+    
+    super.init(key: Image.KEY)
+  }
+  
+  override init(target: NSDictionary?) {
+    self.style = Style()
+    
+    self.target = target
+    self.isPosition = false
+    
+    super.init(target: target)
+  }
+  
+  override init(target: NSDictionary?, key: String) {
+    self.style = Style()
+    
+    self.target = target
+    self.isPosition = false
+    
+    super.init(target: target, key: key)
   }
   
   private func getBool(key: String) -> Bool {
@@ -19,19 +42,6 @@ public class Image {
     return self.target?[key] as! Bool
   }
 
-  public func getImg(_ key: String, defaultImage: String) -> UIImage? {
-    if !self.style.exists(self.target, key: key) {
-      return UIImage(named: defaultImage)
-    }
-
-    let imageName = self.target?[key] as? String ?? ""
-    if imageName.isEmpty {
-      return UIImage(named: defaultImage)
-    }
-
-    return UIImage(named: imageName)
-  }
-
   public func getShowBranding() -> Bool {
     return self.getBool(key: "isShowBranding")
   }
@@ -40,20 +50,35 @@ public class Image {
     return self.getBool(key: "isHideForCameraPermissions")
   }
   
-  public func getButtonLocation() -> FaceTecCancelButtonLocation {
-    let key = "cancelLocation"
-    let defaultLocation = FaceTecCancelButtonLocation.topRight
+  public func getButtonPosition() -> CGRect {
+    let cancelPosition = self.target?["cancelPosition"] as? NSDictionary
+    let ios = cancelPosition?["ios"] as? NSDictionary
     
-    if !self.style.exists(self.target, key: key) {
-      return defaultLocation
+    if (cancelPosition == nil || ios == nil) {
+      self.isPosition = false
+      
+      return .zero
     }
+    
+    let x = (ios?["x"] ?? 0) as! Int
+    let y = (ios?["y"] ?? 0) as! Int
+    let width = (ios?["width"] ?? 0.0) as! Double
+    let height = (ios?["height"] ?? 0.0) as! Double
+    
+    let point = CGPoint(x: x, y: y)
+    let size = CGSize(width: width, height: height)
+    
+    self.isPosition = true
+    
+    return CGRect(origin: point, size: size)
+  }
+  
+  public func getButtonLocation() -> FaceTecCancelButtonLocation {
+    let defaultLocation = FaceTecCancelButtonLocation.topRight
 
-    let buttonLocation = (self.target?[key] as? String) ?? ""
-    if buttonLocation.isEmpty {
-      return defaultLocation
-    }
+    let cancelLocation = self.isPosition ? "CUSTOM" : (self.target?["cancelLocation"] as? String) ?? ""
 
-    switch buttonLocation {
+    switch cancelLocation {
     case "TOP_RIGHT":
       do {
         return FaceTecCancelButtonLocation.topRight
@@ -65,6 +90,10 @@ public class Image {
     case "DISABLED":
       do {
         return FaceTecCancelButtonLocation.disabled
+      }
+    case "CUSTOM":
+      do {
+        return FaceTecCancelButtonLocation.custom
       }
     default:
       do {

@@ -5,12 +5,12 @@ public class IdScan {
   private let reviewScreen: ReviewScreen
 
   init() {
-    let theme = Style().getTarget("idScan")
+    let target = Style().getTarget("idScan")
 
-    self.button = Button(theme: theme)
-    self.selectionScreen = SelectionScreen(theme: theme)
-    self.captureScreen = CaptureScreen(theme: theme)
-    self.reviewScreen = ReviewScreen(theme: theme)
+    self.button = Button(target: target)
+    self.selectionScreen = SelectionScreen(target: target)
+    self.captureScreen = CaptureScreen(target: target)
+    self.reviewScreen = ReviewScreen(target: target)
   }
 
   public func getButton() -> Button {

@@ -13,12 +13,12 @@ import {
   liveness,
   photoMatch,
   photoScan,
+  setLocale,
   vocal,
   FaceView,
   type Params,
   type Headers,
   type Processor,
-  setLocale,
   type Locale,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';

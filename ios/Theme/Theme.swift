@@ -5,7 +5,6 @@ import UIKit
 public class Theme {
   private let color: Color
   private let image: Image
-  private let general: General
   private let frame: Frame
   private let guidance: Guidance
   private let oval: Oval
@@ -17,7 +16,6 @@ public class Theme {
   init() {
     self.color = Color()
     self.image = Image()
-    self.general = General()
     self.frame = Frame()
     self.guidance = Guidance()
     self.oval = Oval()
@@ -70,10 +68,6 @@ public class Theme {
 
   public func getImage() -> Image {
     return self.image
-  }
-
-  public func getGeneral() -> General {
-    return self.general
   }
 
   public func getFrame() -> Frame {

@@ -11,16 +11,16 @@ public class IdScan {
   private final ReviewScreen reviewScreen;
 
   public IdScan() {
-    final JSONObject theme = new Theme().getTarget("idScan");
+    final JSONObject target = new Theme().getTarget("idScan");
 
-    this.button = new Button(theme);
-    this.selectionScreen = new SelectionScreen(theme);
-    this.captureScreen = new CaptureScreen(theme);
-    this.reviewScreen = new ReviewScreen(theme);
+    this.button = new Button(target);
+    this.selectionScreen = new SelectionScreen(target);
+    this.captureScreen = new CaptureScreen(target);
+    this.reviewScreen = new ReviewScreen(target);
   }
 
   public Button getButton() {
-    return button;
+    return this.button;
   }
 
   public SelectionScreen getSelectionScreen() {
@@ -28,10 +28,10 @@ public class IdScan {
   }
 
   public CaptureScreen getCaptureScreen() {
-    return captureScreen;
+    return this.captureScreen;
   }
 
   public ReviewScreen getReviewScreen() {
-    return reviewScreen;
+    return this.reviewScreen;
   }
 }

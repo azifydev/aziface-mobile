@@ -18,16 +18,16 @@ public class Oval {
   }
 
   private int getInt(String key) {
-    final int defaultParamValue = -1;
+    final int defaultValue = -1;
     try {
       if (!this.theme.exists(this.target, key)) {
-        return defaultParamValue;
+        return defaultValue;
       }
 
-      final int paramValue = this.target.getInt(key);
-      return paramValue < 0 ? defaultParamValue : paramValue;
+      final int value = this.target.getInt(key);
+      return value < 0 ? defaultValue : value;
     } catch (JSONException e) {
-      return defaultParamValue;
+      return defaultValue;
     }
   }
 

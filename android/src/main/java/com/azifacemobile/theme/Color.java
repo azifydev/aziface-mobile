@@ -94,4 +94,12 @@ public class Color {
 
     return this.parseColor(theme, key, color);
   }
+
+  public int getColor(JSONObject theme, String key, int defaultColor) {
+    if (!this.theme.exists(theme, key)) {
+      return defaultColor;
+    }
+
+    return this.parseColor(theme, key, defaultColor);
+  }
 }

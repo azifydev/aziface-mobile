@@ -1,10 +1,10 @@
 package com.azifacemobile.theme;
 
-import com.azifacemobile.theme.abstracts.CommonStyle;
+import com.azifacemobile.theme.abstracts.ViewStyle;
 
 import org.json.JSONObject;
 
-public class SelectionScreen extends CommonStyle {
+public class SelectionScreen extends ViewStyle {
 
   public SelectionScreen(JSONObject target) {
     super(target, "selectionScreen");
@@ -12,6 +12,6 @@ public class SelectionScreen extends CommonStyle {
 
   @Override
   public int getForegroundColor() {
-    return this.getForegroundColor("#272937");
+    return super.getForegroundColor("#272937");
   }
 }
