@@ -832,7 +832,7 @@ export interface ThemeGuidanceRetryScreen {
    * @description Represents the subtext color style of the guidance retry
    * screen.
    *
-   * @default undefined
+   * @default '#000000'
    */
   subtextColor?: string;
 }
@@ -840,8 +840,7 @@ export interface ThemeGuidanceRetryScreen {
 /**
  * @interface ThemeGuidanceImages
  *
- * @description An object containing the image assets used in the Aziface
- * SDK.
+ * @description An object containing the images assets used in the guidance.
  */
 export interface ThemeGuidanceImages {
   /**
@@ -870,7 +869,7 @@ export interface ThemeGuidanceReadyScreen {
    * @description Represents the header text color style of the guidance ready
    * screen.
    *
-   * @default undefined
+   * @default '#000000'
    */
   headerTextColor?: string;
 
@@ -886,7 +885,7 @@ export interface ThemeGuidanceReadyScreen {
    * @description Represents the subtext color style of the guidance ready
    * screen.
    *
-   * @default undefined
+   * @default '#000000'
    */
   subtextColor?: string;
 }
