@@ -993,11 +993,11 @@ An object containing the animation styles used in the Aziface SDK result animati
 
 An object containing the animation styles used in the Aziface SDK session abort animation.
 
-| `ThemeResultScreen` | type     | Platform | Required | Default     |
-| ------------------- | -------- | -------- | -------- | ----------- |
-| `foregroundColor`   | `string` | All      | ❌       | `#ffffff`   |
-| `backgroundColor`   | `string` | All      | ❌       | `#cc0044`   |
-| `image`             | `string` | All      | ❌       | `undefined` |
+| `ThemeSessionAbortAnimation` | type     | Platform | Required | Default     |
+| ---------------------------- | -------- | -------- | -------- | ----------- |
+| `foregroundColor`            | `string` | All      | ❌       | `#ffffff`   |
+| `backgroundColor`            | `string` | All      | ❌       | `#cc0044`   |
+| `image`                      | `string` | All      | ❌       | `undefined` |
 
 #### `ThemeIdScan`
 
