@@ -3,7 +3,6 @@
     android:fillAfter="true"
     android:ordering="sequentially">
         <objectAnimator
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:propertyName="strokeWidth"
             android:duration="150"
             android:valueFrom="0.0f"
@@ -11,7 +10,6 @@
             android:valueType="floatType"
             android:interpolator="@android:interpolator/fast_out_slow_in"/>
         <objectAnimator
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:propertyName="strokeWidth"
             android:duration="600"
             android:startDelay="150"
