@@ -1,7 +1,10 @@
 package com.azifacemobile.theme;
 
+import android.graphics.Typeface;
+
 import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
+import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,12 +13,14 @@ public class Feedback extends ViewStyle {
   private static final String KEY = "feedback";
   private final Theme theme;
   private final JSONObject target;
+  private final Font font;
   private final Color color;
 
-  public Feedback() {
+  public Feedback(ReactApplicationContext context) {
     super(KEY);
 
     this.theme = new Theme();
+    this.font = new Font(context);
     this.color = new Color();
 
     this.target = this.theme.getTarget(KEY);
@@ -51,5 +56,9 @@ public class Feedback extends ViewStyle {
     } catch (JSONException e) {
       return true;
     }
+  }
+
+  public Typeface getFont() {
+    return this.font.getTypography(this.target, "font");
   }
 }

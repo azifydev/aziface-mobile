@@ -24,9 +24,9 @@ public class Theme {
     this.frame = new Frame();
     this.guidance = new Guidance(context);
     this.oval = new Oval();
-    this.feedback = new Feedback();
+    this.feedback = new Feedback(context);
     this.resultScreen = new ResultScreen(context);
-    this.idScan = new IdScan();
+    this.idScan = new IdScan(context);
     this.image = new Image(context);
   }
 
