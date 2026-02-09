@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 export default function Index() {
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
 
       <ScrollView contentContainerStyle={styles.container}>
         <Routes />

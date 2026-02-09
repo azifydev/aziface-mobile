@@ -55,104 +55,147 @@ public class Config {
   public static func retrieveConfigurationWizardCustomization() -> FaceTecCustomization {
     let theme = Theme()
 
+    let image = theme.getImage()
+
     let defaultCustomization = FaceTecCustomization()
 
-    defaultCustomization.frameCustomization.cornerRadius = theme.getFrame().getCornerRadius()
-    defaultCustomization.frameCustomization.backgroundColor = theme.getFrame().getBackgroundColor()
-    defaultCustomization.frameCustomization.borderColor = theme.getFrame().getBorderColor()
-    defaultCustomization.frameCustomization.borderWidth = theme.getFrame().getBorderWidth()
-    defaultCustomization.frameCustomization.shadow = theme.getFrame().getShadow()
+    let frameCustomization = defaultCustomization.frameCustomization
+    let frame = theme.getFrame()
+    frameCustomization.cornerRadius = frame.getCornerRadius()
+    frameCustomization.backgroundColor = frame.getBackgroundColor()
+    frameCustomization.borderColor = frame.getBorderColor()
+    frameCustomization.borderWidth = frame.getBorderWidth()
+    frameCustomization.shadow = frame.getShadow()
 
-    defaultCustomization.overlayCustomization.brandingImage = theme.getImage().getImg(
+    let overlayCustomization = defaultCustomization.overlayCustomization
+    overlayCustomization.brandingImage = image.getSource(
       "branding", defaultImage: "facetec_your_app_logo")
-    defaultCustomization.overlayCustomization.showBrandingImage = theme.getImage().getShowBranding()
-    defaultCustomization.overlayCustomization.backgroundColor = theme.getColor(
-      "overlayBackgroundColor")
+    overlayCustomization.showBrandingImage = image.getShowBranding()
+    overlayCustomization.backgroundColor = theme.getColor("overlayBackgroundColor")
 
-    defaultCustomization.guidanceCustomization.backgroundColors = theme.getGuidance()
-      .getBackgroundColors()
-    defaultCustomization.guidanceCustomization.foregroundColor = theme.getGuidance()
-      .getForegroundColor()
-    defaultCustomization.guidanceCustomization.buttonBackgroundNormalColor = theme.getGuidance()
-      .getButton().getBackgroundNormalColor()
-    defaultCustomization.guidanceCustomization.buttonBackgroundDisabledColor = theme.getGuidance()
-      .getButton().getBackgroundDisabledColor()
-    defaultCustomization.guidanceCustomization.buttonBackgroundHighlightColor = theme.getGuidance()
-      .getButton().getBackgroundHighlightColor()
-    defaultCustomization.guidanceCustomization.buttonTextNormalColor = theme.getGuidance()
-      .getButton().getTextNormalColor()
-    defaultCustomization.guidanceCustomization.buttonTextDisabledColor = theme.getGuidance()
-      .getButton().getTextDisabledColor()
-    defaultCustomization.guidanceCustomization.buttonTextHighlightColor = theme.getGuidance()
-      .getButton().getTextHighlightColor()
-    defaultCustomization.guidanceCustomization.retryScreenImageBorderColor = theme.getGuidance()
-      .getRetryScreen().getImageBorderColor()
-    defaultCustomization.guidanceCustomization.retryScreenOvalStrokeColor = theme.getGuidance()
-      .getRetryScreen().getOvalStrokeColor()
+    let guidanceCustomization = defaultCustomization.guidanceCustomization
+    let guidance = theme.getGuidance()
+    let guidanceButton = guidance.getButton()
+    let guidanceImage = guidance.getImage()
+    let guidanceReadyScreen = guidance.getReadyScreen()
+    let guidanceRetryScreen = guidance.getRetryScreen()
+    guidanceCustomization.backgroundColors = guidance.getBackgroundColors()
+    guidanceCustomization.foregroundColor = guidance.getForegroundColor()
+    guidanceCustomization.buttonBorderColor = guidanceButton.getBorderColor()
+    guidanceCustomization.buttonBorderWidth = guidanceButton.getBorderWidth()
+    guidanceCustomization.buttonCornerRadius = guidanceButton.getCornerRadius()
+    guidanceCustomization.buttonBackgroundNormalColor = guidanceButton.getBackgroundNormalColor()
+    guidanceCustomization.buttonBackgroundDisabledColor =
+      guidanceButton.getBackgroundDisabledColor()
+    guidanceCustomization.buttonBackgroundHighlightColor =
+      guidanceButton.getBackgroundHighlightColor()
+    guidanceCustomization.buttonTextNormalColor = guidanceButton.getTextNormalColor()
+    guidanceCustomization.buttonTextDisabledColor = guidanceButton.getTextDisabledColor()
+    guidanceCustomization.buttonTextHighlightColor = guidanceButton.getTextHighlightColor()
+    guidanceCustomization.cameraPermissionsScreenImage = guidanceImage.getSource(
+      "cameraPermission", defaultImage: "facetec_camera")
+    guidanceCustomization.readyScreenSubtextTextColor = guidanceReadyScreen.getSubtextColor()
+    guidanceCustomization.readyScreenHeaderTextColor = guidanceReadyScreen.getHeaderTextColor()
+    guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor()
+    guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor()
+    guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor()
+    guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal")
+    guidanceCustomization.retryScreenSubtextTextColor = guidanceRetryScreen.getSubtextColor()
+    guidanceCustomization.retryScreenImageBorderWidth = guidanceRetryScreen.getImageBorderWidth()
+    guidanceCustomization.retryScreenImageCornerRadius = guidanceRetryScreen.getImageCornerRadius()
 
-    defaultCustomization.ovalCustomization.strokeColor = theme.getOval().getStrokeColor()
-    defaultCustomization.ovalCustomization.progressColor1 = theme.getOval().getFirstProgressColor()
-    defaultCustomization.ovalCustomization.progressColor2 = theme.getOval().getSecondProgressColor()
-    defaultCustomization.ovalCustomization.strokeWidth = theme.getOval().getStrokeWidth()
-    defaultCustomization.ovalCustomization.progressStrokeWidth = theme.getOval().getProgressStrokeWidth()
-    defaultCustomization.ovalCustomization.progressRadialOffset = theme.getOval().getProgressRadialOffset()
+    let ovalCustomization = defaultCustomization.ovalCustomization
+    let oval = theme.getOval()
+    ovalCustomization.strokeColor = oval.getStrokeColor()
+    ovalCustomization.progressColor1 = oval.getFirstProgressColor()
+    ovalCustomization.progressColor2 = oval.getSecondProgressColor()
+    ovalCustomization.strokeWidth = oval.getStrokeWidth()
+    ovalCustomization.progressStrokeWidth = oval.getProgressStrokeWidth()
+    ovalCustomization.progressRadialOffset = oval.getProgressRadialOffset()
 
-    defaultCustomization.feedbackCustomization.backgroundColor = theme.getFeedback()
-      .getGradientBackgroundColors()
-    defaultCustomization.feedbackCustomization.textColor = theme.getFeedback().getTextColor()
-    defaultCustomization.feedbackCustomization.cornerRadius = theme.getFeedback().getBorderRadius()
-    defaultCustomization.feedbackCustomization.shadow = theme.getFeedback().getShadow()
-    defaultCustomization.feedbackCustomization.enablePulsatingText = theme.getFeedback().getEnablePulsatingText()
+    let feedbackCustomization = defaultCustomization.feedbackCustomization
+    let feedback = theme.getFeedback()
+    feedbackCustomization.backgroundColor = feedback.getGradientBackgroundColors()
+    feedbackCustomization.textColor = feedback.getTextColor()
+    feedbackCustomization.cornerRadius = feedback.getCornerRadius()
+    feedbackCustomization.shadow = feedback.getShadow()
+    feedbackCustomization.enablePulsatingText = feedback.getEnablePulsatingText()
 
-    defaultCustomization.cancelButtonCustomization.customImage = theme.getImage().getImg(
+    defaultCustomization.cancelButtonCustomization.customImage = image.getSource(
       "cancel", defaultImage: "facetec_cancel")
-    defaultCustomization.cancelButtonCustomization.hideForCameraPermissions = theme.getImage().getHideForCameraPermissions()
-    defaultCustomization.cancelButtonCustomization.location = theme.getImage().getButtonLocation()
+    defaultCustomization.cancelButtonCustomization.hideForCameraPermissions =
+      image.getHideForCameraPermissions()
+    defaultCustomization.cancelButtonCustomization.location = image.getButtonLocation()
+    defaultCustomization.cancelButtonCustomization.customLocation = image.getButtonPosition()
 
-    defaultCustomization.resultScreenCustomization.backgroundColors = theme.getResultScreen()
-      .getBackgroundColors()
-    defaultCustomization.resultScreenCustomization.foregroundColor = theme.getResultScreen()
-      .getForegroundColor()
-    defaultCustomization.resultScreenCustomization.activityIndicatorColor = theme.getResultScreen()
-      .getActivityIndicatorColor()
-    defaultCustomization.resultScreenCustomization.resultAnimationBackgroundColor =
-      theme.getResultScreen().getResultAnimation().getBackgroundColor()
-    defaultCustomization.resultScreenCustomization.resultAnimationForegroundColor =
-      theme.getResultScreen().getResultAnimation().getForegroundColor()
-    defaultCustomization.resultScreenCustomization.uploadProgressFillColor = theme.getResultScreen()
-      .getUploadProgressFillColor()
+    let resultScreenCustomization = defaultCustomization.resultScreenCustomization
+    let resultScreen = theme.getResultScreen()
+    let resultScreenResultAnimation = resultScreen.getResultAnimation()
+    let resultScreenSessionAbortAnimation = resultScreen.getSessionAbortAnimation()
+    resultScreenCustomization.backgroundColors = resultScreen.getBackgroundColors()
+    resultScreenCustomization.foregroundColor = resultScreen.getForegroundColor()
+    resultScreenCustomization.activityIndicatorColor = resultScreen.getActivityIndicatorColor()
+    resultScreenCustomization.uploadProgressFillColor = resultScreen.getUploadProgressFillColor()
+    resultScreenCustomization.uploadProgressTrackColor = resultScreen.getUploadProgressTrackColor()
+    resultScreenCustomization.animationRelativeScale = resultScreen.getAnimationRelativeScale()
+    resultScreenCustomization.showUploadProgressBar = resultScreen.getShowUploadProgressBar()
+    resultScreenCustomization.customActivityIndicatorImage =
+      resultScreen.getActivityIndicatorImage()
+    resultScreenCustomization.customActivityIndicatorRotationInterval =
+      resultScreen.getIndicatorRotationInterval()
+    resultScreenCustomization.faceScanStillUploadingMessageDelayTime =
+      resultScreen.getFaceScanStillUploadingMessageDelayTime()
+    resultScreenCustomization.idScanStillUploadingMessageDelayTime =
+      resultScreen.getIdScanStillUploadingMessageDelayTime()
+    resultScreenCustomization.resultAnimationBackgroundColor =
+      resultScreenResultAnimation.getBackgroundColor()
+    resultScreenCustomization.resultAnimationForegroundColor =
+      resultScreenResultAnimation.getForegroundColor()
+    resultScreenCustomization.resultAnimationDisplayTime =
+      resultScreenResultAnimation.getDisplayTime()
+    resultScreenCustomization.resultAnimationIDScanSuccessForegroundColor =
+      resultScreenResultAnimation.getIDScanSuccessForegroundColor()
+    resultScreenCustomization.resultAnimationSuccessBackgroundImage =
+      resultScreenResultAnimation.getSuccessBackgroundImage()
+    resultScreenCustomization.resultAnimationUnsuccessBackgroundColor =
+      resultScreenResultAnimation.getUnsuccessBackgroundColor()
+    resultScreenCustomization.resultAnimationUnsuccessBackgroundImage =
+      resultScreenResultAnimation.getUnsuccessBackgroundImage()
+    resultScreenCustomization.resultAnimationUnsuccessForegroundColor =
+      resultScreenResultAnimation.getUnsuccessForegroundColor()
+    resultScreenCustomization.sessionAbortAnimationBackgroundColor =
+      resultScreenSessionAbortAnimation.getBackgroundColor()
+    resultScreenCustomization.sessionAbortAnimationBackgroundImage =
+      resultScreenSessionAbortAnimation.getBackgroundImage()
+    resultScreenCustomization.sessionAbortAnimationForegroundColor =
+      resultScreenSessionAbortAnimation.getForegroundColor()
 
-    let securityWatermarkImage: FaceTecSecurityWatermarkImage = .faceTec
-    defaultCustomization.securityWatermarkImage = securityWatermarkImage
+    defaultCustomization.securityWatermarkImage = .faceTec
 
-    defaultCustomization.idScanCustomization.selectionScreenBackgroundColors = theme.getIdScan()
-      .getSelectionScreen().getBackgroundColors()
-    defaultCustomization.idScanCustomization.selectionScreenForegroundColor = theme.getIdScan()
-      .getSelectionScreen().getForegroundColor()
-    defaultCustomization.idScanCustomization.reviewScreenForegroundColor = theme.getIdScan()
-      .getReviewScreen().getForegroundColor()
-    defaultCustomization.idScanCustomization.reviewScreenTextBackgroundColor = theme.getIdScan()
-      .getReviewScreen().getTextBackgroundColor()
-    defaultCustomization.idScanCustomization.captureScreenForegroundColor = theme.getIdScan()
-      .getCaptureScreen().getForegroundColor()
-    defaultCustomization.idScanCustomization.captureScreenTextBackgroundColor = theme.getIdScan()
-      .getCaptureScreen().getTextBackgroundColor()
-    defaultCustomization.idScanCustomization.buttonBackgroundNormalColor = theme.getIdScan()
-      .getButton().getBackgroundNormalColor()
-    defaultCustomization.idScanCustomization.buttonBackgroundDisabledColor = theme.getIdScan()
-      .getButton().getBackgroundDisabledColor()
-    defaultCustomization.idScanCustomization.buttonBackgroundHighlightColor = theme.getIdScan()
-      .getButton().getBackgroundHighlightColor()
-    defaultCustomization.idScanCustomization.buttonTextNormalColor = theme.getIdScan().getButton()
-      .getTextNormalColor()
-    defaultCustomization.idScanCustomization.buttonTextDisabledColor = theme.getIdScan().getButton()
-      .getTextDisabledColor()
-    defaultCustomization.idScanCustomization.buttonTextHighlightColor = theme.getIdScan()
-      .getButton().getTextHighlightColor()
-    defaultCustomization.idScanCustomization.captureScreenBackgroundColor = theme.getIdScan()
-      .getCaptureScreen().getBackgroundColor()
-    defaultCustomization.idScanCustomization.captureFrameStrokeColor = theme.getIdScan()
-      .getCaptureScreen().getFrameStrokeColor()
+    let idScanCustomization = defaultCustomization.idScanCustomization
+    let idScan = theme.getIdScan()
+    let idScanSelectionScreen = idScan.getSelectionScreen()
+    let idScanReviewScreen = idScan.getReviewScreen()
+    let idScanCaptureScreen = idScan.getCaptureScreen()
+    let idScanButton = idScan.getButton()
+    idScanCustomization.selectionScreenBackgroundColors =
+      idScanSelectionScreen.getBackgroundColors()
+    idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor()
+    idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor()
+    idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColors()
+    idScanCustomization.reviewScreenTextBackgroundColor =
+      idScanReviewScreen.getTextBackgroundColor()
+    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor()
+    idScanCustomization.captureScreenTextBackgroundColor =
+      idScanCaptureScreen.getTextBackgroundColor()
+    idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor()
+    idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor()
+    idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor()
+    idScanCustomization.buttonTextNormalColor = idScanButton.getTextNormalColor()
+    idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor()
+    idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor()
+    idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor()
+    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor()
 
     return defaultCustomization
   }

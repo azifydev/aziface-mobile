@@ -1395,10 +1395,100 @@ export interface DynamicStrings {
  * @type
  *
  * @description The type of cancel location.
- *
- * @default "TOP_RIGHT"
  */
-export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT';
+export type CancelLocation = 'DISABLED' | 'TOP_LEFT' | 'TOP_RIGHT' | 'CUSTOM';
+
+/**
+ * @interface CancelPositionAndroid
+ *
+ * @description The cancel button position for Android.
+ */
+export interface CancelPositionAndroid {
+  /**
+   * @description The left position of the cancel button.
+   *
+   * @platform android
+   */
+  left: number;
+
+  /**
+   * @description The top position of the cancel button.
+   *
+   * @platform android
+   */
+  top: number;
+
+  /**
+   * @description The right position of the cancel button.
+   *
+   * @platform android
+   */
+  right: number;
+
+  /**
+   * @description The bottom position of the cancel button.
+   *
+   * @platform android
+   */
+  bottom: number;
+}
+
+/**
+ * @interface CancelPositionIOS
+ *
+ * @description The cancel button position for iOS.
+ */
+export interface CancelPositionIOS {
+  /**
+   * @description The X coordinate of the cancel button.
+   *
+   * @platform iOS
+   */
+  x: number;
+
+  /**
+   * @description The Y coordinate of the cancel button.
+   *
+   * @platform iOS
+   */
+  y: number;
+
+  /**
+   * @description The width of the cancel button.
+   *
+   * @platform iOS
+   */
+  width: number;
+
+  /**
+   * @description The height of the cancel button.
+   *
+   * @platform iOS
+   */
+  height: number;
+}
+
+/**
+ * @interface CancelPosition
+ *
+ * @description This type must be used to set the custom position of the cancel
+ * button.
+ */
+export interface CancelPosition {
+  /**
+   * @description The cancel button position for Android.
+   *
+   * @default undefined
+   */
+  android?: CancelPositionAndroid;
+
+  /**
+   * @description The cancel button position for iOS.
+   *
+   * @default undefined
+   */
+  ios?: CancelPositionIOS;
+}
 
 /**
  * @interface Point
@@ -1580,15 +1670,23 @@ export interface ThemeImage {
    * @description The branding image to will be used in Aziface SDK screen.
    * **Note**: The image name must be to inserted with no extension format.
    *
-   * @default "facetec_your_app_logo.png"
+   * @default undefined
    */
   branding?: string;
+
+  /**
+   * @description The icon cancel button to will be used in Aziface SDK screen.
+   * The image name must be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  cancel?: string;
 
   /**
    * @description A boolean value to show or hide the branding image in
    * Aziface SDK screen.
    *
-   * @default undefined
+   * @default true
    */
   isShowBranding?: boolean;
 
@@ -1601,19 +1699,19 @@ export interface ThemeImage {
   isHideForCameraPermissions?: boolean;
 
   /**
-   * @description The icon cancel button to will be used in Aziface SDK screen.
-   * The image name must be to inserted with no extension format.
-   *
-   * @default "facetec_cancel.png"
-   */
-  cancel?: string;
-
-  /**
    * @description The cancel location in Aziface SDK screen.
    *
    * @default "TOP_RIGHT"
    */
   cancelLocation?: CancelLocation;
+
+  /**
+   * @description The custom position to the cancel button in Aziface SDK
+   * screen.
+   *
+   * @default undefined
+   */
+  cancelPosition?: CancelPosition;
 }
 
 /**
@@ -1839,6 +1937,27 @@ export interface ThemeButton {
    * @default '#ffffff'
    */
   textHighlightColor?: string;
+
+  /**
+   * @description Represents the border radius style of the button.
+   *
+   * @default undefined
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the border width style of the button.
+   *
+   * @default undefined
+   */
+  borderWidth?: number;
+
+  /**
+   * @description Represents the border color style of the button.
+   *
+   * @default undefined
+   */
+  borderColor?: string;
 }
 
 /**
@@ -1863,6 +1982,86 @@ export interface ThemeResultAnimation {
    * @default '#ffffff'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the display time style of the result animation in
+   * seconds.
+   *
+   * @default 2.5
+   */
+  displayTime?: number;
+
+  /**
+   * @description Represents the background color style of the success result
+   * animation.
+   *
+   * @default '#026ff4'
+   */
+  IDScanSuccessForegroundColor?: string;
+
+  /**
+   * @description Represents the success image of the success result animation.
+   *
+   * @default undefined
+   */
+  successImage?: string;
+
+  /**
+   * @description Represents the unsuccess image of the success result
+   * animation.
+   *
+   * @default undefined
+   */
+  unsuccessImage?: string;
+
+  /**
+   * @description Represents the background color style of the unsuccess result
+   * animation.
+   *
+   * @default '#cc0044'
+   */
+  unsuccessBackgroundColor?: string;
+
+  /**
+   * @description Represents the foreground color style of the unsuccess result
+   * animation.
+   *
+   * @default '#ffffff'
+   */
+  unsuccessForegroundColor?: string;
+}
+
+/**
+ * @interface ThemeSessionAbortAnimation
+ *
+ * @description An object containing the animation styles used in the Aziface
+ * SDK session abort animation.
+ */
+export interface ThemeSessionAbortAnimation {
+  /**
+   * @description Represents the foreground color style of the session abort
+   * animation.
+   *
+   * @default '#ffffff'
+   */
+  foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the session abort
+   * animation.
+   *
+   * @default '#cc0044'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description Represents the background image asset name of the session
+   * abort animation. The image name must be to inserted with no extension
+   * format.
+   *
+   * @default undefined
+   */
+  image?: string;
 }
 
 /**
@@ -1881,12 +2080,89 @@ export interface ThemeGuidanceRetryScreen {
   imageBorderColor?: string;
 
   /**
+   * @description Represents the border width style of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  imageBorderWidth?: number;
+
+  /**
+   * @description Represents the corner radius style of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  imageCornerRadius?: number;
+
+  /**
    * @description Represents the border color style of the oval view row
    * of the guidance retry.
    *
    * @default '#ffffff'
    */
   ovalStrokeColor?: string;
+
+  /**
+   * @description Represents the subtext color style of the guidance retry
+   * screen.
+   *
+   * @default '#000000'
+   */
+  subtextColor?: string;
+}
+
+/**
+ * @interface ThemeGuidanceImages
+ *
+ * @description An object containing the images assets used in the guidance.
+ */
+export interface ThemeGuidanceImages {
+  /**
+   * @description The image to will be used in camera permissions screen.
+   *
+   * @default undefined
+   */
+  cameraPermission?: string;
+
+  /**
+   * @description The image to will be used in retry screen as ideal photo.
+   *
+   * @default undefined
+   */
+  ideal?: string;
+}
+
+/**
+ * @interface ThemeGuidanceReadyScreen
+ *
+ * @description An object containing the styles used in the guidance ready
+ * screen.
+ */
+export interface ThemeGuidanceReadyScreen {
+  /**
+   * @description Represents the header text color style of the guidance ready
+   * screen.
+   *
+   * @default '#000000'
+   */
+  headerTextColor?: string;
+
+  /**
+   * @description Represents the oval fill color style of the guidance ready
+   * screen.
+   *
+   * @default 'transparent'
+   */
+  ovalFillColor?: string;
+
+  /**
+   * @description Represents the subtext color style of the guidance ready
+   * screen.
+   *
+   * @default '#000000'
+   */
+  subtextColor?: string;
 }
 
 /**
@@ -1932,6 +2208,22 @@ export interface ThemeGuidance {
    * @default undefined
    */
   retryScreen?: ThemeGuidanceRetryScreen;
+
+  /**
+   * @description An object containing the styles used in the guidance ready
+   * screen.
+   *
+   * @default undefined
+   */
+  readyScreen?: ThemeGuidanceReadyScreen;
+
+  /**
+   * @description An object containing the image assets used in the Aziface
+   * SDK.
+   *
+   * @default undefined
+   */
+  images?: ThemeGuidanceImages;
 }
 
 /**
@@ -1972,6 +2264,15 @@ export interface ThemeResultScreen {
   activityIndicatorColor?: string;
 
   /**
+   * @description Represents the indicator image asset name of the result
+   * screen during loading. The image name must be to inserted with no
+   * extension format.
+   *
+   * @default undefined
+   */
+  indicatorImage?: string;
+
+  /**
    * @description Represents the progress bar fill color style of the result
    * screen during loading.
    *
@@ -1980,11 +2281,67 @@ export interface ThemeResultScreen {
   uploadProgressFillColor?: string;
 
   /**
+   * @description Represents the progress bar track color style of the result
+   * screen during loading.
+   *
+   * @default '#b3d4fc'
+   */
+  uploadProgressTrackColor?: string;
+
+  /**
+   * @description A boolean value to show or hide the upload progress bar in
+   * the result screen during loading.
+   *
+   * @default true
+   */
+  isShowUploadProgressBar?: boolean;
+
+  /**
+   * @description Represents the animation relative scale style of the result
+   * screen.
+   *
+   * @default 1
+   */
+  animationRelativeScale?: number;
+
+  /**
+   * @description Represents the delay time style of the face scan still
+   * uploading message in seconds.
+   *
+   * @default 6
+   */
+  faceScanStillUploadingMessageDelayTime?: number;
+
+  /**
+   * @description Represents the delay time style of the ID scan still
+   * uploading message in seconds.
+   *
+   * @default 8
+   */
+  idScanStillUploadingMessageDelayTime?: number;
+
+  /**
+   * @description Represents the indicator rotation interval style of the
+   * result screen during loading in milliseconds.
+   *
+   * @default 1000
+   */
+  indicatorRotationInterval?: number;
+
+  /**
    * @description Represents the result animation styles of the result screen.
    *
    * @default undefined
    */
   resultAnimation?: ThemeResultAnimation;
+
+  /**
+   * @description Represents the session abort animation styles of the result
+   * screen.
+   *
+   * @default undefined
+   */
+  sessionAbortAnimation?: ThemeSessionAbortAnimation;
 }
 
 /**
@@ -2040,6 +2397,22 @@ export interface ThemeIdScanReviewScreen {
    * @default '#ffffff'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the review screen.
+   * The review screen is above the view and it's showed to before check face
+   * or scan ID of the user. In Android you must provide a string color, but in
+   * iOS you must provide an array of colors.
+   *
+   * @description Default value in **Android** is:
+   *
+   * @default '#ffffff'
+   *
+   * @description Default value in **iOS** is:
+   *
+   * @default ['#ffffff', '#ffffff']
+   */
+  backgroundColor?: string | string[];
 
   /**
    * @description Represents the background color style of the ID scan

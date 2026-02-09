@@ -54,7 +54,7 @@ Aziface SDK adapter to react native.
 - [Vocal Guidance](#vocal-guidance)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
 - [Integration guide](#integration-guide)
-  - [`flutter`](./FLUTTER.md)
+  - [`flutter`](./docs/FLUTTER.md)
 - [Expo](#expo)
 - [Contributing](#contributing)
 - [License](#license)
@@ -696,13 +696,13 @@ The dynamic strings defined through this method apply across Aziface SDK workflo
 
 If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
 
-We separated another documentation about the dynamic strings, see more [here](./DYNAMIC_STRINGS.md)!
+We separated another documentation about the dynamic strings, see more [here](./docs/DYNAMIC_STRINGS.md)!
 
 <hr/>
 
 ## Theme
 
-The Aziface SDK provides the ability to change the theme of each flow. We separated another documentation about the theme, see more [here](./THEME.md)!
+The Aziface SDK provides the ability to change the theme of each flow. We separated another documentation about the theme, see more [here](./docs/THEME.md)!
 
 <hr/>
 
@@ -775,7 +775,7 @@ If you want to enable the camera, you need to add the following instructions in 
 
 ## Integration guide
 
-The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./FLUTTER.md).
+The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./docs/FLUTTER.md).
 
 <hr/>
 
