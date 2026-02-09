@@ -121,6 +121,8 @@ public class Config {
     guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor();
     guidanceCustomization.readyScreenSubtextTextColor = guidanceReadyScreen.getSubtextColor();
     guidanceCustomization.readyScreenSubtextFont = guidanceReadyScreen.getSubtextFont();
+    guidanceCustomization.readyScreenTextBackgroundColor = guidanceReadyScreen.getTextBackgroundColor();
+    guidanceCustomization.readyScreenTextBackgroundCornerRadius = guidanceReadyScreen.getTextBackgroundCornerRadius();
     guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor();
     guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor();
     guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal");
@@ -198,8 +200,6 @@ public class Config {
     idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColor();
     idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor();
     idScanCustomization.reviewScreenTextBackgroundColor = idScanReviewScreen.getTextBackgroundColor();
-    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
-    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
     idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor();
     idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor();
     idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor();
@@ -207,6 +207,8 @@ public class Config {
     idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor();
     idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor();
     idScanCustomization.buttonFont = idScanButton.getFont();
+    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
+    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor();
     idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor();
     idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont();
