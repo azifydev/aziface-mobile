@@ -20,6 +20,8 @@ export interface Spec extends TurboModule {
   authenticate(data?: UnsafeObject): Promise<string>;
   liveness(data?: UnsafeObject): Promise<string>;
   setLocale(locale?: WithDefault<string, 'default'>): void;
+  setDynamicStrings(strings?: UnsafeObject): void;
+  resetDynamicStrings(): void;
   setTheme(options?: UnsafeObject): void;
   vocal(): void;
 }

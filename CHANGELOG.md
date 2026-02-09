@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/azifydev/aziface-mobile/compare/v3.4.0...v3.5.0) (2026-02-09)
+
+
+### Features
+
+* **WL-330:** add dynamic strings ([#23](https://github.com/azifydev/aziface-mobile/issues/23)) ([045359d](https://github.com/azifydev/aziface-mobile/commit/045359db7058c8d187195801b30ec0a8ca06f13f))
+
 # [3.4.0](https://github.com/azifydev/aziface-mobile/compare/v3.3.1...v3.4.0) (2026-02-03)
 
 

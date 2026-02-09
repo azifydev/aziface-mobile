@@ -13,6 +13,8 @@
 
 Aziface SDK adapter to react native.
 
+## Summary
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
@@ -28,10 +30,8 @@ Aziface SDK adapter to react native.
     - [Properties](#properties-4)
   - [`photoScan`](#photoscan)
     - [Properties](#properties-5)
-  - [`setTheme`](#settheme)
-    - [Properties](#properties-6)
   - [`setLocale`](#setlocale)
-    - [Properties](#properties-7)
+    - [Properties](#properties-6)
   - [`vocal`](#vocal)
 - [Types](#types)
   - [`Params`](#azifacesdkparams)
@@ -45,44 +45,16 @@ Aziface SDK adapter to react native.
       - [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)
     - [`ProcessorError`](#processorerror)
   - [`Locale`](#locale)
-  - [`Theme`](#theme)
-    - [`CancelLocation`](#cancellocation)
-    - [`ThemeImage`](#themeimage)
-      - [`CancelPosition`](#cancelposition)
-        - [`CancelPositionAndroid` (Android only)](#cancelpositionandroid-android-only)
-        - [`CancelPositionIOS` (iOS only)](#cancelpositionios-ios-only)
-    - [`ThemeFrame`](#themeframe)
-    - [`ThemeButton`](#themebutton)
-    - [`ThemeGuidance`](#themeguidance)
-      - [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)
-      - [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen)
-      - [`ThemeGuidanceImages`](#themeguidanceimages)
-    - [`ThemeOval`](#themeoval)
-    - [`ThemeFeedback`](#themefeedback)
-      - [`FeedbackBackgroundColor` (iOS only)](#feedbackbackgroundcolor-ios-only)
-        - [`Point`](#point)
-    - [`ThemeResultScreen`](#themeresultscreen)
-      - [`ThemeResultAnimation`](#themeresultanimation)
-      - [`ThemeSessionAbortAnimation`](#themesessionabortanimation)
-    - [`ThemeIdScan`](#themeidscan)
-      - [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)
-      - [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)
-      - [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)
-    - [`ThemeShadow` (iOS only)](#themeshadow-ios-only)
-      - [`ThemeShadowInsets`](#themeshadowinsets)
-      - [`ThemeShadowOffset`](#themeshadowoffset)
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
-    - [Properties](#properties-8)
+    - [Properties](#properties-7)
+- [Dynamic Strings](#dynamic-strings)
+- [Theme](#theme)
 - [Vocal Guidance](#vocal-guidance)
-- [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
-  - [How to add images in Android?](#how-to-add-images-in-android)
-  - [How to add images in iOS?](#how-to-add-images-in-ios)
-  - [Example with images added](#example-with-images-added)
 - [Enabling Camera (iOS only)](#enabling-camera-ios-only)
 - [Integration guide](#integration-guide)
-  - [`flutter`](./FLUTTER.md)
+  - [`flutter`](./docs/FLUTTER.md)
 - [Expo](#expo)
 - [Contributing](#contributing)
 - [License](#license)
@@ -336,7 +308,6 @@ const styles = StyleSheet.create({
 | `liveness`     | `Promise<Processor>` | All      |
 | `photoMatch`   | `Promise<Processor>` | All      |
 | `photoScan`    | `Promise<Processor>` | All      |
-| `setTheme`     | `void`               | All      |
 | `setLocale`    | `void`               | All      |
 | `vocal`        | `void`               | All      |
 
@@ -472,29 +443,6 @@ console.log(result);
 | -------- | ----- | -------- | ----------- |
 | `data`   | `any` | ❌       | `undefined` |
 
-### `setTheme`
-
-This method customize your SDK theme during session.
-
-```tsx
-// It's recommended to use it before calling the initialize method
-setTheme({
-  // ...
-});
-
-await initialize({
-  // ...
-});
-```
-
-**Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
-
-#### Properties
-
-| Property  | type              | Required | Default     |
-| --------- | ----------------- | -------- | ----------- |
-| `options` | [`Theme`](#theme) | ❌       | `undefined` |
-
 ### `setLocale`
 
 The `setLocale` method in the Aziface SDK is used to define the language and locale used by the SDK’s user interface and vocal guidance during verification sessions.
@@ -517,7 +465,7 @@ setLocale('en');
 
 ### `vocal`
 
-The Vocal Guidance feature in the FaceTec SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
+The Vocal Guidance feature in the Aziface SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
 
 During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
 
@@ -550,32 +498,6 @@ vocal();
 | [`ProcessorRequestMethod`](#processorrequestmethod)                 | All      |
 | [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)       | All      |
 | [`Locale`](#locale)                                                 | All      |
-| [`Theme`](#theme)                                                   | All      |
-| [`CancelLocation`](#cancellocation)                                 | All      |
-| [`ThemeImage`](#themeimage)                                         | All      |
-| [`CancelPosition`](#cancelposition)                                 | All      |
-| [`CancelPositionAndroid`](#cancelpositionandroid-android-only)      | Android  |
-| [`CancelPositionIOS`](#cancelpositionios-ios-only)                  | iOS      |
-| [`ThemeFrame`](#themeframe)                                         | All      |
-| [`ThemeButton`](#themebutton)                                       | All      |
-| [`ThemeGuidance`](#themeguidance)                                   | All      |
-| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)             | All      |
-| [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen)             | All      |
-| [`ThemeGuidanceImages`](#themeguidanceimages)                       | All      |
-| [`ThemeOval`](#themeoval)                                           | All      |
-| [`ThemeFeedback`](#themefeedback)                                   | All      |
-| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)      | iOS      |
-| [`Point`](#point)                                                   | iOS      |
-| [`ThemeResultScreen`](#themeresultscreen)                           | All      |
-| [`ThemeSessionAbortAnimation`](#themesessionabortanimation)         | All      |
-| [`ThemeResultAnimation`](#themeresultanimation)                     | All      |
-| [`ThemeIdScan`](#themeidscan)                                       | All      |
-| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)         | All      |
-| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)               | All      |
-| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)             | All      |
-| [`ThemeShadow`](#themeshadow-ios-only)                              | iOS      |
-| [`ThemeShadowInsets`](#themeshadowinsets)                           | iOS      |
-| [`ThemeShadowOffset`](#themeshadowoffset)                           | iOS      |
 
 ### `Params`
 
@@ -726,354 +648,6 @@ The `Locale` type use the [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_63
 | `vi`      | Vietnamese language.            | All      |
 | `zh`      | Chinese language.               | All      |
 
-### `Theme`
-
-This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
-
-| `Theme`                  | type                                      | Platform | Required | Default     |
-| ------------------------ | ----------------------------------------- | -------- | -------- | ----------- |
-| `overlayBackgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
-| `image`                  | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
-| `frame`                  | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
-| `guidance`               | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
-| `oval`                   | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
-| `feedback`               | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
-| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
-| `idScan`                 | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
-
-#### `CancelLocation`
-
-This type must be used to position of the cancel button on screen.
-
-| `CancelLocation` | Description                                                     |
-| ---------------- | --------------------------------------------------------------- |
-| `DISABLED`       | Disable cancel button and doesn't show it.                      |
-| `TOP_LEFT`       | Position cancel button in top right.                            |
-| `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
-| `CUSTOM`         | Indicate that cancel button will have custom position.          |
-
-#### `ThemeImage`
-
-An object containing the image assets used in the Aziface SDK.
-
-| `ThemeImage`                 | type                                | Platform | Required | Default                            |
-| ---------------------------- | ----------------------------------- | -------- | -------- | ---------------------------------- |
-| `branding`                   | `string`                            | All      | ❌       | `undefined`                        |
-| `isShowBranding`             | `boolean`                           | All      | ❌       | `undefined`                        |
-| `isHideForCameraPermissions` | `boolean`                           | All      | ❌       | `true` (iOS) and `false` (Android) |
-| `cancel`                     | `string`                            | All      | ❌       | `undefined`                        |
-| `cancelLocation`             | [`CancelLocation`](#cancellocation) | All      | ❌       | `TOP_RIGHT`                        |
-| `cancelPosition`             | [`CancelPosition`](#cancelposition) | All      | ❌       | `undefined`                        |
-
-##### `CancelPosition`
-
-This type must be used to set the custom position of the cancel button.
-
-| `CancelPosition` | type                                                           | Platform | Required | Default     |
-| ---------------- | -------------------------------------------------------------- | -------- | -------- | ----------- |
-| `android`        | [`CancelPositionAndroid`](#cancelpositionandroid-android-only) | Android  | ❌       | `undefined` |
-| `ios`            | [`CancelPositionIOS`](#cancelpositionios-ios-only)             | iOS      | ❌       | `undefined` |
-
-###### `CancelPositionAndroid` (Android only)
-
-The cancel button position for Android.
-
-```tsx
-setTheme({
-  // Set cancel location as CUSTOM to enable custom position.
-  cancelLocation: 'CUSTOM',
-  cancelPosition: {
-    android: {
-      left: 32,
-      right: 32,
-      top: 32,
-      bottom: 32,
-    },
-  },
-});
-
-await initialize({
-  // ...
-});
-```
-
-| `CancelPositionAndroid` | type     | Platform | Required | Default     |
-| ----------------------- | -------- | -------- | -------- | ----------- |
-| `left`                  | `number` | Android  | ✅       | `undefined` |
-| `right`                 | `number` | Android  | ✅       | `undefined` |
-| `top`                   | `number` | Android  | ✅       | `undefined` |
-| `bottom`                | `number` | Android  | ✅       | `undefined` |
-
-###### `CancelPositionIOS` (iOS only)
-
-The cancel button position for iOS.
-
-```tsx
-setTheme({
-  // Set cancel location as CUSTOM to enable custom position.
-  cancelLocation: 'CUSTOM',
-  cancelPosition: {
-    android: {
-      x: 20,
-      y: 64,
-      width: 32,
-      height: 32,
-    },
-  },
-});
-
-await initialize({
-  // ...
-});
-```
-
-| `CancelPositionIOS` | type     | Platform | Required | Default     |
-| ------------------- | -------- | -------- | -------- | ----------- |
-| `x`                 | `number` | iOS      | ✅       | `undefined` |
-| `y`                 | `number` | iOS      | ✅       | `undefined` |
-| `width`             | `number` | iOS      | ✅       | `undefined` |
-| `height`            | `number` | iOS      | ✅       | `undefined` |
-
-#### `ThemeFrame`
-
-An object containing the frame styles used in the Aziface SDK.
-
-| `ThemeFrame`      | type                                   | Platform | Required | Default     |
-| ----------------- | -------------------------------------- | -------- | -------- | ----------- |
-| `cornerRadius`    | `number`                               | All      | ❌       | `20`        |
-| `borderColor`     | `string`                               | All      | ❌       | `#ffffff`   |
-| `borderWidth`     | `number`                               | All      | ❌       | `undefined` |
-| `backgroundColor` | `string`                               | All      | ❌       | `#ffffff`   |
-| `elevation`       | `number`                               | Android  | ❌       | `0`         |
-| `shadow`          | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
-
-#### `ThemeButton`
-
-An object containing the button styles used in the Aziface SDK.
-
-| `ThemeButton`              | type     | Platform | Required | Default     |
-| -------------------------- | -------- | -------- | -------- | ----------- |
-| `backgroundNormalColor`    | `string` | All      | ❌       | `#026ff4`   |
-| `backgroundDisabledColor`  | `string` | All      | ❌       | `#b3d4fc`   |
-| `backgroundHighlightColor` | `string` | All      | ❌       | `#0264dc`   |
-| `textNormalColor`          | `string` | All      | ❌       | `#ffffff`   |
-| `textDisabledColor`        | `string` | All      | ❌       | `#ffffff`   |
-| `textHighlightColor`       | `string` | All      | ❌       | `#ffffff`   |
-| `cornerRadius`             | `number` | All      | ❌       | `undefined` |
-| `borderWidth`              | `number` | All      | ❌       | `undefined` |
-| `borderColor`              | `number` | All      | ❌       | `undefined` |
-
-#### `ThemeGuidance`
-
-An object containing the styles used in the guidance view.
-
-| `ThemeGuidance`   | type                                                    | Platform | Required | Default                                                |
-| ----------------- | ------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor` | `string` or `string[]`                                  | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor` | `string`                                                | All      | ❌       | `#272937`                                              |
-| `button`          | [`ThemeButton`](#themebutton)                           | All      | ❌       | `undefined`                                            |
-| `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | All      | ❌       | `undefined`                                            |
-| `readyScreen`     | [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen) | All      | ❌       | `undefined`                                            |
-| `images`          | [`ThemeGuidanceImages`](#themeguidanceimages)           | All      | ❌       | `undefined`                                            |
-
-##### `ThemeGuidanceRetryScreen`
-
-An object containing the styles used in the guidance retry screen.
-
-| `ThemeGuidanceRetryScreen` | type     | Platform | Required | Default     |
-| -------------------------- | -------- | -------- | -------- | ----------- |
-| `imageBorderColor`         | `string` | All      | ❌       | `#ffffff`   |
-| `imageBorderWidth`         | `number` | All      | ❌       | `undefined` |
-| `imageCornerRadius`        | `number` | All      | ❌       | `undefined` |
-| `ovalStrokeColor`          | `string` | All      | ❌       | `#ffffff`   |
-| `subtextColor`             | `string` | All      | ❌       | `#000000`   |
-
-##### `ThemeGuidanceReadyScreen`
-
-An object containing the styles used in the guidance ready screen.
-
-| `ThemeGuidanceReadyScreen` | type     | Platform | Required | Default       |
-| -------------------------- | -------- | -------- | -------- | ------------- |
-| `headerTextColor`          | `string` | All      | ❌       | `#000000`     |
-| `ovalFillColor`            | `string` | All      | ❌       | `transparent` |
-| `subtextColor`             | `string` | All      | ❌       | `#000000`     |
-
-##### `ThemeGuidanceImages`
-
-An object containing the images assets used in the guidance.
-
-| `ThemeGuidanceImages` | type     | Platform | Required | Default     |
-| --------------------- | -------- | -------- | -------- | ----------- |
-| `cameraPermission`    | `string` | All      | ❌       | `undefined` |
-| `ideal`               | `string` | All      | ❌       | `undefined` |
-
-#### `ThemeOval`
-
-An object containing the oval styles used in the Aziface SDK.
-
-| `ThemeOval`            | type     | Platform | Required | Default     |
-| ---------------------- | -------- | -------- | -------- | ----------- |
-| `strokeColor`          | `string` | All      | ❌       | `#026ff4`   |
-| `strokeWidth`          | `number` | All      | ❌       | `undefined` |
-| `firstProgressColor`   | `string` | All      | ❌       | `#0264dc`   |
-| `secondProgressColor`  | `string` | All      | ❌       | `#0264dc`   |
-| `progressRadialOffset` | `number` | All      | ❌       | `undefined` |
-| `progressStrokeWidth`  | `number` | All      | ❌       | `undefined` |
-
-#### `ThemeFeedback`
-
-An object containing the oval styles used in the Aziface SDK.
-
-| `ThemeFeedback`                                         | type                                   | Platform | Required | Default     |
-| ------------------------------------------------------- | -------------------------------------- | -------- | -------- | ----------- |
-| `backgroundColor`                                       | `string`                               | Android  | ❌       | `#026ff4`   |
-| [`backgroundColors`](#feedbackbackgroundcolor-ios-only) | `string`                               | iOS      | ❌       | `undefined` |
-| `textColor`                                             | `string`                               | All      | ❌       | `#ffffff`   |
-| `cornerRadius`                                          | `number`                               | All      | ❌       | `undefined` |
-| `elevation`                                             | `number`                               | Android  | ❌       | `0`         |
-| `shadow`                                                | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
-| `isEnablePulsatingText`                                 | `boolean`                              | All      | ❌       | `true`      |
-
-##### `FeedbackBackgroundColor` (iOS only)
-
-This type must be used to **set** the **theme** of the feedback box.
-
-| `FeedbackBackgroundColor` | Description                                                                                        | type                       | Required | Default                  |
-| ------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------- | -------- | ------------------------ |
-| `colors`                  | An array of colors defining the color of each gradient stop.                                       | `string[]`                 | ❌       | `["#026FF4", "#026FF4"]` |
-| `locations`               | It's accepts only two values between `0` and `1` that defining the location of each gradient stop. | `[number, number]`         | ❌       | `[0, 1]`                 |
-| `startPoint`              | The start point of the gradient when drawn in the layer’s coordinate space.                        | [`Point`](#point-ios-only) | ❌       | `{ x: 0, y: 0 }`         |
-| `endPoint`                | The end point of the gradient when drawn in the layer’s coordinate space.                          | [`Point`](#point-ios-only) | ❌       | `{ x: 1, y: 0 }`         |
-
-###### `Point`
-
-This interface defines the drawn in the layer's coordinate space.
-
-| `Point` | type     | Required | Default |
-| ------- | -------- | -------- | ------- |
-| `x`     | `number` | ❌       | `0`     |
-| `y`     | `number` | ❌       | `0`     |
-
-#### `ThemeResultScreen`
-
-An object containing the styles used in the result screen.
-
-| `ThemeResultScreen`                      | type                                                        | Platform | Required | Default                                                |
-| ---------------------------------------- | ----------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`                        | `string` or `string[]`                                      | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`                        | `string`                                                    | All      | ❌       | `#272937`                                              |
-| `activityIndicatorColor`                 | `string`                                                    | All      | ❌       | `#026ff4`                                              |
-| `indicatorImage`                         | `string`                                                    | All      | ❌       | `undefined`                                            |
-| `indicatorRotationInterval`              | `number`                                                    | All      | ❌       | `1000`                                                 |
-| `uploadProgressFillColor`                | `string`                                                    | All      | ❌       | `#026ff4`                                              |
-| `uploadProgressTrackColor`               | `string`                                                    | All      | ❌       | `#b3d4fc`                                              |
-| `isShowUploadProgressBar`                | `boolean`                                                   | All      | ❌       | `true`                                                 |
-| `animationRelativeScale`                 | `number`                                                    | All      | ❌       | `1`                                                    |
-| `faceScanStillUploadingMessageDelayTime` | `number`                                                    | All      | ❌       | `6.0`                                                  |
-| `idScanStillUploadingMessageDelayTime`   | `number`                                                    | All      | ❌       | `8.0`                                                  |
-| `resultAnimation`                        | [`ThemeResultAnimation`](#themeresultanimation)             | All      | ❌       | `undefined`                                            |
-| `sessionAbortAnimation`                  | [`ThemeSessionAbortAnimation`](#themesessionabortanimation) | All      | ❌       | `undefined`                                            |
-
-##### `ThemeResultAnimation`
-
-An object containing the animation styles used in the Aziface SDK result animation.
-
-| `ThemeResultAnimation`         | type     | Platform | Required | Default     |
-| ------------------------------ | -------- | -------- | -------- | ----------- |
-| `backgroundColor`              | `string` | All      | ❌       | `#026ff4`   |
-| `foregroundColor`              | `string` | All      | ❌       | `#ffffff`   |
-| `displayTime`                  | `number` | All      | ❌       | `2.5`       |
-| `IDScanSuccessForegroundColor` | `string` | All      | ❌       | `#026ff4`   |
-| `successImage`                 | `string` | All      | ❌       | `undefined` |
-| `unsuccessImage`               | `string` | All      | ❌       | `undefined` |
-| `unsuccessBackgroundColor`     | `string` | All      | ❌       | `#cc0044`   |
-| `unsuccessForegroundColor`     | `string` | All      | ❌       | `#ffffff`   |
-
-##### `ThemeSessionAbortAnimation`
-
-An object containing the animation styles used in the Aziface SDK session abort animation.
-
-| `ThemeSessionAbortAnimation` | type     | Platform | Required | Default     |
-| ---------------------------- | -------- | -------- | -------- | ----------- |
-| `foregroundColor`            | `string` | All      | ❌       | `#ffffff`   |
-| `backgroundColor`            | `string` | All      | ❌       | `#cc0044`   |
-| `image`                      | `string` | All      | ❌       | `undefined` |
-
-#### `ThemeIdScan`
-
-An object containing the styles used in the ID scan screens.
-
-| `ThemeIdScan`     | type                                                        | Platform | Required | Default     |
-| ----------------- | ----------------------------------------------------------- | -------- | -------- | ----------- |
-| `selectionScreen` | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen) | All      | ❌       | `undefined` |
-| `reviewScreen`    | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)       | All      | ❌       | `undefined` |
-| `captureScreen`   | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)     | All      | ❌       | `undefined` |
-| `button`          | [`ThemeButton`](#themebutton)                               | All      | ❌       | `undefined` |
-
-##### `ThemeIdScanSelectionScreen`
-
-An object containing the styles used in the ID scan selection screen.
-
-| `ThemeIdScanSelectionScreen` | type                   | Platform | Required | Default                                                |
-| ---------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`            | `string`               | All      | ❌       | `#272937`                                              |
-
-##### `ThemeIdScanReviewScreen`
-
-An object containing the styles used in the ID scan review screen.
-
-| `ThemeIdScanReviewScreen` | type                   | Platform | Required | Default                                                |
-| ------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`         | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`         | `string`               | All      | ❌       | `#ffffff`                                              |
-| `textBackgroundColor`     | `string`               | All      | ❌       | `#026ff4`                                              |
-
-##### `ThemeIdScanCaptureScreen`
-
-An object containing the styles used in the ID scan capture screen.
-
-| `ThemeIdScanCaptureScreen` | type     | Platform | Required | Default   |
-| -------------------------- | -------- | -------- | -------- | --------- |
-| `foregroundColor`          | `string` | All      | ❌       | `#ffffff` |
-| `textBackgroundColor`      | `string` | All      | ❌       | `#ffffff` |
-| `backgroundColor`          | `string` | All      | ❌       | `#026ff4` |
-| `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff` |
-
-#### `ThemeShadow` (iOS only)
-
-An object containing the shadow styles used during capture screen. If you want to use shadow in Android App, you the `elevation` property in the `frame` or `feedback` objects.
-
-| `ThemeShadow` | type                                      | Platform | Required | Default     |
-| ------------- | ----------------------------------------- | -------- | -------- | ----------- |
-| `color`       | `string`                                  | iOS      | ❌       | `#000000`   |
-| `opacity`     | `number`                                  | iOS      | ❌       | `1`         |
-| `radius`      | `number`                                  | iOS      | ❌       | `10`        |
-| `offset`      | [`ThemeShadowInsets`](#themeshadowoffset) | iOS      | ❌       | `undefined` |
-| `insets`      | [`ThemeShadowOffset`](#themeshadowinsets) | iOS      | ❌       | `undefined` |
-
-##### `ThemeShadowInsets`
-
-An object containing the shadow inset styles used in screen.
-
-| `ThemeShadowInsets` | type     | Platform | Required | Default |
-| ------------------- | -------- | -------- | -------- | ------- |
-| `top`               | `number` | iOS      | ❌       | `0`     |
-| `left`              | `number` | iOS      | ❌       | `0`     |
-| `bottom`            | `number` | iOS      | ❌       | `0`     |
-| `right`             | `number` | iOS      | ❌       | `0`     |
-
-##### `ThemeShadowOffset`
-
-An object containing the shadow offset styles used in screen.
-
-| `ThemeShadowOffset` | type     | Platform | Required | Default |
-| ------------------- | -------- | -------- | -------- | ------- |
-| `width`             | `number` | iOS      | ❌       | `0`     |
-| `height`            | `number` | iOS      | ❌       | `0`     |
-
-<hr/>
-
 ### `Errors`
 
 | `Errors`                  | Description                                                                         | Platform |
@@ -1109,6 +683,26 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 | `onError`      | Callback function called when an error occurs in the Aziface SDK. | `boolean` | All      |
 | `onVocal`      | Callback function called when the vocal guidance is activated.    | `boolean` | All      |
 | `onInitialize` | Callback function called when the Aziface SDK is initialized.     | `boolean` | All      |
+
+<hr/>
+
+## Dynamic Strings
+
+The `setDynamicStrings` method in the Aziface SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
+
+This method enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
+
+The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, setDynamicStrings should be called before starting a session so that all UI elements display the customized text.
+
+If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
+
+We separated another documentation about the dynamic strings, see more [here](./docs/DYNAMIC_STRINGS.md)!
+
+<hr/>
+
+## Theme
+
+The Aziface SDK provides the ability to change the theme of each flow. We separated another documentation about the theme, see more [here](./docs/THEME.md)!
 
 <hr/>
 
@@ -1166,62 +760,6 @@ export default function App() {
 
 <hr/>
 
-## How to add images in Aziface SDK module?
-
-The `branding` and `cancel` properties represents your branding and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the branding image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
-
-### How to add images in Android?
-
-To add your images in `Android`, you must go to your project's `android/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
-
-**Important**: The filename of the image can't have uppercase letters, Android doesn't accept these characters in the image name.
-
-### How to add images in iOS?
-
-In `iOS`, open your XCode and go to your project's `ios/<YOUR_PROJECT_NAME>/Images.xcassets` directory. Open the `Images.xcassets` folder and only put your images inside there.
-
-### Example with images added
-
-Now, go back to where you want to apply the styles, import `setTheme` method and add only the image name, no extension format, in image property (`branding` or `cancel`). **Note**: If the image is not founded the default image will be showed. Check the code example below:
-
-```tsx
-import { useEffect } from 'react';
-// ...
-import {
-  initialize,
-  setTheme,
-  type Params /* ... */,
-} from '@azify/aziface-mobile';
-
-export default function App() {
-  useEffect(() => {
-    const params: Params = {
-      isDevelopment: true,
-      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
-      baseUrl: 'YOUR_BASE_URL',
-    };
-
-    async function initialize() {
-      // You call setTheme after initialize.
-      setTheme({
-        image: {
-          branding: 'branding', // branding.png
-          cancel: 'close', // close.png
-        },
-      });
-
-      await initialize({ params });
-    }
-
-    initialize();
-  }, []);
-
-  // ...
-}
-```
-
-<hr/>
-
 ## Enabling Camera (iOS only)
 
 If you want to enable the camera, you need to add the following instructions in your `Info.plist` file:
@@ -1237,7 +775,7 @@ If you want to enable the camera, you need to add the following instructions in 
 
 ## Integration guide
 
-The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./FLUTTER.md).
+The Azify offers an example App for Flutter developers. Currently, this example App has full implementation in Android apps. Now, in iOS apps it's still in progress. Check that's the documentation [here](./docs/FLUTTER.md).
 
 <hr/>
 
