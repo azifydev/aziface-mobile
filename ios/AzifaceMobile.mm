@@ -71,6 +71,14 @@ RCT_EXPORT_MODULE()
   return [_aziface setLocale:locale];
 }
 
+- (void)setDynamicStrings:(NSDictionary *)strings {
+  return [_aziface setDynamicStrings:strings];
+}
+
+- (void)resetDynamicStrings {
+  return [_aziface resetDynamicStrings];
+}
+
 - (void)setTheme:(nonnull NSDictionary *)options {
   return [_aziface setTheme:options];
 }
