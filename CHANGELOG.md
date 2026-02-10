@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/azifydev/aziface-mobile/compare/v3.7.0...v3.8.0) (2026-02-10)
+
+
+### Features
+
+* **WL-338:** Update SDK ([#25](https://github.com/azifydev/aziface-mobile/issues/25)) ([8cdd33d](https://github.com/azifydev/aziface-mobile/commit/8cdd33dbb4b594eb6a583cbc837fa37a30949003))
+
 # [3.7.0](https://github.com/azifydev/aziface-mobile/compare/v3.6.0...v3.7.0) (2026-02-10)
 
 
