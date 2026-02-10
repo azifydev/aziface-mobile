@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/azifydev/aziface-mobile/compare/v3.6.0...v3.7.0) (2026-02-10)
+
+
+### Features
+
+* **WL-110:** Add the new properties from Theme (III) ([#26](https://github.com/azifydev/aziface-mobile/issues/26)) ([7dca90f](https://github.com/azifydev/aziface-mobile/commit/7dca90f2214807abbd51e96c1c4e283d904ed4ea))
+
 # [3.6.0](https://github.com/azifydev/aziface-mobile/compare/v3.5.0...v3.6.0) (2026-02-09)
 
 
