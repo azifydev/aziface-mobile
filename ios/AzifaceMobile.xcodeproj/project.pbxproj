@@ -11,14 +11,16 @@
 		7C435D612BA1D46D00A5ADCD /* AzifaceMobile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceMobile.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
 		7C435D6A2BA1D69000A5ADCD /* AzifaceMobile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceMobile.m */; };
+		DD8C0A252F365B10003A5D81 /* vocal_guidance_off.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607E2E71A19A0009EEB4 /* vocal_guidance_off.mp3 */; };
+		DD8C0A262F365B10003A5D81 /* vocal_guidance_on.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607F2E71A19A0009EEB4 /* vocal_guidance_on.mp3 */; };
+		DD8C0A292F365B28003A5D81 /* full_vocal_guidance_on.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD8C0A272F365B27003A5D81 /* full_vocal_guidance_on.mp3 */; };
+		DD8C0A2A2F365B28003A5D81 /* minimal_vocal_guidance_on.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD8C0A282F365B28003A5D81 /* minimal_vocal_guidance_on.mp3 */; };
 		DD9D60942E71AC8B0009EEB4 /* facescan_successful_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */; };
 		DD9D60952E71AC8B0009EEB4 /* please_frame_your_face_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */; };
 		DD9D60962E71AC8B0009EEB4 /* please_move_closer_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607A2E71A19A0009EEB4 /* please_move_closer_sound_file.mp3 */; };
 		DD9D60972E71AC8B0009EEB4 /* please_press_button_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607B2E71A19A0009EEB4 /* please_press_button_sound_file.mp3 */; };
 		DD9D60982E71AC8B0009EEB4 /* please_retry_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607C2E71A19A0009EEB4 /* please_retry_sound_file.mp3 */; };
 		DD9D60992E71AC8B0009EEB4 /* uploading_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607D2E71A19A0009EEB4 /* uploading_sound_file.mp3 */; };
-		DD9D609A2E71AC8B0009EEB4 /* vocal_guidance_off.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607E2E71A19A0009EEB4 /* vocal_guidance_off.mp3 */; };
-		DD9D609B2E71AC8B0009EEB4 /* vocal_guidance_on.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607F2E71A19A0009EEB4 /* vocal_guidance_on.mp3 */; };
 		DD9D609C2E71AC8B0009EEB4 /* FaceTec_OCR_Customization.json in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		CEBC6EA92AA66FF300A76DE0 /* PhotoIDMatchProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDMatchProcessor.swift; sourceTree = "<group>"; };
 		CEBC6EAA2AA66FF300A76DE0 /* PhotoIDScanProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoIDScanProcessor.swift; sourceTree = "<group>"; };
 		CEE455C22AA6869C0063FD54 /* ThemeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeUtils.swift; sourceTree = "<group>"; };
+		DD8C0A272F365B27003A5D81 /* full_vocal_guidance_on.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = full_vocal_guidance_on.mp3; sourceTree = "<group>"; };
+		DD8C0A282F365B28003A5D81 /* minimal_vocal_guidance_on.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minimal_vocal_guidance_on.mp3; sourceTree = "<group>"; };
 		DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FaceTec_OCR_Customization.json; sourceTree = "<group>"; };
 		DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = facescan_successful_sound_file.mp3; sourceTree = "<group>"; };
 		DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = please_frame_your_face_sound_file.mp3; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 		DD9D60802E71A19A0009EEB4 /* VocalGuidanceSoundFiles */ = {
 			isa = PBXGroup;
 			children = (
+				DD8C0A272F365B27003A5D81 /* full_vocal_guidance_on.mp3 */,
+				DD8C0A282F365B28003A5D81 /* minimal_vocal_guidance_on.mp3 */,
 				DD9D60782E71A19A0009EEB4 /* facescan_successful_sound_file.mp3 */,
 				DD9D60792E71A19A0009EEB4 /* please_frame_your_face_sound_file.mp3 */,
 				DD9D607A2E71A19A0009EEB4 /* please_move_closer_sound_file.mp3 */,
@@ -245,14 +251,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD8C0A292F365B28003A5D81 /* full_vocal_guidance_on.mp3 in Resources */,
+				DD8C0A2A2F365B28003A5D81 /* minimal_vocal_guidance_on.mp3 in Resources */,
+				DD8C0A252F365B10003A5D81 /* vocal_guidance_off.mp3 in Resources */,
+				DD8C0A262F365B10003A5D81 /* vocal_guidance_on.mp3 in Resources */,
 				DD9D60942E71AC8B0009EEB4 /* facescan_successful_sound_file.mp3 in Resources */,
 				DD9D60952E71AC8B0009EEB4 /* please_frame_your_face_sound_file.mp3 in Resources */,
 				DD9D60962E71AC8B0009EEB4 /* please_move_closer_sound_file.mp3 in Resources */,
 				DD9D60972E71AC8B0009EEB4 /* please_press_button_sound_file.mp3 in Resources */,
 				DD9D60982E71AC8B0009EEB4 /* please_retry_sound_file.mp3 in Resources */,
 				DD9D60992E71AC8B0009EEB4 /* uploading_sound_file.mp3 in Resources */,
-				DD9D609A2E71AC8B0009EEB4 /* vocal_guidance_off.mp3 in Resources */,
-				DD9D609B2E71AC8B0009EEB4 /* vocal_guidance_on.mp3 in Resources */,
 				DD9D609C2E71AC8B0009EEB4 /* FaceTec_OCR_Customization.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
