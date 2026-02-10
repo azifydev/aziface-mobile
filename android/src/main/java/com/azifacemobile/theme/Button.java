@@ -1,19 +1,26 @@
 package com.azifacemobile.theme;
 
+import android.graphics.Typeface;
+
 import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
+import com.facebook.react.bridge.ReactApplicationContext;
 
 import org.json.JSONObject;
+
+import javax.annotation.Nullable;
 
 public class Button extends ViewStyle {
   private static final String KEY = "button";
   private final JSONObject theme;
+  private final Font font;
   private final Color color;
 
-  public Button(JSONObject target) {
+  public Button(ReactApplicationContext context, JSONObject target) {
     super(target, KEY);
 
-    this.theme = new Theme().getTarget(target, "button");
+    this.theme = new Theme().getTarget(target, KEY);
+    this.font = new Font(context);
     this.color = new Color();
   }
 
@@ -44,5 +51,10 @@ public class Button extends ViewStyle {
 
   public int getTextHighlightColor() {
     return this.color.getColor(this.theme, "textHighlightColor");
+  }
+
+  @Nullable
+  public Typeface getFont() {
+    return this.font.getTypography(this.theme, "font");
   }
 }

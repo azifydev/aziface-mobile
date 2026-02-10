@@ -103,6 +103,8 @@ public class Config {
     RetryScreen guidanceRetryScreen = guidance.getRetryScreen();
     guidanceCustomization.backgroundColors = guidance.getBackgroundColor();
     guidanceCustomization.foregroundColor = guidance.getForegroundColor();
+    guidanceCustomization.headerFont = guidance.getHeaderFont();
+    guidanceCustomization.subtextFont = guidance.getSubtextFont();
     guidanceCustomization.buttonBorderWidth = guidanceButton.getBorderWidth();
     guidanceCustomization.buttonBorderColor = guidanceButton.getBorderColor();
     guidanceCustomization.buttonCornerRadius = guidanceButton.getCornerRadius();
@@ -112,14 +114,22 @@ public class Config {
     guidanceCustomization.buttonTextNormalColor = guidanceButton.getTextNormalColor();
     guidanceCustomization.buttonTextDisabledColor = guidanceButton.getTextDisabledColor();
     guidanceCustomization.buttonTextHighlightColor = guidanceButton.getTextHighlightColor();
+    guidanceCustomization.buttonFont = guidanceButton.getFont();
     guidanceCustomization.cameraPermissionsScreenImage = guidanceImage.getSource("cameraPermission", R.drawable.facetec_camera);
     guidanceCustomization.readyScreenHeaderTextColor = guidanceReadyScreen.getHeaderTextColor();
+    guidanceCustomization.readyScreenHeaderFont = guidanceReadyScreen.getHeaderFont();
     guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor();
     guidanceCustomization.readyScreenSubtextTextColor = guidanceReadyScreen.getSubtextColor();
+    guidanceCustomization.readyScreenSubtextFont = guidanceReadyScreen.getSubtextFont();
+    guidanceCustomization.readyScreenTextBackgroundColor = guidanceReadyScreen.getTextBackgroundColor();
+    guidanceCustomization.readyScreenTextBackgroundCornerRadius = guidanceReadyScreen.getTextBackgroundCornerRadius();
     guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor();
     guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor();
     guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal");
     guidanceCustomization.retryScreenSubtextTextColor = guidanceRetryScreen.getSubtextColor();
+    guidanceCustomization.retryScreenSubtextFont = guidanceRetryScreen.getSubtextFont();
+    guidanceCustomization.retryScreenHeaderTextColor = guidanceRetryScreen.getHeaderTextColor();
+    guidanceCustomization.retryScreenHeaderFont = guidanceRetryScreen.getHeaderFont();
     guidanceCustomization.retryScreenImageBorderWidth = guidanceRetryScreen.getImageBorderWidth();
     guidanceCustomization.retryScreenImageCornerRadius = guidanceRetryScreen.getImageCornerRadius();
 
@@ -135,6 +145,7 @@ public class Config {
     FaceTecFeedbackCustomization feedbackCustomization = defaultCustomization.getFeedbackCustomization();
     Feedback feedback = theme.getFeedback();
     feedbackCustomization.backgroundColors = feedback.getBackgroundColor();
+    feedbackCustomization.textFont = feedback.getFont();
     feedbackCustomization.textColor = feedback.getTextColor();
     feedbackCustomization.cornerRadius = feedback.getCornerRadius();
     feedbackCustomization.elevation = feedback.getElevation();
@@ -152,6 +163,7 @@ public class Config {
     SessionAbortAnimation resultScreenSessionAbortAnimation = resultScreen.getSessionAbortAnimation();
     resultScreenCustomization.backgroundColors = resultScreen.getBackgroundColor();
     resultScreenCustomization.foregroundColor = resultScreen.getForegroundColor();
+    resultScreenCustomization.messageFont = resultScreen.getFont();
     resultScreenCustomization.activityIndicatorColor = resultScreen.getActivityIndicatorColor();
     resultScreenCustomization.showUploadProgressBar = resultScreen.getShowUploadProgressBar();
     resultScreenCustomization.uploadProgressFillColor = resultScreen.getUploadProgressFillColor();
@@ -181,21 +193,25 @@ public class Config {
     ReviewScreen idScanReviewScreen = idScan.getReviewScreen();
     CaptureScreen idScanCaptureScreen = idScan.getCaptureScreen();
     Button idScanButton = idScan.getButton();
+    idScanCustomization.headerFont = idScan.getHeaderFont();
+    idScanCustomization.subtextFont = idScan.getSubtextFont();
     idScanCustomization.selectionScreenBackgroundColors = idScanSelectionScreen.getBackgroundColor();
     idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor();
     idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColor();
     idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor();
     idScanCustomization.reviewScreenTextBackgroundColor = idScanReviewScreen.getTextBackgroundColor();
-    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
-    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
     idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor();
     idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor();
     idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor();
     idScanCustomization.buttonTextNormalColor = idScanButton.getTextNormalColor();
     idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor();
     idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor();
+    idScanCustomization.buttonFont = idScanButton.getFont();
+    idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
+    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor();
     idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor();
+    idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont();
 
     return defaultCustomization;
   }

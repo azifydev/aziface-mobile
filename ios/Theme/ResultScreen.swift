@@ -2,6 +2,7 @@ public class ResultScreen: ViewStyle {
   private static let KEY: String = "resultScreen"
   private let style: Style
   private let target: NSDictionary?
+  private let font: Font
   private let color: Color
   private let image: Image
   private let resultAnimation: ResultAnimation
@@ -9,6 +10,7 @@ public class ResultScreen: ViewStyle {
 
   init() {
     self.style = Style()
+    self.font = Font()
     self.color = Color()
     
     self.target = self.style.getTarget(ResultScreen.KEY)
@@ -89,6 +91,10 @@ public class ResultScreen: ViewStyle {
     }
     
     return self.target?[key] as! Bool
+  }
+  
+  public func getFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "font")
   }
 
   public func getResultAnimation() -> ResultAnimation {

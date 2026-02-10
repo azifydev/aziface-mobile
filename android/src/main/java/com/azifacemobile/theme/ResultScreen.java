@@ -1,5 +1,7 @@
 package com.azifacemobile.theme;
 
+import android.graphics.Typeface;
+
 import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -7,10 +9,13 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.annotation.Nullable;
+
 public class ResultScreen extends ViewStyle {
   private static final String KEY = "resultScreen";
   private final Theme theme;
   private final JSONObject target;
+  private final Font font;
   private final Color color;
   private final Image image;
   private final ResultAnimation resultAnimation;
@@ -20,6 +25,7 @@ public class ResultScreen extends ViewStyle {
     super(KEY);
 
     this.theme = new Theme();
+    this.font = new Font(context);
     this.color = new Color();
 
     this.target = this.theme.getTarget(KEY);
@@ -112,6 +118,11 @@ public class ResultScreen extends ViewStyle {
     } catch (JSONException e) {
       return true;
     }
+  }
+
+  @Nullable
+  public Typeface getFont() {
+    return this.font.getTypography(this.target, "font");
   }
 
   public ResultAnimation getResultAnimation() {

@@ -5,10 +5,12 @@ public class Feedback: ViewStyle {
   private let style: Style
   private let target: NSDictionary?
   private let shadow: Shadow
+  private let font: Font
   private let color: Color
 
   init() {
     self.style = Style()
+    self.font = Font()
     self.color = Color()
     
     self.target = self.style.getTarget(Feedback.KEY)
@@ -37,5 +39,9 @@ public class Feedback: ViewStyle {
     }
 
     return self.target?[key] as! Bool
+  }
+  
+  public func getFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "font")
   }
 }

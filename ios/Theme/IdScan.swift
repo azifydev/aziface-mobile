@@ -1,16 +1,27 @@
 public class IdScan {
+  private let target: NSDictionary?
+  private let font: Font
   private let button: Button
   private let selectionScreen: SelectionScreen
   private let captureScreen: CaptureScreen
   private let reviewScreen: ReviewScreen
 
   init() {
-    let target = Style().getTarget("idScan")
+    self.target = Style().getTarget("idScan")
 
-    self.button = Button(target: target)
-    self.selectionScreen = SelectionScreen(target: target)
-    self.captureScreen = CaptureScreen(target: target)
-    self.reviewScreen = ReviewScreen(target: target)
+    self.font = Font()
+    self.button = Button(target: self.target)
+    self.selectionScreen = SelectionScreen(target: self.target)
+    self.captureScreen = CaptureScreen(target: self.target)
+    self.reviewScreen = ReviewScreen(target: self.target)
+  }
+  
+  public func getHeaderFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "headerFont")
+  }
+  
+  public func getSubtextFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "subtextFont")
   }
 
   public func getButton() -> Button {
