@@ -3,10 +3,12 @@ import Foundation
 public class Button: ViewStyle {
   private static let KEY: String = "guidance"
   private let target: NSDictionary?
+  private let font: Font
   private let color: Color
 
   init(target: NSDictionary?) {
     self.target = Style().getTarget(target, key: Button.KEY)
+    self.font = Font()
     self.color = Color()
     
     super.init(key: Button.KEY)
@@ -14,6 +16,10 @@ public class Button: ViewStyle {
   
   override public func getCornerRadius() -> Int32 {
     return super.getCornerRadius(-1)
+  }
+  
+  public func getFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "font")
   }
 
   public func getBackgroundNormalColor() -> UIColor {
