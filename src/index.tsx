@@ -1854,6 +1854,13 @@ export interface ThemeFeedback {
   textColor?: string;
 
   /**
+   * @description Represents the font family of the feedback box text.
+   *
+   * @default undefined
+   */
+  font?: string;
+
+  /**
    * @description Represents the border radius style of the feedback view.
    *
    * @default undefined
@@ -1958,6 +1965,13 @@ export interface ThemeButton {
    * @default undefined
    */
   borderColor?: string;
+
+  /**
+   * @description Represents the font family of the button.
+   *
+   * @default undefined
+   */
+  font?: string;
 }
 
 /**
@@ -2104,12 +2118,36 @@ export interface ThemeGuidanceRetryScreen {
   ovalStrokeColor?: string;
 
   /**
+   * @description Represents the header text color style of the guidance retry
+   * screen.
+   *
+   * @default '#000000'
+   */
+  headerTextColor?: string;
+
+  /**
+   * @description Represents the header font family of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  headerFont?: string;
+
+  /**
    * @description Represents the subtext color style of the guidance retry
    * screen.
    *
    * @default '#000000'
    */
   subtextColor?: string;
+
+  /**
+   * @description Represents the subtext font family of the guidance retry
+   * screen.
+   *
+   * @default undefined
+   */
+  subtextFont?: string;
 }
 
 /**
@@ -2149,6 +2187,13 @@ export interface ThemeGuidanceReadyScreen {
   headerTextColor?: string;
 
   /**
+   * @description Represents the header font family of the guidance ready screen.
+   *
+   * @default undefined
+   */
+  headerFont?: string;
+
+  /**
    * @description Represents the oval fill color style of the guidance ready
    * screen.
    *
@@ -2163,6 +2208,30 @@ export interface ThemeGuidanceReadyScreen {
    * @default '#000000'
    */
   subtextColor?: string;
+
+  /**
+   * @description Represents the subtext font family of the guidance ready
+   * screen.
+   *
+   * @default undefined
+   */
+  subtextFont?: string;
+
+  /**
+   * @description Represents the text background color style of the guidance
+   * ready screen.
+   *
+   * @default undefined
+   */
+  textBackgroundColor?: string;
+
+  /**
+   * @description Represents the text background corner radius style of the
+   * guidance ready screen.
+   *
+   * @default undefined
+   */
+  textBackgroundCornerRadius?: number;
 }
 
 /**
@@ -2193,6 +2262,20 @@ export interface ThemeGuidance {
    * @default '#272937'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the header font family style of the guidance text.
+   *
+   * @default undefined
+   */
+  headerFont?: string;
+
+  /**
+   * @description Represents the subtext font family style of the guidance text.
+   *
+   * @default undefined
+   */
+  subtextFont?: string;
 
   /**
    * @description Represents the button styles used in the Aziface SDK.
@@ -2254,6 +2337,13 @@ export interface ThemeResultScreen {
    * @default '#272937'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the font family of the result screen text.
+   *
+   * @default undefined
+   */
+  font?: string;
 
   /**
    * @description Represents the indicator background color style of the
@@ -2382,6 +2472,14 @@ export interface ThemeIdScanCaptureScreen {
    * @default '#ffffff'
    */
   frameStrokeColor?: string;
+
+  /**
+   * @description Represents the font family style of the ID scan capture
+   * camera text.
+   *
+   * @default undefined
+   */
+  font?: string;
 }
 
 /**
@@ -2459,6 +2557,20 @@ export interface ThemeIdScanSelectionScreen {
  * @description An object containing the styles used in the ID scan screens.
  */
 export interface ThemeIdScan {
+  /**
+   * @description Represents the font family style of the ID scan text.
+   *
+   * @default undefined
+   */
+  headerFont?: string;
+
+  /**
+   * @description Represents the font family style of the ID scan subtext.
+   *
+   * @default undefined
+   */
+  subtextFont?: string;
+
   /**
    * @description An object containing the styles used in the ID scan
    * selection screen.
