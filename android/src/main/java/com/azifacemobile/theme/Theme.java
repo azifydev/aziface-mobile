@@ -10,7 +10,6 @@ import com.facetec.sdk.FaceTecSDK;
 
 public class Theme {
   private final Color color;
-  private final General general;
   private final Image image;
   private final Frame frame;
   private final Guidance guidance;
@@ -22,13 +21,12 @@ public class Theme {
 
   public Theme(ReactApplicationContext context) {
     this.color = new Color();
-    this.general = new General();
     this.frame = new Frame();
-    this.guidance = new Guidance();
+    this.guidance = new Guidance(context);
     this.oval = new Oval();
-    this.feedback = new Feedback();
-    this.resultScreen = new ResultScreen();
-    this.idScan = new IdScan();
+    this.feedback = new Feedback(context);
+    this.resultScreen = new ResultScreen(context);
+    this.idScan = new IdScan(context);
     this.image = new Image(context);
   }
 
@@ -67,10 +65,6 @@ public class Theme {
 
   public Image getImage() {
     return this.image;
-  }
-
-  public General getGeneral() {
-    return this.general;
   }
 
   public Frame getFrame() {

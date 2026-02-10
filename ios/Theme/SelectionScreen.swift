@@ -1,7 +1,7 @@
-public class SelectionScreen: CommonViewStyle {
+public class SelectionScreen: ViewStyle {
 
-  init(theme: NSDictionary?) {
-    super.init(theme: theme, key: "selectionScreen")
+  init(target: NSDictionary?) {
+    super.init(target: target, key: "selectionScreen")
   }
 
   override public func getForegroundColor() -> UIColor {

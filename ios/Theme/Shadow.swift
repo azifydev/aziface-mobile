@@ -6,11 +6,11 @@ public class Shadow {
   private let target: NSDictionary?
   private let color: Color
 
-  init(theme: NSDictionary?) {
+  init(target: NSDictionary?) {
     self.style = Style()
     self.color = Color()
     
-    self.target = self.style.getTarget(theme, key: "shadow")
+    self.target = self.style.getTarget(target, key: "shadow")
   }
   
   private func getColor() -> UIColor {

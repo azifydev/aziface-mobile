@@ -8,6 +8,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private static let NAME: String = "ios_azify_app_"
   private static var IsRunning: Bool = false
   private static var I18n: Localization = Localization(locale: "default")
+  private static var Strings: DynamicStrings = DynamicStrings()
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
   private var resolver: RCTPromiseResolveBlock?
@@ -238,6 +239,20 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     Aziface.I18n = Localization.from(locale)
 
     self.setupI18n()
+  }
+
+  @objc public func setDynamicStrings(_ strings: NSDictionary) {
+    Aziface.Strings
+      .setStrings(strings)
+      .load()
+      .build()
+  }
+
+  @objc public func resetDynamicStrings() {
+    Aziface.Strings
+      .setStrings(nil)
+      .load()
+      .build()
   }
 
   @objc public func setTheme(_ options: NSDictionary?) {

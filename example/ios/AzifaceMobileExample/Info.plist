@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Aeonik-Regular.otf</string>
+		<string>HelveticaNowDisplay-Bold.ttf</string>
+	</array>
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
 	<key>CFBundleDisplayName</key>
 	<string>AzifaceMobileExample</string>
 	<key>CFBundleExecutable</key>

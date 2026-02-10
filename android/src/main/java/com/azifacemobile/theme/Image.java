@@ -1,5 +1,8 @@
 package com.azifacemobile.theme;
 
+import android.graphics.Rect;
+
+import com.azifacemobile.theme.abstracts.ImageStyle;
 import com.azifacemobile.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facetec.sdk.FaceTecCancelButtonCustomization;
@@ -7,56 +10,75 @@ import com.facetec.sdk.FaceTecCancelButtonCustomization;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Image {
-  private static ReactApplicationContext reactContext;
-  private final JSONObject theme;
+import javax.annotation.Nullable;
+
+public class Image extends ImageStyle {
+  private final static String KEY = "image";
+  private final JSONObject target;
+  private boolean isPosition;
 
   public Image(ReactApplicationContext context) {
-    reactContext = context;
+    super(context, KEY);
 
-    this.theme = new Theme().getTarget("image");
+    this.target = new Theme().getTarget(KEY);
+    this.isPosition = false;
   }
 
-  public int getImg(String key, int defaultImage) {
+  public Image(ReactApplicationContext context, JSONObject target) {
+    super(context, target);
+
+    this.target = target;
+    this.isPosition = false;
+  }
+
+  public Image(ReactApplicationContext context, JSONObject target, String key) {
+    super(context, target, key);
+
+    this.target = target;
+    this.isPosition = false;
+  }
+
+  private boolean getBoolean(String key, boolean defaultValue) {
     try {
-      if (reactContext == null) {
-        return defaultImage;
-      }
-
-      final String imageName = this.theme.getString(key);
-
-      if (imageName.isEmpty()) {
-        return defaultImage;
-      }
-
-      final String packageName = reactContext.getPackageName();
-      final int resourceId = reactContext.getResources().getIdentifier(imageName, "drawable", packageName);
-      return resourceId == 0 ? defaultImage : resourceId;
+      return this.target.getBoolean(key);
     } catch (NullPointerException | JSONException e) {
-      return defaultImage;
+      return defaultValue;
     }
   }
 
   public boolean getShowBranding() {
-    try {
-      return this.theme.getBoolean("isShowBranding");
-    } catch (NullPointerException | JSONException e) {
-      return true;
-    }
+    return this.getBoolean("isShowBranding", true);
   }
 
   public boolean getHideForCameraPermissions() {
+    return this.getBoolean("isHideForCameraPermissions", false);
+  }
+
+  @Nullable
+  public Rect getButtonPosition() {
     try {
-      return this.theme.getBoolean("isHideForCameraPermissions");
+      final JSONObject cancelPosition = this.target.getJSONObject("cancelPosition");
+      final JSONObject android = cancelPosition.getJSONObject("android");
+
+      final int left = android.getInt("left");
+      final int top = android.getInt("top");
+      final int right = android.getInt("right");
+      final int bottom = android.getInt("bottom");
+
+      this.isPosition = true;
+
+      return new Rect(left, top, right, bottom);
     } catch (NullPointerException | JSONException e) {
-      return false;
+      this.isPosition = false;
+
+      return null;
     }
   }
 
   public FaceTecCancelButtonCustomization.ButtonLocation getButtonLocation() {
     final FaceTecCancelButtonCustomization.ButtonLocation defaultLocation = FaceTecCancelButtonCustomization.ButtonLocation.TOP_RIGHT;
     try {
-      final String cancelLocation = this.theme.getString("cancelLocation");
+      final String cancelLocation = this.isPosition ? "CUSTOM" : this.target.getString("cancelLocation");
 
       switch (cancelLocation) {
         case "TOP_RIGHT":
@@ -65,6 +87,8 @@ public class Image {
           return FaceTecCancelButtonCustomization.ButtonLocation.TOP_LEFT;
         case "DISABLED":
           return FaceTecCancelButtonCustomization.ButtonLocation.DISABLED;
+        case "CUSTOM":
+          return FaceTecCancelButtonCustomization.ButtonLocation.CUSTOM;
         default:
           return defaultLocation;
       }

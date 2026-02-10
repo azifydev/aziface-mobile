@@ -1,30 +1,30 @@
 import FaceTecSDK
 
-public class Feedback: CommonViewStyle {
+public class Feedback: ViewStyle {
   private static let KEY: String = "feedback"
   private let style: Style
   private let target: NSDictionary?
-  private let general: General
   private let shadow: Shadow
+  private let font: Font
   private let color: Color
 
   init() {
     self.style = Style()
-    self.general = General()
+    self.font = Font()
     self.color = Color()
     
     self.target = self.style.getTarget(Feedback.KEY)
-    self.shadow = Shadow(theme: self.target)
+    self.shadow = Shadow(target: self.target)
 
     super.init(key: Feedback.KEY)
+  }
+  
+  override public func getCornerRadius() -> Int32 {
+    return super.getCornerRadius(-1)
   }
 
   public func getTextColor() -> UIColor {
     return self.color.getColor(self.target, key: "textColor")
-  }
-  
-  public func getBorderRadius() -> Int32 {
-    return self.general.getBorderRadius(self.target, key: "cornerRadius", defaultBorderRadius: -1)
   }
   
   public func getShadow() -> FaceTecShadow? {
@@ -39,5 +39,9 @@ public class Feedback: CommonViewStyle {
     }
 
     return self.target?[key] as! Bool
+  }
+  
+  public func getFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "font")
   }
 }

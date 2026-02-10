@@ -1,3 +1,17 @@
+# [3.6.0](https://github.com/azifydev/aziface-mobile/compare/v3.5.0...v3.6.0) (2026-02-09)
+
+
+### Features
+
+* **WL-110:** Add the new properties from Theme (II) ([#24](https://github.com/azifydev/aziface-mobile/issues/24)) ([131917f](https://github.com/azifydev/aziface-mobile/commit/131917f427f78c10057a2ae847f5e506450363a3))
+
+# [3.5.0](https://github.com/azifydev/aziface-mobile/compare/v3.4.0...v3.5.0) (2026-02-09)
+
+
+### Features
+
+* **WL-330:** add dynamic strings ([#23](https://github.com/azifydev/aziface-mobile/issues/23)) ([045359d](https://github.com/azifydev/aziface-mobile/commit/045359db7058c8d187195801b30ec0a8ca06f13f))
+
 # [3.4.0](https://github.com/azifydev/aziface-mobile/compare/v3.3.1...v3.4.0) (2026-02-03)
 
 

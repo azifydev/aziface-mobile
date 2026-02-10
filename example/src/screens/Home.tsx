@@ -13,12 +13,14 @@ import {
   liveness,
   photoMatch,
   photoScan,
+  setLocale,
+  setDynamicStrings,
+  resetDynamicStrings,
   vocal,
   FaceView,
   type Params,
   type Headers,
   type Processor,
-  setLocale,
   type Locale,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
@@ -35,31 +37,15 @@ import md5 from 'md5';
 import { styles } from './styles';
 import { useUser } from '../hooks';
 import { useBiometricConfigs } from '../services';
+import { DYNAMIC_STRINGS, LOCALES } from '../constants';
 import type { FaceType } from '../types';
-
-const LOCALES: Locale[] = [
-  'default',
-  'en',
-  'af',
-  'ar',
-  'de',
-  'el',
-  'es',
-  'fr',
-  'ja',
-  'kk',
-  'nb',
-  'pt-BR',
-  'ru',
-  'vi',
-  'zh',
-];
 
 export function Home() {
   const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, logout } = useUser();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
+  const [isDynamicStringsEnabled, setIsDynamicStringsEnabled] = useState(false);
   const [localization, setLocalization] = useState<Locale>('default');
 
   const commonButtonProps: TouchableOpacityProps = {
@@ -150,6 +136,16 @@ export function Home() {
     setLocale('default');
   };
 
+  const onDynamicStrings = () => {
+    if (isDynamicStringsEnabled) {
+      setIsDynamicStringsEnabled(false);
+      resetDynamicStrings();
+    } else {
+      setIsDynamicStringsEnabled(true);
+      setDynamicStrings(DYNAMIC_STRINGS);
+    }
+  };
+
   const onVocal = (enabled: boolean) => {
     console.log('onVocal', enabled);
     setIsEnabledVocal(enabled);
@@ -224,6 +220,14 @@ export function Home() {
         <TouchableOpacity {...commonButtonProps} onPress={vocal}>
           <Text style={styles.buttonText}>
             Vocal {isEnabledVocal ? 'On' : 'Off'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity {...commonButtonProps} onPress={onDynamicStrings}>
+          <Text style={styles.buttonText}>
+            {isDynamicStringsEnabled
+              ? 'Reset Dynamic Strings'
+              : 'Set Dynamic Strings'}
           </Text>
         </TouchableOpacity>
 

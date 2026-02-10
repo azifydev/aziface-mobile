@@ -1,6 +1,6 @@
-public class ReviewScreen: CommonViewStyle {
+public class ReviewScreen: ViewStyle {
 
-  init(theme: NSDictionary?) {
-    super.init(theme: theme, key: "reviewScreen")
+  init(target: NSDictionary?) {
+    super.init(target: target, key: "reviewScreen")
   }
 }
