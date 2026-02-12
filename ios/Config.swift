@@ -71,7 +71,7 @@ public class Config {
     overlayCustomization.brandingImage = image.getSource(
       "branding", defaultImage: "facetec_your_app_logo")
     overlayCustomization.showBrandingImage = image.getShowBranding()
-    overlayCustomization.backgroundColor = theme.getColor("overlayBackgroundColor")
+    overlayCustomization.backgroundColor = theme.getColor("backgroundColor")
 
     let guidanceCustomization = defaultCustomization.guidanceCustomization
     let guidance = theme.getGuidance()
@@ -81,8 +81,6 @@ public class Config {
     let guidanceRetryScreen = guidance.getRetryScreen()
     guidanceCustomization.backgroundColors = guidance.getBackgroundColors()
     guidanceCustomization.foregroundColor = guidance.getForegroundColor()
-    guidanceCustomization.headerFont = guidance.getHeaderFont()
-    guidanceCustomization.subtextFont = guidance.getSubtextFont()
     guidanceCustomization.buttonBorderColor = guidanceButton.getBorderColor()
     guidanceCustomization.buttonBorderWidth = guidanceButton.getBorderWidth()
     guidanceCustomization.buttonCornerRadius = guidanceButton.getCornerRadius()
@@ -102,8 +100,10 @@ public class Config {
     guidanceCustomization.readyScreenHeaderTextColor = guidanceReadyScreen.getHeaderTextColor()
     guidanceCustomization.readyScreenHeaderFont = guidanceReadyScreen.getHeaderFont()
     guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor()
-    guidanceCustomization.readyScreenTextBackgroundColor = guidanceReadyScreen.getTextBackgroudColor()
-    guidanceCustomization.readyScreenTextBackgroundCornerRadius = guidanceReadyScreen.getTextBackgroudColorCornerRadius()
+    guidanceCustomization.readyScreenTextBackgroundColor =
+      guidanceReadyScreen.getTextBackgroudColor()
+    guidanceCustomization.readyScreenTextBackgroundCornerRadius =
+      guidanceReadyScreen.getTextBackgroudColorCornerRadius()
     guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor()
     guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor()
     guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal")
@@ -207,7 +207,8 @@ public class Config {
     idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor()
     idScanCustomization.buttonFont = idScanButton.getFont()
     idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor()
-    idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor()
+    idScanCustomization.captureScreenTextBackgroundColor =
+      idScanCaptureScreen.getTextBackgroundColor()
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor()
     idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor()
     idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont()

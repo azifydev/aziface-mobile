@@ -7,7 +7,7 @@ import React
 public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private static let NAME: String = "ios_azify_app_"
   private static var IsRunning: Bool = false
-  private static var I18n: Localization = Localization(locale: "default")
+  private static var I18n: Localization = Localization()
   private static var Strings: DynamicStrings = DynamicStrings()
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
@@ -236,7 +236,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   }
 
   @objc public func setLocale(_ locale: String) {
-    Aziface.I18n = Localization.from(locale)
+    Aziface.I18n.setLocale(locale: locale)
 
     self.setupI18n()
   }
@@ -257,6 +257,14 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
   @objc public func setTheme(_ options: NSDictionary?) {
     Theme.setAppTheme(options)
+  }
+
+  @objc public func resetTheme() {
+    if Theme.Style == nil {
+      return
+    }
+
+    Theme.setAppTheme(nil)
   }
 
   @objc public func vocal() {
@@ -290,7 +298,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   }
 
   private func setupI18n() {
-    FaceTec.sdk.setLanguage(Aziface.I18n.rawValue)
+    FaceTec.sdk.setLanguage(Aziface.I18n.getLocale())
   }
 
   private func getCurrentViewController() -> UIViewController? {

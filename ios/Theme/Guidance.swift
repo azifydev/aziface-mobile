@@ -18,27 +18,19 @@ public class Guidance: ViewStyle {
 
     super.init(key: Guidance.KEY)
   }
-  
+
   override public func getForegroundColor() -> UIColor {
     return self.getForegroundColor(defaultColor: "#272937")
-  }
-  
-  public func getHeaderFont() -> UIFont {
-    return self.font.getTypography(theme: self.target, key: "headerFont")
-  }
-  
-  public func getSubtextFont() -> UIFont {
-    return self.font.getTypography(theme: self.target, key: "subtextFont")
   }
 
   public func getButton() -> Button {
     return self.button
   }
-  
+
   public func getImage() -> Image {
     return self.image
   }
-  
+
   public func getReadyScreen() -> ReadyScreen {
     return self.readyScreen
   }

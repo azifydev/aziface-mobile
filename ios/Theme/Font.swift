@@ -7,19 +7,31 @@ public class Font {
   public init() {
     self.style = Style()
   }
+  
+  private func getFont(filename: String?) -> UIFont {
+    let systemFontSize = UIFont.systemFontSize
+    let defaultFont = UIFont.systemFont(ofSize: systemFontSize)
+    
+    if filename == nil {
+      return defaultFont
+    }
+    
+    return UIFont(name: filename!, size: systemFontSize) ?? defaultFont
+  }
 
   public func getTypography(theme: NSDictionary?, key: String) -> UIFont {
     let systemFontSize = UIFont.systemFontSize
     let defaultFont = UIFont.systemFont(ofSize: systemFontSize)
-    
+    let globalFontFamily = self.style.getGlobalFontFamily()
+
     if !self.style.exists(theme, key: key) {
-      return defaultFont
+      return self.getFont(filename: globalFontFamily)
     }
 
     let filenameWithExt = theme?[key] as? String ?? ""
     let filenameWithoutExt = filenameWithExt.replacingOccurrences(of: ".otf", with: "")
       .replacingOccurrences(of: ".ttf", with: "")
 
-    return UIFont(name: filenameWithoutExt, size: systemFontSize) ?? defaultFont
+    return self.getFont(filename: filenameWithoutExt)
   }
 }
