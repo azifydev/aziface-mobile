@@ -77,14 +77,14 @@ public class Config {
     FaceTecCancelButtonCustomization.ButtonLocation cancelButtonLocation = theme.getGeneral()
       .getButtonLocation("cancelButtonLocation");
 
-        FaceTecCustomization defaultCustomization = new FaceTecCustomization();
+    FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
     defaultCustomization.getFrameCustomization().cornerRadius = theme.getFrame().getCornerRadius();
     defaultCustomization.getFrameCustomization().backgroundColor = theme.getFrame().getBackgroundColor();
     defaultCustomization.getFrameCustomization().borderColor = theme.getFrame().getBorderColor();
 
     defaultCustomization.getOverlayCustomization().brandingImage = theme.getImage("branding", R.drawable.facetec_your_app_logo);
-    defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("overlayBackgroundColor");
+    defaultCustomization.getOverlayCustomization().backgroundColor = theme.getColor("backgroundColor");
 
     defaultCustomization.getGuidanceCustomization().backgroundColors = theme.getGuidance().getBackgroundColor();
     defaultCustomization.getGuidanceCustomization().foregroundColor = theme.getGuidance().getForegroundColor();

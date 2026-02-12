@@ -93,7 +93,7 @@ public class Config {
     FaceTecOverlayCustomization overlayCustomization = defaultCustomization.getOverlayCustomization();
     overlayCustomization.brandingImage = image.getSource("branding", R.drawable.facetec_your_app_logo);
     overlayCustomization.showBrandingImage = image.getShowBranding();
-    overlayCustomization.backgroundColor = theme.getColor("overlayBackgroundColor");
+    overlayCustomization.backgroundColor = theme.getColor("backgroundColor");
 
     FaceTecGuidanceCustomization guidanceCustomization = defaultCustomization.getGuidanceCustomization();
     Guidance guidance = theme.getGuidance();
@@ -103,8 +103,6 @@ public class Config {
     RetryScreen guidanceRetryScreen = guidance.getRetryScreen();
     guidanceCustomization.backgroundColors = guidance.getBackgroundColor();
     guidanceCustomization.foregroundColor = guidance.getForegroundColor();
-    guidanceCustomization.headerFont = guidance.getHeaderFont();
-    guidanceCustomization.subtextFont = guidance.getSubtextFont();
     guidanceCustomization.buttonBorderWidth = guidanceButton.getBorderWidth();
     guidanceCustomization.buttonBorderColor = guidanceButton.getBorderColor();
     guidanceCustomization.buttonCornerRadius = guidanceButton.getCornerRadius();
