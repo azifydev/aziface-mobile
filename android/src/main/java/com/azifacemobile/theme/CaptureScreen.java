@@ -24,8 +24,13 @@ public class CaptureScreen extends ViewStyle {
     this.color = new Color();
   }
 
-  public int getFrameStrokeColor() {
-    return this.color.getColor(this.target, "frameStrokeColor");
+  @Override
+  public int getCornerRadius() {
+    return super.getCornerRadius(-1);
+  }
+
+  public int getFocusTextColor() {
+    return this.color.getColor(this.target, "focusTextColor");
   }
 
   @Nullable

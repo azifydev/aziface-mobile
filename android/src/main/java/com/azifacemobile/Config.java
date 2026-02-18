@@ -82,6 +82,10 @@ public class Config {
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
+//    defaultCustomization.getInitialLoadingAnimationCustomization();
+//    defaultCustomization.getOcrConfirmationCustomization();
+//    defaultCustomization.getOrientationScreenCustomization();
+
     FaceTecFrameCustomization frameCustomization = defaultCustomization.getFrameCustomization();
     Frame frame = theme.getFrame();
     frameCustomization.cornerRadius = frame.getCornerRadius();
@@ -123,7 +127,7 @@ public class Config {
     guidanceCustomization.readyScreenTextBackgroundCornerRadius = guidanceReadyScreen.getTextBackgroundCornerRadius();
     guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor();
     guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor();
-    guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal");
+    guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal", com.facetec.sdk.R.drawable.facetec_ideal_pose_image);
     guidanceCustomization.retryScreenSubtextTextColor = guidanceRetryScreen.getSubtextColor();
     guidanceCustomization.retryScreenSubtextFont = guidanceRetryScreen.getSubtextFont();
     guidanceCustomization.retryScreenHeaderTextColor = guidanceRetryScreen.getHeaderTextColor();
@@ -191,13 +195,39 @@ public class Config {
     ReviewScreen idScanReviewScreen = idScan.getReviewScreen();
     CaptureScreen idScanCaptureScreen = idScan.getCaptureScreen();
     Button idScanButton = idScan.getButton();
+    AdditionalReview idScanAdditionalReview = idScan.getAdditionalReview();
+    IdFeedback idScanIdFeedback = idScan.getIdFeedback();
     idScanCustomization.headerFont = idScan.getHeaderFont();
     idScanCustomization.subtextFont = idScan.getSubtextFont();
+    idScanCustomization.inactiveTorchButtonImage = idScan.getInactiveTorchImage();
+    idScanCustomization.activeTorchButtonImage = idScan.getActiveTorchImage();
+    idScanCustomization.faceMatchToIDBrandingImage = idScan.getFaceMatchToIDBrandingImage();
+    idScanCustomization.showFaceMatchToIDBrandingImage = idScan.getShowFaceMatchToIDBrandingImage();
+    idScanCustomization.disableAdditionalReviewScreen = idScanAdditionalReview.getDisableAdditionalReviewScreen();
+    idScanCustomization.additionalReviewScreenAnimationDisplayTime = idScanAdditionalReview.getDisplayTime();
+    idScanCustomization.additionalReviewScreenBackgroundColors = idScanAdditionalReview.getBackgroundColor();
+    idScanCustomization.additionalReviewScreenForegroundColor = idScanAdditionalReview.getForegroundColor();
+    idScanCustomization.additionalReviewScreenImage = idScanAdditionalReview.getReviewImage();
+    idScanCustomization.enableAdditionalReviewTag = idScanAdditionalReview.getEnableAdditionalReviewTag();
+    idScanCustomization.additionalReviewTagImage = idScanAdditionalReview.getTagImage();
+    idScanCustomization.additionalReviewTagImageColor = idScanAdditionalReview.getTagImageColor();
+    idScanCustomization.additionalReviewTagTextColor = idScanAdditionalReview.getTagTextColor();
+    idScanCustomization.disableIDFeedbackScreen = idScanIdFeedback.getDisableIDFeedbackScreen();
+    idScanCustomization.idFeedbackScreenForegroundColor = idScanIdFeedback.getForegroundColor();
+    idScanCustomization.idFeedbackScreenBackgroundColors = idScanIdFeedback.getBackgroundColor();
+    idScanCustomization.idFeedbackScreenAnimationDisplayTime = idScanIdFeedback.getDisplayTime();
+    idScanCustomization.idFeedbackScreenFlipIDBackImage = idScanIdFeedback.getFlipIDBackImage();
+    idScanCustomization.idFeedbackScreenFlipIDFrontImage = idScanIdFeedback.getFlipIDFrontImage();
     idScanCustomization.selectionScreenBackgroundColors = idScanSelectionScreen.getBackgroundColor();
     idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor();
+    idScanCustomization.selectionScreenDocumentImage = idScanSelectionScreen.getDocumentImage();
+    idScanCustomization.showSelectionScreenDocumentImage = idScanSelectionScreen.getShowDocumentImage();
     idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColor();
     idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor();
     idScanCustomization.reviewScreenTextBackgroundColor = idScanReviewScreen.getTextBackgroundColor();
+    idScanCustomization.reviewScreenTextBackgroundBorderColor = idScanReviewScreen.getTextBackgroundBorderColor();
+    idScanCustomization.reviewScreenTextBackgroundBorderWidth = idScanReviewScreen.getTextBackgroundBorderWidth();
+    idScanCustomization.reviewScreenTextBackgroundCornerRadius = idScanReviewScreen.getTextBackgroundCornerRadius();
     idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor();
     idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor();
     idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor();
@@ -205,11 +235,20 @@ public class Config {
     idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor();
     idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor();
     idScanCustomization.buttonFont = idScanButton.getFont();
+    idScanCustomization.buttonBorderColor = idScanButton.getBorderColor();
+    idScanCustomization.buttonBorderWidth = idScanButton.getBorderWidth();
+    idScanCustomization.buttonCornerRadius = idScanButton.getCornerRadius();
     idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor();
     idScanCustomization.captureScreenTextBackgroundColor = idScanCaptureScreen.getTextBackgroundColor();
+    idScanCustomization.captureScreenTextBackgroundBorderColor = idScanCaptureScreen.getTextBackgroundBorderColor();
+    idScanCustomization.captureScreenTextBackgroundBorderWidth = idScanCaptureScreen.getTextBackgroundBorderWidth();
+    idScanCustomization.captureScreenTextBackgroundCornerRadius = idScanCaptureScreen.getTextBackgroundCornerRadius();
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor();
-    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor();
     idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont();
+    idScanCustomization.captureScreenFocusMessageTextColor = idScanCaptureScreen.getFocusTextColor();
+    idScanCustomization.captureFrameStrokeWidth = idScanCaptureScreen.getStrokeWidth();
+    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getStrokeColor();
+    idScanCustomization.captureFrameCornerRadius = idScanCaptureScreen.getCornerRadius();
 
     return defaultCustomization;
   }

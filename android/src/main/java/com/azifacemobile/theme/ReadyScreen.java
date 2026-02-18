@@ -2,48 +2,36 @@ package com.azifacemobile.theme;
 
 import android.graphics.Typeface;
 
+import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
 import com.facebook.react.bridge.ReactApplicationContext;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.annotation.Nullable;
 
-public class ReadyScreen {
-  private final Theme theme;
+public class ReadyScreen extends ViewStyle {
+  private static final String KEY = "readyScreen";
   private final JSONObject target;
   private final Font font;
   private final Color color;
 
   public ReadyScreen(ReactApplicationContext context, JSONObject target) {
-    this.theme = new Theme();
+    super(target, KEY);
+
     this.font = new Font(context);
     this.color = new Color();
 
-    this.target = this.theme.getTarget(target, "readyScreen");
+    this.target = new Theme().getTarget(target, KEY);
   }
 
+  @Override
   public int getTextBackgroundColor() {
-    return this.color.getColor(this.target, "textBackgroundColor", -1);
-  }
-
-  public int getTextBackgroundCornerRadius() {
-    final int defaultCornerRadius = -1;
-    try {
-      if (!this.theme.exists(this.target, "textBackgroundCornerRadius")) {
-        return defaultCornerRadius;
-      }
-
-      final int cornerRadius = this.target.getInt("textBackgroundCornerRadius");
-      return cornerRadius < 0 ? defaultCornerRadius : cornerRadius;
-    } catch (JSONException e) {
-      return defaultCornerRadius;
-    }
+    return super.getTextBackgroundColor(android.graphics.Color.TRANSPARENT);
   }
 
   public int getHeaderTextColor() {
-    return this.color.getColor(this.target, "headerTextColor", "#000000");
+    return this.color.getColor(this.target, "headerTextColor", "#272937");
   }
 
   @Nullable
@@ -52,7 +40,7 @@ public class ReadyScreen {
   }
 
   public int getSubtextColor() {
-    return this.color.getColor(this.target, "subtextColor", "#000000");
+    return this.color.getColor(this.target, "subtextColor", "#272937");
   }
 
   @Nullable

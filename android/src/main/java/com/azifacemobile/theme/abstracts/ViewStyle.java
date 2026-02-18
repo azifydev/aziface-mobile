@@ -57,6 +57,26 @@ public abstract class ViewStyle {
     return this.color.getColor(this.target, "textBackgroundColor", "#026ff4");
   }
 
+  public int getTextBackgroundColor(int defaultColor) {
+    return this.color.getColor(this.target, "textBackgroundColor", defaultColor);
+  }
+
+  public int getTextBackgroundBorderColor() {
+    return this.color.getColor(this.target, "textBackgroundBorderColor");
+  }
+
+  public int getTextBackgroundBorderWidth() {
+    final int defaultBorderWidth = -1;
+    final int borderWidth = this.getInt("textBackgroundBorderWidth", defaultBorderWidth);
+    return borderWidth < 0 ? defaultBorderWidth : borderWidth;
+  }
+
+  public int getTextBackgroundCornerRadius() {
+    final int defaultCornerRadius = -1;
+    final int cornerRadius = this.getInt("textBackgroundCornerRadius", defaultCornerRadius);
+    return cornerRadius < 0 ? defaultCornerRadius : cornerRadius;
+  }
+
   public int getBorderColor() {
     return this.color.getColor(this.target, "borderColor");
   }
@@ -74,6 +94,20 @@ public abstract class ViewStyle {
   public int getCornerRadius(int defaultCornerRadius) {
     final int cornerRadius = this.getInt("cornerRadius", defaultCornerRadius);
     return cornerRadius < 0 ? defaultCornerRadius : cornerRadius;
+  }
+
+  public int getStrokeWidth() {
+    final int defaultStrokeWidth = -1;
+    final int strokeWidth = this.getInt("strokeWidth", defaultStrokeWidth);
+    return strokeWidth < 0 ? defaultStrokeWidth : strokeWidth;
+  }
+
+  public int getStrokeColor() {
+    return this.color.getColor(this.target, "strokeColor");
+  }
+
+  public int getStrokeColor(String defaultColor) {
+    return this.color.getColor(this.target, "strokeColor", defaultColor);
   }
 
   public int getElevation() {
