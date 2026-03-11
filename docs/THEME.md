@@ -10,6 +10,7 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
 - [API](#api)
   - [`setTheme`](#settheme)
     - [Properties](#properties)
+  - [`resetTheme`](#resettheme)
 - [Types](#types)
   - [`Theme`](#theme)
     - [`CancelLocation`](#cancellocation)
@@ -35,10 +36,12 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
       - [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)
       - [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)
       - [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)
+      - [`ThemeIdScanAdditionalReview`](#themeidscanadditionalreview)
+      - [`ThemeIdScanIdFeedback`](#themeidscanidfeedback)
     - [`ThemeShadow` (iOS only)](#themeshadow-ios-only)
       - [`ThemeShadowInsets`](#themeshadowinsets)
       - [`ThemeShadowOffset`](#themeshadowoffset)
-- [How to add images in Aziface SDK module?](#how-to-add-images-in-aziface-sdk-module)
+- [Custom Images](#custom-images)
   - [Android](#android)
   - [iOS](#ios)
   - [Example](#example)
@@ -47,6 +50,8 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
   - [iOS](#ios-1)
   - [Example](#example-1)
 - [Colors Support](#colors-support)
+- [Limitations](#limitations)
+  - [Swap of Theme](#swap-theme)
 
 <hr/>
 
@@ -55,7 +60,7 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
 ```tsx
 // It's recommended to use it before calling the initialize function
 setTheme({
-  overlayBackgroundColor: '#f1f1f1',
+  backgroundColor: '#f1f1f1',
   // ...
 });
 
@@ -68,19 +73,26 @@ await initialize({
 
 ## API
 
-| Methods    | Return Type | Platform |
-| ---------- | ----------- | -------- |
-| `setTheme` | `void`      | All      |
+| Methods      | Return Type | Platform |
+| ------------ | ----------- | -------- |
+| `setTheme`   | `void`      | All      |
+| `resetTheme` | `void`      | All      |
 
 ### `setTheme`
 
-This method customize your SDK theme during session. **Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
+This method customize your SDK theme during session.
+
+**Note**: Currently, it's recommended testing the theme with a physical device. The SDK does not behave correctly with customizable themes in emulators.
 
 #### Properties
 
 | Property  | type              | Required | Default     |
 | --------- | ----------------- | -------- | ----------- |
 | `options` | [`Theme`](#theme) | ❌       | `undefined` |
+
+### `resetTheme`
+
+The `resetTheme` is a fallback method to return default theme.
 
 <hr/>
 
@@ -111,6 +123,8 @@ This method customize your SDK theme during session. **Note**: Currently, it's r
 | [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)    | All      |
 | [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)          | All      |
 | [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)        | All      |
+| [`ThemeIdScanAdditionalReview`](#themeidscanadditionalreview)  | All      |
+| [`ThemeIdScanIdFeedback`](#themeidscanidfeedback)              | All      |
 | [`ThemeShadow`](#themeshadow-ios-only)                         | iOS      |
 | [`ThemeShadowInsets`](#themeshadowinsets)                      | iOS      |
 | [`ThemeShadowOffset`](#themeshadowoffset)                      | iOS      |
@@ -121,16 +135,17 @@ This method customize your SDK theme during session. **Note**: Currently, it's r
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
 
-| `Theme`                  | type                                      | Platform | Required | Default     |
-| ------------------------ | ----------------------------------------- | -------- | -------- | ----------- |
-| `overlayBackgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
-| `image`                  | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
-| `frame`                  | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
-| `guidance`               | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
-| `oval`                   | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
-| `feedback`               | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
-| `resultScreen`           | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
-| `idScan`                 | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
+| `Theme`           | type                                      | Platform | Required | Default     |
+| ----------------- | ----------------------------------------- | -------- | -------- | ----------- |
+| `fontFamily`      | `string`                                  | All      | ❌       | `undefined` |
+| `backgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
+| `image`           | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
+| `frame`           | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
+| `guidance`        | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
+| `oval`            | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
+| `feedback`        | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
+| `resultScreen`    | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
+| `idScan`          | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
 
 #### `CancelLocation`
 
@@ -263,8 +278,6 @@ An object containing the styles used in the guidance view.
 | ----------------- | ------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
 | `backgroundColor` | `string` or `string[]`                                  | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
 | `foregroundColor` | `string`                                                | All      | ❌       | `#272937`                                              |
-| `headerFont`      | `string`                                                | All      | ❌       | `undefined`                                            |
-| `subtextFont`     | `string`                                                | All      | ❌       | `undefined`                                            |
 | `button`          | [`ThemeButton`](#themebutton)                           | All      | ❌       | `undefined`                                            |
 | `retryScreen`     | [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen) | All      | ❌       | `undefined`                                            |
 | `readyScreen`     | [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen) | All      | ❌       | `undefined`                                            |
@@ -280,9 +293,9 @@ An object containing the styles used in the guidance retry screen.
 | `imageBorderWidth`            | `number` | All      | ❌       | `undefined` |
 | `imageCornerRadius`           | `number` | All      | ❌       | `undefined` |
 | `ovalStrokeColor`             | `string` | All      | ❌       | `#ffffff`   |
-| `headerTextColor`             | `string` | All      | ❌       | `#000000`   |
+| `headerTextColor`             | `string` | All      | ❌       | `#272937`   |
 | `headerFont`                  | `string` | All      | ❌       | `undefined` |
-| `subtextColor`                | `string` | All      | ❌       | `#000000`   |
+| `subtextColor`                | `string` | All      | ❌       | `#272937`   |
 | `subtextFont`                 | `string` | All      | ❌       | `undefined` |
 | `textBackgroundColor`         | `string` | All      | ❌       | `undefined` |
 | `textBackgroundCornersRadius` | `number` | All      | ❌       | `undefined` |
@@ -291,13 +304,15 @@ An object containing the styles used in the guidance retry screen.
 
 An object containing the styles used in the guidance ready screen.
 
-| `ThemeGuidanceReadyScreen` | type     | Platform | Required | Default       |
-| -------------------------- | -------- | -------- | -------- | ------------- |
-| `headerTextColor`          | `string` | All      | ❌       | `#000000`     |
-| `headerFont`               | `string` | All      | ❌       | `undefined`   |
-| `ovalFillColor`            | `string` | All      | ❌       | `transparent` |
-| `subtextColor`             | `string` | All      | ❌       | `#000000`     |
-| `subtextFont`              | `string` | All      | ❌       | `undefined`   |
+| `ThemeGuidanceReadyScreen`   | type     | Platform | Required | Default       |
+| ---------------------------- | -------- | -------- | -------- | ------------- |
+| `headerTextColor`            | `string` | All      | ❌       | `#272937`     |
+| `headerFont`                 | `string` | All      | ❌       | `undefined`   |
+| `ovalFillColor`              | `string` | All      | ❌       | `transparent` |
+| `subtextColor`               | `string` | All      | ❌       | `#272937`     |
+| `subtextFont`                | `string` | All      | ❌       | `undefined`   |
+| `textBackgroundColor`        | `string` | All      | ❌       | `transparent` |
+| `textBackgroundCornerRadius` | `string` | All      | ❌       | `undefined`   |
 
 ##### `ThemeGuidanceImages`
 
@@ -423,28 +438,64 @@ An object containing the styles used in the ID scan selection screen.
 | ---------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
 | `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
 | `foregroundColor`            | `string`               | All      | ❌       | `#272937`                                              |
+| `documentImage`              | `string`               | All      | ❌       | `undefined`                                            |
+| `isShowDocumentImage`        | `boolean`              | All      | ❌       | `true`                                                 |
 
 ##### `ThemeIdScanReviewScreen`
 
 An object containing the styles used in the ID scan review screen.
 
-| `ThemeIdScanReviewScreen` | type                   | Platform | Required | Default                                                |
-| ------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`         | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`         | `string`               | All      | ❌       | `#ffffff`                                              |
-| `textBackgroundColor`     | `string`               | All      | ❌       | `#026ff4`                                              |
+| `ThemeIdScanReviewScreen`    | type                   | Platform | Required | Default                                                |
+| ---------------------------- | ---------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`            | `string` or `string[]` | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`            | `string`               | All      | ❌       | `#ffffff`                                              |
+| `textBackgroundColor`        | `string`               | All      | ❌       | `#026ff4`                                              |
+| `textBackgroundBorderColor`  | `string`               | All      | ❌       | `#ffffff`                                              |
+| `textBackgroundBorderWidth`  | `number`               | All      | ❌       | `undefined`                                            |
+| `textBackgroundCornerRadius` | `number`               | All      | ❌       | `undefined`                                            |
 
 ##### `ThemeIdScanCaptureScreen`
 
 An object containing the styles used in the ID scan capture screen.
 
-| `ThemeIdScanCaptureScreen` | type     | Platform | Required | Default     |
-| -------------------------- | -------- | -------- | -------- | ----------- |
-| `foregroundColor`          | `string` | All      | ❌       | `#ffffff`   |
-| `textBackgroundColor`      | `string` | All      | ❌       | `#ffffff`   |
-| `backgroundColor`          | `string` | All      | ❌       | `#026ff4`   |
-| `frameStrokeColor`         | `string` | All      | ❌       | `#ffffff`   |
-| `font`                     | `string` | All      | ❌       | `undefined` |
+| `ThemeIdScanCaptureScreen`   | type     | Platform | Required | Default     |
+| ---------------------------- | -------- | -------- | -------- | ----------- |
+| `foregroundColor`            | `string` | All      | ❌       | `#ffffff`   |
+| `backgroundColor`            | `string` | All      | ❌       | `#026ff4`   |
+| `textBackgroundColor`        | `string` | All      | ❌       | `#ffffff`   |
+| `textBackgroundBorderColor`  | `string` | All      | ❌       | `#ffffff`   |
+| `textBackgroundBorderWidth`  | `number` | All      | ❌       | `undefined` |
+| `textBackgroundCornerRadius` | `number` | All      | ❌       | `undefined` |
+| `strokeColor`                | `string` | All      | ❌       | `#ffffff`   |
+| `strokeWidth`                | `number` | All      | ❌       | `undefined` |
+| `cornerRadius`               | `number` | All      | ❌       | `undefined` |
+| `focusTextColor`             | `string` | All      | ❌       | `#ffffff`   |
+| `font`                       | `string` | All      | ❌       | `undefined` |
+
+##### `ThemeIdScanAdditionalReview`
+
+| `ThemeIdScanAdditionalReview`     | type      | Platform | Required | Default     |
+| --------------------------------- | --------- | -------- | -------- | ----------- |
+| `foregroundColor`                 | `string`  | All      | ❌       | `#272937`   |
+| `backgroundColor`                 | `string`  | All      | ❌       | `#ffffff`   |
+| `isDisableAdditionalReviewScreen` | `boolean` | All      | ❌       | `false`     |
+| `isEnableAdditionalReviewTag`     | `boolean` | All      | ❌       | `true`      |
+| `displayTime`                     | `number`  | All      | ❌       | `2.0`       |
+| `reviewImage`                     | `string`  | All      | ❌       | `undefined` |
+| `tagImage`                        | `string`  | All      | ❌       | `undefined` |
+| `tagImageColor`                   | `string`  | All      | ❌       | `#cc0044`   |
+| `tagTextColor`                    | `string`  | All      | ❌       | `#272937`   |
+
+##### `ThemeIdScanIdFeedback`
+
+| `ThemeIdScanIdFeedback`     | type      | Platform | Required | Default     |
+| --------------------------- | --------- | -------- | -------- | ----------- |
+| `foregroundColor`           | `string`  | All      | ❌       | `#272937`   |
+| `backgroundColor`           | `string`  | All      | ❌       | `#ffffff`   |
+| `isDisableIDFeedbackScreen` | `boolean` | All      | ❌       | `false`     |
+| `displayTime`               | `number`  | All      | ❌       | `2.0`       |
+| `flipIDBackImage`           | `string`  | All      | ❌       | `undefined` |
+| `flipIDFrontImage`          | `string`  | All      | ❌       | `undefined` |
 
 #### `ThemeShadow` (iOS only)
 
@@ -452,7 +503,7 @@ An object containing the shadow styles used during capture screen. If you want t
 
 | `ThemeShadow` | type                                      | Platform | Required | Default     |
 | ------------- | ----------------------------------------- | -------- | -------- | ----------- |
-| `color`       | `string`                                  | iOS      | ❌       | `#000000`   |
+| `color`       | `string`                                  | iOS      | ❌       | `#272937`   |
 | `opacity`     | `number`                                  | iOS      | ❌       | `1`         |
 | `radius`      | `number`                                  | iOS      | ❌       | `10`        |
 | `offset`      | [`ThemeShadowInsets`](#themeshadowoffset) | iOS      | ❌       | `undefined` |
@@ -480,7 +531,7 @@ An object containing the shadow offset styles used in screen.
 
 <hr/>
 
-## How to add images in Aziface SDK module?
+## Custom Images
 
 The `branding` and `cancel` properties represents your branding and icon of the button cancel. Does not possible to remove them from the module. Default are [Azify](https://www.azify.com/) images and `.png` format. By default in `Android` the branding image is shown, but on `iOS` it isn't shown, It's necessary to add manually.
 
@@ -617,3 +668,13 @@ Currently, the Aziface SDK theme accepts only hexadecimal colors in this format:
 - `#RGBA`
 - `#RRGGBB`
 - `#RRGGBBAA`
+
+<hr />
+
+## Limitations
+
+Nothing is perfect, there is always a problem 😅
+
+### Swap of Theme
+
+It's recommended to test the theme changes in physical devices because Aziface SDK behavior differs between physical and emulator devices. In the emulator, some styles, like background colors aren't applied correctly.
