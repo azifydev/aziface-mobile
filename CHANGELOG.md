@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/azifydev/aziface-mobile/compare/v3.8.0...v3.8.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **ios:** revert SDK version ([#27](https://github.com/azifydev/aziface-mobile/issues/27)) ([9280fd0](https://github.com/azifydev/aziface-mobile/commit/9280fd036b0efa0d4c010e3db274a3b08f8732fc))
+
 # [3.8.0](https://github.com/azifydev/aziface-mobile/compare/v3.7.0...v3.8.0) (2026-02-10)
 
 
