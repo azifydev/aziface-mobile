@@ -59,6 +59,10 @@ public class Config {
 
     let defaultCustomization = FaceTecCustomization()
 
+    //    defaultCustomization.initialLoadingAnimationCustomization
+    //    defaultCustomization.ocrConfirmationCustomization
+    //    defaultCustomization.orientationScreenCustomization
+
     let frameCustomization = defaultCustomization.frameCustomization
     let frame = theme.getFrame()
     frameCustomization.cornerRadius = frame.getCornerRadius()
@@ -101,9 +105,9 @@ public class Config {
     guidanceCustomization.readyScreenHeaderFont = guidanceReadyScreen.getHeaderFont()
     guidanceCustomization.readyScreenOvalFillColor = guidanceReadyScreen.getOvalFillColor()
     guidanceCustomization.readyScreenTextBackgroundColor =
-      guidanceReadyScreen.getTextBackgroudColor()
+      guidanceReadyScreen.getTextBackgroundColor()
     guidanceCustomization.readyScreenTextBackgroundCornerRadius =
-      guidanceReadyScreen.getTextBackgroudColorCornerRadius()
+      guidanceReadyScreen.getTextBackgroundColorCornerRadius()
     guidanceCustomization.retryScreenImageBorderColor = guidanceRetryScreen.getImageBorderColor()
     guidanceCustomization.retryScreenOvalStrokeColor = guidanceRetryScreen.getOvalStrokeColor()
     guidanceCustomization.retryScreenIdealImage = guidanceImage.getSource("ideal")
@@ -117,9 +121,9 @@ public class Config {
     let ovalCustomization = defaultCustomization.ovalCustomization
     let oval = theme.getOval()
     ovalCustomization.strokeColor = oval.getStrokeColor()
+    ovalCustomization.strokeWidth = oval.getStrokeWidth()
     ovalCustomization.progressColor1 = oval.getFirstProgressColor()
     ovalCustomization.progressColor2 = oval.getSecondProgressColor()
-    ovalCustomization.strokeWidth = oval.getStrokeWidth()
     ovalCustomization.progressStrokeWidth = oval.getProgressStrokeWidth()
     ovalCustomization.progressRadialOffset = oval.getProgressRadialOffset()
 
@@ -186,19 +190,45 @@ public class Config {
 
     let idScanCustomization = defaultCustomization.idScanCustomization
     let idScan = theme.getIdScan()
+    let idScanAdditionalReview = idScan.getAdditionalReview()
+    let idScanIdFeedback = idScan.getIdFeedback()
     let idScanSelectionScreen = idScan.getSelectionScreen()
     let idScanReviewScreen = idScan.getReviewScreen()
     let idScanCaptureScreen = idScan.getCaptureScreen()
     let idScanButton = idScan.getButton()
     idScanCustomization.headerFont = idScan.getHeaderFont()
     idScanCustomization.subtextFont = idScan.getSubtextFont()
+    idScanCustomization.inactiveTorchButtonImage = idScan.getInactiveTorchImage()
+    idScanCustomization.showFaceMatchToIDBrandingImage = idScan.getShowFaceMatchToIDBrandingImage()
+    idScanCustomization.faceMatchToIDBrandingImage = idScan.getFaceMatchToIDBrandingImage()
+    idScanCustomization.activeTorchButtonImage = idScan.getActiveTorchImage()
+    idScanCustomization.enableAdditionalReviewTag = idScanAdditionalReview.getEnableAdditionalReviewTag()
+    idScanCustomization.disableAdditionalReviewScreen = idScanAdditionalReview.getDisableAdditionalReviewScreen()
+    idScanCustomization.additionalReviewScreenAnimationDisplayTime = idScanAdditionalReview.getDisplayTime()
+        idScanCustomization.additionalReviewScreenBackgroundColors = idScanAdditionalReview.getBackgroundColors()
+    idScanCustomization.additionalReviewScreenForegroundColor = idScanAdditionalReview.getForegroundColor()
+    idScanCustomization.additionalReviewScreenImage = idScanAdditionalReview.getReviewImage()
+    idScanCustomization.additionalReviewTagImage = idScanAdditionalReview.getTagImage()
+    idScanCustomization.additionalReviewTagImageColor = idScanAdditionalReview.getTagImageColor()
+    idScanCustomization.additionalReviewTagTextColor = idScanAdditionalReview.getTagTextColor()
+    idScanCustomization.disableIDFeedbackScreen = idScanIdFeedback.getDisableIDFeedbackScreen()
+    idScanCustomization.idFeedbackScreenForegroundColor = idScanIdFeedback.getForegroundColor()
+    idScanCustomization.idFeedbackScreenBackgroundColors = idScanIdFeedback.getBackgroundColors()
+    idScanCustomization.idFeedbackScreenAnimationDisplayTime = idScanIdFeedback.getDisplayTime()
+    idScanCustomization.idFeedbackScreenFlipIDBackImage = idScanIdFeedback.getFlipIDBackImage()
+    idScanCustomization.idFeedbackScreenFlipIDFrontImage = idScanIdFeedback.getFlipIDFrontImage()
     idScanCustomization.selectionScreenBackgroundColors =
       idScanSelectionScreen.getBackgroundColors()
     idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor()
+    idScanCustomization.selectionScreenDocumentImage = idScanSelectionScreen.getDocumentImage()
+    idScanCustomization.showSelectionScreenDocumentImage = idScanSelectionScreen.getShowDocumentImage()
     idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor()
     idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColors()
     idScanCustomization.reviewScreenTextBackgroundColor =
       idScanReviewScreen.getTextBackgroundColor()
+    idScanCustomization.reviewScreenTextBackgroundBorderColor = idScanReviewScreen.getTextBackgroundBorderColor()
+    idScanCustomization.reviewScreenTextBackgroundBorderWidth = idScanReviewScreen.getTextBackgroundBorderWidth()
+    idScanCustomization.reviewScreenTextBackgroundCornerRadius = idScanReviewScreen.getTextBackgroundCornerRadius()
     idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor()
     idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor()
     idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor()
@@ -206,12 +236,21 @@ public class Config {
     idScanCustomization.buttonTextDisabledColor = idScanButton.getTextDisabledColor()
     idScanCustomization.buttonTextHighlightColor = idScanButton.getTextHighlightColor()
     idScanCustomization.buttonFont = idScanButton.getFont()
+    idScanCustomization.buttonBorderColor = idScanButton.getBorderColor()
+    idScanCustomization.buttonBorderWidth = idScanButton.getBorderWidth()
+    idScanCustomization.buttonCornerRadius = idScanButton.getCornerRadius()
     idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor()
     idScanCustomization.captureScreenTextBackgroundColor =
       idScanCaptureScreen.getTextBackgroundColor()
+    idScanCustomization.captureScreenTextBackgroundBorderColor = idScanCaptureScreen.getTextBackgroundBorderColor()
+    idScanCustomization.captureScreenTextBackgroundBorderWidth = idScanCaptureScreen.getTextBackgroundBorderWidth()
+    idScanCustomization.captureScreenTextBackgroundCornerRadius = idScanCaptureScreen.getTextBackgroundCornerRadius()
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor()
-    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getFrameStrokeColor()
     idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont()
+    idScanCustomization.captureScreenFocusMessageTextColor = idScanCaptureScreen.getFocusTextColor()
+    idScanCustomization.captureFrameStrokeWith = idScanCaptureScreen.getStrokeWidth()
+    idScanCustomization.captureFrameStrokeColor = idScanCaptureScreen.getStrokeColor()
+    idScanCustomization.captureFrameCornerRadius = idScanCaptureScreen.getCornerRadius()
 
     return defaultCustomization
   }

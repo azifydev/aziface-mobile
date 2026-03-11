@@ -28,7 +28,8 @@ public class ResultAnimation: ViewStyle {
       return defaultDisplayTime
     }
     
-    return (self.target?[key] ?? defaultDisplayTime) as! Double
+    let displayTime = self.target?[key] as! Double
+    return displayTime < 0 ? defaultDisplayTime : displayTime
   }
   
   public func getIDScanSuccessForegroundColor() -> UIColor {
