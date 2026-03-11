@@ -138,9 +138,9 @@ public class Config {
     FaceTecOvalCustomization ovalCustomization = defaultCustomization.getOvalCustomization();
     Oval oval = theme.getOval();
     ovalCustomization.strokeColor = oval.getStrokeColor();
+    ovalCustomization.strokeWidth = oval.getStrokeWidth();
     ovalCustomization.progressColor1 = oval.getFirstProgressColor();
     ovalCustomization.progressColor2 = oval.getSecondProgressColor();
-    ovalCustomization.strokeWidth = oval.getStrokeWidth();
     ovalCustomization.progressRadialOffset = oval.getProgressRadialOffset();
     ovalCustomization.progressStrokeWidth = oval.getProgressStrokeWidth();
 

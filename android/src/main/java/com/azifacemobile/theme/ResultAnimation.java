@@ -38,7 +38,8 @@ public class ResultAnimation extends ViewStyle {
         return defaultDisplayTime;
       }
 
-      return this.target.getDouble(key);
+      final double displayTime = this.target.getDouble(key);
+      return displayTime < 0 ? defaultDisplayTime : displayTime;
     } catch (JSONException e) {
       return defaultDisplayTime;
     }

@@ -60,10 +60,6 @@ public class IdScan {
     return this.font.getTypography(this.target, "subtextFont");
   }
 
-  public Button getButton() {
-    return this.button;
-  }
-
   public int getInactiveTorchImage() {
     return this.image.getSource("inactiveTorchImage", R.drawable.facetec_inactive_torch);
   }
@@ -74,6 +70,10 @@ public class IdScan {
 
   public int getFaceMatchToIDBrandingImage() {
     return this.image.getSource("faceMatchToIDBrandingImage");
+  }
+
+  public Button getButton() {
+    return this.button;
   }
 
   public SelectionScreen getSelectionScreen() {
