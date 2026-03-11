@@ -23,6 +23,7 @@ export interface Spec extends TurboModule {
   setDynamicStrings(strings?: UnsafeObject): void;
   resetDynamicStrings(): void;
   setTheme(options?: UnsafeObject): void;
+  resetTheme(): void;
   vocal(): void;
 }
 

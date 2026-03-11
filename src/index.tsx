@@ -1627,7 +1627,7 @@ export interface ThemeShadow {
   /**
    * @description The shadow color style of the view.
    *
-   * @default '#000000'
+   * @default '#272937'
    */
   color?: string;
 
@@ -2121,7 +2121,7 @@ export interface ThemeGuidanceRetryScreen {
    * @description Represents the header text color style of the guidance retry
    * screen.
    *
-   * @default '#000000'
+   * @default '#272937'
    */
   headerTextColor?: string;
 
@@ -2137,7 +2137,7 @@ export interface ThemeGuidanceRetryScreen {
    * @description Represents the subtext color style of the guidance retry
    * screen.
    *
-   * @default '#000000'
+   * @default '#272937'
    */
   subtextColor?: string;
 
@@ -2182,7 +2182,7 @@ export interface ThemeGuidanceReadyScreen {
    * @description Represents the header text color style of the guidance ready
    * screen.
    *
-   * @default '#000000'
+   * @default '#272937'
    */
   headerTextColor?: string;
 
@@ -2205,7 +2205,7 @@ export interface ThemeGuidanceReadyScreen {
    * @description Represents the subtext color style of the guidance ready
    * screen.
    *
-   * @default '#000000'
+   * @default '#272937'
    */
   subtextColor?: string;
 
@@ -2262,20 +2262,6 @@ export interface ThemeGuidance {
    * @default '#272937'
    */
   foregroundColor?: string;
-
-  /**
-   * @description Represents the header font family style of the guidance text.
-   *
-   * @default undefined
-   */
-  headerFont?: string;
-
-  /**
-   * @description Represents the subtext font family style of the guidance text.
-   *
-   * @default undefined
-   */
-  subtextFont?: string;
 
   /**
    * @description Represents the button styles used in the Aziface SDK.
@@ -2453,33 +2439,231 @@ export interface ThemeIdScanCaptureScreen {
    * @description Represents the background color style of the ID scan
    * capture view.
    *
-   * @default '#ffffff'
-   */
-  textBackgroundColor?: string;
-
-  /**
-   * @description Represents the background color style of the ID scan
-   * capture view.
-   *
    * @default '#026ff4'
    */
   backgroundColor?: string;
 
   /**
-   * @description Represents the border color style of the ID scan capture
+   * @description Represents the background color style of the ID scan
+   * capture view.
+   *
+   * @default '#ffffff'
+   */
+  textBackgroundColor?: string;
+
+  /**
+   * @description Represents the border color style of the ID scan capture view
+   * text background.
+   *
+   * @default '#ffffff'
+   */
+  textBackgroundBorderColor?: string;
+
+  /**
+   * @description Represents the border width style of the ID scan capture view
+   * text background.
+   *
+   * @default undefined
+   */
+  textBackgroundBorderWidth?: number;
+
+  /**
+   * @description Represents the corner radius style of the ID scan capture view
+   * text background.
+   *
+   * @default undefined
+   */
+  textBackgroundCornerRadius?: number;
+
+  /**
+   * @description Represents the frame stroke color style of the ID scan capture
    * camera.
    *
    * @default '#ffffff'
    */
-  frameStrokeColor?: string;
+  strokeColor?: string;
 
   /**
-   * @description Represents the font family style of the ID scan capture
+   * @description Represents the frame stroke width style of the ID scan capture
+   * camera.
+   *
+   * @default undefined
+   */
+  strokeWidth?: number;
+
+  /**
+   * @description Represents the frame corner radius style of the ID scan
+   * capture camera.
+   *
+   * @default undefined
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the focus text color style of the ID scan capture
+   * camera.
+   *
+   * @default '#ffffff'
+   */
+  focusTextColor?: string;
+
+  /**
+   * @description Represents the focus font family style of the ID scan capture
    * camera text.
    *
    * @default undefined
    */
   font?: string;
+}
+
+/**
+ * @interface ThemeIdScanAdditionalReview
+ *
+ * @description An object containing the styles used in the ID scan additional
+ * review screen.
+ */
+export interface ThemeIdScanAdditionalReview {
+  /**
+   * @description Represents the foreground color style of the additional
+   * review screen.
+   *
+   * @default '#272937'
+   */
+  foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the additional
+   * review screen.
+   *
+   * @default '#ffffff'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description A boolean value to show or hide the additional review screen
+   * after the ID scan review screen when the user fails the face match with
+   * the ID photo. If you set this property to true, the user will see an
+   * additional review screen with the face match result and the option to
+   * retake the ID scan or continue with the face match result.
+   *
+   * @default false
+   */
+  isDisableAdditionalReviewScreen?: boolean;
+
+  /**
+   * @description A boolean value to show or hide the additional review tag in
+   * the ID scan review screen when the user fails the face match with the ID
+   * photo. If you set this property to true, the user will see an additional
+   * review tag in the ID scan review screen with the face match result.
+   *
+   * @default true
+   */
+  isEnableAdditionalReviewTag?: boolean;
+
+  /**
+   * @description Represents the display time style of the additional review
+   * tag in seconds.
+   *
+   * @default 2.0
+   */
+  displayTime?: number;
+
+  /**
+   * @description Represents the image asset name of the additional review tag
+   * in the ID scan review screen when the user fails the face match with the
+   * ID photo. The image name must be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  reviewImage?: string;
+
+  /**
+   * @description Represents the image asset name of the additional review tag
+   * in the ID scan review screen when the user fails the face match with the
+   * ID photo. The image name must be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  tagImage?: string;
+
+  /**
+   * @description Represents the color style of the additional review tag in
+   * the ID scan review screen when the user fails the face match with the ID
+   * photo.
+   *
+   * @default '#cc0044'
+   */
+  tagImageColor?: string;
+
+  /**
+   * @description Represents the color style of the additional review tag text
+   * in the ID scan review screen when the user fails the face match with the
+   * ID photo.
+   *
+   * @default '#272937'
+   */
+  tagTextColor?: string;
+}
+
+/**
+ * @interface ThemeIdScanIdFeedback
+ *
+ * @description An object containing the styles used in the ID scan feedback
+ * screen.
+ */
+export interface ThemeIdScanIdFeedback {
+  /**
+   * @description Represents the foreground color style of the ID scan feedback
+   * screen.
+   *
+   * @default '#272937'
+   */
+  foregroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the ID scan feedback
+   * screen.
+   *
+   * @default '#ffffff'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description A boolean value to show or hide the ID scan feedback screen
+   * after the ID scan review screen when the user fails the face match with
+   * the ID photo. If you set this property to true, the user will see an ID
+   * scan feedback screen with the face match result and the option to retake
+   * the ID scan or continue with the face match result.
+   *
+   * @default false
+   */
+  isDisableIDFeedbackScreen?: boolean;
+
+  /**
+   * @description Represents the display time style of the ID scan feedback
+   * screen in seconds.
+   *
+   * @default 2.0
+   */
+  displayTime?: number;
+
+  /**
+   * @description Represents the image asset name of the ID scan feedback screen
+   * when the user fails the face match with the ID photo. The image name must
+   * be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  flipIDBackImage?: string;
+
+  /**
+   * @description Represents the image asset name of the ID scan feedback screen
+   * when the user fails the face match with the ID photo. The image name must
+   * be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  flipIDFrontImage?: string;
 }
 
 /**
@@ -2514,11 +2698,35 @@ export interface ThemeIdScanReviewScreen {
 
   /**
    * @description Represents the background color style of the ID scan
-   * review label.
+   * review text background.
    *
    * @default '#026ff4'
    */
   textBackgroundColor?: string;
+
+  /**
+   * @description Represents the border color style of the ID scan review view
+   * text background.
+   *
+   * @default '#ffffff'
+   */
+  textBackgroundBorderColor?: string;
+
+  /**
+   * @description Represents the border width style of the ID scan review view
+   * text background.
+   *
+   * @default undefined
+   */
+  textBackgroundBorderWidth?: number;
+
+  /**
+   * @description Represents the corner radius style of the ID scan review view
+   * text background.
+   *
+   * @default undefined
+   */
+  textBackgroundCornerRadius?: number;
 }
 
 /**
@@ -2549,6 +2757,22 @@ export interface ThemeIdScanSelectionScreen {
    * @default '#272937'
    */
   foregroundColor?: string;
+
+  /**
+   * @description Represents the document image of the ID scan selection
+   * screen.
+   *
+   * @default undefined
+   */
+  documentImage?: string;
+
+  /**
+   * @description A boolean value to show or hide the document image in the ID
+   * scan selection screen.
+   *
+   * @default true
+   */
+  isShowDocumentImage?: boolean;
 }
 
 /**
@@ -2570,6 +2794,41 @@ export interface ThemeIdScan {
    * @default undefined
    */
   subtextFont?: string;
+
+  /**
+   * @description Represents the image asset name of the inactive torch button
+   * in the ID scan screens. The image name must be to inserted with no
+   * extension format.
+   *
+   * @default undefined
+   */
+  inactiveTorchImage?: string;
+
+  /**
+   * @description Represents the image asset name of the active torch button in
+   * the ID scan screens. The image name must be to inserted with no extension
+   * format.
+   *
+   * @default undefined
+   */
+  activeTorchImage?: string;
+
+  /**
+   * @description Represents the branding image asset name of the face match in
+   * the ID scan screens. The image name must be to inserted with no extension
+   * format.
+   *
+   * @default undefined
+   */
+  faceMatchToIDBrandingImage?: string;
+
+  /**
+   * @description A boolean value to show or hide the branding image of the face
+   * match in the ID scan screens.
+   *
+   * @default false
+   */
+  isShowFaceMatchToIDBrandingImage?: boolean;
 
   /**
    * @description An object containing the styles used in the ID scan
@@ -2596,6 +2855,22 @@ export interface ThemeIdScan {
   captureScreen?: ThemeIdScanCaptureScreen;
 
   /**
+   * @description An object containing the styles used in the ID scan additional
+   * review screen.
+   *
+   * @default undefined
+   */
+  additionalReview?: ThemeIdScanAdditionalReview;
+
+  /**
+   * @description An object containing the styles used in the ID scan feedback
+   * screen.
+   *
+   * @default undefined
+   */
+  idFeedback?: ThemeIdScanIdFeedback;
+
+  /**
    * @description Represents the button styles used in the Aziface SDK.
    *
    * @default undefined
@@ -2611,11 +2886,23 @@ export interface ThemeIdScan {
  */
 export interface Theme {
   /**
+   * @description Represents the global font family style of the text in the
+   * Aziface SDK. This property set globally the font family style for
+   * **all text** in the Aziface SDK, but if you set the font family style in
+   * a specific property like feedback or guidance, the font family style in
+   * the specific property will be **priority** over the global font family
+   * style.
+   *
+   * @default undefined
+   */
+  fontFamily?: string;
+
+  /**
    * @description Represents the background color style of the main view.
    *
    * @default '#ffffff'
    */
-  overlayBackgroundColor?: string;
+  backgroundColor?: string;
 
   /**
    * @description An object containing the image assets used in the Aziface
@@ -3367,6 +3654,17 @@ export function resetDynamicStrings(): void {
  */
 export function setTheme(options?: Theme): void {
   AzifaceMobile.setTheme(options);
+}
+
+/**
+ * @description This method must be used to **reset** the **theme** of the
+ * Aziface SDK screen. It's recommend called this method **before** the
+ * `initialize` method.
+ *
+ * @return {void}
+ */
+export function resetTheme(): void {
+  AzifaceMobile.resetTheme();
 }
 
 // Components
