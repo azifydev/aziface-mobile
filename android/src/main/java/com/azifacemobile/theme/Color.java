@@ -6,7 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Color {
-  private static final String DEFAULT_COLOR = "#ffffff";
+  public static final String TRANSPARENT = "#00000000";
+  private static final String DEFAULT_COLOR = "#FFFFFF";
   private final Theme theme;
 
   public Color() {

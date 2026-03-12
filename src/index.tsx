@@ -1998,14 +1998,6 @@ export interface ThemeResultAnimation {
   foregroundColor?: string;
 
   /**
-   * @description Represents the display time style of the result animation in
-   * seconds.
-   *
-   * @default 2.5
-   */
-  displayTime?: number;
-
-  /**
    * @description Represents the background color style of the success result
    * animation.
    *
@@ -2340,15 +2332,6 @@ export interface ThemeResultScreen {
   activityIndicatorColor?: string;
 
   /**
-   * @description Represents the indicator image asset name of the result
-   * screen during loading. The image name must be to inserted with no
-   * extension format.
-   *
-   * @default undefined
-   */
-  indicatorImage?: string;
-
-  /**
    * @description Represents the progress bar fill color style of the result
    * screen during loading.
    *
@@ -2371,38 +2354,6 @@ export interface ThemeResultScreen {
    * @default true
    */
   isShowUploadProgressBar?: boolean;
-
-  /**
-   * @description Represents the animation relative scale style of the result
-   * screen.
-   *
-   * @default 1
-   */
-  animationRelativeScale?: number;
-
-  /**
-   * @description Represents the delay time style of the face scan still
-   * uploading message in seconds.
-   *
-   * @default 6
-   */
-  faceScanStillUploadingMessageDelayTime?: number;
-
-  /**
-   * @description Represents the delay time style of the ID scan still
-   * uploading message in seconds.
-   *
-   * @default 8
-   */
-  idScanStillUploadingMessageDelayTime?: number;
-
-  /**
-   * @description Represents the indicator rotation interval style of the
-   * result screen during loading in milliseconds.
-   *
-   * @default 1000
-   */
-  indicatorRotationInterval?: number;
 
   /**
    * @description Represents the result animation styles of the result screen.
@@ -2561,14 +2512,6 @@ export interface ThemeIdScanAdditionalReview {
   isEnableAdditionalReviewTag?: boolean;
 
   /**
-   * @description Represents the display time style of the additional review
-   * tag in seconds.
-   *
-   * @default 2.0
-   */
-  displayTime?: number;
-
-  /**
    * @description Represents the image asset name of the additional review tag
    * in the ID scan review screen when the user fails the face match with the
    * ID photo. The image name must be to inserted with no extension format.
@@ -2638,14 +2581,6 @@ export interface ThemeIdScanIdFeedback {
    * @default false
    */
   isDisableIDFeedbackScreen?: boolean;
-
-  /**
-   * @description Represents the display time style of the ID scan feedback
-   * screen in seconds.
-   *
-   * @default 2.0
-   */
-  displayTime?: number;
 
   /**
    * @description Represents the image asset name of the ID scan feedback screen
@@ -2879,6 +2814,38 @@ export interface ThemeIdScan {
 }
 
 /**
+ * @interface ThemeInitialLoadingAnimation
+ *
+ * @description An object containing the animation styles used in the initial
+ * loading animation.
+ */
+export interface ThemeInitialLoadingAnimation {
+  /**
+   * @description Represents the track color style of the initial loading
+   * animation.
+   *
+   * @default 'transparent'
+   */
+  trackColor?: string;
+
+  /**
+   * @description Represents the fill and text color style of the initial
+   * loading animation.
+   *
+   * @default '#026ff4'
+   */
+  fillColor?: string;
+
+  /**
+   * @description Represents the font family style of the initial loading
+   * animation text.
+   *
+   * @default undefined
+   */
+  font?: string;
+}
+
+/**
  * @interface Theme
  *
  * @description An object with all the properties to will be used to set the
@@ -2955,6 +2922,14 @@ export interface Theme {
    * @default undefined
    */
   idScan?: ThemeIdScan;
+
+  /**
+   * @description An object containing the animation styles used in the initial
+   * loading animation.
+   *
+   * @default undefined
+   */
+  initialLoadingAnimation?: ThemeInitialLoadingAnimation;
 }
 
 // Modules

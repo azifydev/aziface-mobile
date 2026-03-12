@@ -11,6 +11,7 @@ public class Theme {
   private let feedback: Feedback
   private let resultScreen: ResultScreen
   private let idScan: IdScan
+  private let initialLoadingAnimation: InitialLoadingAnimation
   public static var Style: NSDictionary?
 
   init() {
@@ -22,6 +23,7 @@ public class Theme {
     self.feedback = Feedback()
     self.resultScreen = ResultScreen()
     self.idScan = IdScan()
+    self.initialLoadingAnimation = InitialLoadingAnimation()
   }
 
   @available(iOS 8.2, *)
@@ -92,5 +94,9 @@ public class Theme {
 
   public func getIdScan() -> IdScan {
     return self.idScan
+  }
+  
+  public func getInitialLoadingAnimation() -> InitialLoadingAnimation {
+    return self.initialLoadingAnimation
   }
 }

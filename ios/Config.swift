@@ -59,7 +59,14 @@ public class Config {
 
     let defaultCustomization = FaceTecCustomization()
 
-    //    defaultCustomization.initialLoadingAnimationCustomization
+    let initialLoadingAnimationCustomization = defaultCustomization.initialLoadingAnimationCustomization
+    let initialLoadingAnimation = theme.getInitialLoadingAnimation()
+    initialLoadingAnimationCustomization.backgroundColors = [initialLoadingAnimation.getTrackColor()]
+    initialLoadingAnimationCustomization.defaultAnimationBackgroundColor = initialLoadingAnimation.getTrackColor()
+    initialLoadingAnimationCustomization.foregroundColor = initialLoadingAnimation.getFillColor()
+    initialLoadingAnimationCustomization.defaultAnimationForegroundColor = initialLoadingAnimation.getFillColor()
+    initialLoadingAnimationCustomization.messageFont = initialLoadingAnimation.getFont()
+    
     //    defaultCustomization.ocrConfirmationCustomization
     //    defaultCustomization.orientationScreenCustomization
 
@@ -153,22 +160,11 @@ public class Config {
     resultScreenCustomization.activityIndicatorColor = resultScreen.getActivityIndicatorColor()
     resultScreenCustomization.uploadProgressFillColor = resultScreen.getUploadProgressFillColor()
     resultScreenCustomization.uploadProgressTrackColor = resultScreen.getUploadProgressTrackColor()
-    resultScreenCustomization.animationRelativeScale = resultScreen.getAnimationRelativeScale()
     resultScreenCustomization.showUploadProgressBar = resultScreen.getShowUploadProgressBar()
-    resultScreenCustomization.customActivityIndicatorImage =
-      resultScreen.getActivityIndicatorImage()
-    resultScreenCustomization.customActivityIndicatorRotationInterval =
-      resultScreen.getIndicatorRotationInterval()
-    resultScreenCustomization.faceScanStillUploadingMessageDelayTime =
-      resultScreen.getFaceScanStillUploadingMessageDelayTime()
-    resultScreenCustomization.idScanStillUploadingMessageDelayTime =
-      resultScreen.getIdScanStillUploadingMessageDelayTime()
     resultScreenCustomization.resultAnimationBackgroundColor =
       resultScreenResultAnimation.getBackgroundColor()
     resultScreenCustomization.resultAnimationForegroundColor =
       resultScreenResultAnimation.getForegroundColor()
-    resultScreenCustomization.resultAnimationDisplayTime =
-      resultScreenResultAnimation.getDisplayTime()
     resultScreenCustomization.resultAnimationIDScanSuccessForegroundColor =
       resultScreenResultAnimation.getIDScanSuccessForegroundColor()
     resultScreenCustomization.resultAnimationSuccessBackgroundImage =
@@ -202,11 +198,14 @@ public class Config {
     idScanCustomization.showFaceMatchToIDBrandingImage = idScan.getShowFaceMatchToIDBrandingImage()
     idScanCustomization.faceMatchToIDBrandingImage = idScan.getFaceMatchToIDBrandingImage()
     idScanCustomization.activeTorchButtonImage = idScan.getActiveTorchImage()
-    idScanCustomization.enableAdditionalReviewTag = idScanAdditionalReview.getEnableAdditionalReviewTag()
-    idScanCustomization.disableAdditionalReviewScreen = idScanAdditionalReview.getDisableAdditionalReviewScreen()
-    idScanCustomization.additionalReviewScreenAnimationDisplayTime = idScanAdditionalReview.getDisplayTime()
-        idScanCustomization.additionalReviewScreenBackgroundColors = idScanAdditionalReview.getBackgroundColors()
-    idScanCustomization.additionalReviewScreenForegroundColor = idScanAdditionalReview.getForegroundColor()
+    idScanCustomization.enableAdditionalReviewTag =
+      idScanAdditionalReview.getEnableAdditionalReviewTag()
+    idScanCustomization.disableAdditionalReviewScreen =
+      idScanAdditionalReview.getDisableAdditionalReviewScreen()
+    idScanCustomization.additionalReviewScreenBackgroundColors =
+      idScanAdditionalReview.getBackgroundColors()
+    idScanCustomization.additionalReviewScreenForegroundColor =
+      idScanAdditionalReview.getForegroundColor()
     idScanCustomization.additionalReviewScreenImage = idScanAdditionalReview.getReviewImage()
     idScanCustomization.additionalReviewTagImage = idScanAdditionalReview.getTagImage()
     idScanCustomization.additionalReviewTagImageColor = idScanAdditionalReview.getTagImageColor()
@@ -214,21 +213,24 @@ public class Config {
     idScanCustomization.disableIDFeedbackScreen = idScanIdFeedback.getDisableIDFeedbackScreen()
     idScanCustomization.idFeedbackScreenForegroundColor = idScanIdFeedback.getForegroundColor()
     idScanCustomization.idFeedbackScreenBackgroundColors = idScanIdFeedback.getBackgroundColors()
-    idScanCustomization.idFeedbackScreenAnimationDisplayTime = idScanIdFeedback.getDisplayTime()
     idScanCustomization.idFeedbackScreenFlipIDBackImage = idScanIdFeedback.getFlipIDBackImage()
     idScanCustomization.idFeedbackScreenFlipIDFrontImage = idScanIdFeedback.getFlipIDFrontImage()
     idScanCustomization.selectionScreenBackgroundColors =
       idScanSelectionScreen.getBackgroundColors()
     idScanCustomization.selectionScreenForegroundColor = idScanSelectionScreen.getForegroundColor()
     idScanCustomization.selectionScreenDocumentImage = idScanSelectionScreen.getDocumentImage()
-    idScanCustomization.showSelectionScreenDocumentImage = idScanSelectionScreen.getShowDocumentImage()
+    idScanCustomization.showSelectionScreenDocumentImage =
+      idScanSelectionScreen.getShowDocumentImage()
     idScanCustomization.reviewScreenForegroundColor = idScanReviewScreen.getForegroundColor()
     idScanCustomization.reviewScreenBackgroundColors = idScanReviewScreen.getBackgroundColors()
     idScanCustomization.reviewScreenTextBackgroundColor =
       idScanReviewScreen.getTextBackgroundColor()
-    idScanCustomization.reviewScreenTextBackgroundBorderColor = idScanReviewScreen.getTextBackgroundBorderColor()
-    idScanCustomization.reviewScreenTextBackgroundBorderWidth = idScanReviewScreen.getTextBackgroundBorderWidth()
-    idScanCustomization.reviewScreenTextBackgroundCornerRadius = idScanReviewScreen.getTextBackgroundCornerRadius()
+    idScanCustomization.reviewScreenTextBackgroundBorderColor =
+      idScanReviewScreen.getTextBackgroundBorderColor()
+    idScanCustomization.reviewScreenTextBackgroundBorderWidth =
+      idScanReviewScreen.getTextBackgroundBorderWidth()
+    idScanCustomization.reviewScreenTextBackgroundCornerRadius =
+      idScanReviewScreen.getTextBackgroundCornerRadius()
     idScanCustomization.buttonBackgroundNormalColor = idScanButton.getBackgroundNormalColor()
     idScanCustomization.buttonBackgroundDisabledColor = idScanButton.getBackgroundDisabledColor()
     idScanCustomization.buttonBackgroundHighlightColor = idScanButton.getBackgroundHighlightColor()
@@ -242,9 +244,12 @@ public class Config {
     idScanCustomization.captureScreenForegroundColor = idScanCaptureScreen.getForegroundColor()
     idScanCustomization.captureScreenTextBackgroundColor =
       idScanCaptureScreen.getTextBackgroundColor()
-    idScanCustomization.captureScreenTextBackgroundBorderColor = idScanCaptureScreen.getTextBackgroundBorderColor()
-    idScanCustomization.captureScreenTextBackgroundBorderWidth = idScanCaptureScreen.getTextBackgroundBorderWidth()
-    idScanCustomization.captureScreenTextBackgroundCornerRadius = idScanCaptureScreen.getTextBackgroundCornerRadius()
+    idScanCustomization.captureScreenTextBackgroundBorderColor =
+      idScanCaptureScreen.getTextBackgroundBorderColor()
+    idScanCustomization.captureScreenTextBackgroundBorderWidth =
+      idScanCaptureScreen.getTextBackgroundBorderWidth()
+    idScanCustomization.captureScreenTextBackgroundCornerRadius =
+      idScanCaptureScreen.getTextBackgroundCornerRadius()
     idScanCustomization.captureScreenBackgroundColor = idScanCaptureScreen.getBackgroundColor()
     idScanCustomization.captureScreenFocusMessageFont = idScanCaptureScreen.getFont()
     idScanCustomization.captureScreenFocusMessageTextColor = idScanCaptureScreen.getFocusTextColor()

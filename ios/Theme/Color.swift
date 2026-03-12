@@ -1,6 +1,7 @@
 import Foundation
 
 public class Color {
+  public static let TRANSPARENT: String = "#00000000"
   private static let DEFAULT_COLOR: String = "#ffffff"
   private let style: Style
 

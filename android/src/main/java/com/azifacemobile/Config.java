@@ -82,7 +82,13 @@ public class Config {
 
     FaceTecCustomization defaultCustomization = new FaceTecCustomization();
 
-//    defaultCustomization.getInitialLoadingAnimationCustomization();
+    FaceTecInitialLoadingAnimationCustomization initialLoadingAnimationCustomization = defaultCustomization.getInitialLoadingAnimationCustomization();
+    InitialLoadingAnimation initialLoadingAnimation = theme.getInitialLoadingAnimation();
+    initialLoadingAnimationCustomization.backgroundColors = initialLoadingAnimation.getTrackColor();
+    initialLoadingAnimationCustomization.defaultAnimationBackgroundColor = initialLoadingAnimation.getTrackColor();
+    initialLoadingAnimationCustomization.foregroundColor = initialLoadingAnimation.getFillColor();
+    initialLoadingAnimationCustomization.defaultAnimationForegroundColor = initialLoadingAnimation.getFillColor();
+    initialLoadingAnimationCustomization.messageFont = initialLoadingAnimation.getFont();
 //    defaultCustomization.getOcrConfirmationCustomization();
 //    defaultCustomization.getOrientationScreenCustomization();
 
@@ -170,14 +176,8 @@ public class Config {
     resultScreenCustomization.showUploadProgressBar = resultScreen.getShowUploadProgressBar();
     resultScreenCustomization.uploadProgressFillColor = resultScreen.getUploadProgressFillColor();
     resultScreenCustomization.uploadProgressTrackColor = resultScreen.getUploadProgressTrackColor();
-    resultScreenCustomization.animationRelativeScale = resultScreen.getAnimationRelativeScale();
-    resultScreenCustomization.customActivityIndicatorImage = resultScreen.getActivityIndicatorImage();
-    resultScreenCustomization.customActivityIndicatorRotationInterval = resultScreen.getIndicatorRotationInterval();
-    resultScreenCustomization.faceScanStillUploadingMessageDelayTime = resultScreen.getFaceScanStillUploadingMessageDelayTime();
-    resultScreenCustomization.idScanStillUploadingMessageDelayTime = resultScreen.getIdScanStillUploadingMessageDelayTime();
     resultScreenCustomization.resultAnimationBackgroundColor = resultScreenResultAnimation.getBackgroundColor();
     resultScreenCustomization.resultAnimationForegroundColor = resultScreenResultAnimation.getForegroundColor();
-    resultScreenCustomization.resultAnimationDisplayTime = resultScreenResultAnimation.getDisplayTime();
     resultScreenCustomization.resultAnimationIDScanSuccessForegroundColor = resultScreenResultAnimation.getIDScanSuccessForegroundColor();
     resultScreenCustomization.resultAnimationSuccessBackgroundImage = resultScreenResultAnimation.getSuccessBackgroundImage();
     resultScreenCustomization.resultAnimationUnsuccessBackgroundColor = resultScreenResultAnimation.getUnsuccessBackgroundColor();
@@ -204,7 +204,6 @@ public class Config {
     idScanCustomization.faceMatchToIDBrandingImage = idScan.getFaceMatchToIDBrandingImage();
     idScanCustomization.showFaceMatchToIDBrandingImage = idScan.getShowFaceMatchToIDBrandingImage();
     idScanCustomization.disableAdditionalReviewScreen = idScanAdditionalReview.getDisableAdditionalReviewScreen();
-    idScanCustomization.additionalReviewScreenAnimationDisplayTime = idScanAdditionalReview.getDisplayTime();
     idScanCustomization.additionalReviewScreenBackgroundColors = idScanAdditionalReview.getBackgroundColor();
     idScanCustomization.additionalReviewScreenForegroundColor = idScanAdditionalReview.getForegroundColor();
     idScanCustomization.additionalReviewScreenImage = idScanAdditionalReview.getReviewImage();
@@ -215,7 +214,6 @@ public class Config {
     idScanCustomization.disableIDFeedbackScreen = idScanIdFeedback.getDisableIDFeedbackScreen();
     idScanCustomization.idFeedbackScreenForegroundColor = idScanIdFeedback.getForegroundColor();
     idScanCustomization.idFeedbackScreenBackgroundColors = idScanIdFeedback.getBackgroundColor();
-    idScanCustomization.idFeedbackScreenAnimationDisplayTime = idScanIdFeedback.getDisplayTime();
     idScanCustomization.idFeedbackScreenFlipIDBackImage = idScanIdFeedback.getFlipIDBackImage();
     idScanCustomization.idFeedbackScreenFlipIDFrontImage = idScanIdFeedback.getFlipIDFrontImage();
     idScanCustomization.selectionScreenBackgroundColors = idScanSelectionScreen.getBackgroundColor();

@@ -57,7 +57,7 @@ public abstract class ViewStyle {
     return this.color.getColor(this.target, "textBackgroundColor", "#026ff4");
   }
 
-  public int getTextBackgroundColor(int defaultColor) {
+  public int getTextBackgroundColor(String defaultColor) {
     return this.color.getColor(this.target, "textBackgroundColor", defaultColor);
   }
 

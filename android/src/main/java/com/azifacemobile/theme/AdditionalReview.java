@@ -49,21 +49,6 @@ public class AdditionalReview extends ViewStyle {
     return this.getBoolean("isEnableAdditionalReviewTag", true);
   }
 
-  public double getDisplayTime() {
-    final double defaultDisplayTime = 2.0d;
-    final String key = "displayTime";
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultDisplayTime;
-      }
-
-      final double displayTime = this.target.getDouble(key);
-      return displayTime < 0 ? defaultDisplayTime : displayTime;
-    } catch (JSONException e) {
-      return defaultDisplayTime;
-    }
-  }
-
   public int getTagImageColor() {
     return this.color.getColor(this.target, "tagImageColor", "#CC0044");
   }

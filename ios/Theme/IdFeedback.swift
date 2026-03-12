@@ -28,18 +28,6 @@ public class IdFeedback: ViewStyle {
     return self.target?[key] as! Bool
   }
 
-  public func getDisplayTime() -> Double {
-    let defaultDisplayTime: Double = 2.0
-    let key = "displayTime"
-
-    if !self.style.exists(self.target, key: key) {
-      return defaultDisplayTime
-    }
-
-    let displayTime = self.target?[key] as! Double
-    return displayTime < 0 ? defaultDisplayTime : displayTime
-  }
-
   public func getFlipIDBackImage() -> UIImage? {
     return self.image.getSource("flipIDBackImage")
   }

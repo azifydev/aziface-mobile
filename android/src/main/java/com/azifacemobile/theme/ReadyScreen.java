@@ -27,7 +27,7 @@ public class ReadyScreen extends ViewStyle {
 
   @Override
   public int getTextBackgroundColor() {
-    return super.getTextBackgroundColor(android.graphics.Color.TRANSPARENT);
+    return super.getTextBackgroundColor(Color.TRANSPARENT);
   }
 
   public int getHeaderTextColor() {
@@ -49,7 +49,7 @@ public class ReadyScreen extends ViewStyle {
   }
 
   public int getOvalFillColor() {
-    return this.color.getColor(this.target, "ovalFillColor", android.graphics.Color.TRANSPARENT);
+    return this.color.getColor(this.target, "ovalFillColor", Color.TRANSPARENT);
   }
 }
 

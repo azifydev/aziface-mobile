@@ -1,5 +1,4 @@
 public class ReadyScreen {
-  private static let TRANSPARENT: String = "#00000000"
   private let style: Style
   private let target: NSDictionary?
   private let font: Font
@@ -31,12 +30,12 @@ public class ReadyScreen {
 
   public func getOvalFillColor() -> UIColor {
     return self.color.getColor(
-      self.target, key: "ovalFillColor", defaultColor: ReadyScreen.TRANSPARENT)
+      self.target, key: "ovalFillColor", defaultColor: Color.TRANSPARENT)
   }
 
   public func getTextBackgroundColor() -> UIColor {
     return self.color.getColor(
-      self.target, key: "textBackgroundColor", defaultColor: ReadyScreen.TRANSPARENT)
+      self.target, key: "textBackgroundColor", defaultColor: Color.TRANSPARENT)
   }
 
   public func getTextBackgroundColorCornerRadius() -> Int32 {

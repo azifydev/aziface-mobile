@@ -43,20 +43,6 @@ public class IdFeedback extends ViewStyle {
     }
   }
 
-  public double getDisplayTime() {
-    final double defaultDisplayTime = 2.0d;
-    final String key = "displayTime";
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultDisplayTime;
-      }
-
-      return this.target.getDouble(key);
-    } catch (JSONException e) {
-      return defaultDisplayTime;
-    }
-  }
-
   public int getFlipIDBackImage() {
     return this.image.getSource("flipIDBackImage");
   }
