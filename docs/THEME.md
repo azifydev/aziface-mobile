@@ -18,7 +18,7 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
       - [`CancelPosition`](#cancelposition)
         - [`CancelPositionAndroid` (Android only)](#cancelpositionandroid-android-only)
         - [`CancelPositionIOS` (iOS only)](#cancelpositionios-ios-only)
-    - [`ThemeImage`](#themeimage)
+    - [`ThemeInitialLoadingAnimation`](#themeinitialloadinganimation)
     - [`ThemeFrame`](#themeframe)
     - [`ThemeButton`](#themebutton)
     - [`ThemeGuidance`](#themeguidance)
@@ -98,36 +98,37 @@ The `resetTheme` is a fallback method to return default theme.
 
 ## Types
 
-| Types                                                          | Platform |
-| -------------------------------------------------------------- | -------- |
-| [`Theme`](#theme)                                              | All      |
-| [`CancelLocation`](#cancellocation)                            | All      |
-| [`ThemeImage`](#themeimage)                                    | All      |
-| [`CancelPosition`](#cancelposition)                            | All      |
-| [`CancelPositionAndroid`](#cancelpositionandroid-android-only) | Android  |
-| [`CancelPositionIOS`](#cancelpositionios-ios-only)             | iOS      |
-| [`ThemeFrame`](#themeframe)                                    | All      |
-| [`ThemeButton`](#themebutton)                                  | All      |
-| [`ThemeGuidance`](#themeguidance)                              | All      |
-| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)        | All      |
-| [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen)        | All      |
-| [`ThemeGuidanceImages`](#themeguidanceimages)                  | All      |
-| [`ThemeOval`](#themeoval)                                      | All      |
-| [`ThemeFeedback`](#themefeedback)                              | All      |
-| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only) | iOS      |
-| [`Point`](#point)                                              | iOS      |
-| [`ThemeResultScreen`](#themeresultscreen)                      | All      |
-| [`ThemeSessionAbortAnimation`](#themesessionabortanimation)    | All      |
-| [`ThemeResultAnimation`](#themeresultanimation)                | All      |
-| [`ThemeIdScan`](#themeidscan)                                  | All      |
-| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)    | All      |
-| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)          | All      |
-| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)        | All      |
-| [`ThemeIdScanAdditionalReview`](#themeidscanadditionalreview)  | All      |
-| [`ThemeIdScanIdFeedback`](#themeidscanidfeedback)              | All      |
-| [`ThemeShadow`](#themeshadow-ios-only)                         | iOS      |
-| [`ThemeShadowInsets`](#themeshadowinsets)                      | iOS      |
-| [`ThemeShadowOffset`](#themeshadowoffset)                      | iOS      |
+| Types                                                           | Platform |
+| --------------------------------------------------------------- | -------- |
+| [`Theme`](#theme)                                               | All      |
+| [`CancelLocation`](#cancellocation)                             | All      |
+| [`ThemeImage`](#themeimage)                                     | All      |
+| [`CancelPosition`](#cancelposition)                             | All      |
+| [`CancelPositionAndroid`](#cancelpositionandroid-android-only)  | Android  |
+| [`CancelPositionIOS`](#cancelpositionios-ios-only)              | iOS      |
+| [`ThemeInitialLoadingAnimation`](#themeinitialloadinganimation) | All      |
+| [`ThemeFrame`](#themeframe)                                     | All      |
+| [`ThemeButton`](#themebutton)                                   | All      |
+| [`ThemeGuidance`](#themeguidance)                               | All      |
+| [`ThemeGuidanceRetryScreen`](#themeguidanceretryscreen)         | All      |
+| [`ThemeGuidanceReadyScreen`](#themeguidancereadyscreen)         | All      |
+| [`ThemeGuidanceImages`](#themeguidanceimages)                   | All      |
+| [`ThemeOval`](#themeoval)                                       | All      |
+| [`ThemeFeedback`](#themefeedback)                               | All      |
+| [`FeedbackBackgroundColor`](#feedbackbackgroundcolor-ios-only)  | iOS      |
+| [`Point`](#point)                                               | iOS      |
+| [`ThemeResultScreen`](#themeresultscreen)                       | All      |
+| [`ThemeSessionAbortAnimation`](#themesessionabortanimation)     | All      |
+| [`ThemeResultAnimation`](#themeresultanimation)                 | All      |
+| [`ThemeIdScan`](#themeidscan)                                   | All      |
+| [`ThemeIdScanSelectionScreen`](#themeidscanselectionscreen)     | All      |
+| [`ThemeIdScanReviewScreen`](#themeidscanreviewscreen)           | All      |
+| [`ThemeIdScanCaptureScreen`](#themeidscancapturescreen)         | All      |
+| [`ThemeIdScanAdditionalReview`](#themeidscanadditionalreview)   | All      |
+| [`ThemeIdScanIdFeedback`](#themeidscanidfeedback)               | All      |
+| [`ThemeShadow`](#themeshadow-ios-only)                          | iOS      |
+| [`ThemeShadowInsets`](#themeshadowinsets)                       | iOS      |
+| [`ThemeShadowOffset`](#themeshadowoffset)                       | iOS      |
 
 <hr/>
 
@@ -239,6 +240,16 @@ await initialize({
 | `y`                 | `number` | iOS      | ✅       | `undefined` |
 | `width`             | `number` | iOS      | ✅       | `undefined` |
 | `height`            | `number` | iOS      | ✅       | `undefined` |
+
+#### `ThemeInitialLoadingAnimation`
+
+An object containing the initial loading animation styles used in the Aziface SDK.
+
+| `ThemeInitialLoadingAnimation` | type     | Platform | Required | Default     |
+| ------------------------------ | -------- | -------- | -------- | ----------- |
+| `trackColor`                   | `string` | All      | ❌       | `#b3d4fc`   |
+| `fillColor`                    | `string` | All      | ❌       | `#026ff4`   |
+| `font`                         | `string` | All      | ❌       | `undefined` |
 
 #### `ThemeFrame`
 
@@ -375,22 +386,17 @@ This interface defines the drawn in the layer's coordinate space.
 
 An object containing the styles used in the result screen.
 
-| `ThemeResultScreen`                      | type                                                        | Platform | Required | Default                                                |
-| ---------------------------------------- | ----------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
-| `backgroundColor`                        | `string` or `string[]`                                      | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
-| `foregroundColor`                        | `string`                                                    | All      | ❌       | `#272937`                                              |
-| `font`                                   | `string`                                                    | All      | ❌       | `undefined`                                            |
-| `activityIndicatorColor`                 | `string`                                                    | All      | ❌       | `#026ff4`                                              |
-| `indicatorImage`                         | `string`                                                    | All      | ❌       | `undefined`                                            |
-| `indicatorRotationInterval`              | `number`                                                    | All      | ❌       | `1000`                                                 |
-| `uploadProgressFillColor`                | `string`                                                    | All      | ❌       | `#026ff4`                                              |
-| `uploadProgressTrackColor`               | `string`                                                    | All      | ❌       | `#b3d4fc`                                              |
-| `isShowUploadProgressBar`                | `boolean`                                                   | All      | ❌       | `true`                                                 |
-| `animationRelativeScale`                 | `number`                                                    | All      | ❌       | `1`                                                    |
-| `faceScanStillUploadingMessageDelayTime` | `number`                                                    | All      | ❌       | `6.0`                                                  |
-| `idScanStillUploadingMessageDelayTime`   | `number`                                                    | All      | ❌       | `8.0`                                                  |
-| `resultAnimation`                        | [`ThemeResultAnimation`](#themeresultanimation)             | All      | ❌       | `undefined`                                            |
-| `sessionAbortAnimation`                  | [`ThemeSessionAbortAnimation`](#themesessionabortanimation) | All      | ❌       | `undefined`                                            |
+| `ThemeResultScreen`        | type                                                        | Platform | Required | Default                                                |
+| -------------------------- | ----------------------------------------------------------- | -------- | -------- | ------------------------------------------------------ |
+| `backgroundColor`          | `string` or `string[]`                                      | All      | ❌       | `#ffffff` (Android) and `['#ffffff', '#ffffff']` (iOS) |
+| `foregroundColor`          | `string`                                                    | All      | ❌       | `#272937`                                              |
+| `font`                     | `string`                                                    | All      | ❌       | `undefined`                                            |
+| `activityIndicatorColor`   | `string`                                                    | All      | ❌       | `#026ff4`                                              |
+| `uploadProgressFillColor`  | `string`                                                    | All      | ❌       | `#026ff4`                                              |
+| `uploadProgressTrackColor` | `string`                                                    | All      | ❌       | `#b3d4fc`                                              |
+| `isShowUploadProgressBar`  | `boolean`                                                   | All      | ❌       | `true`                                                 |
+| `resultAnimation`          | [`ThemeResultAnimation`](#themeresultanimation)             | All      | ❌       | `undefined`                                            |
+| `sessionAbortAnimation`    | [`ThemeSessionAbortAnimation`](#themesessionabortanimation) | All      | ❌       | `undefined`                                            |
 
 ##### `ThemeResultAnimation`
 
@@ -400,7 +406,6 @@ An object containing the animation styles used in the Aziface SDK result animati
 | ------------------------------ | -------- | -------- | -------- | ----------- |
 | `backgroundColor`              | `string` | All      | ❌       | `#026ff4`   |
 | `foregroundColor`              | `string` | All      | ❌       | `#ffffff`   |
-| `displayTime`                  | `number` | All      | ❌       | `2.5`       |
 | `IDScanSuccessForegroundColor` | `string` | All      | ❌       | `#026ff4`   |
 | `successImage`                 | `string` | All      | ❌       | `undefined` |
 | `unsuccessImage`               | `string` | All      | ❌       | `undefined` |
@@ -480,7 +485,6 @@ An object containing the styles used in the ID scan capture screen.
 | `backgroundColor`                 | `string`  | All      | ❌       | `#ffffff`   |
 | `isDisableAdditionalReviewScreen` | `boolean` | All      | ❌       | `false`     |
 | `isEnableAdditionalReviewTag`     | `boolean` | All      | ❌       | `true`      |
-| `displayTime`                     | `number`  | All      | ❌       | `2.0`       |
 | `reviewImage`                     | `string`  | All      | ❌       | `undefined` |
 | `tagImage`                        | `string`  | All      | ❌       | `undefined` |
 | `tagImageColor`                   | `string`  | All      | ❌       | `#cc0044`   |
@@ -493,7 +497,6 @@ An object containing the styles used in the ID scan capture screen.
 | `foregroundColor`           | `string`  | All      | ❌       | `#272937`   |
 | `backgroundColor`           | `string`  | All      | ❌       | `#ffffff`   |
 | `isDisableIDFeedbackScreen` | `boolean` | All      | ❌       | `false`     |
-| `displayTime`               | `number`  | All      | ❌       | `2.0`       |
 | `flipIDBackImage`           | `string`  | All      | ❌       | `undefined` |
 | `flipIDFrontImage`          | `string`  | All      | ❌       | `undefined` |
 
