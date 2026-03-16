@@ -41,6 +41,7 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
     - [`ThemeShadow` (iOS only)](#themeshadow-ios-only)
       - [`ThemeShadowInsets`](#themeshadowinsets)
       - [`ThemeShadowOffset`](#themeshadowoffset)
+    - [`ThemeOrientationScreen`](#themeorientationscreen)
 - [Custom Images](#custom-images)
   - [Android](#android)
   - [iOS](#ios)
@@ -129,6 +130,7 @@ The `resetTheme` is a fallback method to return default theme.
 | [`ThemeShadow`](#themeshadow-ios-only)                          | iOS      |
 | [`ThemeShadowInsets`](#themeshadowinsets)                       | iOS      |
 | [`ThemeShadowOffset`](#themeshadowoffset)                       | iOS      |
+| [`ThemeOrientationScreen`](#themeorientationscreen)             | All      |
 
 <hr/>
 
@@ -531,6 +533,17 @@ An object containing the shadow offset styles used in screen.
 | ------------------- | -------- | -------- | -------- | ------- |
 | `width`             | `number` | iOS      | ❌       | `0`     |
 | `height`            | `number` | iOS      | ❌       | `0`     |
+
+#### `ThemeOrientationScreen`
+
+An object containing the styles used in the orientation screen.
+
+| `ThemeOrientationScreen` | type     | Platform | Required | Default       |
+| ------------------------ | -------- | -------- | -------- | ------------- |
+| `backgroundColor`        | `string` | All      | ❌       | `transparent` |
+| `foregroundColor`        | `string` | All      | ❌       | `#026ff4`     |
+| `font`                   | `string` | All      | ❌       | `undefined`   |
+| `iconImage`              | `string` | All      | ❌       | `undefined`   |
 
 <hr/>
 
