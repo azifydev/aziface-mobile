@@ -12,6 +12,7 @@ public class Theme {
   private let resultScreen: ResultScreen
   private let idScan: IdScan
   private let initialLoadingAnimation: InitialLoadingAnimation
+  private let orientationScreen: OrientationScreen
   public static var Style: NSDictionary?
 
   init() {
@@ -24,6 +25,7 @@ public class Theme {
     self.resultScreen = ResultScreen()
     self.idScan = IdScan()
     self.initialLoadingAnimation = InitialLoadingAnimation()
+    self.orientationScreen = OrientationScreen()
   }
 
   @available(iOS 8.2, *)
@@ -98,5 +100,9 @@ public class Theme {
   
   public func getInitialLoadingAnimation() -> InitialLoadingAnimation {
     return self.initialLoadingAnimation
+  }
+  
+  public func getOrientationScreen() -> OrientationScreen {
+    return self.orientationScreen
   }
 }

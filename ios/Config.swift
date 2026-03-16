@@ -67,8 +67,14 @@ public class Config {
     initialLoadingAnimationCustomization.defaultAnimationForegroundColor = initialLoadingAnimation.getFillColor()
     initialLoadingAnimationCustomization.messageFont = initialLoadingAnimation.getFont()
     
-    //    defaultCustomization.ocrConfirmationCustomization
-    //    defaultCustomization.orientationScreenCustomization
+    // defaultCustomization.ocrConfirmationCustomization
+    
+    let orientationScreenCustomization = defaultCustomization.orientationScreenCustomization
+    let orientationScreen = theme.getOrientationScreen()
+    orientationScreenCustomization.backgroundColors = [orientationScreen.getBackgroundColor()]
+    orientationScreenCustomization.foregroundColor = orientationScreen.getForegroundColor()
+    orientationScreenCustomization.messageFont = orientationScreen.getFont()
+    orientationScreenCustomization.iconImage = orientationScreen.getIconImage()
 
     let frameCustomization = defaultCustomization.frameCustomization
     let frame = theme.getFrame()

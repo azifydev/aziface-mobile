@@ -2846,6 +2846,45 @@ export interface ThemeInitialLoadingAnimation {
 }
 
 /**
+ * @interface ThemeOrientationScreen
+ *
+ * @description An object containing the styles used in the orientation screen.
+ */
+export interface ThemeOrientationScreen {
+  /**
+   * @description Represents the background color style of the orientation
+   * screen.
+   *
+   * @default 'transparent'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description Represents the fill and text color style of the orientation
+   * screen.
+   *
+   * @default '#026ff4'
+   */
+  foregroundColor?: string;
+
+  /**
+   * @description Represents the font family style of the orientation screen
+   *  text.
+   *
+   * @default undefined
+   */
+  font?: string;
+
+  /**
+   * @description Represents the image asset name of the orientation screen. The
+   * image name must be to inserted with no extension format.
+   *
+   * @default undefined
+   */
+  iconImage?: string;
+}
+
+/**
  * @interface Theme
  *
  * @description An object with all the properties to will be used to set the
@@ -2930,6 +2969,13 @@ export interface Theme {
    * @default undefined
    */
   initialLoadingAnimation?: ThemeInitialLoadingAnimation;
+
+  /**
+   * @description An object containing the styles used in the orientation screen.
+   *
+   * @default undefined
+   */
+  orientationScreen?: ThemeOrientationScreen;
 }
 
 // Modules

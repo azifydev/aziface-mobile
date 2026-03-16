@@ -89,8 +89,15 @@ public class Config {
     initialLoadingAnimationCustomization.foregroundColor = initialLoadingAnimation.getFillColor();
     initialLoadingAnimationCustomization.defaultAnimationForegroundColor = initialLoadingAnimation.getFillColor();
     initialLoadingAnimationCustomization.messageFont = initialLoadingAnimation.getFont();
-//    defaultCustomization.getOcrConfirmationCustomization();
-//    defaultCustomization.getOrientationScreenCustomization();
+
+    FaceTecOCRConfirmationCustomization ocrConfirmationCustomization = defaultCustomization.getOcrConfirmationCustomization();
+
+    FaceTecOrientationScreenCustomization orientationScreenCustomization = defaultCustomization.getOrientationScreenCustomization();
+    OrientationScreen orientationScreen = theme.getOrientationScreen();
+    orientationScreenCustomization.backgroundColors = orientationScreen.getBackgroundColor();
+    orientationScreenCustomization.foregroundColor = orientationScreen.getForegroundColor();
+    orientationScreenCustomization.messageFont = orientationScreen.getFont();
+    orientationScreenCustomization.iconImage = orientationScreen.getIconImage();
 
     FaceTecFrameCustomization frameCustomization = defaultCustomization.getFrameCustomization();
     Frame frame = theme.getFrame();

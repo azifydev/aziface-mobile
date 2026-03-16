@@ -18,6 +18,7 @@ public class Theme {
   private final ResultScreen resultScreen;
   private final IdScan idScan;
   private final InitialLoadingAnimation initialLoadingAnimation;
+  private final OrientationScreen orientationScreen;
   public static ReadableMap Style = null;
 
   public Theme(ReactApplicationContext context) {
@@ -26,6 +27,7 @@ public class Theme {
     this.guidance = new Guidance(context);
     this.oval = new Oval();
     this.initialLoadingAnimation = new InitialLoadingAnimation(context);
+    this.orientationScreen = new OrientationScreen(context);
     this.feedback = new Feedback(context);
     this.resultScreen = new ResultScreen(context);
     this.idScan = new IdScan(context);
@@ -83,6 +85,10 @@ public class Theme {
 
   public InitialLoadingAnimation getInitialLoadingAnimation() {
     return this.initialLoadingAnimation;
+  }
+
+  public OrientationScreen getOrientationScreen() {
+    return this.orientationScreen;
   }
 
   public Feedback getFeedback() {
