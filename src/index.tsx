@@ -2885,6 +2885,276 @@ export interface ThemeOrientationScreen {
 }
 
 /**
+ * @interface ThemeScrollIndicator
+ *
+ * @description An object containing the styles used in the scroll indicator.
+ */
+export interface ThemeScrollIndicator {
+  /**
+   * @description Represents the border radius style of the scroll indicator
+   *
+   * @default undefined
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the elevation style of the scroll indicator.
+   *
+   * @default 10
+   *
+   * @platform Android
+   */
+  elevation?: number;
+
+  /**
+   * @description Represents the border color style of the scroll indicator.
+   *
+   * @default `#ffffff`
+   */
+  borderColor?: string;
+
+  /**
+   * @description Represents the border width style of the scroll indicator.
+   *
+   * @default undefined
+   */
+  borderWidth?: number;
+
+  /**
+   * @description Represents the background color style of the scroll indicator.
+   *
+   * @default `#026ff4`
+   */
+  backgroundNormalColor?: string;
+
+  /**
+   * @description Represents the background color style of the scroll indicator
+   * when it's on press effect.
+   *
+   * @default `#0264dc`
+   */
+  backgroundHighlightColor?: string;
+
+  /**
+   * @description Represents the background color style of the scroll indicator
+   * text.
+   *
+   * @default `transparent`
+   */
+  foregroundNormalColor?: string;
+
+  /**
+   * @description Represents the background color style of the scroll indicator
+   * text when it's on press effect.
+   *
+   * @default `transparent`
+   */
+  foregroundHighlightColor?: string;
+
+  /**
+   * @description A boolean value to show or hide the scroll indicator in the
+   * guidance view when the user needs to scroll to see the full content of the
+   * guidance text. If you set this property to true, the user will see a scroll
+   * indicator at the end of the guidance text when the content is overflowed.
+   *
+   * @default true
+   */
+  showsScrollIndicator?: boolean;
+
+  /**
+   * @description A boolean value to show or hide the scroll text animation in the
+   * guidance view when the user needs to scroll to see the full content of the
+   * guidance text. If you set this property to true, the user will see a scroll
+   * text animation at the end of the guidance text when the content is overflowed.
+   *
+   * @default true
+   */
+  showsScrollTextAnimation?: boolean;
+
+  /**
+   * @description A boolean value to show or hide the scroll image in the
+   * guidance view when the user needs to scroll to see the full content of the
+   * guidance text. If you set this property to true, the user will see a scroll
+   * image at the end of the guidance text when the content is overflowed.
+   *
+   * @default true
+   */
+  showsScrollImage?: boolean;
+
+  /**
+   * @description Represents the font family style of the scroll indicator text.
+   *
+   * @default undefined
+   */
+  font?: string;
+}
+
+/**
+ * @interface ThemeInputField
+ *
+ * @description An object containing the styles used in the input fields in the
+ * Aziface SDK, like the input field in the OCR confirmation screen.
+ */
+export interface ThemeInputField {
+  /**
+   * @description Represents the foreground color style of the input field text.
+   *
+   * @default 'transparent'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the input field.
+   *
+   * @default '#0264dc'
+   */
+  borderColor?: string;
+
+  /**
+   * @description Represents the border width style of the input field.
+   *
+   * @default undefined
+   */
+  borderWidth?: number;
+
+  /**
+   * @description Represents the corner radius style of the input field.
+   *
+   * @default 20
+   */
+  cornerRadius?: number;
+
+  /**
+   * @description Represents the color style of the input field text.
+   *
+   * @default '#272937'
+   */
+  textColor?: string;
+
+  /**
+   * @description Represents the color style of the input field placeholder text.
+   *
+   * @default 'transparent'
+   */
+  placeholderTextColor?: string;
+
+  /**
+   * @description A boolean value to show or hide only the bottom border of the
+   * input field. If you set this property to true, the input field will show
+   * only the bottom border with the color and width defined in the `borderColor`
+   * and `borderWidth` properties.
+   *
+   * @default false
+   */
+  showsBorderBottomOnly?: boolean;
+
+  /**
+   * @description Represents the font family style of the input field text.
+   *
+   * @default undefined
+   */
+  font?: string;
+}
+
+/**
+ * @interface ThemeOCRConfirmation
+ *
+ * @description An object containing the styles used in the OCR confirmation
+ * screen.
+ */
+export interface ThemeOCRConfirmation {
+  /**
+   * @description Represents the foreground color style of the OCR confirmation
+   * screen text.
+   *
+   * @default 'transparent'
+   */
+  backgroundColor?: string;
+
+  /**
+   * @description Represents the background color style of the OCR confirmation
+   * screen.
+   *
+   * @default '#026ff4'
+   */
+  lineColor?: string;
+
+  /**
+   * @description Represents the border width style of the line separator in the
+   * OCR confirmation screen.
+   *
+   * @default undefined
+   */
+  lineWidth?: number;
+
+  /**
+   * @description Represents the color style of the OCR confirmation screen header
+   * text.
+   *
+   * @default '#026ff4'
+   */
+  headerTextColor?: string;
+
+  /**
+   * @description Represents the font family style of the OCR confirmation screen
+   * header text.
+   *
+   * @default undefined
+   */
+  headerFont?: string;
+
+  /**
+   * @description Represents the color style of the OCR confirmation screen
+   * section text.
+   *
+   * @default '#272937'
+   */
+  sectionTextColor?: string;
+
+  /**
+   * @description Represents the font family style of the OCR confirmation
+   * screen section text.
+   *
+   * @default undefined
+   */
+  sectionFont?: string;
+
+  /**
+   * @description A boolean value to show or hide the confirm button in the OCR
+   * confirmation screen. If you set this property to true, the user will see a
+   * confirm button in the OCR confirmation screen to confirm the OCR data before
+   * continue with the face check or ID scan. If you set this property to false,
+   * the user will not see the confirm button and the OCR data will be
+   * automatically confirmed without the user interaction.
+   *
+   * @default false
+   */
+  isFixedConfirmButton?: boolean;
+
+  /**
+   * @description Represents the button styles used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  button?: ThemeButton;
+
+  /**
+   * @description Represents the scroll indicator styles used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  scrollIndicator?: ThemeScrollIndicator;
+
+  /**
+   * @description Represents the input field styles used in the Aziface SDK,
+   * like the input field in the OCR confirmation screen.
+   *
+   * @default undefined
+   */
+  inputField?: ThemeInputField;
+}
+
+/**
  * @interface Theme
  *
  * @description An object with all the properties to will be used to set the
@@ -2976,6 +3246,14 @@ export interface Theme {
    * @default undefined
    */
   orientationScreen?: ThemeOrientationScreen;
+
+  /**
+   * @description An object containing the styles used in the OCR confirmation
+   * screen.
+   *
+   * @default undefined
+   */
+  ocrConfirmation?: ThemeOCRConfirmation;
 }
 
 // Modules
