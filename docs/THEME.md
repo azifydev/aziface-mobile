@@ -41,6 +41,9 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
     - [`ThemeShadow` (iOS only)](#themeshadow-ios-only)
       - [`ThemeShadowInsets`](#themeshadowinsets)
       - [`ThemeShadowOffset`](#themeshadowoffset)
+    - [`ThemeOCRConfirmation`](#themeocrconfirmation)
+      - [`ThemeScrollIndicator`](#themescrollindicator)
+      - [`ThemeInputField`](#themeinputfield)
     - [`ThemeOrientationScreen`](#themeorientationscreen)
 - [Custom Images](#custom-images)
   - [Android](#android)
@@ -130,6 +133,9 @@ The `resetTheme` is a fallback method to return default theme.
 | [`ThemeShadow`](#themeshadow-ios-only)                          | iOS      |
 | [`ThemeShadowInsets`](#themeshadowinsets)                       | iOS      |
 | [`ThemeShadowOffset`](#themeshadowoffset)                       | iOS      |
+| [`ThemeOCRConfirmation`](#themeocrconfirmation)                 | All      |
+| [`ThemeScrollIndicator`](#themescrollindicator)                 | All      |
+| [`ThemeInputField`](#themeinputfield)                           | All      |
 | [`ThemeOrientationScreen`](#themeorientationscreen)             | All      |
 
 <hr/>
@@ -533,6 +539,58 @@ An object containing the shadow offset styles used in screen.
 | ------------------- | -------- | -------- | -------- | ------- |
 | `width`             | `number` | iOS      | ❌       | `0`     |
 | `height`            | `number` | iOS      | ❌       | `0`     |
+
+#### `ThemeOCRConfirmation`
+
+An object containing the styles used in the OCR confirmation.
+
+| `ThemeOCRConfirmation` | type                                            | Platform | Required | Default       |
+| ---------------------- | ----------------------------------------------- | -------- | -------- | ------------- |
+| `backgroundColor`      | `string`                                        | All      | ❌       | `transparent` |
+| `lineColor`            | `string`                                        | All      | ❌       | `#026ff4`     |
+| `lineWidth`            | `number`                                        | All      | ❌       | `undefined`   |
+| `headerTextColor`      | `string`                                        | All      | ❌       | `#026ff4`     |
+| `headerFont`           | `string`                                        | All      | ❌       | `undefined`   |
+| `sectionTextColor`     | `string`                                        | All      | ❌       | `#272937`     |
+| `sectionFont`          | `string`                                        | All      | ❌       | `undefined`   |
+| `isFixedConfirmButton` | `boolean`                                       | All      | ❌       | `false`       |
+| `button`               | [`ThemeButton`](#themebutton)                   | All      | ❌       | `undefined`   |
+| `scrollIndicator`      | [`ThemeScrollIndicator`](#themescrollindicator) | All      | ❌       | `undefined`   |
+| `inputField`           | [`ThemeInputField`](#themeinputfield)           | All      | ❌       | `undefined`   |
+
+##### `ThemeScrollIndicator`
+
+An object containing the styles used in the scroll indicator.
+
+| `ThemeScrollIndicator`     | type      | Platform | Required | Default     |
+| -------------------------- | --------- | -------- | -------- | ----------- |
+| `cornerRadius`             | `number`  | All      | ❌       | `undefined` |
+| `elevation`                | `number`  | Android  | ❌       | `10`        |
+| `borderColor`              | `number`  | All      | ❌       | `#ffffff`   |
+| `borderWidth`              | `number`  | All      | ❌       | `undefined` |
+| `backgroundNormalColor`    | `string`  | All      | ❌       | `#026ff4`   |
+| `backgroundHighlightColor` | `string`  | All      | ❌       | `#0264dc`   |
+| `foregroundNormalColor`    | `string`  | All      | ❌       | `#ffffff`   |
+| `foregroundHighlightColor` | `string`  | All      | ❌       | `#ffffff`   |
+| `showsScrollIndicator`     | `boolean` | All      | ❌       | `true`      |
+| `showsScrollTextAnimation` | `boolean` | All      | ❌       | `true`      |
+| `showsScrollImage`         | `boolean` | All      | ❌       | `true`      |
+| `font`                     | `string`  | All      | ❌       | `undefined` |
+
+##### `ThemeInputField`
+
+An object containing the styles used in the input field.
+
+| `ThemeInputField`       | type      | Platform | Required | Default       |
+| ----------------------- | --------- | -------- | -------- | ------------- |
+| `backgroundColor`       | `string`  | All      | ❌       | `transparent` |
+| `borderColor`           | `string`  | All      | ❌       | `#0264dc`     |
+| `borderWidth`           | `string`  | All      | ❌       | `undefined`   |
+| `cornerRadius`          | `number`  | All      | ❌       | `4`           |
+| `textColor`             | `string`  | All      | ❌       | `#272937`     |
+| `placeholderTextColor`  | `string`  | All      | ❌       | `transparent` |
+| `showsBorderBottomOnly` | `boolean` | All      | ❌       | `false`       |
+| `font`                  | `string`  | All      | ❌       | `undefined`   |
 
 #### `ThemeOrientationScreen`
 
