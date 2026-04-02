@@ -81,6 +81,10 @@ public abstract class ViewStyle {
     return this.color.getColor(this.target, "borderColor");
   }
 
+  public int getBorderColor(String defaultBorderColor) {
+    return this.color.getColor(this.target, "borderColor", defaultBorderColor);
+  }
+
   public int getBorderWidth() {
     final int defaultBorderWidth = -1;
     final int borderWidth = this.getInt("borderWidth", defaultBorderWidth);
