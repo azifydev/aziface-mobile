@@ -87,6 +87,15 @@ public class OcrConfirmation extends ViewStyle {
     return this.font.getTypography(this.target, "sectionFont");
   }
 
+  public int getLabelColor() {
+    return this.color.getColor(this.target, "labelColor", "#272937");
+  }
+
+  @Nullable
+  public Typeface getLabelFont() {
+    return this.font.getTypography(this.target, "labelFont");
+  }
+
   public Button getButton() {
     return this.button;
   }

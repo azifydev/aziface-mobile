@@ -103,6 +103,8 @@ public class Config {
     ocrConfirmationCustomization.mainHeaderFont = ocrConfirmation.getHeaderFont();
     ocrConfirmationCustomization.sectionHeaderTextColor = ocrConfirmation.getSectionTextColor();
     ocrConfirmationCustomization.sectionHeaderFont = ocrConfirmation.getSectionFont();
+    ocrConfirmationCustomization.fieldLabelTextColor = ocrConfirmation.getLabelColor();
+    ocrConfirmationCustomization.fieldLabelFont = ocrConfirmation.getLabelFont();
     ocrConfirmationCustomization.buttonBackgroundDisabledColor = ocrConfirmationButton.getBackgroundDisabledColor();
     ocrConfirmationCustomization.buttonBackgroundNormalColor = ocrConfirmationButton.getBackgroundNormalColor();
     ocrConfirmationCustomization.buttonBackgroundHighlightColor = ocrConfirmationButton.getBackgroundHighlightColor();
