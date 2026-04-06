@@ -2907,6 +2907,15 @@ export interface ThemeScrollIndicator {
   elevation?: number;
 
   /**
+   * @description The shadow styles of the view.
+   *
+   * @default undefined
+   *
+   * @platform iOS
+   */
+  shadow?: ThemeShadow;
+
+  /**
    * @description Represents the border color style of the scroll indicator.
    *
    * @default `#ffffff`
@@ -3000,6 +3009,8 @@ export interface ThemeInputField {
    * @description Represents the foreground color style of the input field text.
    *
    * @default 'transparent'
+   *
+   * @platform Android
    */
   backgroundColor?: string;
 
@@ -3068,6 +3079,8 @@ export interface ThemeOCRConfirmation {
    * screen text.
    *
    * @default 'transparent'
+   *
+   * @platform Android
    */
   backgroundColor?: string;
 
