@@ -553,6 +553,8 @@ An object containing the styles used in the OCR confirmation.
 | `headerFont`           | `string`                                        | All      | ❌       | `undefined`   |
 | `sectionTextColor`     | `string`                                        | All      | ❌       | `#272937`     |
 | `sectionFont`          | `string`                                        | All      | ❌       | `undefined`   |
+| `labelColor`           | `string`                                        | All      | ❌       | `#272937`     |
+| `labelFont`            | `string`                                        | All      | ❌       | `undefined`   |
 | `isFixedConfirmButton` | `boolean`                                       | All      | ❌       | `false`       |
 | `button`               | [`ThemeButton`](#themebutton)                   | All      | ❌       | `undefined`   |
 | `scrollIndicator`      | [`ThemeScrollIndicator`](#themescrollindicator) | All      | ❌       | `undefined`   |
