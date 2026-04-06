@@ -3120,6 +3120,22 @@ export interface ThemeOCRConfirmation {
   sectionFont?: string;
 
   /**
+   * @description Represents the color style of the OCR confirmation screen
+   * label.
+   *
+   * @default '#272937'
+   */
+  labelColor?: string;
+
+  /**
+   * @description Represents the font family style of the OCR confirmation
+   * screen label.
+   *
+   * @default undefined
+   */
+  labelFont?: string;
+
+  /**
    * @description A boolean value to show or hide the confirm button in the OCR
    * confirmation screen. If you set this property to true, the user will see a
    * confirm button in the OCR confirmation screen to confirm the OCR data before
