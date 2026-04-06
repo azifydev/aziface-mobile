@@ -75,11 +75,7 @@ public class Shadow {
     return edgeInsets
   }
 
-  public func getShadow() -> FaceTecShadow? {
-    if (self.target == nil) {
-      return nil
-    }
-
+  private func getFaceShadow() -> FaceTecShadow {
     let color = self.getColor()
     let opacity = self.getOpacity()
     let radius = self.getRadius()
@@ -88,5 +84,17 @@ public class Shadow {
 
     let shadow = FaceTecShadow(color: color, opacity: opacity, radius: radius, offset: offset, insets: insets)
     return shadow
+  }
+
+  public func getShadowOrNil() -> FaceTecShadow? {
+    if (self.target == nil) {
+      return nil
+    }
+
+    return self.getFaceShadow()
+  }
+
+  public func getShadow() -> FaceTecShadow {
+    return self.getFaceShadow()
   }
 }

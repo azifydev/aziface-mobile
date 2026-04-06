@@ -59,16 +59,61 @@ public class Config {
 
     let defaultCustomization = FaceTecCustomization()
 
-    let initialLoadingAnimationCustomization = defaultCustomization.initialLoadingAnimationCustomization
+    let initialLoadingAnimationCustomization = defaultCustomization
+      .initialLoadingAnimationCustomization
     let initialLoadingAnimation = theme.getInitialLoadingAnimation()
-    initialLoadingAnimationCustomization.backgroundColors = [initialLoadingAnimation.getTrackColor()]
-    initialLoadingAnimationCustomization.defaultAnimationBackgroundColor = initialLoadingAnimation.getTrackColor()
+    initialLoadingAnimationCustomization.backgroundColors = [
+      initialLoadingAnimation.getTrackColor()
+    ]
+    initialLoadingAnimationCustomization.defaultAnimationBackgroundColor =
+      initialLoadingAnimation.getTrackColor()
     initialLoadingAnimationCustomization.foregroundColor = initialLoadingAnimation.getFillColor()
-    initialLoadingAnimationCustomization.defaultAnimationForegroundColor = initialLoadingAnimation.getFillColor()
+    initialLoadingAnimationCustomization.defaultAnimationForegroundColor =
+      initialLoadingAnimation.getFillColor()
     initialLoadingAnimationCustomization.messageFont = initialLoadingAnimation.getFont()
-    
-    // defaultCustomization.ocrConfirmationCustomization
-    
+
+    let ocrConfirmationCustomization = defaultCustomization.ocrConfirmationCustomization
+    let ocrConfirmation = theme.getOcrConfirmation()
+    let ocrConfirmationButton = ocrConfirmation.getButton()
+    let ocrConfirmationScrollIndicator = ocrConfirmation.getScrollIndicator()
+    let ocrConfirmationInputField = ocrConfirmation.getInputField()
+//    ocrConfirmationCustomization.backgroundColors = [ocrConfirmation.getBackgroundColor()]
+    ocrConfirmationCustomization.enableFixedConfirmButton = ocrConfirmation.getEnableFixedConfirmButton()
+    ocrConfirmationCustomization.mainHeaderDividerLineColor = ocrConfirmation.getLineColor()
+    ocrConfirmationCustomization.mainHeaderDividerLineWidth = ocrConfirmation.getLineWidth()
+    ocrConfirmationCustomization.mainHeaderTextColor = ocrConfirmation.getHeaderTextColor()
+    ocrConfirmationCustomization.mainHeaderFont = ocrConfirmation.getHeaderFont()
+    ocrConfirmationCustomization.sectionHeaderTextColor = ocrConfirmation.getSectionTextColor()
+    ocrConfirmationCustomization.sectionHeaderFont = ocrConfirmation.getSectionFont()
+    ocrConfirmationCustomization.fieldLabelTextColor = ocrConfirmation.getLabelColor()
+    ocrConfirmationCustomization.fieldLabelFont = ocrConfirmation.getLabelFont()
+    ocrConfirmationCustomization.buttonBackgroundNormalColor = ocrConfirmationButton.getBackgroundNormalColor()
+    ocrConfirmationCustomization.buttonBackgroundDisabledColor = ocrConfirmationButton.getBackgroundDisabledColor()
+    ocrConfirmationCustomization.buttonBackgroundHighlightColor = ocrConfirmationButton.getBackgroundHighlightColor()
+    ocrConfirmationCustomization.buttonTextNormalColor = ocrConfirmationButton.getTextNormalColor()
+    ocrConfirmationCustomization.buttonTextDisabledColor = ocrConfirmationButton.getTextDisabledColor()
+    ocrConfirmationCustomization.buttonTextHighlightColor = ocrConfirmationButton.getTextHighlightColor()
+    ocrConfirmationCustomization.buttonFont = ocrConfirmationButton.getFont()
+    ocrConfirmationCustomization.buttonBorderColor = ocrConfirmationButton.getBorderColor()
+    ocrConfirmationCustomization.buttonBorderWidth = ocrConfirmationButton.getBorderWidth()
+    ocrConfirmationCustomization.buttonCornerRadius = ocrConfirmationButton.getCornerRadius()
+    ocrConfirmationCustomization.scrollIndicatorBackgroundNormalColor = ocrConfirmationScrollIndicator.getBackgroundNormalColor()
+    ocrConfirmationCustomization.scrollIndicatorBackgroundHighlightColor = ocrConfirmationScrollIndicator.getBackgroundHighlightColor()
+    ocrConfirmationCustomization.scrollIndicatorForegroundNormalColor = ocrConfirmationScrollIndicator.getForegroundNormalColor()
+    ocrConfirmationCustomization.scrollIndicatorForegroundHighlightColor = ocrConfirmationScrollIndicator.getForegroundHighlightColor()
+    ocrConfirmationCustomization.enableScrollIndicator = ocrConfirmationScrollIndicator.getEnableScrollIndicator()
+    ocrConfirmationCustomization.enableScrollIndicatorTextAnimation = ocrConfirmationScrollIndicator.getEnableScrollIndicatorTextAnimation()
+    ocrConfirmationCustomization.showScrollIndicatorImage = ocrConfirmationScrollIndicator.getShowScrollIndicatorImage()
+    ocrConfirmationCustomization.scrollIndicatorFont = ocrConfirmationScrollIndicator.getFont()
+    ocrConfirmationCustomization.scrollIndicatorShadow = ocrConfirmationScrollIndicator.getShadow()
+//    ocrConfirmationCustomization.inputFieldBackgroundColor = ocrConfirmationInputField.getBackgroundColor()
+    ocrConfirmationCustomization.inputFieldBorderColor = ocrConfirmationInputField.getBorderColor()
+    ocrConfirmationCustomization.inputFieldCornerRadius = ocrConfirmationInputField.getCornerRadius()
+    ocrConfirmationCustomization.inputFieldTextColor = ocrConfirmationInputField.getTextColor()
+    ocrConfirmationCustomization.inputFieldPlaceholderTextColor = ocrConfirmationInputField.getPlaceholderTextColor()
+    ocrConfirmationCustomization.showInputFieldBottomBorderOnly = ocrConfirmationInputField.getShowInputFieldBottomBorderOnly()
+    ocrConfirmationCustomization.inputFieldFont = ocrConfirmationInputField.getFont()
+
     let orientationScreenCustomization = defaultCustomization.orientationScreenCustomization
     let orientationScreen = theme.getOrientationScreen()
     orientationScreenCustomization.backgroundColors = [orientationScreen.getBackgroundColor()]
