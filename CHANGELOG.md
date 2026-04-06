@@ -1,3 +1,10 @@
+## [3.8.2](https://github.com/azifydev/aziface-mobile/compare/v3.8.1...v3.8.2) (2026-03-31)
+
+
+### Bug Fixes
+
+* set axios version fixed ([0d168fc](https://github.com/azifydev/aziface-mobile/commit/0d168fc5c084f9341776149e7343f3ea2e46f322))
+
 ## [3.8.1](https://github.com/azifydev/aziface-mobile/compare/v3.8.0...v3.8.1) (2026-03-11)
 
 
