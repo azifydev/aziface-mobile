@@ -546,7 +546,7 @@ An object containing the styles used in the OCR confirmation.
 
 | `ThemeOCRConfirmation` | type                                            | Platform | Required | Default       |
 | ---------------------- | ----------------------------------------------- | -------- | -------- | ------------- |
-| `backgroundColor`      | `string`                                        | All      | ❌       | `transparent` |
+| `backgroundColor`      | `string`                                        | Android  | ❌       | `transparent` |
 | `lineColor`            | `string`                                        | All      | ❌       | `#026ff4`     |
 | `lineWidth`            | `number`                                        | All      | ❌       | `undefined`   |
 | `headerTextColor`      | `string`                                        | All      | ❌       | `#026ff4`     |
@@ -564,20 +564,21 @@ An object containing the styles used in the OCR confirmation.
 
 An object containing the styles used in the scroll indicator.
 
-| `ThemeScrollIndicator`     | type      | Platform | Required | Default     |
-| -------------------------- | --------- | -------- | -------- | ----------- |
-| `cornerRadius`             | `number`  | All      | ❌       | `undefined` |
-| `elevation`                | `number`  | Android  | ❌       | `10`        |
-| `borderColor`              | `number`  | All      | ❌       | `#ffffff`   |
-| `borderWidth`              | `number`  | All      | ❌       | `undefined` |
-| `backgroundNormalColor`    | `string`  | All      | ❌       | `#026ff4`   |
-| `backgroundHighlightColor` | `string`  | All      | ❌       | `#0264dc`   |
-| `foregroundNormalColor`    | `string`  | All      | ❌       | `#ffffff`   |
-| `foregroundHighlightColor` | `string`  | All      | ❌       | `#ffffff`   |
-| `showsScrollIndicator`     | `boolean` | All      | ❌       | `true`      |
-| `showsScrollTextAnimation` | `boolean` | All      | ❌       | `true`      |
-| `showsScrollImage`         | `boolean` | All      | ❌       | `true`      |
-| `font`                     | `string`  | All      | ❌       | `undefined` |
+| `ThemeScrollIndicator`     | type                                   | Platform | Required | Default     |
+| -------------------------- | -------------------------------------- | -------- | -------- | ----------- |
+| `cornerRadius`             | `number`                               | All      | ❌       | `undefined` |
+| `elevation`                | `number`                               | Android  | ❌       | `10`        |
+| `shadow`                   | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
+| `borderColor`              | `number`                               | All      | ❌       | `#ffffff`   |
+| `borderWidth`              | `number`                               | All      | ❌       | `undefined` |
+| `backgroundNormalColor`    | `string`                               | All      | ❌       | `#026ff4`   |
+| `backgroundHighlightColor` | `string`                               | All      | ❌       | `#0264dc`   |
+| `foregroundNormalColor`    | `string`                               | All      | ❌       | `#ffffff`   |
+| `foregroundHighlightColor` | `string`                               | All      | ❌       | `#ffffff`   |
+| `showsScrollIndicator`     | `boolean`                              | All      | ❌       | `true`      |
+| `showsScrollTextAnimation` | `boolean`                              | All      | ❌       | `true`      |
+| `showsScrollImage`         | `boolean`                              | All      | ❌       | `true`      |
+| `font`                     | `string`                               | All      | ❌       | `undefined` |
 
 ##### `ThemeInputField`
 
@@ -585,7 +586,7 @@ An object containing the styles used in the input field.
 
 | `ThemeInputField`       | type      | Platform | Required | Default       |
 | ----------------------- | --------- | -------- | -------- | ------------- |
-| `backgroundColor`       | `string`  | All      | ❌       | `transparent` |
+| `backgroundColor`       | `string`  | Android  | ❌       | `transparent` |
 | `borderColor`           | `string`  | All      | ❌       | `#0264dc`     |
 | `borderWidth`           | `string`  | All      | ❌       | `undefined`   |
 | `cornerRadius`          | `number`  | All      | ❌       | `4`           |
