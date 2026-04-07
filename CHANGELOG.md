@@ -1,3 +1,10 @@
+## [3.8.3](https://github.com/azifydev/aziface-mobile/compare/v3.8.2...v3.8.3) (2026-04-07)
+
+
+### Bug Fixes
+
+* adjust pull request template ([9dfb060](https://github.com/azifydev/aziface-mobile/commit/9dfb0604291022921ca9047284ce2fe739ce13a5))
+
 ## [3.8.2](https://github.com/azifydev/aziface-mobile/compare/v3.8.1...v3.8.2) (2026-03-31)
 
 
