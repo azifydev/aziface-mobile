@@ -9,6 +9,12 @@ Include context about the problem being solved, the approach taken, and any rele
 
 Mark the items that have been completed in this PR:
 
+## ⚠️ Impact
+
+- [ ] Low (isolated change)
+- [ ] Medium (affects multiple areas)
+- [ ] High (critical flow / risk of regression)
+
 ### 📱 React Native
 
 - [ ] Task 1 – _e.g., Created new component XYZ_
