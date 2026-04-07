@@ -18,6 +18,6 @@ public class Frame: ViewStyle {
   }
   
   public func getShadow() -> FaceTecShadow? {
-    return self.shadow.getShadow()
+    return self.shadow.getShadowOrNil()
   }
 }

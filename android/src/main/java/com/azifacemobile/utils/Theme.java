@@ -21,6 +21,18 @@ public class Theme {
   }
 
   @Nullable
+  public String getGlobalFontFamily() {
+    try {
+      final JSONObject theme = this.getTheme();
+      final String key = "fontFamily";
+
+      return theme != null && this.exists(key) ? theme.getString(key) : null;
+    } catch (JSONException e) {
+      return null;
+    }
+  }
+
+  @Nullable
   public JSONObject getTheme() {
     try {
       final HashMap<String, Object> map = com.azifacemobile.theme.Theme.Style.toHashMap();

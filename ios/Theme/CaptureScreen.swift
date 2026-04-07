@@ -11,9 +11,13 @@ public class CaptureScreen: ViewStyle {
 
     super.init(target: target, key: CaptureScreen.KEY)
   }
+  
+  override public func getCornerRadius() -> Int32 {
+    return super.getCornerRadius(-1)
+  }
 
-  public func getFrameStrokeColor() -> UIColor {
-    return self.color.getColor(self.target, key: "frameStrokeColor")
+  public func getFocusTextColor() -> UIColor {
+    return self.color.getColor(self.target, key: "focusTextColor")
   }
   
   public func getFont() -> UIFont {

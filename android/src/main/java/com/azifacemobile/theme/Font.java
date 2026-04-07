@@ -21,17 +21,29 @@ public class Font {
   }
 
   @Nullable
+  private Typeface getAsset(@Nullable String filename) {
+    try {
+      if (filename == null) return null;
+
+      return Typeface.createFromAsset(reactContext.getAssets(), "fonts/" + filename);
+    } catch (RuntimeException e) {
+      return null;
+    }
+  }
+
+  @Nullable
   public Typeface getTypography(JSONObject theme, String key) {
+    final @Nullable String globalFontFamily = this.theme.getGlobalFontFamily();
+
     try {
       if (!this.theme.exists(theme, key)) {
-        return null;
+        return this.getAsset(globalFontFamily);
       }
 
       final String filename = theme.getString(key);
-
-      return Typeface.createFromAsset(reactContext.getAssets(), "fonts/" + filename);
-    } catch (JSONException | RuntimeException e) {
-      return null;
+      return this.getAsset(filename);
+    } catch (JSONException e) {
+      return this.getAsset(globalFontFamily);
     }
   }
 }

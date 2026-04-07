@@ -50,7 +50,7 @@ public class RetryScreen {
   }
 
   public int getHeaderTextColor() {
-    return this.color.getColor(this.target, "headerTextColor", "#000000");
+    return this.color.getColor(this.target, "headerTextColor", "#272937");
   }
 
   @Nullable
@@ -59,7 +59,7 @@ public class RetryScreen {
   }
 
   public int getSubtextColor() {
-    return this.color.getColor(this.target, "subtextColor", "#000000");
+    return this.color.getColor(this.target, "subtextColor", "#272937");
   }
 
   @Nullable

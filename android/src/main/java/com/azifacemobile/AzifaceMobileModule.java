@@ -39,7 +39,7 @@ import java.util.Locale;
 @ReactModule(name = AzifaceMobileModule.NAME)
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
-  private static final Localization I18n = Localization.DEFAULT;
+  private static final Localization I18n = new Localization();
   private static final DynamicStrings Strings = new DynamicStrings();
   public static final String NAME = "AzifaceMobile";
   private static Boolean IsRunning = false;
@@ -307,6 +307,15 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   @ReactMethod
   public void setTheme(ReadableMap style) {
     Theme.setStyle(style);
+
+    this.updateTheme();
+  }
+
+  @ReactMethod
+  public void resetTheme() {
+    if (Theme.Style == null) return;
+
+    Theme.setStyle(null);
 
     this.updateTheme();
   }

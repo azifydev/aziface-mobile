@@ -56,6 +56,22 @@ public class ViewStyle {
     return self.color.getColor(self.target, key: "textBackgroundColor", defaultColor: "#026ff4")
   }
   
+  public func getTextBackgroundBorderColor() -> UIColor {
+    return self.color.getColor(self.target, key: "textBackgroundBorderColor")
+  }
+  
+  public func getTextBackgroundBorderWidth() -> Int32 {
+    let defaultBorderWidth: Int32 = -1
+    let borderWidth = self.getInt32("textBackgroundBorderWidth", defaultValue: defaultBorderWidth)
+    return borderWidth < 0 ? defaultBorderWidth : borderWidth
+  }
+  
+  public func getTextBackgroundCornerRadius() -> Int32 {
+    let defaultCornerRadius: Int32 = -1
+    let cornerRadius = self.getInt32("textBackgroundCornerRadius", defaultValue: defaultCornerRadius)
+    return cornerRadius < 0 ? defaultCornerRadius : cornerRadius
+  }
+  
   func getBorderColor() -> UIColor {
     return self.color.getColor(self.target, key: "borderColor");
   }
@@ -77,5 +93,19 @@ public class ViewStyle {
   public func getCornerRadius(_ defaultCornerRadius: Int32) -> Int32 {
     let cornerRadius = self.getInt32("cornerRadius", defaultValue: defaultCornerRadius)
     return cornerRadius < 0 ? defaultCornerRadius : cornerRadius
+  }
+  
+  public func getStrokeWidth() -> Int32 {
+    let defaultStrokeWidth: Int32 = -1
+    let strokeWidth: Int32 = self.getInt32("strokeWidth", defaultValue: defaultStrokeWidth)
+    return strokeWidth < 0 ? defaultStrokeWidth : strokeWidth
+  }
+  
+  public func getStrokeColor() -> UIColor {
+    return self.color.getColor(self.target, key: "strokeColor")
+  }
+  
+  public func getStrokeColor(_ defaultColor: String) -> UIColor {
+    return self.color.getColor(self.target, key: "strokeColor", defaultColor: defaultColor)
   }
 }

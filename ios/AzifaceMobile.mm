@@ -83,6 +83,10 @@ RCT_EXPORT_MODULE()
   return [_aziface setTheme:options];
 }
 
+- (void)resetTheme {
+  return [_aziface resetTheme];
+}
+
 - (void)vocal {
   return [_aziface vocal];
 }

@@ -28,11 +28,11 @@ public class RetryScreen {
   public func getImageBorderColor() -> UIColor {
     return self.color.getColor(self.target, key: "imageBorderColor")
   }
-  
+
   public func getHeaderTextColor() -> UIColor {
-    return self.color.getColor(self.target, key: "headerTextColor", defaultColor: "#000000")
+    return self.color.getColor(self.target, key: "headerTextColor", defaultColor: "#272937")
   }
-  
+
   public func getHeaderFont() -> UIFont {
     return self.font.getTypography(theme: self.target, key: "headerFont")
   }
@@ -42,9 +42,9 @@ public class RetryScreen {
   }
 
   public func getSubtextColor() -> UIColor {
-    return self.color.getColor(self.target, key: "subtextColor", defaultColor: "#000000")
+    return self.color.getColor(self.target, key: "subtextColor", defaultColor: "#272937")
   }
-  
+
   public func getSubtextFont() -> UIFont {
     return self.font.getTypography(theme: self.target, key: "subtextFont")
   }

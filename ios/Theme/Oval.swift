@@ -1,4 +1,5 @@
-public class Oval {
+public class Oval: ViewStyle {
+  private static let KEY: String = "oval"
   private let style: Style
   private let target: NSDictionary?
   private let color: Color
@@ -6,13 +7,15 @@ public class Oval {
   init() {
     self.style = Style()
     self.color = Color()
+
+    self.target = self.style.getTarget(Oval.KEY)
     
-    self.target = self.style.getTarget("oval")
+    super.init(key: Oval.KEY)
   }
-  
+
   private func getInt(key: String) -> Int32 {
     let defaultParamValue: Int32 = -1
-    
+
     if !self.style.exists(self.target, key: key) {
       return defaultParamValue
     }
@@ -21,12 +24,8 @@ public class Oval {
     return paramValue < 0 ? defaultParamValue : paramValue
   }
 
-  public func getStrokeColor() -> UIColor {
+  override public func getStrokeColor() -> UIColor {
     return self.color.getColor(self.target, key: "strokeColor", defaultColor: "#026ff4")
-  }
-  
-  public func getStrokeWidth() -> Int32 {
-    return self.getInt(key: "strokeWidth")
   }
 
   public func getFirstProgressColor() -> UIColor {
@@ -36,11 +35,11 @@ public class Oval {
   public func getSecondProgressColor() -> UIColor {
     return self.color.getColor(self.target, key: "secondProgressColor", defaultColor: "#0264dc")
   }
-  
+
   public func getProgressRadialOffset() -> Int32 {
     return self.getInt(key: "progressRadialOffset")
   }
-  
+
   public func getProgressStrokeWidth() -> Int32 {
     return self.getInt(key: "progressStrokeWidth")
   }

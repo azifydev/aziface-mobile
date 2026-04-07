@@ -1,20 +1,24 @@
 package com.azifacemobile.theme;
 
+import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.azifacemobile.utils.Theme;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Oval {
+public class Oval extends ViewStyle {
+  private static final String KEY = "oval";
   private final Theme theme;
   private final JSONObject target;
   private final Color color;
 
   public Oval() {
+    super(KEY);
+
     this.theme = new Theme();
     this.color = new Color();
 
-    this.target = this.theme.getTarget("oval");
+    this.target = this.theme.getTarget(KEY);
   }
 
   private int getInt(String key) {
@@ -24,19 +28,15 @@ public class Oval {
         return defaultValue;
       }
 
-      final int value = this.target.getInt(key);
-      return value < 0 ? defaultValue : value;
+      return this.target.getInt(key);
     } catch (JSONException e) {
       return defaultValue;
     }
   }
 
+  @Override
   public int getStrokeColor() {
-    return this.color.getColor(this.target, "strokeColor", "#026ff4");
-  }
-
-  public int getStrokeWidth() {
-    return this.getInt("strokeWidth");
+    return super.getStrokeColor("#026ff4");
   }
 
   public int getFirstProgressColor() {

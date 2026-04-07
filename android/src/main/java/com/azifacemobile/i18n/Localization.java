@@ -2,27 +2,14 @@ package com.azifacemobile.i18n;
 
 import androidx.annotation.NonNull;
 
-public enum Localization {
-  DEFAULT("en"),
-  AF("af"),
-  AR("ar"),
-  DE("de"),
-  EL("el"),
-  ES("es"),
-  FR("fr"),
-  JA("ja"),
-  KK("kk"),
-  NB("nb"),
-  PT_BR("pt-rBR"),
-  RU("ru"),
-  VI("vi"),
-  ZH("zh");
+public class Localization {
+  public static final String DEFAULT = "en";
 
   @NonNull
   private String locale;
 
-  Localization(@NonNull String locale) {
-    this.locale = locale;
+  public Localization() {
+    this.locale = Localization.DEFAULT;
   }
 
   @NonNull

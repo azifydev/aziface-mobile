@@ -11,6 +11,9 @@ public class Theme {
   private let feedback: Feedback
   private let resultScreen: ResultScreen
   private let idScan: IdScan
+  private let initialLoadingAnimation: InitialLoadingAnimation
+  private let orientationScreen: OrientationScreen
+  private let ocrConfirmation: OcrConfirmation
   public static var Style: NSDictionary?
 
   init() {
@@ -22,6 +25,9 @@ public class Theme {
     self.feedback = Feedback()
     self.resultScreen = ResultScreen()
     self.idScan = IdScan()
+    self.initialLoadingAnimation = InitialLoadingAnimation()
+    self.orientationScreen = OrientationScreen()
+    self.ocrConfirmation = OcrConfirmation()
   }
 
   @available(iOS 8.2, *)
@@ -92,5 +98,17 @@ public class Theme {
 
   public func getIdScan() -> IdScan {
     return self.idScan
+  }
+
+  public func getInitialLoadingAnimation() -> InitialLoadingAnimation {
+    return self.initialLoadingAnimation
+  }
+
+  public func getOrientationScreen() -> OrientationScreen {
+    return self.orientationScreen
+  }
+
+  public func getOcrConfirmation() -> OcrConfirmation {
+    return self.ocrConfirmation
   }
 }

@@ -10,31 +10,31 @@ import org.json.JSONObject;
 
 import javax.annotation.Nullable;
 
-public class CaptureScreen extends ViewStyle {
-  private static final String KEY = "captureScreen";
+public class OrientationScreen extends ViewStyle {
+  private final static String KEY = "orientationScreen";
   private final JSONObject target;
   private final Font font;
-  private final Color color;
+  private final Image image;
 
-  public CaptureScreen(ReactApplicationContext context, JSONObject target) {
-    super(target, KEY);
+  public OrientationScreen(ReactApplicationContext context) {
+    super(KEY);
 
-    this.target = new Theme().getTarget(target, KEY);
+    this.target = new Theme().getTarget(KEY);
     this.font = new Font(context);
-    this.color = new Color();
+    this.image = new Image(context, this.target);
   }
 
   @Override
-  public int getCornerRadius() {
-    return super.getCornerRadius(-1);
-  }
-
-  public int getFocusTextColor() {
-    return this.color.getColor(this.target, "focusTextColor");
+  public int getForegroundColor() {
+    return super.getForegroundColor("#026ff4");
   }
 
   @Nullable
   public Typeface getFont() {
     return this.font.getTypography(this.target, "font");
+  }
+
+  public int getIconImage() {
+    return this.image.getSource("iconImage");
   }
 }

@@ -17,10 +17,6 @@ public class Button: ViewStyle {
   override public func getCornerRadius() -> Int32 {
     return super.getCornerRadius(-1)
   }
-  
-  public func getFont() -> UIFont {
-    return self.font.getTypography(theme: self.target, key: "font")
-  }
 
   public func getBackgroundNormalColor() -> UIColor {
     return self.color.getColor(self.target, key: "backgroundNormalColor", defaultColor: "#026ff4")
@@ -44,5 +40,9 @@ public class Button: ViewStyle {
 
   public func getTextHighlightColor() -> UIColor {
     return self.color.getColor(self.target, key: "textHighlightColor")
+  }
+  
+  public func getFont() -> UIFont {
+    return self.font.getTypography(theme: self.target, key: "font")
   }
 }

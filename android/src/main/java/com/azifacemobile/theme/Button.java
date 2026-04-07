@@ -12,14 +12,14 @@ import javax.annotation.Nullable;
 
 public class Button extends ViewStyle {
   private static final String KEY = "button";
-  private final JSONObject theme;
+  private final JSONObject target;
   private final Font font;
   private final Color color;
 
   public Button(ReactApplicationContext context, JSONObject target) {
     super(target, KEY);
 
-    this.theme = new Theme().getTarget(target, KEY);
+    this.target = new Theme().getTarget(target, KEY);
     this.font = new Font(context);
     this.color = new Color();
   }
@@ -30,31 +30,31 @@ public class Button extends ViewStyle {
   }
 
   public int getBackgroundNormalColor() {
-    return this.color.getColor(this.theme, "backgroundNormalColor", "#026ff4");
+    return this.color.getColor(this.target, "backgroundNormalColor", "#026ff4");
   }
 
   public int getBackgroundDisabledColor() {
-    return this.color.getColor(this.theme, "backgroundDisabledColor", "#b3d4fc");
+    return this.color.getColor(this.target, "backgroundDisabledColor", "#b3d4fc");
   }
 
   public int getBackgroundHighlightColor() {
-    return this.color.getColor(this.theme, "backgroundHighlightColor", "#0264dc");
+    return this.color.getColor(this.target, "backgroundHighlightColor", "#0264dc");
   }
 
   public int getTextNormalColor() {
-    return this.color.getColor(this.theme, "textNormalColor");
+    return this.color.getColor(this.target, "textNormalColor");
   }
 
   public int getTextDisabledColor() {
-    return this.color.getColor(this.theme, "textDisabledColor");
+    return this.color.getColor(this.target, "textDisabledColor");
   }
 
   public int getTextHighlightColor() {
-    return this.color.getColor(this.theme, "textHighlightColor");
+    return this.color.getColor(this.target, "textHighlightColor");
   }
 
   @Nullable
   public Typeface getFont() {
-    return this.font.getTypography(this.theme, "font");
+    return this.font.getTypography(this.target, "font");
   }
 }

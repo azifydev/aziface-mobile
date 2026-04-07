@@ -4,12 +4,10 @@ import com.azifacemobile.utils.Theme;
 import com.azifacemobile.theme.abstracts.ViewStyle;
 import com.facebook.react.bridge.ReactApplicationContext;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ResultAnimation extends ViewStyle {
   private static final String KEY = "resultAnimation";
-  private final Theme theme;
   private final JSONObject target;
   private final Image image;
   private final Color color;
@@ -17,31 +15,15 @@ public class ResultAnimation extends ViewStyle {
   public ResultAnimation(ReactApplicationContext context, JSONObject target) {
     super(target, KEY);
 
-    this.theme = new Theme();
+    this.target = new Theme().getTarget(target, KEY);
+
     this.color = new Color();
-
-    this.target = this.theme.getTarget(target, KEY);
-
     this.image = new Image(context, this.target);
   }
 
   @Override
   public int getBackgroundColor() {
     return super.getBackgroundColor("#026ff4");
-  }
-
-  public double getDisplayTime() {
-    final double defaultDisplayTime = 2.5d;
-    final String key = "displayTime";
-    try {
-      if (!this.theme.exists(this.target, key)) {
-        return defaultDisplayTime;
-      }
-
-      return this.target.getDouble(key);
-    } catch (JSONException e) {
-      return defaultDisplayTime;
-    }
   }
 
   public int getIDScanSuccessForegroundColor() {

@@ -56,6 +56,10 @@ Aziface SDK adapter to react native.
 - [Integration guide](#integration-guide)
   - [`flutter`](./docs/FLUTTER.md)
 - [Expo](#expo)
+- [Limitations](#limitations)
+  - [Both](#both)
+  - [Android](#android)
+  - [iOS](#ios)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -782,6 +786,26 @@ The Azify offers an example App for Flutter developers. Currently, this example 
 ## Expo
 
 In Expo, you need to convert to a [custom development build](https://docs.expo.dev/develop/development-builds/introduction/) or use [prebuild](https://docs.expo.dev/workflow/continuous-native-generation/). You can use also React Native without Expo. Check Expo example App [here](./examples/expoapp/README.md).
+
+<hr/>
+
+## Limitations
+
+Sometimes, the World is a bit cruel... 🫠
+
+### Both
+
+- We **only support** hexadecimal colors. Read more [here](./docs/THEME.md#colors-support)!
+
+### Android
+
+- We recommend to test the theme changes in physical devices. Read more [here](./docs/THEME.md#limitations)!
+- The document scan **works** in physical devices only. Currently, the Aziface SDK not support documents scan in Android emulators.
+
+### iOS
+
+- The `initialize` function **works** in physical devices only. Currently, the Aziface SDK not support initialization in iOS emulators directly.
+- We **only support** `.ttf` and `.otf` fonts. Read more [here](./docs/THEME.md#ios-1)!
 
 <hr/>
 
