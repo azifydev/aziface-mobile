@@ -4,9 +4,9 @@ The Aziface SDK allows applications to dynamically customize and override the te
 
 This enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
 
-The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, you should be called before starting a session so that all UI elements display the customized text.
+The dynamic strings apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, call `setDynamicStrings` before starting a session so that all UI elements display the customized text.
 
-If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
+If a provided string key is invalid or missing, the SDK falls back to its default text for that element (in the language selected with `setLocale`). This ensures that the user experience remains functional even if some custom strings are not defined.
 
 <hr/>
 
@@ -43,6 +43,7 @@ If a provided string key is invalid or missing, the SDK falls back to its defaul
         - [`DynamicStringsResultIdScanSuccess`](#dynamicstringsresultidscansuccess)
         - [`DynamicStringsResultIdScanRetry`](#dynamicstringsresultidscanretry)
         - [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)
+    - [`DynamicStringsRetry`](#dynamicstringsretry)
       - [`DynamicStringsRetryOfficialIdPhoto`](#dynamicstringsretryofficialidphoto)
     - [`DynamicStringsLabel`](#dynamicstringslabel)
 
@@ -53,49 +54,45 @@ If a provided string key is invalid or missing, the SDK falls back to its defaul
 ```tsx
 import { useState } from 'react';
 import { Button } from 'react-native';
-// ...
 import {
   setDynamicStrings,
   resetDynamicStrings,
-  FaceView,
+  enroll,
 } from '@azify/aziface-mobile';
 
-// ...
 export default function App() {
   const [isEnabled, setIsEnabled] = useState(false);
 
-  function onDynamicStrings() {
-    // ...
+  function onToggleDynamicStrings() {
+    if (isEnabled) {
+      // Back to the SDK default texts.
+      resetDynamicStrings();
+    } else {
+      // Only the keys you provide are replaced.
+      setDynamicStrings({
+        action: {
+          ok: "Let's go!",
+          imReady: "I'm ready!",
+        },
+        feedback: {
+          centerFace: 'Put your face in the center',
+        },
+      });
+    }
 
-    setIsEnabled(true);
-    setDynamicStrings({
-      action: {
-        ok: "Let's go!",
-        imReady: "I'm perfect!",
-        // ...
-      },
-      // ...
-    });
+    setIsEnabled(!isEnabled);
   }
-
-  function onResetDynamicStrings() {
-    // ...
-
-    setIsEnabled(false);
-    resetDynamicStrings();
-  }
-
-  // ...
 
   return (
-    <FaceView>
-      {/* ... */}
-
+    <>
       <Button
-        title={isEnabled ? 'Dynamic Strings Enabled' : 'Reset Dynamic Strings'}
-        onPress={isEnabled ? onResetDynamicStrings : onDynamicStrings}
+        title={isEnabled ? 'Reset Dynamic Strings' : 'Set Dynamic Strings'}
+        onPress={onToggleDynamicStrings}
       />
-    </FaceView>
+
+      {/* The next session uses the texts set above. */}
+      <Button title="Enroll" onPress={() => enroll()} />
+    </>
   );
 }
 ```
@@ -153,7 +150,7 @@ The `resetDynamicStrings` is a fallback method to return default strings.
 | [`DynamicStringsResultIdScan`](#dynamicstringsresultidscan)                           | All      |
 | [`DynamicStringsResultIdScanSuccess`](#dynamicstringsresultidscansuccess)             | All      |
 | [`DynamicStringsResultIdScanRetry`](#dynamicstringsresultidscanretry)                 | All      |
-| [`DynamicStringsResultUpload`](#dynamicstringsresultidscanupload)                     | All      |
+| [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)               | All      |
 | [`DynamicStringsRetry`](#dynamicstringsretry)                                         | All      |
 | [`DynamicStringsRetryOfficialIdPhoto`](#dynamicstringsretryofficialidphoto)           | All      |
 | [`DynamicStringsLabel`](#dynamicstringslabel)                                         | All      |

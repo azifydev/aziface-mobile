@@ -17,6 +17,9 @@ Aziface SDK adapter to react native.
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Quick start](#quick-start)
+  - [Handling results](#handling-results)
+  - [Full example](#full-example)
 - [API](#api)
   - [`initialize`](#initialize)
     - [Properties](#properties)
@@ -34,8 +37,8 @@ Aziface SDK adapter to react native.
     - [Properties](#properties-6)
   - [`vocal`](#vocal)
 - [Types](#types)
-  - [`Params`](#azifacesdkparams)
-  - [`Headers`](#azifacesdkheaders)
+  - [`Params`](#params)
+  - [`Headers`](#headers)
   - [`Processor`](#processor)
     - [`ProcessorData`](#processordata)
       - [`ProcessorAdditionalSessionData`](#processoradditionalsessiondata)
@@ -83,9 +86,83 @@ cd ios && pod install && cd ..
 
 ## Usage
 
+Every integration follows the same three steps:
+
+1. **(Optional)** Customize the SDK with [`setTheme`](./docs/THEME.md), [`setLocale`](#setlocale) and [`setDynamicStrings`](./docs/DYNAMIC_STRINGS.md).
+2. **Initialize** the SDK once with [`initialize`](#initialize).
+3. **Start a flow** ([`enroll`](#enroll), [`authenticate`](#authenticate), [`liveness`](#liveness), [`photoMatch`](#photomatch) or [`photoScan`](#photoscan)) and read the returned [`Processor`](#processor).
+
+### Quick start
+
+```tsx
+import {
+  initialize,
+  enroll,
+  Errors,
+  type Params,
+  type Headers,
+} from '@azify/aziface-mobile';
+
+const params: Params = {
+  deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+  baseUrl: 'YOUR_BASE_URL',
+  isDevelopment: true, // use `false` in production
+};
+
+const headers: Headers = {
+  'x-token-bearer': 'YOUR_TOKEN_BEARER',
+  // your headers
+};
+
+export async function startEnrollment() {
+  // 1. Initialize once, before calling any other flow.
+  const initialized = await initialize({ params, headers });
+
+  if (!initialized) {
+    console.warn('Aziface SDK could not be initialized');
+    return;
+  }
+
+  // 2. Open the face scan. The promise resolves when the session ends.
+  const result = await enroll();
+
+  // 3. Always check `isSuccess`: session errors are resolved, not thrown.
+  if (result.isSuccess) {
+    console.log('Enrolled!', result.data?.externalDatabaseRefID);
+  } else if (result.error?.code === Errors.UserCancelledFaceScan) {
+    console.log('The user closed the session');
+  } else {
+    console.warn(result.error?.code, result.error?.message);
+  }
+}
+```
+
+### Handling results
+
+| Situation                                                                          | What happens                                                                                            |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `initialize` without `deviceKeyIdentifier`/`baseUrl`                               | Promise **rejects**. `error.message` is `ConfigNotProvided` or `ParamsNotProvided`.                     |
+| `initialize` fails inside the SDK (invalid key, network, unsupported device, etc.) | Promise **resolves** `false`.                                                                           |
+| A flow finishes successfully                                                       | Promise resolves `{ isSuccess: true, data, error: null }`.                                              |
+| A flow fails or is cancelled                                                       | Promise resolves `{ isSuccess: false, data: null, error: { code, message } }`. See [`Errors`](#errors). |
+
+> [!IMPORTANT]
+> Only one session can run at a time. If you call a flow (or `initialize`) while another one is still running, the new call is ignored and its promise **never settles**. Disable your buttons while a session is in progress.
+
+The request headers are:
+
+- every key you passed in [`Headers`](#headers);
+- `Content-Type: application/json`;
+- `X-Device-Key`: your `deviceKeyIdentifier`;
+- `X-Testing-API-Header`: only when `isDevelopment` is `true`.
+
+### Full example
+
+A screen with one button per flow. The [`FaceView`](#faceview) component is used to listen to SDK events.
+
 ```tsx
 import { useState } from 'react';
-import { Text, TouchableOpacity, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import {
   initialize,
   enroll,
@@ -101,167 +178,97 @@ import {
   type Locale,
 } from '@azify/aziface-mobile';
 
+type Flow = 'enroll' | 'authenticate' | 'liveness' | 'photoMatch' | 'photoScan';
+
+const FLOWS: Record<Flow, (data?: object) => Promise<Processor>> = {
+  enroll,
+  authenticate,
+  liveness,
+  photoMatch,
+  photoScan,
+};
+
+const LOCALES: Locale[] = ['default', 'en', 'es', 'pt-BR'];
+
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [localization, setLocalization] = useState<Locale>('default');
+  const [isRunning, setIsRunning] = useState(false);
+  const [locale, setCurrentLocale] = useState<Locale>('default');
 
-  const opacity = isInitialized ? 1 : 0.5;
+  const isDisabled = !isInitialized || isRunning;
 
   const onInitialize = async () => {
-    /*
-     * The SDK must be initialized first
-     * so that the rest of the library
-     * functions can work!
-     * */
-    const headers: Headers = {
-      'x-token-bearer': 'YOUR_X_TOKEN_BEARER',
-      'x-api-key': 'YOUR_X_API_KEY',
-      'clientInfo': 'YUOR_CLIENT_INFO',
-      'contentType': 'YOUR_CONTENT_TYPE',
-      'device': 'YOUR_DEVICE',
-      'deviceid': 'YOUR_DEVICE_ID',
-      'deviceip': 'YOUR_DEVICE_IP',
-      'locale': 'YOUR_LOCALE',
-      'xForwardedFor': 'YOUR_X_FORWARDED_FOR',
-      'user-agent': 'YOUR_USER_AGENT',
-      'x-only-raw-analysis': '1',
-    };
-
     const params: Params = {
-      isDevelopment: true,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
+      isDevelopment: true,
+    };
+
+    const headers: Headers = {
+      'x-token-bearer': 'YOUR_TOKEN_BEARER',
+      // Any other header is forwarded to your backend on every request.
+      'x-api-key': 'YOUR_X_API_KEY',
     };
 
     try {
-      const initialized = await initialize({
-        params,
-        headers,
-      });
-
-      setIsInitialized(initialized);
-      console.log(initialized);
-    } catch (error: any) {
+      setIsInitialized(await initialize({ params, headers }));
+    } catch (error) {
+      // `deviceKeyIdentifier` or `baseUrl` is missing.
       setIsInitialized(false);
       console.error(error);
     }
   };
 
-  const onFaceScan = async (type: string, data?: any) => {
+  const onFlow = async (flow: Flow) => {
+    setIsRunning(true);
+
     try {
-      let processor: Processor | null = null;
+      const result = await FLOWS[flow]();
 
-      switch (type) {
-        case 'enroll':
-          processor = await enroll(data);
-          break;
-        case 'liveness':
-          processor = await liveness(data);
-          break;
-        case 'authenticate':
-          processor = await authenticate(data);
-          break;
-        case 'photoMatch':
-          processor = await photoMatch(data);
-          break;
-        case 'photoScan':
-          processor = await photoScan(data);
-          break;
-        default:
-          processor = false;
-          break;
+      if (result.isSuccess) {
+        console.log(flow, 'succeeded', result.data);
+      } else {
+        console.warn(flow, 'failed', result.error?.code);
       }
-
-      console.log(type, processor);
-    } catch (error: any) {
-      console.error(type, error.message);
+    } finally {
+      setIsRunning(false);
     }
   };
 
   const onLocale = () => {
-    const LOCALES: Locale[] = ['default', 'en', 'es', 'pt-BR'];
-    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
-    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+    const next = LOCALES[(LOCALES.indexOf(locale) + 1) % LOCALES.length]!;
 
-    setLocalization(value);
-    setLocale(value);
+    setCurrentLocale(next);
+    setLocale(next);
   };
 
   return (
-    <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView contentContainerStyle={styles.scrollContent}>
       <FaceView
         style={styles.content}
-        onInitialize={(event) => console.log('onInitialize', event)}
-        onOpen={(event) => console.log('onOpen', event)}
-        onClose={(event) => console.log('onClose', event)}
-        onCancel={(event) => console.log('onCancel', event)}
-        onError={(event) => console.log('onError', event)}
-        onVocal={(event) => console.log('onVocal', event)}
+        onInitialize={(initialized) => console.log('onInitialize', initialized)}
+        onOpen={(opened) => console.log('onOpen', opened)}
+        onClose={(closed) => console.log('onClose', closed)}
+        onCancel={(cancelled) => console.log('onCancel', cancelled)}
+        onError={(hasError) => console.log('onError', hasError)}
       >
-        <TouchableOpacity
-          style={styles.button}
-          activeOpacity={0.8}
-          onPress={onInitialize}
-        >
+        <TouchableOpacity style={styles.button} onPress={onInitialize}>
           <Text style={styles.buttonText}>Initialize SDK</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onFaceScan('enroll')}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Enrollment</Text>
-        </TouchableOpacity>
+        {(Object.keys(FLOWS) as Flow[]).map((flow) => (
+          <TouchableOpacity
+            key={flow}
+            style={[styles.button, isDisabled && styles.disabled]}
+            disabled={isDisabled}
+            onPress={() => onFlow(flow)}
+          >
+            <Text style={styles.buttonText}>{flow}</Text>
+          </TouchableOpacity>
+        ))}
 
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onFaceScan('liveness')}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Liveness</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onFaceScan('authenticate')}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Authenticate</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onFaceScan('photoMatch')}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Photo Match</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onFaceScan('photoScan')}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Photo Scan</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { opacity }]}
-          activeOpacity={0.8}
-          onPress={() => onLocale()}
-          disabled={!isInitialized}
-        >
-          <Text style={styles.buttonText}>Localization: {localization}</Text>
+        <TouchableOpacity style={styles.button} onPress={onLocale}>
+          <Text style={styles.buttonText}>Locale: {locale}</Text>
         </TouchableOpacity>
       </FaceView>
     </ScrollView>
@@ -269,31 +276,26 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 40 : 0,
-    backgroundColor: 'white',
-  },
   scrollContent: {
     flexGrow: 1,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    gap: 40,
-    backgroundColor: 'white',
+    gap: 16,
+    padding: 24,
   },
   button: {
-    width: '100%',
-    justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
     borderRadius: 16,
     backgroundColor: '#4a68b3',
   },
+  disabled: {
+    opacity: 0.5,
+  },
   buttonText: {
-    fontSize,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -326,18 +328,24 @@ A successful initialization confirms that the SDK is correctly licensed, properl
 Initialization is a **mandatory step** and must be completed once during the application lifecycle (or as required by the platform) before invoking any Aziface SDK workflows.
 
 ```tsx
-const initialized = await initialize({
-  params: {
-    deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
-    baseUrl: 'YOUR_BASE_URL',
-  },
-  headers: {
-    'x-token-bearer': 'YOUR_TOKEN_BEARER',
-    // your headers...
-  },
-});
+try {
+  const initialized = await initialize({
+    params: {
+      deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+      baseUrl: 'YOUR_BASE_URL',
+    },
+    headers: {
+      'x-token-bearer': 'YOUR_TOKEN_BEARER',
+      // your headers...
+    },
+  });
 
-console.log(initialized);
+  // `false` when the SDK itself fails to initialize.
+  console.log(initialized);
+} catch (error) {
+  // Rejected when `deviceKeyIdentifier` or `baseUrl` is missing.
+  console.error(error);
+}
 ```
 
 #### Properties
@@ -358,14 +366,17 @@ The result of a successful enrollment is a trusted biometric template associated
 ```tsx
 const result = await enroll();
 
-console.log(result);
+// Optionally, send extra data to your backend in the request body.
+const resultWithData = await enroll({ userId: '123' });
+
+console.log(result.isSuccess, resultWithData.isSuccess);
 ```
 
 #### Properties
 
-| Property | type  | Required | Default     |
-| -------- | ----- | -------- | ----------- |
-| `data`   | `any` | ❌       | `undefined` |
+| Property | type     | Required | Default     | Description                                              |
+| -------- | -------- | -------- | ----------- | -------------------------------------------------------- |
+| `data`   | `object` | ❌       | `undefined` | Extra data sent in the `data` field of the request body. |
 
 ### `authenticate`
 
@@ -375,17 +386,24 @@ During authentication, the SDK performs an active liveness check while guiding t
 
 If the comparison is successful and the liveness checks pass, the authentication is approved and the user is granted access. If the process fails due to a mismatch, spoofing attempt, or poor capture conditions, the SDK returns detailed result and error codes so the application can handle denial, retries, or alternative verification flows.
 
-```tsx
-const result = await authenticate();
+> [!IMPORTANT]
+> `authenticate` requires a successful `enroll` (or `photoMatch`) earlier in the same app session. Otherwise, it resolves with the `NotAuthenticated` error. Running `liveness` or cancelling a session also clears the enrolled reference.
 
-console.log(result);
+```tsx
+const enrollment = await enroll();
+
+if (enrollment.isSuccess) {
+  const result = await authenticate();
+
+  console.log(result);
+}
 ```
 
 #### Properties
 
-| Property | type  | Required | Default     |
-| -------- | ----- | -------- | ----------- |
-| `data`   | `any` | ❌       | `undefined` |
+| Property | type     | Required | Default     | Description                                              |
+| -------- | -------- | -------- | ----------- | -------------------------------------------------------- |
+| `data`   | `object` | ❌       | `undefined` | Extra data sent in the `data` field of the request body. |
 
 ### `liveness`
 
@@ -403,9 +421,9 @@ console.log(result);
 
 #### Properties
 
-| Property | type  | Required | Default     |
-| -------- | ----- | -------- | ----------- |
-| `data`   | `any` | ❌       | `undefined` |
+| Property | type     | Required | Default     | Description                                              |
+| -------- | -------- | -------- | ----------- | -------------------------------------------------------- |
+| `data`   | `object` | ❌       | `undefined` | Extra data sent in the `data` field of the request body. |
 
 ### `photoMatch`
 
@@ -423,9 +441,9 @@ console.log(result);
 
 #### Properties
 
-| Property | type  | Required | Default     |
-| -------- | ----- | -------- | ----------- |
-| `data`   | `any` | ❌       | `undefined` |
+| Property | type     | Required | Default     | Description                                              |
+| -------- | -------- | -------- | ----------- | -------------------------------------------------------- |
+| `data`   | `object` | ❌       | `undefined` | Extra data sent in the `data` field of the request body. |
 
 ### `photoScan`
 
@@ -443,9 +461,9 @@ console.log(result);
 
 #### Properties
 
-| Property | type  | Required | Default     |
-| -------- | ----- | -------- | ----------- |
-| `data`   | `any` | ❌       | `undefined` |
+| Property | type     | Required | Default     | Description                                              |
+| -------- | -------- | -------- | ----------- | -------------------------------------------------------- |
+| `data`   | `object` | ❌       | `undefined` | Extra data sent in the `data` field of the request body. |
 
 ### `setLocale`
 
@@ -455,10 +473,13 @@ By calling this method, the application specifies which language the SDK should 
 
 The selected language applies to all Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. The language must be set **before starting** a session to ensure consistent localization throughout the user interaction.
 
-If an unsupported or invalid language code is provided, the SDK falls back to a default language (en-US) and returns appropriate status or error information, depending on the platform implementation.
+If an unsupported or invalid language code is provided, the SDK falls back to its default language (English). `setLocale` doesn't return anything.
 
 ```tsx
-setLocale('en');
+setLocale('pt-BR');
+
+// Sessions started from now on use Brazilian Portuguese.
+await liveness();
 ```
 
 #### Properties
@@ -472,6 +493,8 @@ setLocale('en');
 The Vocal Guidance feature in the Aziface SDK provides spoken, real-time instructions to guide users through face capture, liveness, authentication, and identity verification flows.
 
 During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
+
+Each call toggles the vocal guidance on or off. Listen to [`FaceView`](#faceview)'s `onVocal` to know the current state. See [Vocal Guidance](#vocal-guidance).
 
 ```tsx
 vocal();
@@ -505,17 +528,17 @@ vocal();
 
 ### `Params`
 
-Here must be passed to initialize the Aziface SDK! Case the parameters isn't provided the Aziface SDK goes to be not initialized.
+The parameters required to initialize the Aziface SDK. If `deviceKeyIdentifier` or `baseUrl` is missing, `initialize` rejects with `ConfigNotProvided`.
 
-| `Params`              | type      | Required | Default |
-| --------------------- | --------- | -------- | ------- |
-| `deviceKeyIdentifier` | `string`  | ✅       | -       |
-| `baseUrl`             | `string`  | ✅       | -       |
-| `isDevelopment`       | `boolean` | ❌       | `false` |
+| `Params`              | type      | Required | Default | Description                                                                            |
+| --------------------- | --------- | -------- | ------- | -------------------------------------------------------------------------------------- |
+| `deviceKeyIdentifier` | `string`  | ✅       | -       | Your device key, available in your Aziface account. Sent as `X-Device-Key`.            |
+| `baseUrl`             | `string`  | ✅       | -       | Your backend URL. Every session request is a `POST` to this URL.                       |
+| `isDevelopment`       | `boolean` | ❌       | `false` | When `true`, also sends the FaceTec `X-Testing-API-Header`. Use `false` in production. |
 
 ### `Headers`
 
-Here you can add your headers to send request when some method is called. Only values from type **string**, **null** or **undefined** are accepts!
+Headers sent on every session request to `baseUrl`. Only **string**, **null** or **undefined** values are accepted.
 
 | `Headers`        | type                              | Required | Default     |
 | ---------------- | --------------------------------- | -------- | ----------- |
@@ -675,11 +698,21 @@ The `Locale` type use the [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_63
 
 ### `FaceView`
 
-The `FaceView` extends all properties of the `View`, but it has five new callbacks to listener Aziface SDK events.
+The `FaceView` extends all properties of the `View`, but it has six new callbacks to listen to Aziface SDK events. Each callback receives a `boolean`.
+
+```tsx
+<FaceView
+  style={{ flex: 1 }}
+  onOpen={(opened) => console.log('SDK opened', opened)}
+  onClose={(closed) => console.log('SDK closed', closed)}
+>
+  {/* your screen */}
+</FaceView>
+```
 
 #### Properties
 
-| Property       | Description                                                       | Returns   | Platform |
+| Property       | Description                                                       | Parameter | Platform |
 | -------------- | ----------------------------------------------------------------- | --------- | -------- |
 | `onOpen`       | Callback function called when the Aziface SDK is opened.          | `boolean` | All      |
 | `onClose`      | Callback function called when the Aziface SDK is closed.          | `boolean` | All      |
@@ -712,50 +745,52 @@ The Aziface SDK provides the ability to change the theme of each flow. We separa
 
 ## Vocal Guidance
 
-The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized. The `vocal` method will always return `false` when the device is muted.
+The Aziface SDK provides the `vocal` method to toggle the vocal guidance. Call it only after the SDK is initialized. The vocal guidance is always turned off (`onVocal` receives `false`) when the device is muted.
 
-**Note**: We recommend to use the `FaceView` component for control vocal guidance state with efficiently.
+**Note**: We recommend using the `FaceView` component to keep the vocal guidance state in sync.
 
 ```tsx
 import { useState } from 'react';
 import { Button } from 'react-native';
-// ...
-import { initialize, vocal, type Params } from '@azify/aziface-mobile';
+import {
+  initialize,
+  vocal,
+  FaceView,
+  type Params,
+  type Headers,
+} from '@azify/aziface-mobile';
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
-  // State to manager when vocal is enabled
   const [isVocalEnabled, setIsVocalEnabled] = useState(false);
 
-  function onInitialize() {
+  async function onInitialize() {
     const params: Params = {
       isDevelopment: true,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };
 
+    const headers: Headers = {
+      'x-token-bearer': 'YOUR_TOKEN_BEARER',
+    };
+
     try {
-      const initialized = await initialize({ params });
-      setIsInitialized(initialized);
+      setIsInitialized(await initialize({ params, headers }));
     } catch {
       setIsInitialized(false);
-    } finally {
-      setIsVocalEnabled(false);
     }
   }
 
-  // Call onVocal function when SDK is initialized!
-  function onVocal(enabled: boolean) {
-    setIsVocalEnabled(enabled);
-  }
-
   return (
-    <FaceView onVocal={onVocal}>
-      {/* ... */}
+    // `onVocal` is called with the new state every time `vocal()` runs.
+    <FaceView onVocal={setIsVocalEnabled}>
+      <Button title="Initialize" onPress={onInitialize} />
 
       <Button
         title={isVocalEnabled ? 'Vocal ON' : 'Vocal OFF'}
         onPress={vocal}
+        disabled={!isInitialized}
       />
     </FaceView>
   );
