@@ -38,6 +38,8 @@ public class Theme {
     Config.currentLowLightCustomization = getLowLightCustomizationForTheme()
     Config.currentDynamicDimmingCustomization = getDynamicDimmingCustomizationForTheme()
 
+    Vocal.setVocalGuidanceSoundFiles()
+
     FaceTec.sdk.setCustomization(Config.currentCustomization)
     FaceTec.sdk.setLowLightCustomization(Config.currentLowLightCustomization)
     FaceTec.sdk.setDynamicDimmingCustomization(Config.currentDynamicDimmingCustomization)
