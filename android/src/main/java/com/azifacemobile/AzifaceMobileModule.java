@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
 
@@ -34,7 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
-import java.util.Locale;
 
 @ReactModule(name = AzifaceMobileModule.NAME)
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
@@ -354,16 +352,13 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   }
 
   private void setupI18n() {
-    Locale locale = new Locale(I18n.getLocale());
+    final Configuration configuration = new Configuration(this.reactContext.getResources().getConfiguration());
+    configuration.setLocale(I18n.getLocale());
 
-    final Resources resources = this.reactContext.getBaseContext().getResources();
-    final DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-    Configuration configuration = resources.getConfiguration();
-    configuration.setLocale(locale);
-
-    resources.updateConfiguration(configuration, displayMetrics);
-
-    this.reactContext.getApplicationContext().getResources().updateConfiguration(configuration, displayMetrics);
+    final Resources resources = this.reactContext.createConfigurationContext(configuration).getResources();
+    Strings.setResources(resources)
+      .load()
+      .build();
   }
 
   private void onInitializationSuccess(FaceTecSDKInstance sdkInstance) {
