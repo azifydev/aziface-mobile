@@ -1,6 +1,6 @@
 # Theme 💅
 
-The Aziface SDK provides the ability to change the theme of each flow. You can modify background colors, borders, text, border radius, among other things. We recommend changing the theme before calling the `initialized` function so that the style changes are applied.
+The Aziface SDK provides the ability to change the theme of each flow. You can modify background colors, borders, text, border radius, among other things. We recommend changing the theme before calling the `initialize` function so that the style changes are applied.
 
 <hr/>
 
@@ -62,14 +62,25 @@ The Aziface SDK provides the ability to change the theme of each flow. You can m
 ## Usage
 
 ```tsx
-// It's recommended to use it before calling the initialize function
+import { initialize, setTheme } from '@azify/aziface-mobile';
+
+// Call `setTheme` before `initialize` so the styles are applied.
 setTheme({
   backgroundColor: '#f1f1f1',
+  oval: {
+    strokeColor: '#4a68b3',
+  },
   // ...
 });
 
 await initialize({
-  // ...
+  params: {
+    deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
+    baseUrl: 'YOUR_BASE_URL',
+  },
+  headers: {
+    'x-token-bearer': 'YOUR_TOKEN_BEARER',
+  },
 });
 ```
 
@@ -144,17 +155,20 @@ The `resetTheme` is a fallback method to return default theme.
 
 This is a list of theme properties that can be used to styling. Note, we recommend that you use **only** hexadecimal values to colors on format `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA` because still we don't supported others color type.
 
-| `Theme`           | type                                      | Platform | Required | Default     |
-| ----------------- | ----------------------------------------- | -------- | -------- | ----------- |
-| `fontFamily`      | `string`                                  | All      | ❌       | `undefined` |
-| `backgroundColor` | `string`                                  | All      | ❌       | `#ffffff`   |
-| `image`           | [`ThemeImage`](#themeimage)               | All      | ❌       | `undefined` |
-| `frame`           | [`ThemeFrame`](#themeframe)               | All      | ❌       | `undefined` |
-| `guidance`        | [`ThemeGuidance`](#themeguidance)         | All      | ❌       | `undefined` |
-| `oval`            | [`ThemeOval`](#themeoval)                 | All      | ❌       | `undefined` |
-| `feedback`        | [`ThemeFeedback`](#themefeedback)         | All      | ❌       | `undefined` |
-| `resultScreen`    | [`ThemeResultScreen`](#themeresultscreen) | All      | ❌       | `undefined` |
-| `idScan`          | [`ThemeIdScan`](#themeidscan)             | All      | ❌       | `undefined` |
+| `Theme`                   | type                                                            | Platform | Required | Default     |
+| ------------------------- | --------------------------------------------------------------- | -------- | -------- | ----------- |
+| `fontFamily`              | `string`                                                        | All      | ❌       | `undefined` |
+| `backgroundColor`         | `string`                                                        | All      | ❌       | `#ffffff`   |
+| `image`                   | [`ThemeImage`](#themeimage)                                     | All      | ❌       | `undefined` |
+| `frame`                   | [`ThemeFrame`](#themeframe)                                     | All      | ❌       | `undefined` |
+| `guidance`                | [`ThemeGuidance`](#themeguidance)                               | All      | ❌       | `undefined` |
+| `oval`                    | [`ThemeOval`](#themeoval)                                       | All      | ❌       | `undefined` |
+| `feedback`                | [`ThemeFeedback`](#themefeedback)                               | All      | ❌       | `undefined` |
+| `resultScreen`            | [`ThemeResultScreen`](#themeresultscreen)                       | All      | ❌       | `undefined` |
+| `idScan`                  | [`ThemeIdScan`](#themeidscan)                                   | All      | ❌       | `undefined` |
+| `initialLoadingAnimation` | [`ThemeInitialLoadingAnimation`](#themeinitialloadinganimation) | All      | ❌       | `undefined` |
+| `orientationScreen`       | [`ThemeOrientationScreen`](#themeorientationscreen)             | All      | ❌       | `undefined` |
+| `ocrConfirmation`         | [`ThemeOCRConfirmation`](#themeocrconfirmation)                 | All      | ❌       | `undefined` |
 
 #### `CancelLocation`
 
@@ -163,7 +177,7 @@ This type must be used to position of the cancel button on screen.
 | `CancelLocation` | Description                                                     |
 | ---------------- | --------------------------------------------------------------- |
 | `DISABLED`       | Disable cancel button and doesn't show it.                      |
-| `TOP_LEFT`       | Position cancel button in top right.                            |
+| `TOP_LEFT`       | Position cancel button in top left.                             |
 | `TOP_RIGHT`      | Position cancel button in top right. It's **default** position. |
 | `CUSTOM`         | Indicate that cancel button will have custom position.          |
 
@@ -195,14 +209,16 @@ The cancel button position for Android.
 
 ```tsx
 setTheme({
-  // Set cancel location as CUSTOM to enable custom position.
-  cancelLocation: 'CUSTOM',
-  cancelPosition: {
-    android: {
-      left: 32,
-      right: 32,
-      top: 32,
-      bottom: 32,
+  image: {
+    // Set cancel location as CUSTOM to enable custom position.
+    cancelLocation: 'CUSTOM',
+    cancelPosition: {
+      android: {
+        left: 32,
+        right: 32,
+        top: 32,
+        bottom: 32,
+      },
     },
   },
 });
@@ -225,14 +241,16 @@ The cancel button position for iOS.
 
 ```tsx
 setTheme({
-  // Set cancel location as CUSTOM to enable custom position.
-  cancelLocation: 'CUSTOM',
-  cancelPosition: {
-    android: {
-      x: 20,
-      y: 64,
-      width: 32,
-      height: 32,
+  image: {
+    // Set cancel location as CUSTOM to enable custom position.
+    cancelLocation: 'CUSTOM',
+    cancelPosition: {
+      ios: {
+        x: 20,
+        y: 64,
+        width: 32,
+        height: 32,
+      },
     },
   },
 });
@@ -614,7 +632,7 @@ The `branding` and `cancel` properties represents your branding and icon of the 
 
 ### Android
 
-To add your images in `Android`, you must go to your project's `android/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
+To add your images in `Android`, you must go to your project's `android/app/src/main/res/drawable` directory. If in your project `drawable` folder doesn't exist, it create one. Inside the `drawable` folder, you must put your images and done!
 
 **Important**: The filename of the image can't have uppercase letters, Android doesn't accept these characters in the image name.
 
@@ -628,11 +646,11 @@ Now, go back to where you want to apply the styles, import `setTheme` function a
 
 ```tsx
 import { useEffect } from 'react';
-// ...
 import {
   initialize,
   setTheme,
-  type Params /* ... */,
+  type Params,
+  type Headers,
 } from '@azify/aziface-mobile';
 
 export default function App() {
@@ -643,8 +661,12 @@ export default function App() {
       baseUrl: 'YOUR_BASE_URL',
     };
 
-    async function initialize() {
-      // You call setTheme after initialize.
+    const headers: Headers = {
+      'x-token-bearer': 'YOUR_TOKEN_BEARER',
+    };
+
+    async function setup() {
+      // Call `setTheme` before `initialize`.
       setTheme({
         image: {
           branding: 'branding', // branding.png
@@ -652,10 +674,10 @@ export default function App() {
         },
       });
 
-      await initialize({ params });
+      await initialize({ params, headers });
     }
 
-    initialize();
+    setup();
   }, []);
 
   // ...
@@ -670,7 +692,7 @@ The Aziface SDK allows changing the font family style to each the session.
 
 ### Android
 
-In Android, you should add all fonts in the `android/app/main/assets/fonts` directory path (if your project's `assets/fonts` isn't exists, you should create it), but if the font isn't found, the Aziface SDK uses the default system font. By default, the Aziface SDK searches for your custom fonts there.
+In Android, you should add all fonts in the `android/app/src/main/assets/fonts` directory path (if your project's `assets/fonts` isn't exists, you should create it), but if the font isn't found, the Aziface SDK uses the default system font. By default, the Aziface SDK searches for your custom fonts there.
 
 All extension fonts are supported.
 
@@ -690,11 +712,11 @@ You should call the `setTheme` function and provides **filename string** as valu
 
 ```tsx
 import { useEffect } from 'react';
-// ...
 import {
   initialize,
   setTheme,
-  type Params /* ... */,
+  type Params,
+  type Headers,
 } from '@azify/aziface-mobile';
 
 export default function App() {
@@ -705,12 +727,16 @@ export default function App() {
       baseUrl: 'YOUR_BASE_URL',
     };
 
-    async function initialize() {
-      // You call setTheme after initialize.
+    const headers: Headers = {
+      'x-token-bearer': 'YOUR_TOKEN_BEARER',
+    };
+
+    async function setup() {
+      // Call `setTheme` before `initialize`.
       setTheme({
+        // Global font, used when a screen doesn't define its own font.
+        fontFamily: 'OpenSans-Medium.ttf',
         guidance: {
-          headerFont: 'Roboto-Bold.otf',
-          subtextFont: 'OpenSans-Medium.ttf',
           button: {
             font: 'NotoSans-Regular.otf',
           },
@@ -725,10 +751,10 @@ export default function App() {
         },
       });
 
-      await initialize({ params });
+      await initialize({ params, headers });
     }
 
-    initialize();
+    setup();
   }, []);
 
   // ...
