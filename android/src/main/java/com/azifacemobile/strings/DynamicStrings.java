@@ -1,5 +1,7 @@
 package com.azifacemobile.strings;
 
+import android.content.res.Resources;
+
 import com.azifacemobile.R;
 import com.facebook.react.bridge.ReadableMap;
 import com.facetec.sdk.FaceTecSDK;
@@ -13,11 +15,13 @@ public class DynamicStrings {
   Map<Integer, String> dynamicStrings;
   @Nullable ReadableMap strings;
   @Nullable ReadableMap target;
+  @Nullable Resources resources;
 
   public DynamicStrings() {
     this.dynamicStrings = new HashMap<>();
     this.strings = null;
     this.target = null;
+    this.resources = null;
   }
 
   @Nullable
@@ -286,6 +290,12 @@ public class DynamicStrings {
     return this;
   }
 
+  public DynamicStrings setResources(@Nullable Resources resources) {
+    this.resources = resources;
+
+    return this;
+  }
+
   public DynamicStrings load() {
     this.accessibility();
     this.accessibilityFeedback();
@@ -302,6 +312,14 @@ public class DynamicStrings {
   }
 
   public void build() {
+    if (this.resources != null) {
+      for (Map.Entry<Integer, String> entry : this.dynamicStrings.entrySet()) {
+        if (entry.getValue() == null) {
+          entry.setValue(this.resources.getString(entry.getKey()));
+        }
+      }
+    }
+
     FaceTecSDK.setDynamicStrings(this.dynamicStrings);
 
     this.cleanup();
