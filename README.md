@@ -473,6 +473,8 @@ The Vocal Guidance feature in the Aziface SDK provides spoken, real-time instruc
 
 During a session, the SDK uses voice prompts to instruct the user on what to do next, such as positioning their face within the camera frame, moving closer or farther, or maintaining proper alignment. This auditory guidance complements on-screen visual cues, helping users complete the process more easily and with fewer errors.
 
+Each call toggles the vocal guidance (disabled → enabled, enabled → disabled) and emits the new state through [`onVocal`](#properties-7). See more [here](#vocal-guidance).
+
 ```tsx
 vocal();
 ```
@@ -685,7 +687,7 @@ The `FaceView` extends all properties of the `View`, but it has five new callbac
 | `onClose`      | Callback function called when the Aziface SDK is closed.          | `boolean` | All      |
 | `onCancel`     | Callback function called when the Aziface SDK is cancelled.       | `boolean` | All      |
 | `onError`      | Callback function called when an error occurs in the Aziface SDK. | `boolean` | All      |
-| `onVocal`      | Callback function called when the vocal guidance is activated.    | `boolean` | All      |
+| `onVocal`      | Callback function called when the vocal guidance state changes.   | `boolean` | All      |
 | `onInitialize` | Callback function called when the Aziface SDK is initialized.     | `boolean` | All      |
 
 <hr/>
@@ -712,22 +714,27 @@ The Aziface SDK provides the ability to change the theme of each flow. We separa
 
 ## Vocal Guidance
 
-The Aziface SDK provides the `vocal` method for you on vocal guidance. We recommend using it the SDK is initialized. The `vocal` method will always return `false` when the device is muted.
+The Aziface SDK provides the `vocal` method to toggle the vocal guidance: if it's disabled, calling `vocal` enables it, and if it's enabled, calling `vocal` disables it. The new state is emitted through the `onVocal` callback. We recommend calling it after the SDK is initialized. When the device is muted, the vocal guidance can't be enabled and `onVocal` emits `false`.
 
-**Note**: We recommend to use the `FaceView` component for control vocal guidance state with efficiently.
+**Note**: We recommend using the `FaceView` component to control the vocal guidance state efficiently. Use only the `onVocal` callback as the source of truth, don't reset the state manually after `initialize` or after a session finishes.
 
 ```tsx
 import { useState } from 'react';
 import { Button } from 'react-native';
 // ...
-import { initialize, vocal, type Params } from '@azify/aziface-mobile';
+import {
+  FaceView,
+  initialize,
+  vocal,
+  type Params,
+} from '@azify/aziface-mobile';
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
   // State to manager when vocal is enabled
   const [isVocalEnabled, setIsVocalEnabled] = useState(false);
 
-  function onInitialize() {
+  async function onInitialize() {
     const params: Params = {
       isDevelopment: true,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
@@ -739,12 +746,10 @@ export default function App() {
       setIsInitialized(initialized);
     } catch {
       setIsInitialized(false);
-    } finally {
-      setIsVocalEnabled(false);
     }
   }
 
-  // Call onVocal function when SDK is initialized!
+  // Called when the SDK is initialized and every time `vocal` is called
   function onVocal(enabled: boolean) {
     setIsVocalEnabled(enabled);
   }

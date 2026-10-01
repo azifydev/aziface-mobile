@@ -77,7 +77,7 @@ public class Config {
     let ocrConfirmationButton = ocrConfirmation.getButton()
     let ocrConfirmationScrollIndicator = ocrConfirmation.getScrollIndicator()
     let ocrConfirmationInputField = ocrConfirmation.getInputField()
-//    ocrConfirmationCustomization.backgroundColors = [ocrConfirmation.getBackgroundColor()]
+    ocrConfirmationCustomization.backgroundColors = [ocrConfirmation.getBackgroundColor()]
     ocrConfirmationCustomization.enableFixedConfirmButton = ocrConfirmation.getEnableFixedConfirmButton()
     ocrConfirmationCustomization.mainHeaderDividerLineColor = ocrConfirmation.getLineColor()
     ocrConfirmationCustomization.mainHeaderDividerLineWidth = ocrConfirmation.getLineWidth()
@@ -106,7 +106,7 @@ public class Config {
     ocrConfirmationCustomization.showScrollIndicatorImage = ocrConfirmationScrollIndicator.getShowScrollIndicatorImage()
     ocrConfirmationCustomization.scrollIndicatorFont = ocrConfirmationScrollIndicator.getFont()
     ocrConfirmationCustomization.scrollIndicatorShadow = ocrConfirmationScrollIndicator.getShadow()
-//    ocrConfirmationCustomization.inputFieldBackgroundColor = ocrConfirmationInputField.getBackgroundColor()
+    ocrConfirmationCustomization.inputFieldBackgroundColor = ocrConfirmationInputField.getBackgroundColor()
     ocrConfirmationCustomization.inputFieldBorderColor = ocrConfirmationInputField.getBorderColor()
     ocrConfirmationCustomization.inputFieldCornerRadius = ocrConfirmationInputField.getCornerRadius()
     ocrConfirmationCustomization.inputFieldTextColor = ocrConfirmationInputField.getTextColor()

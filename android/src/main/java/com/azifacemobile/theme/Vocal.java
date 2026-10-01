@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class Vocal {
-  enum VocalGuidanceMode {
+  public enum VocalGuidanceMode {
     OFF,
     MINIMAL,
     FULL
@@ -30,41 +30,21 @@ public class Vocal {
 
   static MediaPlayer vocalGuidanceOnPlayer;
   static MediaPlayer vocalGuidanceOffPlayer;
-  static Vocal.VocalGuidanceMode vocalGuidanceMode = VocalGuidanceMode.MINIMAL;
+  public static Vocal.VocalGuidanceMode vocalGuidanceMode = VocalGuidanceMode.OFF;
 
   public static void setUpVocalGuidancePlayers(AzifaceMobileModule module) {
+    if (vocalGuidanceOnPlayer != null && vocalGuidanceOffPlayer != null) return;
+
     vocalGuidanceOnPlayer = MediaPlayer.create(module.getContext(), R.raw.vocal_guidance_on);
     vocalGuidanceOffPlayer = MediaPlayer.create(module.getContext(), R.raw.vocal_guidance_off);
-    vocalGuidanceMode = Vocal.VocalGuidanceMode.MINIMAL;
   }
 
-  public static void setVocalGuidanceMode(AzifaceMobileModule module) {
-    if (isDeviceMuted(module)) {
-      return;
-    }
-
-    if (vocalGuidanceOnPlayer == null || vocalGuidanceOffPlayer == null || vocalGuidanceOnPlayer.isPlaying() || vocalGuidanceOffPlayer.isPlaying()) {
-      return;
-    }
+  public static void setVocalGuidanceMode(boolean isEnabled) {
+    vocalGuidanceMode = isEnabled ? VocalGuidanceMode.FULL : VocalGuidanceMode.OFF;
 
     runOnUiThread(() -> {
-      switch (vocalGuidanceMode) {
-        case OFF:
-          vocalGuidanceMode = VocalGuidanceMode.MINIMAL;
-          vocalGuidanceOnPlayer.start();
-          Config.currentCustomization.vocalGuidanceCustomization.mode = FaceTecVocalGuidanceCustomization.VocalGuidanceMode.MINIMAL_VOCAL_GUIDANCE;
-          break;
-        case MINIMAL:
-          vocalGuidanceMode = VocalGuidanceMode.FULL;
-          vocalGuidanceOnPlayer.start();
-          Config.currentCustomization.vocalGuidanceCustomization.mode = FaceTecVocalGuidanceCustomization.VocalGuidanceMode.FULL_VOCAL_GUIDANCE;
-          break;
-        case FULL:
-          vocalGuidanceMode = VocalGuidanceMode.OFF;
-          vocalGuidanceOffPlayer.start();
-          Config.currentCustomization.vocalGuidanceCustomization.mode = FaceTecVocalGuidanceCustomization.VocalGuidanceMode.NO_VOCAL_GUIDANCE;
-          break;
-      }
+      final MediaPlayer player = isEnabled ? vocalGuidanceOnPlayer : vocalGuidanceOffPlayer;
+      if (player != null) player.start();
 
       Vocal.setVocalGuidanceSoundFiles();
       FaceTecSDK.setCustomization(Config.currentCustomization);
@@ -98,9 +78,6 @@ public class Vocal {
   }
 
   public static void setOCRLocalization(Context context) {
-    // Set the strings to be used for group names, field names, and placeholder texts for the FaceTec ID Scan User OCR Confirmation Screen.
-    // DEVELOPER NOTE: For this demo, we are using the template json file, 'FaceTec_OCR_Customization.json,' as the parameter in calling this API.
-    // For the configureOCRLocalization API parameter, you may use any object that follows the same structure and key naming as the template json file, 'FaceTec_OCR_Customization.json'.
     try {
       InputStream is = context.getAssets().open("FaceTec_OCR_Customization.json");
       int size = is.available();
