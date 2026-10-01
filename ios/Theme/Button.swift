@@ -1,7 +1,7 @@
 import Foundation
 
 public class Button: ViewStyle {
-  private static let KEY: String = "guidance"
+  private static let KEY: String = "button"
   private let target: NSDictionary?
   private let font: Font
   private let color: Color
@@ -11,7 +11,7 @@ public class Button: ViewStyle {
     self.font = Font()
     self.color = Color()
     
-    super.init(key: Button.KEY)
+    super.init(target: target, key: Button.KEY)
   }
   
   override public func getCornerRadius() -> Int32 {

@@ -21,10 +21,9 @@ public class OcrConfirmation: ViewStyle {
     super.init(key: OcrConfirmation.KEY)
   }
 
-//  TODO: Add it in the next versions because it currently is wrong on iOS
-//  override public func getBackgroundColor() -> UIColor {
-//    return super.getBackgroundColor(defaultColor: Color.TRANSPARENT)
-//  }
+  override public func getBackgroundColor() -> UIColor {
+    return super.getBackgroundColor(defaultColor: "#1A1B20")
+  }
 
   public func getEnableFixedConfirmButton() -> Bool {
     let key = "isFixedConfirmButton"

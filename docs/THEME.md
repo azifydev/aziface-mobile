@@ -261,7 +261,7 @@ An object containing the initial loading animation styles used in the Aziface SD
 
 #### `ThemeFrame`
 
-An object containing the frame styles used in the Aziface SDK.
+An object containing the frame styles used in the Aziface SDK. The frame background and border follow the root `backgroundColor`, so the frame blends with the overlay.
 
 | `ThemeFrame`      | type                                   | Platform | Required | Default     |
 | ----------------- | -------------------------------------- | -------- | -------- | ----------- |
@@ -546,7 +546,7 @@ An object containing the styles used in the OCR confirmation.
 
 | `ThemeOCRConfirmation` | type                                            | Platform | Required | Default       |
 | ---------------------- | ----------------------------------------------- | -------- | -------- | ------------- |
-| `backgroundColor`      | `string`                                        | Android  | ❌       | `transparent` |
+| `backgroundColor`      | `string`                                        | All      | ❌       | `transparent` (Android) and `#1A1B20` (iOS) |
 | `lineColor`            | `string`                                        | All      | ❌       | `#026ff4`     |
 | `lineWidth`            | `number`                                        | All      | ❌       | `undefined`   |
 | `headerTextColor`      | `string`                                        | All      | ❌       | `#026ff4`     |
@@ -586,7 +586,7 @@ An object containing the styles used in the input field.
 
 | `ThemeInputField`       | type      | Platform | Required | Default       |
 | ----------------------- | --------- | -------- | -------- | ------------- |
-| `backgroundColor`       | `string`  | Android  | ❌       | `transparent` |
+| `backgroundColor`       | `string`  | All      | ❌       | `transparent` (Android) and `#1A1B20` (iOS) |
 | `borderColor`           | `string`  | All      | ❌       | `#0264dc`     |
 | `borderWidth`           | `string`  | All      | ❌       | `undefined`   |
 | `cornerRadius`          | `number`  | All      | ❌       | `4`           |
@@ -638,7 +638,7 @@ import {
 export default function App() {
   useEffect(() => {
     const params: Params = {
-      isDevelopment: true,
+      isDevelopment: false,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };
@@ -700,7 +700,7 @@ import {
 export default function App() {
   useEffect(() => {
     const params: Params = {
-      isDevelopment: true,
+      isDevelopment: false,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };

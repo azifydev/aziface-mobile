@@ -74,8 +74,14 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @Override
   public void onActivityResult(@NonNull Activity activity, int requestCode, int resultCode, Intent data) {
+    if (sdkInstance == null || promise == null) {
+      return;
+    }
+
     FaceTecSessionResult sessionResult = sdkInstance.getActivitySessionResult(requestCode, resultCode, data);
-    assert sessionResult != null;
+    if (sessionResult == null) {
+      return;
+    }
 
     final FaceTecSessionStatus status = sessionResult.getStatus();
     final boolean isCompleted = status == FaceTecSessionStatus.SESSION_COMPLETED;
@@ -217,12 +223,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
     if (!this.isInitialized) {
       this.onProcessorError("AziFace SDK doesn't initialized!", "NotInitialized");
-      promise.resolve(this.getStringifyResponse());
-      return;
-    }
-
-    if (DemonstrationExternalDatabaseRefID.isEmpty()) {
-      this.onProcessorError("User isn't authenticated! You must enroll first!", "NotAuthenticated");
       promise.resolve(this.getStringifyResponse());
       return;
     }
