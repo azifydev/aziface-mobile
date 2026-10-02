@@ -263,14 +263,12 @@ An object containing the initial loading animation styles used in the Aziface SD
 
 An object containing the frame styles used in the Aziface SDK. The frame background and border follow the root `backgroundColor`, so the frame blends with the overlay.
 
-| `ThemeFrame`      | type                                   | Platform | Required | Default     |
-| ----------------- | -------------------------------------- | -------- | -------- | ----------- |
-| `cornerRadius`    | `number`                               | All      | ❌       | `20`        |
-| `borderColor`     | `string`                               | All      | ❌       | `#ffffff`   |
-| `borderWidth`     | `number`                               | All      | ❌       | `undefined` |
-| `backgroundColor` | `string`                               | All      | ❌       | `#ffffff`   |
-| `elevation`       | `number`                               | Android  | ❌       | `0`         |
-| `shadow`          | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
+| `ThemeFrame`   | type                                   | Platform | Required | Default     |
+| -------------- | -------------------------------------- | -------- | -------- | ----------- |
+| `cornerRadius` | `number`                               | All      | ❌       | `20`        |
+| `borderWidth`  | `number`                               | All      | ❌       | `undefined` |
+| `elevation`    | `number`                               | Android  | ❌       | `0`         |
+| `shadow`       | [`ThemeShadow`](#themeshadow-ios-only) | iOS      | ❌       | `undefined` |
 
 #### `ThemeButton`
 
@@ -546,7 +544,7 @@ An object containing the styles used in the OCR confirmation.
 
 | `ThemeOCRConfirmation` | type                                            | Platform | Required | Default       |
 | ---------------------- | ----------------------------------------------- | -------- | -------- | ------------- |
-| `backgroundColor`      | `string`                                        | All      | ❌       | `transparent` (Android) and `#1A1B20` (iOS) |
+| `backgroundColor`      | `string`                                        | All      | ❌       | `transparent` |
 | `lineColor`            | `string`                                        | All      | ❌       | `#026ff4`     |
 | `lineWidth`            | `number`                                        | All      | ❌       | `undefined`   |
 | `headerTextColor`      | `string`                                        | All      | ❌       | `#026ff4`     |
@@ -586,7 +584,7 @@ An object containing the styles used in the input field.
 
 | `ThemeInputField`       | type      | Platform | Required | Default       |
 | ----------------------- | --------- | -------- | -------- | ------------- |
-| `backgroundColor`       | `string`  | All      | ❌       | `transparent` (Android) and `#1A1B20` (iOS) |
+| `backgroundColor`       | `string`  | All      | ❌       | `transparent` |
 | `borderColor`           | `string`  | All      | ❌       | `#0264dc`     |
 | `borderWidth`           | `string`  | All      | ❌       | `undefined`   |
 | `cornerRadius`          | `number`  | All      | ❌       | `4`           |

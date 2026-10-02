@@ -509,8 +509,8 @@ Here must be passed to initialize the Aziface SDK! Case the parameters isn't pro
 
 | `Params`              | type      | Required | Default | Description                                                                                                       |
 | --------------------- | --------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `deviceKeyIdentifier` | `string`  | ✅       | -       | -                                                                                                                 |
-| `baseUrl`             | `string`  | ✅       | -       | -                                                                                                                 |
+| `deviceKeyIdentifier` | `string`  | ✅       | -       | The identifier used to initialize the SDK.                                                                        |
+| `baseUrl`             | `string`  | ✅       | -       | The base URL used during the request of the processor.                                                            |
 | `isDevelopment`       | `boolean` | ❌       | `false` | Only effective in **DEBUG** builds. Release builds always ignore this flag and never send `X-Testing-API-Header`. |
 
 ### `Headers`

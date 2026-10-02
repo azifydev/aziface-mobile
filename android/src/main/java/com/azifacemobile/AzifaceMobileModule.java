@@ -74,7 +74,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @Override
   public void onActivityResult(@NonNull Activity activity, int requestCode, int resultCode, Intent data) {
-    if (sdkInstance == null || promise == null) {
+    if (this.sdkInstance == null || this.promise == null) {
       return;
     }
 

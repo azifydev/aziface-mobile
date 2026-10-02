@@ -16,7 +16,7 @@ public class InputField: ViewStyle {
   }
 
   override public func getBackgroundColor() -> UIColor {
-    return self.color.getColor(self.target, key: "backgroundColor", defaultColor: "#1A1B20")
+    return self.color.getColor(Color.TRANSPARENT)
   }
 
   override public func getBorderColor() -> UIColor {

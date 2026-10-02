@@ -22,7 +22,7 @@ public class OcrConfirmation: ViewStyle {
   }
 
   override public func getBackgroundColor() -> UIColor {
-    return super.getBackgroundColor(defaultColor: "#1A1B20")
+    return super.getBackgroundColor(defaultColor: Color.TRANSPARENT)
   }
 
   public func getEnableFixedConfirmButton() -> Bool {
