@@ -26,7 +26,7 @@ public class Color {
       char green = color.charAt(2);
       char blue = color.charAt(3);
       char alpha = color.charAt(4);
-      color = "#" + alpha + "0" + red + red + green + green + blue + blue;
+      color = "#" + alpha + alpha + red + red + green + green + blue + blue;
     } else if (isRGB) {
       char red = color.charAt(1);
       char green = color.charAt(2);

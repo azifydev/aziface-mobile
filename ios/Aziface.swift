@@ -14,7 +14,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private var resolver: RCTPromiseResolveBlock?
   private var response: NSMutableDictionary!
   private var isEnabled: Bool = false
-  private var vocalGuidance: Vocal!
   public var emitter: Emitter!
   public var isInitialized: Bool = false
   public var sdkInstance: FaceTecSDKInstance!
@@ -27,7 +26,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.response = NSMutableDictionary()
 
     self.setupI18n()
-    self.setupVocalGuidance()
   }
 
   @objc public func initialize(
@@ -261,33 +259,26 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   }
 
   @objc public func vocal() {
-    let isMuted = Vocal.isDeviceMuted()
-
-    if Aziface.IsRunning || isMuted {
-      if isMuted {
-        self.isEnabled = false
+    DispatchQueue.main.async {
+      if Aziface.IsRunning {
+        return
       }
 
+      if !self.isEnabled && Vocal.isDeviceMuted() {
+        self.emitter.emitOnVocal(false)
+        return
+      }
+
+      self.isEnabled = !self.isEnabled
+
+      if self.isEnabled {
+        Vocal.setUpVocalGuidancePlayers()
+        Vocal.setOCRLocalization()
+      }
+
+      Vocal.setVocalGuidanceMode(self.isEnabled)
       self.emitter.emitOnVocal(self.isEnabled)
-      return
     }
-
-    Aziface.IsRunning = true
-
-    self.isEnabled = !self.isEnabled
-    if self.isEnabled {
-      Vocal.setUpVocalGuidancePlayers()
-    }
-
-    Vocal.setVocalGuidanceMode()
-
-    self.emitter.emitOnVocal(self.isEnabled)
-    Aziface.IsRunning = false
-  }
-
-  private func setupVocalGuidance() {
-    let viewController = self.getCurrentViewController()
-    self.vocalGuidance = Vocal(controller: viewController!)
   }
 
   private func setupI18n() {
@@ -341,14 +332,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
 
       self.resolver?(self.onProcessorError(message: message, code: code))
     } else {
-      if self.isEnabled {
-        Vocal.setUpVocalGuidancePlayers()
-        Vocal.cleanUp()
-        self.isEnabled = false
-
-        self.emitter.emitOnVocal(false)
-      }
-
       self.resolver?(self.onProcessorSuccess())
     }
   }
@@ -357,12 +340,8 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.isInitialized = true
 
     self.emitter.emitOnInitialize(true)
-    self.emitter.emitOnVocal(false)
+    self.emitter.emitOnVocal(self.isEnabled)
     self.sdkInstance = sdkInstance
-
-    Vocal.setVocalGuidanceSoundFiles()
-    Vocal.setUpVocalGuidancePlayers()
-    Vocal.setOCRLocalization()
 
     self.resolver?(true)
 
@@ -373,7 +352,7 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.isInitialized = false
 
     self.emitter.emitOnInitialize(false)
-    self.emitter.emitOnVocal(false)
+    self.emitter.emitOnVocal(self.isEnabled)
 
     self.resolver?(false)
 

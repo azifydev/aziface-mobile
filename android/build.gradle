@@ -11,13 +11,20 @@ buildscript {
   dependencies {
     classpath "com.android.tools.build:gradle:8.7.2"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
-    classpath "com.facebook.react:react-native-gradle-plugin"
   }
 }
 
 
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
+
+// AGP 9 ships built-in Kotlin support and registers the `kotlin` extension
+// itself. Applying the Kotlin plugin on top of it fails configuration with
+// "Cannot add extension with name 'kotlin'". Only apply it when nothing has
+// registered that extension yet.
+if (project.extensions.findByName('kotlin') == null) {
+  apply plugin: "kotlin-android"
+}
+
 
 apply plugin: "com.facebook.react"
 
@@ -75,7 +82,7 @@ repositories {
 def kotlin_version = getExtOrDefault("kotlinVersion")
 
 dependencies {
-  implementation "com.facebook.react:react-android:0.81.1"
+  implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.squareup.okhttp3:okhttp:3.12.13'
   implementation 'com.squareup.okio:okio:1.15.0'

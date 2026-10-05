@@ -95,14 +95,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
       this.onProcessorError(message, code);
     } else {
-      if (this.isEnabled) {
-        Vocal.setUpVocalGuidancePlayers(this);
-        this.isEnabled = false;
-
-        this.onVocal(false);
-      }
-
       assert SessionRequestProcessor.Response != null;
+
       this.onProcessorSuccess(SessionRequestProcessor.Response);
     }
 
@@ -322,14 +316,10 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void vocal() {
-    final boolean isMuted = Vocal.isDeviceMuted(this);
+    if (IsRunning) return;
 
-    if (IsRunning || isMuted) {
-      if (isMuted) {
-        this.isEnabled = false;
-      }
-
-      this.onVocal(this.isEnabled);
+    if (!this.isEnabled && Vocal.isDeviceMuted(this)) {
+      this.onVocal(false);
       return;
     }
 
@@ -339,9 +329,10 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     this.isEnabled = !this.isEnabled;
     if (this.isEnabled) {
       Vocal.setUpVocalGuidancePlayers(this);
+      Vocal.setOCRLocalization(this.reactContext);
     }
 
-    Vocal.setVocalGuidanceMode(this);
+    Vocal.setVocalGuidanceMode(this.isEnabled);
 
     this.onVocal(this.isEnabled);
     IsRunning = false;
@@ -374,12 +365,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
     Theme.setTheme();
 
-    Vocal.setOCRLocalization(this.reactContext);
-    Vocal.setVocalGuidanceSoundFiles();
-    Vocal.setUpVocalGuidancePlayers(this);
-
     this.onInitialize(true);
-    this.onVocal(false);
+    this.onVocal(this.isEnabled);
 
     IsRunning = false;
   }
@@ -387,7 +374,7 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   private void onInitializationError() {
     this.isInitialized = false;
     this.onInitialize(false);
-    this.onVocal(false);
+    this.onVocal(this.isEnabled);
 
     IsRunning = false;
   }
