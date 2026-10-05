@@ -128,7 +128,7 @@ export default function App() {
     };
 
     const params: Params = {
-      isDevelopment: true,
+      isDevelopment: false,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };
@@ -509,11 +509,11 @@ vocal();
 
 Here must be passed to initialize the Aziface SDK! Case the parameters isn't provided the Aziface SDK goes to be not initialized.
 
-| `Params`              | type      | Required | Default |
-| --------------------- | --------- | -------- | ------- |
-| `deviceKeyIdentifier` | `string`  | ✅       | -       |
-| `baseUrl`             | `string`  | ✅       | -       |
-| `isDevelopment`       | `boolean` | ❌       | `false` |
+| `Params`              | type      | Required | Default | Description                                                                                                       |
+| --------------------- | --------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| `deviceKeyIdentifier` | `string`  | ✅       | -       | The identifier used to initialize the SDK.                                                                        |
+| `baseUrl`             | `string`  | ✅       | -       | The base URL used during the request of the processor.                                                            |
+| `isDevelopment`       | `boolean` | ❌       | `false` | Only effective in **DEBUG** builds. Release builds always ignore this flag and never send `X-Testing-API-Header`. |
 
 ### `Headers`
 
@@ -661,7 +661,6 @@ The `Locale` type use the [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_63
 | `NotInitialized`          | When trying to initialize a process, but SDK wasn't initialized.                    | All      |
 | `ConfigNotProvided`       | When `deviceKeyIdentifier` and `baseUrl` aren't provided.                           | All      |
 | `ParamsNotProvided`       | When parameters aren't provided, this case, it is `null`.                           | All      |
-| `NotAuthenticated`        | When `authenticate` process is called, but `enroll` wasn't done first.              | All      |
 | `NotFoundTargetView`      | When `Activity` (Android) or `ViewController` (iOS) aren't found on call processor. | All      |
 | `CameraError`             | When an error on use the camera occurs.                                             | All      |
 | `CameraPermissionsDenied` | When the user doesn't permit the use camera.                                        | All      |
@@ -736,7 +735,7 @@ export default function App() {
 
   async function onInitialize() {
     const params: Params = {
-      isDevelopment: true,
+      isDevelopment: false,
       deviceKeyIdentifier: 'YOUR_DEVICE_KEY_IDENTIFIER',
       baseUrl: 'YOUR_BASE_URL',
     };

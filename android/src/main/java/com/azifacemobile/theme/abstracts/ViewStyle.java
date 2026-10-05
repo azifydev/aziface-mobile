@@ -31,6 +31,11 @@ public abstract class ViewStyle {
         return defaultValue;
       }
 
+      Object value = this.target.get(key);
+      if (value instanceof Number) {
+        return ((Number) value).intValue();
+      }
+
       return this.target.getInt(key);
     } catch (JSONException e) {
       return defaultValue;

@@ -12,7 +12,7 @@ public class IdFeedback: ViewStyle {
     self.color = Color()
     self.image = Image(target: self.target)
 
-    super.init(target: self.target, key: IdFeedback.KEY)
+    super.init(target: target, key: IdFeedback.KEY)
   }
 
   override func getForegroundColor() -> UIColor {

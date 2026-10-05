@@ -151,13 +151,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
               message: "AziFace SDK not found target View!", code: "NotFoundTargetView"))
         }
 
-        if Aziface.DemonstrationExternalDatabaseRefID.isEmpty {
-          return resolve(
-            self.onProcessorError(
-              message: "User isn't authenticated! You must enroll first!", code: "NotAuthenticated")
-          )
-        }
-
         self.setResolver(resolve: resolve)
         let controller = self.sdkInstance.start3DLivenessThen3DFaceMatch(
           with: SessionRequestProcessor(module: self, data: data))

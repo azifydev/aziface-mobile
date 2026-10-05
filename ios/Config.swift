@@ -17,7 +17,11 @@ public class Config {
   }
 
   public static func setIsDevelopment(_ isDevelopment: Bool) {
+#if DEBUG
     Config.IsDevelopment = isDevelopment
+#else
+    Config.IsDevelopment = false
+#endif
   }
 
   public static func setHeaders(_ headers: NSDictionary?) {
@@ -124,8 +128,6 @@ public class Config {
     let frameCustomization = defaultCustomization.frameCustomization
     let frame = theme.getFrame()
     frameCustomization.cornerRadius = frame.getCornerRadius()
-    frameCustomization.backgroundColor = frame.getBackgroundColor()
-    frameCustomization.borderColor = frame.getBorderColor()
     frameCustomization.borderWidth = frame.getBorderWidth()
     frameCustomization.shadow = frame.getShadow()
 
@@ -133,7 +135,10 @@ public class Config {
     overlayCustomization.brandingImage = image.getSource(
       "branding", defaultImage: "facetec_your_app_logo")
     overlayCustomization.showBrandingImage = image.getShowBranding()
-    overlayCustomization.backgroundColor = theme.getColor("backgroundColor")
+    let overlayBackgroundColor = theme.getColor("backgroundColor")
+    overlayCustomization.backgroundColor = overlayBackgroundColor
+    frameCustomization.backgroundColor = overlayBackgroundColor
+    frameCustomization.borderColor = overlayBackgroundColor
 
     let guidanceCustomization = defaultCustomization.guidanceCustomization
     let guidance = theme.getGuidance()

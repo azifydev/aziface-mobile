@@ -12,7 +12,7 @@ public class AdditionalReview: ViewStyle {
     self.color = Color()
     self.image = Image(target: self.target)
 
-    super.init(target: self.target, key: AdditionalReview.KEY)
+    super.init(target: target, key: AdditionalReview.KEY)
   }
 
   private func getBoolean(_ key: String, defaultValue: Bool) -> Bool {

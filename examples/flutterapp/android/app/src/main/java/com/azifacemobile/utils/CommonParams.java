@@ -2,6 +2,7 @@ package com.azifacemobile.utils;
 
 import androidx.annotation.Nullable;
 
+import com.azifacemobile.BuildConfig;
 import com.azifacemobile.Config;
 
 import java.util.Map;
@@ -36,7 +37,7 @@ public class CommonParams {
         if (!this.isNull()) {
             Config.setDeviceKeyIdentifier(this.getParam("deviceKeyIdentifier"));
             Config.setBaseUrl(this.getParam("baseUrl"));
-            Config.setIsDevelopment(this.isDevelopment());
+            Config.setIsDevelopment(BuildConfig.DEBUG && this.isDevelopment());
         }
     }
 }
