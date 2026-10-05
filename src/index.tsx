@@ -40,12 +40,6 @@ export enum Errors {
   ParamsNotProvided = 'ParamsNotProvided',
 
   /**
-   * @description When `authenticate` process is called, but `enroll` wasn't
-   * done first.
-   */
-  NotAuthenticated = 'NotAuthenticated',
-
-  /**
    * @description When `Activity` (Android) or `ViewController` (iOS) aren't
    * found on call processor.
    */
@@ -1726,21 +1720,6 @@ export interface ThemeFrame {
    * @default 20
    */
   cornerRadius?: number;
-
-  /**
-   * @description Represents the border color style of the frame view.
-   *
-   * @default '#ffffff'
-   */
-  borderColor?: string;
-
-  /**
-   * @description Represents the background color style of the frame view
-   * during to check face or scan ID of the user.
-   *
-   * @default '#ffffff'
-   */
-  backgroundColor?: string;
 
   /**
    * @description Represents the border width style of the frame view.

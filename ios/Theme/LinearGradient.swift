@@ -65,6 +65,18 @@ public class LinearGradient {
       return defaultLinearGradient
     }
 
+    if let hexColors = theme?[key] as? [String] {
+      let colors = self.color.parseColors(hexColors)
+      if !colors.isEmpty {
+        return colors
+      }
+    }
+
+    if let hexColor = theme?[key] as? String, !hexColor.isEmpty {
+      let parsed = UIColor(hexString: hexColor)
+      return [parsed, parsed]
+    }
+
     let hexColors = Theme.Style?[key] as? [String?] ?? []
     let colors = self.color.parseColors(hexColors)
     if colors.isEmpty {
