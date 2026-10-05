@@ -2,6 +2,8 @@ package com.azifacemobile.i18n;
 
 import androidx.annotation.NonNull;
 
+import java.util.Locale;
+
 public class Localization {
   public static final String DEFAULT = "en";
 
@@ -13,8 +15,8 @@ public class Localization {
   }
 
   @NonNull
-  public String getLocale() {
-    return this.locale;
+  public Locale getLocale() {
+    return Locale.forLanguageTag(this.locale);
   }
 
   public void setLocale(@NonNull String locale) {
@@ -36,7 +38,7 @@ public class Localization {
         this.locale = temp;
         break;
       case "pt-br":
-        this.locale = "pt";
+        this.locale = "pt-BR";
         break;
       default:
         this.locale = "en";
