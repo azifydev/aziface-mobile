@@ -74,7 +74,6 @@ export default function Screen() {
     });
 
     setIsInitialized(initialized);
-    setIsEnabledVocal(false);
 
     if (!initialized) {
       Alert.alert('Initialization failed');
@@ -110,8 +109,6 @@ export default function Screen() {
     } catch (error) {
       console.log('Exception', error);
     }
-
-    setIsEnabledVocal(false);
   }
 
   function onVocal(enabled: boolean) {

@@ -21,7 +21,6 @@
     "*.podspec",
     "react-native.config.js",
     "!ios/build",
-    "!ios/Frameworks/FaceTecSDKForDevelopment.xcframework",
     "!android/build",
     "!android/gradle",
     "!android/gradlew",

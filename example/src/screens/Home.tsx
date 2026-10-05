@@ -84,7 +84,6 @@ export function Home() {
     try {
       const initialized = await initialize({ params, headers });
       setIsInitialized(initialized);
-      setIsEnabledVocal(false);
       console.log('isInitialized', initialized);
     } catch (error) {
       console.error('Initialize', error);
@@ -116,7 +115,6 @@ export function Home() {
           break;
       }
 
-      setIsEnabledVocal(false);
       console.log(type, process);
     } catch (error: any) {
       console.error(type, error.message);

@@ -10,16 +10,9 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
     case FULL
   }
 
-  private static var module: UIViewController?
-  public static var vocalGuidanceMode: VocalGuidanceMode! = .MINIMAL
+  public static var vocalGuidanceMode: VocalGuidanceMode! = .OFF
   public static var vocalGuidanceOnPlayer: AVAudioPlayer!
   public static var vocalGuidanceOffPlayer: AVAudioPlayer!
-  public var themeTransitionTextTimer: Timer!
-  public var networkIssueDetected = false
-
-  init(controller: UIViewController) {
-    Vocal.module = controller
-  }
 
   private static func copyBundleFileToURL(fileName: String, fileExtension: String) -> URL? {
     guard let bundleUrl = Bundle.main.url(forResource: fileName, withExtension: fileExtension)
@@ -42,24 +35,10 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
     }
   }
 
-  public static func cleanUp() {
-    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let files = ["vocal_guidance_on.mp3", "vocal_guidance_off.mp3"]
-
-    for fileName in files {
-      let fileUrl = documentsPath.appendingPathComponent(fileName)
-      do {
-        if FileManager.default.fileExists(atPath: fileUrl.path) {
-          try FileManager.default.removeItem(at: fileUrl)
-        }
-      } catch {
-        print("Error removing \(fileName): \(error)")
-      }
-    }
-  }
-
   public static func setUpVocalGuidancePlayers() {
-    Vocal.vocalGuidanceMode = .MINIMAL
+    if vocalGuidanceOnPlayer != nil && vocalGuidanceOffPlayer != nil {
+      return
+    }
 
     guard
       let vocalGuidanceOnUrl = copyBundleFileToURL(
@@ -88,39 +67,14 @@ public class Vocal: NSObject, FaceTecCustomAnimationDelegate {
     return !(AVAudioSession.sharedInstance().outputVolume > 0)
   }
 
-  public static func setVocalGuidanceMode() {
-    if Vocal.isDeviceMuted() {
-      return
-    }
+  public static func setVocalGuidanceMode(_ isEnabled: Bool) {
+    Vocal.vocalGuidanceMode = isEnabled ? .FULL : .OFF
 
-    if vocalGuidanceOnPlayer == nil || vocalGuidanceOffPlayer == nil
-      || vocalGuidanceOnPlayer.isPlaying || vocalGuidanceOffPlayer.isPlaying
-    {
-      return
-    }
+    let player: AVAudioPlayer? = isEnabled ? vocalGuidanceOnPlayer : vocalGuidanceOffPlayer
+    player?.play()
 
-    DispatchQueue.main.async {
-      switch Vocal.vocalGuidanceMode {
-      case .OFF:
-        Vocal.vocalGuidanceMode = .MINIMAL
-        self.vocalGuidanceOnPlayer.play()
-        Config.currentCustomization.vocalGuidanceCustomization.mode =
-          FaceTecVocalGuidanceMode.minimalVocalGuidance
-      case .MINIMAL:
-        Vocal.vocalGuidanceMode = .FULL
-        self.vocalGuidanceOnPlayer.play()
-        Config.currentCustomization.vocalGuidanceCustomization.mode =
-          FaceTecVocalGuidanceMode.fullVocalGuidance
-      case .FULL:
-        Vocal.vocalGuidanceMode = .OFF
-        self.vocalGuidanceOffPlayer.play()
-        Config.currentCustomization.vocalGuidanceCustomization.mode =
-          FaceTecVocalGuidanceMode.noVocalGuidance
-      default: break
-      }
-      Vocal.setVocalGuidanceSoundFiles()
-      FaceTec.sdk.setCustomization(Config.currentCustomization)
-    }
+    Vocal.setVocalGuidanceSoundFiles()
+    FaceTec.sdk.setCustomization(Config.currentCustomization)
   }
 
   public static func setVocalGuidanceSoundFiles() {
