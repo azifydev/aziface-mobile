@@ -24,8 +24,21 @@ public class ViewStyle {
     if (!self.style.exists(self.target, key: key)) {
       return defaultValue
     }
-    
-    return (target?[key] as? Int32) ?? defaultValue
+
+    if let intValue = target?[key] as? Int32 {
+      return intValue
+    }
+    if let number = target?[key] as? NSNumber {
+      return number.int32Value
+    }
+    if let intValue = target?[key] as? Int {
+      return Int32(intValue)
+    }
+    if let doubleValue = target?[key] as? Double {
+      return Int32(doubleValue)
+    }
+
+    return defaultValue
   }
 
   func getBackgroundColor() -> UIColor {

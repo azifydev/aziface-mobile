@@ -64,7 +64,7 @@ public class Config {
     }
 
     public static void setIsDevelopment(Boolean isDevelopment) {
-        IsDevelopment = isDevelopment;
+        IsDevelopment = BuildConfig.DEBUG && Boolean.TRUE.equals(isDevelopment);
     }
 
     public static boolean isEmpty() {

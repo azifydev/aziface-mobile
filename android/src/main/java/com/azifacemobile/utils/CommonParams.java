@@ -1,5 +1,6 @@
 package com.azifacemobile.utils;
 
+import com.azifacemobile.BuildConfig;
 import com.azifacemobile.Config;
 import com.facebook.react.bridge.ReadableMap;
 
@@ -34,7 +35,7 @@ public class CommonParams {
     if (!this.isNull()) {
       Config.setDeviceKeyIdentifier(this.getParam("deviceKeyIdentifier"));
       Config.setBaseUrl(this.getParam("baseUrl"));
-      Config.setIsDevelopment(this.isDevelopment());
+      Config.setIsDevelopment(BuildConfig.DEBUG && this.isDevelopment());
     }
   }
 }

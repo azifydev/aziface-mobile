@@ -15,10 +15,9 @@ public class InputField: ViewStyle {
     super.init(key: InputField.KEY)
   }
 
-//  TODO: Add it in the next versions because it currently is wrong on iOS
-//  override public func getBackgroundColor() -> UIColor {
-//    return super.getBackgroundColor(defaultColor: Color.TRANSPARENT)
-//  }
+  override public func getBackgroundColor() -> UIColor {
+    return self.color.getColor(Color.TRANSPARENT)
+  }
 
   override public func getBorderColor() -> UIColor {
     return super.getBorderColor("#0264dc")

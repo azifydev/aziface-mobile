@@ -50,6 +50,10 @@ class CommonParams {
 
     Config.setDeviceKeyIdentifier(self.getParam("deviceKeyIdentifier") as? String ?? "")
     Config.setBaseUrl(self.getParam("baseUrl") as? String ?? "")
+#if DEBUG
     Config.setIsDevelopment(self.isDevelopment())
+#else
+    Config.setIsDevelopment(false)
+#endif
   }
 }

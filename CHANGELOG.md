@@ -1,3 +1,10 @@
+## [3.8.4](https://github.com/azifydev/aziface-mobile/compare/v3.8.3...v3.8.4) (2026-10-05)
+
+
+### Bug Fixes
+
+* controller ([#33](https://github.com/azifydev/aziface-mobile/issues/33)) ([8de9cae](https://github.com/azifydev/aziface-mobile/commit/8de9caef5ebb5d4da73bbb791391cf3ca0d55682))
+
 ## [3.8.3](https://github.com/azifydev/aziface-mobile/compare/v3.8.2...v3.8.3) (2026-04-07)
 
 

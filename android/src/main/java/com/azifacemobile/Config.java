@@ -67,7 +67,7 @@ public class Config {
   }
 
   public static void setIsDevelopment(Boolean isDevelopment) {
-    IsDevelopment = isDevelopment;
+    IsDevelopment = BuildConfig.DEBUG && Boolean.TRUE.equals(isDevelopment);
   }
 
   public static boolean isEmpty() {
@@ -147,15 +147,16 @@ public class Config {
     FaceTecFrameCustomization frameCustomization = defaultCustomization.getFrameCustomization();
     Frame frame = theme.getFrame();
     frameCustomization.cornerRadius = frame.getCornerRadius();
-    frameCustomization.backgroundColor = frame.getBackgroundColor();
-    frameCustomization.borderColor = frame.getBorderColor();
     frameCustomization.borderWidth = frame.getBorderWidth();
     frameCustomization.elevation = frame.getElevation();
 
     FaceTecOverlayCustomization overlayCustomization = defaultCustomization.getOverlayCustomization();
     overlayCustomization.brandingImage = image.getSource("branding", R.drawable.facetec_your_app_logo);
     overlayCustomization.showBrandingImage = image.getShowBranding();
-    overlayCustomization.backgroundColor = theme.getColor("backgroundColor");
+    int overlayBackgroundColor = theme.getColor("backgroundColor");
+    overlayCustomization.backgroundColor = overlayBackgroundColor;
+    frameCustomization.backgroundColor = overlayBackgroundColor;
+    frameCustomization.borderColor = overlayBackgroundColor;
 
     FaceTecGuidanceCustomization guidanceCustomization = defaultCustomization.getGuidanceCustomization();
     Guidance guidance = theme.getGuidance();
