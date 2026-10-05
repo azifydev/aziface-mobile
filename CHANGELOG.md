@@ -1,3 +1,10 @@
+## [3.8.6](https://github.com/azifydev/aziface-mobile/compare/v3.8.5...v3.8.6) (2026-10-05)
+
+
+### Bug Fixes
+
+* **WL-566:** vocal guidance controller ([#29](https://github.com/azifydev/aziface-mobile/issues/29)) ([19a92d6](https://github.com/azifydev/aziface-mobile/commit/19a92d6ab253730be7977ba88049408268e6bb4f))
+
 ## [3.8.5](https://github.com/azifydev/aziface-mobile/compare/v3.8.4...v3.8.5) (2026-10-05)
 
 
