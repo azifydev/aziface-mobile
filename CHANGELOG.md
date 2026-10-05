@@ -1,3 +1,10 @@
+## [3.8.5](https://github.com/azifydev/aziface-mobile/compare/v3.8.4...v3.8.5) (2026-10-05)
+
+
+### Bug Fixes
+
+* remove library unnecessary configs ([#30](https://github.com/azifydev/aziface-mobile/issues/30)) ([231af58](https://github.com/azifydev/aziface-mobile/commit/231af5819e16457fa1af7db0469f8db46e12744d))
+
 ## [3.8.4](https://github.com/azifydev/aziface-mobile/compare/v3.8.3...v3.8.4) (2026-10-05)
 
 
