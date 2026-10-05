@@ -1,3 +1,10 @@
+## [3.8.7](https://github.com/azifydev/aziface-mobile/compare/v3.8.6...v3.8.7) (2026-10-05)
+
+
+### Bug Fixes
+
+* **android:** change locale and dynamic strings when setLocale is called ([#31](https://github.com/azifydev/aziface-mobile/issues/31)) ([7cec5a3](https://github.com/azifydev/aziface-mobile/commit/7cec5a3ecb5df15fe96eb4cf456feae49a97b99f))
+
 ## [3.8.6](https://github.com/azifydev/aziface-mobile/compare/v3.8.5...v3.8.6) (2026-10-05)
 
 
