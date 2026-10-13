@@ -14,6 +14,10 @@ import {
   onOpen as handleOpen,
   onVocal as handleVocal,
 } from './listeners';
+import { en } from './locales';
+
+// Locales
+export * from './locales';
 
 // Errors
 
@@ -82,41 +86,15 @@ export enum Errors {
   UnknownInternalError = 'UnknownInternalError',
 }
 
-// Language & Region
-
-/**
- * @type
- *
- * @description The locale options available in Aziface SDK.
- *
- * @default "default"
- */
-export type Locale =
-  | 'default'
-  | 'en'
-  | 'af'
-  | 'ar'
-  | 'de'
-  | 'el'
-  | 'es'
-  | 'fr'
-  | 'ja'
-  | 'kk'
-  | 'nb'
-  | 'pt-BR'
-  | 'ru'
-  | 'vi'
-  | 'zh';
-
 // Strings & Texts
 
 /**
- * @interface DynamicStringsAccessibility
+ * @interface LocaleAccessibility
  *
- * @description An object containing the accessibility dynamic strings used in
- * the Aziface SDK.
+ * @description An object containing the accessibility locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsAccessibility {
+export interface LocaleAccessibility {
   /**
    * @description The cancel button accessibility string.
    *
@@ -140,12 +118,12 @@ export interface DynamicStringsAccessibility {
 }
 
 /**
- * @interface DynamicStringsAccessibilityFeedbackFace
+ * @interface LocaleAccessibilityFeedbackFace
  *
- * @description An object containing the face feedback accessibility dynamic
- * strings used in the Aziface SDK.
+ * @description An object containing the face feedback accessibility locale
+ * used in the Aziface SDK.
  */
-export interface DynamicStringsAccessibilityFeedbackFace {
+export interface LocaleAccessibilityFeedbackFace {
   /**
    * @description The too far left accessibility string.
    *
@@ -211,12 +189,12 @@ export interface DynamicStringsAccessibilityFeedbackFace {
 }
 
 /**
- * @interface DynamicStringsAccessibilityFeedback
+ * @interface LocaleAccessibilityFeedback
  *
- * @description An object containing the accessibility feedback dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the accessibility feedback locale used in
+ * the Aziface SDK.
  */
-export interface DynamicStringsAccessibilityFeedback {
+export interface LocaleAccessibilityFeedback {
   /**
    * @description The move phone away accessibility string.
    *
@@ -244,16 +222,15 @@ export interface DynamicStringsAccessibilityFeedback {
    *
    * @default undefined
    */
-  face?: DynamicStringsAccessibilityFeedbackFace;
+  face?: LocaleAccessibilityFeedbackFace;
 }
 
 /**
- * @interface DynamicStringsAction
+ * @interface LocaleAction
  *
- * @description An object containing the action dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the action locale used in the Aziface SDK.
  */
-export interface DynamicStringsAction {
+export interface LocaleAction {
   /**
    * @description The OK action string.
    *
@@ -333,12 +310,12 @@ export interface DynamicStringsAction {
 }
 
 /**
- * @interface DynamicStringsCameraPermission
+ * @interface LocaleCameraPermission
  *
- * @description An object containing the camera permission dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the camera permission locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsCameraPermission {
+export interface LocaleCameraPermission {
   /**
    * @description The header string.
    *
@@ -376,12 +353,11 @@ export interface DynamicStringsCameraPermission {
 }
 
 /**
- * @interface DynamicStringsCamera
+ * @interface LocaleCamera
  *
- * @description An object containing the camera dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the camera locale used in the Aziface SDK.
  */
-export interface DynamicStringsCamera {
+export interface LocaleCamera {
   /**
    * @description The initializing camera string.
    *
@@ -390,21 +366,21 @@ export interface DynamicStringsCamera {
   initializingCamera?: string;
 
   /**
-   * @description An object containing the camera permission dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the camera permission locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  permission?: DynamicStringsCameraPermission;
+  permission?: LocaleCameraPermission;
 }
 
 /**
- * @interface DynamicStringsFeedbackMove
+ * @interface LocaleFeedbackMove
  *
- * @description An object containing the move feedback dynamic strings used
- * in the Aziface SDK.
+ * @description An object containing the move feedback locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsFeedbackMove {
+export interface LocaleFeedbackMove {
   /**
    * @description The phone away string.
    *
@@ -428,12 +404,12 @@ export interface DynamicStringsFeedbackMove {
 }
 
 /**
- * @interface DynamicStringsFeedbackFace
+ * @interface LocaleFeedbackFace
  *
- * @description An object containing the face feedback dynamic strings used
- * in the Aziface SDK.
+ * @description An object containing the face feedback locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsFeedbackFace {
+export interface LocaleFeedbackFace {
   /**
    * @description The not found string.
    *
@@ -457,12 +433,12 @@ export interface DynamicStringsFeedbackFace {
 }
 
 /**
- * @interface DynamicStringsFeedback
+ * @interface LocaleFeedback
  *
- * @description An object containing the feedback dynamic strings used in
- * the Aziface SDK.
+ * @description An object containing the feedback locale used in the Aziface
+ * SDK.
  */
-export interface DynamicStringsFeedback {
+export interface LocaleFeedback {
   /**
    * @description The center face string.
    *
@@ -485,29 +461,29 @@ export interface DynamicStringsFeedback {
   useEvenLighting?: string;
 
   /**
-   * @description An object containing the face feedback dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the face feedback locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  face?: DynamicStringsFeedbackFace;
+  face?: LocaleFeedbackFace;
 
   /**
-   * @description An object containing the move feedback dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the move feedback locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  move?: DynamicStringsFeedbackMove;
+  move?: LocaleFeedbackMove;
 }
 
 /**
- * @interface DynamicStringsIdScanCapture
+ * @interface LocaleIdScanCapture
  *
- * @description An object containing the ID scan capture dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the ID scan capture locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsIdScanCapture {
+export interface LocaleIdScanCapture {
   /**
    * @description The tap to focus string.
    *
@@ -538,12 +514,12 @@ export interface DynamicStringsIdScanCapture {
 }
 
 /**
- * @interface DynamicStringsIdScanReview
+ * @interface LocaleIdScanReview
  *
- * @description An object containing the ID scan review dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the ID scan review locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsIdScanReview {
+export interface LocaleIdScanReview {
   /**
    * @description The ID front instruction string.
    *
@@ -560,12 +536,12 @@ export interface DynamicStringsIdScanReview {
 }
 
 /**
- * @interface DynamicStringsIdScanOcr
+ * @interface LocaleIdScanOcr
  *
- * @description An object containing the ID scan OCR dynamic strings used
- * in the Aziface SDK.
+ * @description An object containing the ID scan OCR locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsIdScanOcr {
+export interface LocaleIdScanOcr {
   /**
    * @description The confirmation main header string.
    *
@@ -582,12 +558,12 @@ export interface DynamicStringsIdScanOcr {
 }
 
 /**
- * @interface DynamicStringsIdScanNfc
+ * @interface LocaleIdScanNfc
  *
- * @description An object containing the ID scan NFC dynamic strings used
- * in the Aziface SDK.
+ * @description An object containing the ID scan NFC locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsIdScanNfc {
+export interface LocaleIdScanNfc {
   /**
    * @description The status disabled string.
    *
@@ -667,12 +643,12 @@ export interface DynamicStringsIdScanNfc {
 }
 
 /**
- * @interface DynamicStringsIdScanFeedback
+ * @interface LocaleIdScanFeedback
  *
- * @description An object containing the ID scan feedback dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the ID scan feedback locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsIdScanFeedback {
+export interface LocaleIdScanFeedback {
   /**
    * @description The flip ID to back string.
    *
@@ -689,12 +665,11 @@ export interface DynamicStringsIdScanFeedback {
 }
 
 /**
- * @interface DynamicStringsIdScan
+ * @interface LocaleIdScan
  *
- * @description An object containing the ID scan dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the ID scan locale used in the Aziface SDK.
  */
-export interface DynamicStringsIdScan {
+export interface LocaleIdScan {
   /**
    * @description The type selection header string.
    *
@@ -710,53 +685,52 @@ export interface DynamicStringsIdScan {
   additionalReview?: string;
 
   /**
-   * @description An object containing the ID scan capture dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the ID scan capture locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  capture?: DynamicStringsIdScanCapture;
+  capture?: LocaleIdScanCapture;
 
   /**
-   * @description An object containing the ID scan review dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the ID scan review locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  review?: DynamicStringsIdScanReview;
+  review?: LocaleIdScanReview;
 
   /**
-   * @description An object containing the ID scan OCR dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the ID scan OCR locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  ocr?: DynamicStringsIdScanOcr;
+  ocr?: LocaleIdScanOcr;
 
   /**
-   * @description An object containing the ID scan NFC dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the ID scan NFC locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  nfc?: DynamicStringsIdScanNfc;
+  nfc?: LocaleIdScanNfc;
 
   /**
-   * @description An object containing the ID scan feedback dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the ID scan feedback locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  feedback?: DynamicStringsIdScanFeedback;
+  feedback?: LocaleIdScanFeedback;
 }
 
 /**
- * @interface DynamicStringsLabel
+ * @interface LocaleLabel
  *
- * @description An object containing label dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing label locale used in the Aziface SDK.
  */
-export interface DynamicStringsLabel {
+export interface LocaleLabel {
   /**
    * @description The primary label string.
    *
@@ -780,36 +754,36 @@ export interface DynamicStringsLabel {
 }
 
 /**
- * @interface DynamicStringsInstructions
+ * @interface LocaleInstructions
  *
- * @description An object containing the instructions dynamic strings used in
- * the Aziface SDK.
+ * @description An object containing the instructions locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsInstructions {
+export interface LocaleInstructions {
   /**
-   * @description An object containing the header label dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the header label locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  header?: Omit<DynamicStringsLabel, 'tertiary'>;
+  header?: Omit<LocaleLabel, 'tertiary'>;
 
   /**
-   * @description An object containing the message label dynamic strings used
-   * in the Aziface SDK.
+   * @description An object containing the message label locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  message?: Omit<DynamicStringsLabel, 'tertiary'>;
+  message?: Omit<LocaleLabel, 'tertiary'>;
 }
 
 /**
- * @interface DynamicStringsPresession
+ * @interface LocalePresession
  *
- * @description An object containing the presession dynamic strings used in
- * the Aziface SDK.
+ * @description An object containing the presession locale used in the Aziface
+ * SDK.
  */
-export interface DynamicStringsPresession {
+export interface LocalePresession {
   /**
    * @description The orientation string.
    *
@@ -861,12 +835,12 @@ export interface DynamicStringsPresession {
 }
 
 /**
- * @interface DynamicStringsResultFaceScanSuccess3d
+ * @interface LocaleResultFaceScanSuccess3d
  *
- * @description An object containing the face scan success 3D dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the face scan success 3D locale used in
+ * the Aziface SDK.
  */
-export interface DynamicStringsResultFaceScanSuccess3d {
+export interface LocaleResultFaceScanSuccess3d {
   /**
    * @description The enrollment string.
    *
@@ -897,12 +871,12 @@ export interface DynamicStringsResultFaceScanSuccess3d {
 }
 
 /**
- * @interface DynamicStringsResultFaceScan
+ * @interface LocaleResultFaceScan
  *
- * @description An object containing the face scan dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the face scan locale used in the Aziface
+ * SDK.
  */
-export interface DynamicStringsResultFaceScan {
+export interface LocaleResultFaceScan {
   /**
    * @description The upload string.
    *
@@ -918,21 +892,21 @@ export interface DynamicStringsResultFaceScan {
   uploadStillUploading?: string;
 
   /**
-   * @description An object containing the face scan success 3D dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the face scan success 3D locale used in
+   * the Aziface SDK.
    *
    * @default undefined
    */
-  success3d?: DynamicStringsResultFaceScanSuccess3d;
+  success3d?: LocaleResultFaceScanSuccess3d;
 }
 
 /**
- * @interface DynamicStringsResultIdScanSuccess
+ * @interface LocaleResultIdScanSuccess
  *
- * @description An object containing the ID scan success dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the ID scan success locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsResultIdScanSuccess {
+export interface LocaleResultIdScanSuccess {
   /**
    * @description The front side string.
    *
@@ -997,20 +971,20 @@ export interface DynamicStringsResultIdScanSuccess {
   nfc?: string;
 
   /**
-   * @description The additional review tag string.
+   * @description The additional review string.
    *
    * @default undefined
    */
-  additionalReviewTag?: string;
+  additionalReview?: string;
 }
 
 /**
- * @interface DynamicStringsResultIdScanRetry
+ * @interface LocaleResultIdScanRetry
  *
- * @description An object containing the ID scan retry dynamic strings
- * used in the Aziface SDK.
+ * @description An object containing the ID scan retry locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsResultIdScanRetry {
+export interface LocaleResultIdScanRetry {
   /**
    * @description The face did not match string.
    *
@@ -1040,20 +1014,19 @@ export interface DynamicStringsResultIdScanRetry {
   idTypeNotSupported?: string;
 
   /**
-   * @description The barcode not readable string.
+   * @description The barcode not read string.
    *
    * @default undefined
    */
-  barcodeNotReadable?: string;
+  barcodeNotRead?: string;
 }
 
 /**
- * @interface DynamicStringsResultIdScan
+ * @interface LocaleResultIdScan
  *
- * @description An object containing the ID scan dynamic strings used in the
- * Aziface SDK.
+ * @description An object containing the ID scan locale used in the Aziface SDK.
  */
-export interface DynamicStringsResultIdScan {
+export interface LocaleResultIdScan {
   /**
    * @description The success string.
    *
@@ -1080,60 +1053,60 @@ export interface DynamicStringsResultIdScan {
    *
    * @default undefined
    */
-  uploadFrontSide?: DynamicStringsResultIdScanUpload;
+  uploadFrontSide?: LocaleResultIdScanUpload;
 
   /**
    * @description The back side upload string.
    *
    * @default undefined
    */
-  uploadBackSide?: DynamicStringsResultIdScanUpload;
+  uploadBackSide?: LocaleResultIdScanUpload;
 
   /**
    * @description The upload user confirmed info string.
    *
    * @default undefined
    */
-  uploadUserConfirmedInfo?: DynamicStringsResultIdScanUpload;
+  uploadUserConfirmedInfo?: LocaleResultIdScanUpload;
 
   /**
    * @description The upload NFC string.
    *
    * @default undefined
    */
-  uploadNfc?: DynamicStringsResultIdScanUpload;
+  uploadNfc?: LocaleResultIdScanUpload;
 
   /**
    * @description The upload skipped NFC string.
    *
    * @default undefined
    */
-  uploadSkippedNfc?: DynamicStringsResultIdScanUpload;
+  uploadSkippedNfc?: LocaleResultIdScanUpload;
 
   /**
-   * @description An object containing the ID scan success dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the ID scan success locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  success?: DynamicStringsResultIdScanSuccess;
+  success?: LocaleResultIdScanSuccess;
 
   /**
-   * @description An object containing the ID scan retry dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the ID scan retry locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  retry?: DynamicStringsResultIdScanRetry;
+  retry?: LocaleResultIdScanRetry;
 }
 
 /**
- * @interface DynamicStringsResultIdScanUpload
+ * @interface LocaleResultIdScanUpload
  *
- * @description An object containing the ID scan upload dynamic strings used in
- * the Aziface SDK.
+ * @description An object containing the ID scan upload locale used in the
+ * Aziface SDK.
  */
-export interface DynamicStringsResultIdScanUpload {
+export interface LocaleResultIdScanUpload {
   /**
    * @description The upload started string.
    *
@@ -1164,12 +1137,12 @@ export interface DynamicStringsResultIdScanUpload {
 }
 
 /**
- * @interface DynamicStringsResult
+ * @interface LocaleResult
  *
- * @description An object containing the result dynamic strings used in the
+ * @description An object containing the result locale used in the
  * Aziface SDK.
  */
-export interface DynamicStringsResult {
+export interface LocaleResult {
   /**
    * @description The NFC upload string.
    *
@@ -1185,27 +1158,27 @@ export interface DynamicStringsResult {
   sessionAbort?: string;
 
   /**
-   * @description An object containing the face scan result dynamic strings
-   * used in the Aziface SDK.
+   * @description An object containing the face scan result locale used in the
+   * Aziface SDK.
    *
    * @default undefined
    */
-  faceScan?: DynamicStringsResultFaceScan;
+  faceScan?: LocaleResultFaceScan;
 
   /**
-   * @description An object containing the ID scan dynamic strings used in the
+   * @description An object containing the ID scan locale used in the
    * Aziface SDK.
    */
-  idScan?: DynamicStringsResultIdScan;
+  idScan?: LocaleResultIdScan;
 }
 
 /**
- * @interface DynamicStringsRetryOfficialIdPhoto
+ * @interface LocaleRetryOfficialIdPhoto
  *
- * @description An object containing the retry official ID photo dynamic
- * strings used in the Aziface SDK.
+ * @description An object containing the retry official ID photo locale used in
+ * the Aziface SDK.
  */
-export interface DynamicStringsRetryOfficialIdPhoto {
+export interface LocaleRetryOfficialIdPhoto {
   /**
    * @description The header string.
    *
@@ -1244,12 +1217,12 @@ export interface DynamicStringsRetryOfficialIdPhoto {
 }
 
 /**
- * @interface DynamicStringsRetry
+ * @interface LocaleRetry
  *
- * @description An object containing the retry dynamic strings used in the
+ * @description An object containing the retry locale used in the
  * Aziface SDK.
  */
-export interface DynamicStringsRetry {
+export interface LocaleRetry {
   /**
    * @description The header string.
    *
@@ -1280,107 +1253,102 @@ export interface DynamicStringsRetry {
   idealImageLabel?: string;
 
   /**
-   * @description The instruction label string.
+   * @description The instruction label locale.
    *
    * @default undefined
    */
-  instruction?: DynamicStringsLabel;
+  instruction?: LocaleLabel;
 
   /**
-   * @description An object containing the retry official ID photo dynamic
-   * strings used in the Aziface SDK.
-   *
-   * @default undefined
-   */
-  officialIdPhoto?: DynamicStringsRetryOfficialIdPhoto;
-}
-
-/**
- * @interface DynamicStrings
- *
- * @description An object with all the dynamic strings to will be used in the
- * Aziface SDK screen. All properties are optional.
- */
-export interface DynamicStrings {
-  /**
-   * @description An object containing the accessibility dynamic strings used
+   * @description An object containing the retry official ID photo locale used
    * in the Aziface SDK.
    *
    * @default undefined
    */
-  accessibility?: DynamicStringsAccessibility;
+  officialIdPhoto?: LocaleRetryOfficialIdPhoto;
+}
 
+/**
+ * @interface Locale
+ *
+ * @description An object with all the locale that will be used in the Aziface
+ * SDK screen. All properties are optional.
+ */
+export interface Locale {
   /**
-   * @description An object containing the accessibility feedback dynamic
-   * strings used in the Aziface SDK.
-   *
-   * @default undefined
-   */
-  accessibilityFeedback?: DynamicStringsAccessibilityFeedback;
-
-  /**
-   * @description An object containing the action dynamic strings used in the
+   * @description An object containing the accessibility locale used in the
    * Aziface SDK.
    *
    * @default undefined
    */
-  action?: DynamicStringsAction;
+  accessibility?: LocaleAccessibility;
 
   /**
-   * @description An object containing the camera dynamic strings used in the
+   * @description An object containing the accessibility feedback locale used
+   * in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  accessibilityFeedback?: LocaleAccessibilityFeedback;
+
+  /**
+   * @description An object containing the action locale used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  action?: LocaleAction;
+
+  /**
+   * @description An object containing the camera locale used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  camera?: LocaleCamera;
+
+  /**
+   * @description An object containing the feedback locale used in the Aziface
+   * SDK.
+   *
+   * @default undefined
+   */
+  feedback?: LocaleFeedback;
+
+  /**
+   * @description An object containing the ID scan locale used in the Aziface
+   * SDK.
+   *
+   * @default undefined
+   */
+  idScan?: LocaleIdScan;
+
+  /**
+   * @description An object containing label locale used in the Aziface SDK.
+   *
+   * @default undefined
+   */
+  instructions?: LocaleInstructions;
+
+  /**
+   * @description An object containing the presession locale used in the
    * Aziface SDK.
    *
    * @default undefined
    */
-  camera?: DynamicStringsCamera;
+  presession?: LocalePresession;
 
   /**
-   * @description An object containing the feedback dynamic strings used in
-   * the Aziface SDK.
+   * @description An object containing the result locale used in the Aziface SDK.
    *
    * @default undefined
    */
-  feedback?: DynamicStringsFeedback;
+  result?: LocaleResult;
 
   /**
-   * @description An object containing the ID scan dynamic strings used in the
-   * Aziface SDK.
+   * @description An object containing the retry locale used in the Aziface SDK.
    *
    * @default undefined
    */
-  idScan?: DynamicStringsIdScan;
-
-  /**
-   * @description An object containing label dynamic strings used in the
-   * Aziface SDK.
-   *
-   * @default undefined
-   */
-  instructions?: DynamicStringsInstructions;
-
-  /**
-   * @description An object containing the presession dynamic strings used in
-   * the Aziface SDK.
-   *
-   * @default undefined
-   */
-  presession?: DynamicStringsPresession;
-
-  /**
-   * @description An object containing the result dynamic strings used in the
-   * Aziface SDK.
-   *
-   * @default undefined
-   */
-  result?: DynamicStringsResult;
-
-  /**
-   * @description An object containing the retry dynamic strings used in
-   * the Aziface SDK.
-   *
-   * @default undefined
-   */
-  retry?: DynamicStringsRetry;
+  retry?: LocaleRetry;
 }
 
 // Styles
@@ -3738,31 +3706,14 @@ export interface Methods extends TurboModule {
 
   /**
    * @description This method must be used to **set** the **locale** of the
-   * Aziface SDK screen.
+   * Aziface SDK screen. Default locale is `en`.
    *
-   * @param {Locale} locale - The locale to be set in Aziface SDK screen.
+   * @param {Locale} locale - The locale to be set in Aziface SDK
+   * screen.
    *
    * @return {void}
    */
   setLocale(locale: Locale): void;
-
-  /**
-   * @description This method must be used to **set** the **dynamic strings**
-   * of the Aziface SDK screen.
-   *
-   * @param {DynamicStrings} strings - An object with dynamic strings.
-   *
-   * @return {void}
-   */
-  setDynamicStrings(strings?: DynamicStrings): void;
-
-  /**
-   * @description This method must be used to **reset** the **dynamic strings**
-   * of the Aziface SDK screen.
-   *
-   * @return {void}
-   */
-  resetDynamicStrings(): void;
 
   /**
    * @description This method must be used to **set** the **theme** of the
@@ -3918,35 +3869,13 @@ export async function liveness(data?: object): Promise<Processor> {
  * @description This method must be used to **set** the **locale** of the
  * Aziface SDK.
  *
- * @param {Locale|undefined} locale - The locale to be set in Aziface SDK
- * screen.
+ * @param {Locale|undefined} locale - The locale to be set in Aziface
+ * SDK screen.
  *
  * @return {void}
  */
 export function setLocale(locale?: Locale): void {
-  AzifaceMobile.setLocale(locale);
-}
-
-/**
- * @description This method must be used to **set** the **dynamic strings**
- * of the Aziface SDK screen.
- *
- * @param {DynamicStrings} strings - An object with dynamic strings.
- *
- * @return {void}
- */
-export function setDynamicStrings(strings?: DynamicStrings): void {
-  AzifaceMobile.setDynamicStrings(strings);
-}
-
-/**
- * @description This method must be used to **reset** the **dynamic strings**
- * of the Aziface SDK screen.
- *
- * @return {void}
- */
-export function resetDynamicStrings(): void {
-  AzifaceMobile.resetDynamicStrings();
+  AzifaceMobile.setDynamicStrings(locale || en);
 }
 
 /**

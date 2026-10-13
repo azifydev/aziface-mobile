@@ -47,7 +47,6 @@ Aziface SDK adapter to react native.
         - [`ProcessorRequestMethod`](#processorrequestmethod)
       - [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)
     - [`ProcessorError`](#processorerror)
-  - [`Locale`](#locale)
   - [`Errors`](#errors)
 - [Components](#components)
   - [`FaceView`](#faceview)
@@ -88,7 +87,7 @@ cd ios && pod install && cd ..
 
 Every integration follows the same three steps:
 
-1. **(Optional)** Customize the SDK with [`setTheme`](./docs/THEME.md), [`setLocale`](#setlocale) and [`setDynamicStrings`](./docs/DYNAMIC_STRINGS.md).
+1. **(Optional)** Customize the SDK with [`setTheme`](./docs/THEME.md) and [`setLocale`](#setlocale) (language and [dynamic strings](./docs/DYNAMIC_STRINGS.md)).
 2. **Initialize** the SDK once with [`initialize`](#initialize).
 3. **Start a flow** ([`enroll`](#enroll), [`authenticate`](#authenticate), [`liveness`](#liveness), [`photoMatch`](#photomatch) or [`photoScan`](#photoscan)) and read the returned [`Processor`](#processor).
 
@@ -172,6 +171,9 @@ import {
   photoScan,
   setLocale,
   FaceView,
+  en,
+  es,
+  ptBR,
   type Params,
   type Headers,
   type Processor,
@@ -188,12 +190,12 @@ const FLOWS: Record<Flow, (data?: object) => Promise<Processor>> = {
   photoScan,
 };
 
-const LOCALES: Locale[] = ['default', 'en', 'es', 'pt-BR'];
+const LOCALES: Record<string, Locale> = { en, es, 'pt-BR': ptBR };
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
-  const [locale, setCurrentLocale] = useState<Locale>('default');
+  const [locale, setCurrentLocale] = useState('en');
 
   const isDisabled = !isInitialized || isRunning;
 
@@ -237,10 +239,11 @@ export default function App() {
   };
 
   const onLocale = () => {
-    const next = LOCALES[(LOCALES.indexOf(locale) + 1) % LOCALES.length]!;
+    const codes = Object.keys(LOCALES);
+    const next = codes[(codes.indexOf(locale) + 1) % codes.length]!;
 
     setCurrentLocale(next);
-    setLocale(next);
+    setLocale(LOCALES[next]);
   };
 
   return (
@@ -468,26 +471,36 @@ console.log(result);
 
 ### `setLocale`
 
-The `setLocale` method in the Aziface SDK is used to define the language and locale used by the SDK’s user interface and vocal guidance during verification sessions.
+The `setLocale` method in the Aziface SDK sets the text strings displayed in the SDK’s user interface during verification sessions. It receives a [`Locale`](./docs/DYNAMIC_STRINGS.md#locale) object, so the same method changes the language and customizes the strings.
 
-By calling this method, the application specifies which language the SDK should use for on-screen text, voice prompts, and user instructions. This allows the SDK to present a localized experience that matches the user’s preferred or device language.
+The library exports a complete object for each supported language: `af`, `ar`, `de`, `el`, `en`, `es`, `fr`, `ja`, `kk`, `nb`, `ptBR`, `ru`, `vi` and `zh`. To customize the strings, spread one of these objects and override the strings you want to change. See the [Dynamic Strings](./docs/DYNAMIC_STRINGS.md) documentation for every available string.
 
-The selected language applies to all Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. The language must be set **before starting** a session to ensure consistent localization throughout the user interaction.
+The strings apply to all Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. Call `setLocale` **before starting** a session to ensure consistent text throughout the user interaction.
 
-If an unsupported or invalid language code is provided, the SDK falls back to its default language (English). `setLocale` doesn't return anything.
+If a string is missing, the SDK falls back to its default text (English) for that element. Calling `setLocale` without arguments resets the strings to `en`. `setLocale` doesn't return anything.
 
 ```tsx
-setLocale('pt-BR');
+import { setLocale, liveness, en } from '@azify/aziface-mobile';
+
+setLocale(en);
 
 // Sessions started from now on use Brazilian Portuguese.
+await liveness();
+
+setLocale({
+  ...en,
+  action: { ...en.action, ok: "Let's go!" },
+});
+
+// Sessions started from now on use Brazilian Portuguese with a custom button text.
 await liveness();
 ```
 
 #### Properties
 
-| Property | type                | Required |
-| -------- | ------------------- | -------- |
-| `locale` | [`Locale`](#locale) | ✅       |
+| Property | type                                         | Required | Default |
+| -------- | -------------------------------------------- | -------- | ------- |
+| `locale` | [`Locale`](./docs/DYNAMIC_STRINGS.md#locale) | ❌       | `en`    |
 
 ### `vocal`
 
@@ -525,7 +538,6 @@ vocal();
 | [`ProcessorHttpCallInfo`](#processorhttpcallinfo)                   | All      |
 | [`ProcessorRequestMethod`](#processorrequestmethod)                 | All      |
 | [`ProcessorIDScanResultsSoFar`](#processoridscanresultssofar)       | All      |
-| [`Locale`](#locale)                                                 | All      |
 
 ### `Params`
 
@@ -654,28 +666,6 @@ The processor scan result. It's shown when you use `photoScan` or `photoMatch`.
 | `faceMapAgeV2GroupEnumInt`                    | `number`  | The face map age group enumeration integer.                   |
 | `watermarkAndHologramStatusEnumInt`           | `number`  | The watermark and hologram status enumeration integer.        |
 
-### `Locale`
-
-The `Locale` type use the [ISO 639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) language codes pattern.
-
-| type      | Description                     | Platform |
-| --------- | ------------------------------- | -------- |
-| `af`      | Afrikaans language.             | All      |
-| `ar`      | Arabic language.                | All      |
-| `de`      | German language.                | All      |
-| `default` | English language.               | All      |
-| `en`      | English language.               | All      |
-| `el`      | Greek language.                 | All      |
-| `es`      | Spanish and Castilian language. | All      |
-| `fr`      | French language.                | All      |
-| `ja`      | Japanese language.              | All      |
-| `kk`      | Kazakh language.                | All      |
-| `nb`      | Norwegian Bokmål language.      | All      |
-| `pt-BR`   | Portuguese Brazilian language.  | All      |
-| `ru`      | Russian language.               | All      |
-| `vi`      | Vietnamese language.            | All      |
-| `zh`      | Chinese language.               | All      |
-
 ### `Errors`
 
 | `Errors`                  | Description                                                                         | Platform |
@@ -725,13 +715,13 @@ The `FaceView` extends all properties of the `View`, but it has six new callback
 
 ## Dynamic Strings
 
-The `setDynamicStrings` method in the Aziface SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
+The [`setLocale`](#setlocale) method in the Aziface SDK allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
 
-This method enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
+This enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
 
-The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, setDynamicStrings should be called before starting a session so that all UI elements display the customized text.
+The dynamic strings defined through this method apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, `setLocale` should be called before starting a session so that all UI elements display the customized text.
 
-If a provided string key is invalid or missing, the SDK falls back to its default text for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
+If a provided string key is invalid or missing, the SDK falls back to its default text (English) for that element. This ensures that the user experience remains functional even if some custom strings are not defined.
 
 We separated another documentation about the dynamic strings, see more [here](./docs/DYNAMIC_STRINGS.md)!
 

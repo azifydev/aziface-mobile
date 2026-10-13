@@ -7,7 +7,6 @@ import React
 public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
   private static let NAME: String = "ios_azify_app_"
   private static var IsRunning: Bool = false
-  private static var I18n: Localization = Localization()
   private static var Strings: DynamicStrings = DynamicStrings()
   public static var DemonstrationExternalDatabaseRefID: String = ""
   private var error: AzifaceError!
@@ -24,8 +23,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     self.emitter = emit
     self.error = AzifaceError(module: self)
     self.response = NSMutableDictionary()
-
-    self.setupI18n()
   }
 
   @objc public func initialize(
@@ -56,8 +53,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       paremeters.build()
 
       if !Config.isEmpty() {
-        self.setupI18n()
-
         FaceTec.sdk.initializeWithSessionRequest(
           deviceKeyIdentifier: Config.DeviceKeyIdentifier,
           sessionRequestProcessor: SessionRequestProcessor(module: self),
@@ -226,22 +221,9 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
     }
   }
 
-  @objc public func setLocale(_ locale: String) {
-    Aziface.I18n.setLocale(locale: locale)
-
-    self.setupI18n()
-  }
-
   @objc public func setDynamicStrings(_ strings: NSDictionary) {
     Aziface.Strings
       .setStrings(strings)
-      .load()
-      .build()
-  }
-
-  @objc public func resetDynamicStrings() {
-    Aziface.Strings
-      .setStrings(nil)
       .load()
       .build()
   }
@@ -279,10 +261,6 @@ public class Aziface: NSObject, URLSessionDelegate, FaceTecInitializeCallback {
       Vocal.setVocalGuidanceMode(self.isEnabled)
       self.emitter.emitOnVocal(self.isEnabled)
     }
-  }
-
-  private func setupI18n() {
-    FaceTec.sdk.setLanguage(Aziface.I18n.getLocale())
   }
 
   private func getCurrentViewController() -> UIViewController? {

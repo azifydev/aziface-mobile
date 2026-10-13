@@ -67,16 +67,8 @@ RCT_EXPORT_MODULE()
   return [_aziface photoIDScanOnly:data resolve:resolve];
 }
 
-- (void)setLocale:(NSString *)locale {
-  return [_aziface setLocale:locale];
-}
-
 - (void)setDynamicStrings:(NSDictionary *)strings {
   return [_aziface setDynamicStrings:strings];
-}
-
-- (void)resetDynamicStrings {
-  return [_aziface resetDynamicStrings];
 }
 
 - (void)setTheme:(nonnull NSDictionary *)options {

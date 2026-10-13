@@ -5,13 +5,10 @@ import static java.util.UUID.randomUUID;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
 import com.azifacemobile.errors.AzifaceError;
-import com.azifacemobile.i18n.Localization;
 import com.azifacemobile.strings.DynamicStrings;
 import com.azifacemobile.theme.Theme;
 import com.azifacemobile.theme.Vocal;
@@ -37,7 +34,6 @@ import java.util.Iterator;
 @ReactModule(name = AzifaceMobileModule.NAME)
 public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements ActivityEventListener {
   private static final String EXTERNAL_ID = "android_azify_app_";
-  private static final Localization I18n = new Localization();
   private static final DynamicStrings Strings = new DynamicStrings();
   public static final String NAME = "AzifaceMobile";
   private static Boolean IsRunning = false;
@@ -58,8 +54,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     this.reactContext = context;
     this.error = new AzifaceError(this);
     this.response = Arguments.createMap();
-
-    this.setupI18n();
 
     FaceTecSDK.preload(context);
   }
@@ -126,8 +120,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     parameters.build();
 
     if (!Config.isEmpty()) {
-      this.setupI18n();
-
       FaceTecSDK.initializeWithSessionRequest(this.getActivity(), Config.DeviceKeyIdentifier, new SessionRequestProcessor(), new FaceTecSDK.InitializeCallback() {
         @Override
         public void onSuccess(@NonNull FaceTecSDKInstance sdkInstance) {
@@ -276,22 +268,8 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   }
 
   @ReactMethod
-  public void setLocale(String locale) {
-    I18n.setLocale(locale);
-
-    this.setupI18n();
-  }
-
-  @ReactMethod
   public void setDynamicStrings(ReadableMap strings) {
     Strings.setStrings(strings)
-      .load()
-      .build();
-  }
-
-  @ReactMethod
-  public void resetDynamicStrings() {
-    Strings.setStrings(null)
       .load()
       .build();
   }
@@ -340,16 +318,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     final Theme theme = new Theme(this.reactContext);
     Config.currentCustomization = Config.retrieveConfigurationCustomization(theme);
     Theme.updateTheme();
-  }
-
-  private void setupI18n() {
-    final Configuration configuration = new Configuration(this.reactContext.getResources().getConfiguration());
-    configuration.setLocale(I18n.getLocale());
-
-    final Resources resources = this.reactContext.createConfigurationContext(configuration).getResources();
-    Strings.setResources(resources)
-      .load()
-      .build();
   }
 
   private void onInitializationSuccess(FaceTecSDKInstance sdkInstance) {

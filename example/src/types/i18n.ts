@@ -1,0 +1,15 @@
+export type LocaleType =
+  | 'af'
+  | 'ar'
+  | 'de'
+  | 'el'
+  | 'es'
+  | 'en'
+  | 'fr'
+  | 'ja'
+  | 'kk'
+  | 'nb'
+  | 'ptBR'
+  | 'ru'
+  | 'vi'
+  | 'zh';

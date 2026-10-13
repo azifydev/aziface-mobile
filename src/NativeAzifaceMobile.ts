@@ -2,7 +2,6 @@ import { TurboModuleRegistry, type TurboModule } from 'react-native';
 import type {
   EventEmitter,
   UnsafeObject,
-  WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypesNamespace';
 
 export interface Spec extends TurboModule {
@@ -19,9 +18,7 @@ export interface Spec extends TurboModule {
   enroll(data?: UnsafeObject): Promise<string>;
   authenticate(data?: UnsafeObject): Promise<string>;
   liveness(data?: UnsafeObject): Promise<string>;
-  setLocale(locale?: WithDefault<string, 'default'>): void;
   setDynamicStrings(strings?: UnsafeObject): void;
-  resetDynamicStrings(): void;
   setTheme(options?: UnsafeObject): void;
   resetTheme(): void;
   vocal(): void;
