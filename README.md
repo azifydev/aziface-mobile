@@ -480,16 +480,16 @@ The strings apply to all Aziface SDK workflows, including enrollment, authentica
 If a string is missing, the SDK falls back to its default text (English) for that element. Calling `setLocale` without arguments resets the strings to `en`. `setLocale` doesn't return anything.
 
 ```tsx
-import { setLocale, liveness, en } from '@azify/aziface-mobile';
+import { setLocale, liveness, ptBR } from '@azify/aziface-mobile';
 
-setLocale(en);
+setLocale(ptBR);
 
 // Sessions started from now on use Brazilian Portuguese.
 await liveness();
 
 setLocale({
-  ...en,
-  action: { ...en.action, ok: "Let's go!" },
+  ...ptBR,
+  action: { ...ptBR.action, ok: 'Vamos lá!' },
 });
 
 // Sessions started from now on use Brazilian Portuguese with a custom button text.
