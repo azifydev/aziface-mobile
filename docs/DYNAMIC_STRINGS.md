@@ -4,9 +4,11 @@ The Aziface SDK allows applications to dynamically customize and override the te
 
 This enables the application to replace default UI messages such as instructions, error messages, button labels, and guidance text with custom strings at runtime. It is commonly used to adapt wording, terminology, or tone to better align with product language, branding, regulatory requirements, or user context.
 
-The dynamic strings apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, call `setDynamicStrings` before starting a session so that all UI elements display the customized text.
+Dynamic strings are set with [`setLocale`](#setlocale). The same method changes the SDK language: pass one of the [built-in locales](#built-in-locales) to translate every string, or pass your own [`Locale`](#locale) object to customize them. You can also spread a built-in locale and override only the strings you want to change.
 
-If a provided string key is invalid or missing, the SDK falls back to its default text for that element (in the language selected with `setLocale`). This ensures that the user experience remains functional even if some custom strings are not defined.
+The dynamic strings apply across Aziface SDK workflows, including enrollment, authentication, liveness checks, photo scan, and photo match verification. To ensure consistency, call `setLocale` before starting a session so that all UI elements display the customized text.
+
+If a provided string key is invalid or missing, the SDK falls back to its default text (English) for that element. To keep a single language on screen, spread a built-in locale before your custom strings, as shown in [Usage](#usage).
 
 <hr/>
 
@@ -14,81 +16,74 @@ If a provided string key is invalid or missing, the SDK falls back to its defaul
 
 - [Usage](#usage)
 - [API](#api)
-  - [`setDynamicStrings`](#setdynamicstrings)
+  - [`setLocale`](#setlocale)
     - [Properties](#properties)
-  - [`resetDynamicStrings`](#resetdynamicstrings)
+- [Built-in locales](#built-in-locales)
 - [Types](#types)
-  - [`DynamicStrings`](#dynamicstrings)
-    - [`DynamicStringsAccessibility`](#dynamicstringsaccessibility)
-    - [`DynamicStringsAccessibilityFeedback`](#dynamicstringsaccessibilityfeedback)
-      - [`DynamicStringsAccessibilityFeedbackFace`](#dynamicstringsaccessibilityfeedbackface)
-    - [`DynamicStringsAction`](#dynamicstringsaction)
-    - [`DynamicStringsCamera`](#dynamicstringscamera)
-      - [`DynamicStringsCameraPermission`](#dynamicstringscamerapermission)
-    - [`DynamicStringsFeedback`](#dynamicstringsfeedback)
-      - [`DynamicStringsFeedbackFace`](#dynamicstringsfeedbackface)
-      - [`DynamicStringsFeedbackMove`](#dynamicstringsfeedbackmove)
-    - [`DynamicStringsIdScan`](#dynamicstringsidscan)
-      - [`DynamicStringsIdScanCapture`](#dynamicstringsidscancapture)
-      - [`DynamicStringsIdScanFeedback`](#dynamicstringsidscanfeedback)
-      - [`DynamicStringsIdScanNfc`](#dynamicstringsidscannfc)
-      - [`DynamicStringsIdScanOcr`](#dynamicstringsidscanocr)
-      - [`DynamicStringsIdScanReview`](#dynamicstringsidscanreview)
-    - [`DynamicStringsInstructions`](#dynamicstringsinstructions)
-    - [`DynamicStringsPresession`](#dynamicstringspresession)
-    - [`DynamicStringsResult`](#dynamicstringsresult)
-      - [`DynamicStringsResultFaceScan`](#dynamicstringsresultfacescan)
-        - [`DynamicStringsResultFaceScanSuccess3d`](#dynamicstringsresultfacescansuccess3d)
-      - [`DynamicStringsResultIdScan`](#dynamicstringsresultidscan)
-        - [`DynamicStringsResultIdScanSuccess`](#dynamicstringsresultidscansuccess)
-        - [`DynamicStringsResultIdScanRetry`](#dynamicstringsresultidscanretry)
-        - [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)
-    - [`DynamicStringsRetry`](#dynamicstringsretry)
-      - [`DynamicStringsRetryOfficialIdPhoto`](#dynamicstringsretryofficialidphoto)
-    - [`DynamicStringsLabel`](#dynamicstringslabel)
+  - [`Locale`](#locale)
+    - [`LocaleAccessibility`](#localeaccessibility)
+    - [`LocaleAccessibilityFeedback`](#localeaccessibilityfeedback)
+      - [`LocaleAccessibilityFeedbackFace`](#localeaccessibilityfeedbackface)
+    - [`LocaleAction`](#localeaction)
+    - [`LocaleCamera`](#localecamera)
+      - [`LocaleCameraPermission`](#localecamerapermission)
+    - [`LocaleFeedback`](#localefeedback)
+      - [`LocaleFeedbackFace`](#localefeedbackface)
+      - [`LocaleFeedbackMove`](#localefeedbackmove)
+    - [`LocaleIdScan`](#localeidscan)
+      - [`LocaleIdScanCapture`](#localeidscancapture)
+      - [`LocaleIdScanFeedback`](#localeidscanfeedback)
+      - [`LocaleIdScanNfc`](#localeidscannfc)
+      - [`LocaleIdScanOcr`](#localeidscanocr)
+      - [`LocaleIdScanReview`](#localeidscanreview)
+    - [`LocaleInstructions`](#localeinstructions)
+    - [`LocalePresession`](#localepresession)
+    - [`LocaleResult`](#localeresult)
+      - [`LocaleResultFaceScan`](#localeresultfacescan)
+        - [`LocaleResultFaceScanSuccess3d`](#localeresultfacescansuccess3d)
+      - [`LocaleResultIdScan`](#localeresultidscan)
+        - [`LocaleResultIdScanSuccess`](#localeresultidscansuccess)
+        - [`LocaleResultIdScanRetry`](#localeresultidscanretry)
+        - [`LocaleResultIdScanUpload`](#localeresultidscanupload)
+    - [`LocaleRetry`](#localeretry)
+      - [`LocaleRetryOfficialIdPhoto`](#localeretryofficialidphoto)
+    - [`LocaleLabel`](#localelabel)
 
 <hr/>
 
 ## Usage
 
 ```tsx
-import { useState } from 'react';
 import { Button } from 'react-native';
-import {
-  setDynamicStrings,
-  resetDynamicStrings,
-  enroll,
-} from '@azify/aziface-mobile';
+import { setLocale, enroll, en, ptBR } from '@azify/aziface-mobile';
 
 export default function App() {
-  const [isEnabled, setIsEnabled] = useState(false);
+  // ...
 
-  function onToggleDynamicStrings() {
-    if (isEnabled) {
-      // Back to the SDK default texts.
-      resetDynamicStrings();
-    } else {
-      // Only the keys you provide are replaced.
-      setDynamicStrings({
-        action: {
-          ok: "Let's go!",
-          imReady: "I'm ready!",
-        },
-        feedback: {
-          centerFace: 'Put your face in the center',
-        },
-      });
-    }
+  function onChangeLanguage() {
+    // Translates every string to Brazilian Portuguese.
+    setLocale(ptBR);
+  }
 
-    setIsEnabled(!isEnabled);
+  function onCustomizeStrings() {
+    setLocale({
+      ...en, // rest of English language object
+      action: {
+        ...en.action,
+        ok: "Let's go!",
+        imReady: "I'm ready!",
+      },
+      feedback: {
+        ...en.feedback,
+        centerFace: 'Put your face in the center',
+      },
+    });
   }
 
   return (
     <>
-      <Button
-        title={isEnabled ? 'Reset Dynamic Strings' : 'Set Dynamic Strings'}
-        onPress={onToggleDynamicStrings}
-      />
+      <Button title="Português" onPress={onChangeLanguage} />
+      <Button title="Custom Strings" onPress={onCustomizeStrings} />
 
       {/* The next session uses the texts set above. */}
       <Button title="Enroll" onPress={() => enroll()} />
@@ -101,224 +96,244 @@ export default function App() {
 
 ## API
 
-| Methods               | Return Type | Platform |
-| --------------------- | ----------- | -------- |
-| `setDynamicStrings`   | `void`      | All      |
-| `resetDynamicStrings` | `void`      | All      |
+| Methods     | Return Type | Platform |
+| ----------- | ----------- | -------- |
+| `setLocale` | `void`      | All      |
 
-### `setDynamicStrings`
+### `setLocale`
 
-The `setDynamicStrings` allows applications to dynamically customize and override the text strings displayed in the SDK’s user interface during verification sessions.
+The `setLocale` sets the text strings displayed in the SDK’s user interface during verification sessions. Use it to change the SDK language with a [built-in locale](#built-in-locales), or to customize and override the strings with your own [`Locale`](#locale) object.
+
+Calling `setLocale` without arguments resets the strings to the [`en`](#built-in-locales) locale. `setLocale` doesn't return anything.
 
 #### Properties
 
-| Property  | type                                | Required | Default     |
-| --------- | ----------------------------------- | -------- | ----------- |
-| `strings` | [`DynamicStrings`](#dynamicstrings) | ❌       | `undefined` |
+| Property | type                | Required | Default |
+| -------- | ------------------- | -------- | ------- |
+| `locale` | [`Locale`](#locale) | ❌       | `en`    |
 
-### `resetDynamicStrings`
+<hr/>
 
-The `resetDynamicStrings` is a fallback method to return default strings.
+## Built-in locales
+
+The library exports a complete [`Locale`](#locale) object for each supported language. Each object is typed as `Required<Locale>`, so you can spread it as the base of your custom strings.
+
+| Locale | Description                     | Platform |
+| ------ | ------------------------------- | -------- |
+| `af`   | Afrikaans language.             | All      |
+| `ar`   | Arabic language.                | All      |
+| `de`   | German language.                | All      |
+| `el`   | Greek language.                 | All      |
+| `en`   | English language (default).     | All      |
+| `es`   | Spanish and Castilian language. | All      |
+| `fr`   | French language.                | All      |
+| `ja`   | Japanese language.              | All      |
+| `kk`   | Kazakh language.                | All      |
+| `nb`   | Norwegian Bokmål language.      | All      |
+| `ptBR` | Portuguese Brazilian language.  | All      |
+| `ru`   | Russian language.               | All      |
+| `vi`   | Vietnamese language.            | All      |
+| `zh`   | Chinese language.               | All      |
 
 <hr/>
 
 ## Types
 
-| Types                                                                                 | Platform |
-| ------------------------------------------------------------------------------------- | -------- |
-| [`DynamicStrings`](#dynamicstrings)                                                   | All      |
-| [`DynamicStringsAccessibility`](#dynamicstringsaccessibility)                         | All      |
-| [`DynamicStringsAccessibilityFeedback`](#dynamicstringsaccessibilityfeedback)         | All      |
-| [`DynamicStringsAccessibilityFeedbackFace`](#dynamicstringsaccessibilityfeedbackface) | All      |
-| [`DynamicStringsAction`](#dynamicstringsaction)                                       | All      |
-| [`DynamicStringsCamera`](#dynamicstringscamera)                                       | All      |
-| [`DynamicStringsCameraPermission`](#dynamicstringscamerapermission)                   | All      |
-| [`DynamicStringsFeedback`](#dynamicstringsfeedback)                                   | All      |
-| [`DynamicStringsFeedbackFace`](#dynamicstringsfeedbackface)                           | All      |
-| [`DynamicStringsFeedbackMove`](#dynamicstringsfeedbackmove)                           | All      |
-| [`DynamicStringsIdScan`](#dynamicstringsidscan)                                       | All      |
-| [`DynamicStringsIdScanCapture`](#dynamicstringsidscancapture)                         | All      |
-| [`DynamicStringsIdScanFeedback`](#dynamicstringsidscanfeedback)                       | All      |
-| [`DynamicStringsIdScanNfc`](#dynamicstringsidscannfc)                                 | All      |
-| [`DynamicStringsIdScanOcr`](#dynamicstringsidscanocr)                                 | All      |
-| [`DynamicStringsIdScanReview`](#dynamicstringsidscanreview)                           | All      |
-| [`DynamicStringsInstructions`](#dynamicstringsinstructions)                           | All      |
-| [`DynamicStringsPresession`](#dynamicstringspresession)                               | All      |
-| [`DynamicStringsResult`](#dynamicstringsresult)                                       | All      |
-| [`DynamicStringsResultFaceScan`](#dynamicstringsresultfacescan)                       | All      |
-| [`DynamicStringsResultFaceScanSuccess3d`](#dynamicstringsresultfacescansuccess3d)     | All      |
-| [`DynamicStringsResultIdScan`](#dynamicstringsresultidscan)                           | All      |
-| [`DynamicStringsResultIdScanSuccess`](#dynamicstringsresultidscansuccess)             | All      |
-| [`DynamicStringsResultIdScanRetry`](#dynamicstringsresultidscanretry)                 | All      |
-| [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)               | All      |
-| [`DynamicStringsRetry`](#dynamicstringsretry)                                         | All      |
-| [`DynamicStringsRetryOfficialIdPhoto`](#dynamicstringsretryofficialidphoto)           | All      |
-| [`DynamicStringsLabel`](#dynamicstringslabel)                                         | All      |
+| Types                                                                 | Platform |
+| --------------------------------------------------------------------- | -------- |
+| [`Locale`](#locale)                                                   | All      |
+| [`LocaleAccessibility`](#localeaccessibility)                         | All      |
+| [`LocaleAccessibilityFeedback`](#localeaccessibilityfeedback)         | All      |
+| [`LocaleAccessibilityFeedbackFace`](#localeaccessibilityfeedbackface) | All      |
+| [`LocaleAction`](#localeaction)                                       | All      |
+| [`LocaleCamera`](#localecamera)                                       | All      |
+| [`LocaleCameraPermission`](#localecamerapermission)                   | All      |
+| [`LocaleFeedback`](#localefeedback)                                   | All      |
+| [`LocaleFeedbackFace`](#localefeedbackface)                           | All      |
+| [`LocaleFeedbackMove`](#localefeedbackmove)                           | All      |
+| [`LocaleIdScan`](#localeidscan)                                       | All      |
+| [`LocaleIdScanCapture`](#localeidscancapture)                         | All      |
+| [`LocaleIdScanFeedback`](#localeidscanfeedback)                       | All      |
+| [`LocaleIdScanNfc`](#localeidscannfc)                                 | All      |
+| [`LocaleIdScanOcr`](#localeidscanocr)                                 | All      |
+| [`LocaleIdScanReview`](#localeidscanreview)                           | All      |
+| [`LocaleInstructions`](#localeinstructions)                           | All      |
+| [`LocalePresession`](#localepresession)                               | All      |
+| [`LocaleResult`](#localeresult)                                       | All      |
+| [`LocaleResultFaceScan`](#localeresultfacescan)                       | All      |
+| [`LocaleResultFaceScanSuccess3d`](#localeresultfacescansuccess3d)     | All      |
+| [`LocaleResultIdScan`](#localeresultidscan)                           | All      |
+| [`LocaleResultIdScanSuccess`](#localeresultidscansuccess)             | All      |
+| [`LocaleResultIdScanRetry`](#localeresultidscanretry)                 | All      |
+| [`LocaleResultIdScanUpload`](#localeresultidscanupload)               | All      |
+| [`LocaleRetry`](#localeretry)                                         | All      |
+| [`LocaleRetryOfficialIdPhoto`](#localeretryofficialidphoto)           | All      |
+| [`LocaleLabel`](#localelabel)                                         | All      |
 
-### `DynamicStrings`
+### `Locale`
 
-An object with all the dynamic strings to will be used in the Aziface SDK screen. All properties are optional.
+An object with all the strings used in the Aziface SDK screen. All properties are optional. See the [built-in locales](#built-in-locales) for complete objects.
 
-| `DynamicStrings`        | type                                                                          | Platform | Required | Default     |
-| ----------------------- | ----------------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `accessibility`         | [`DynamicStringsAccessibility`](#dynamicstringsaccessibility)                 | All      | ❌       | `undefined` |
-| `accessibilityFeedback` | [`DynamicStringsAccessibilityFeedback`](#dynamicstringsaccessibilityfeedback) | All      | ❌       | `undefined` |
-| `action`                | [`DynamicStringsAction`](#dynamicstringsaction)                               | All      | ❌       | `undefined` |
-| `camera`                | [`DynamicStringsCamera`](#dynamicstringscamera)                               | All      | ❌       | `undefined` |
-| `feedback`              | [`DynamicStringsFeedback`](#dynamicstringsfeedback)                           | All      | ❌       | `undefined` |
-| `idScan`                | [`DynamicStringsIdScan`](#dynamicstringsidscan)                               | All      | ❌       | `undefined` |
-| `instructions`          | [`DynamicStringsInstructions`](#dynamicstringsinstructions)                   | All      | ❌       | `undefined` |
-| `presession`            | [`DynamicStringsPresession`](#dynamicstringspresession)                       | All      | ❌       | `undefined` |
-| `result`                | [`DynamicStringsResult`](#dynamicstringsresult)                               | All      | ❌       | `undefined` |
-| `retry`                 | [`DynamicStringsRetry`](#dynamicstringsretry)                                 | All      | ❌       | `undefined` |
+| `Locale`                | type                                                          | Platform | Required | Default     |
+| ----------------------- | ------------------------------------------------------------- | -------- | -------- | ----------- |
+| `accessibility`         | [`LocaleAccessibility`](#localeaccessibility)                 | All      | ❌       | `undefined` |
+| `accessibilityFeedback` | [`LocaleAccessibilityFeedback`](#localeaccessibilityfeedback) | All      | ❌       | `undefined` |
+| `action`                | [`LocaleAction`](#localeaction)                               | All      | ❌       | `undefined` |
+| `camera`                | [`LocaleCamera`](#localecamera)                               | All      | ❌       | `undefined` |
+| `feedback`              | [`LocaleFeedback`](#localefeedback)                           | All      | ❌       | `undefined` |
+| `idScan`                | [`LocaleIdScan`](#localeidscan)                               | All      | ❌       | `undefined` |
+| `instructions`          | [`LocaleInstructions`](#localeinstructions)                   | All      | ❌       | `undefined` |
+| `presession`            | [`LocalePresession`](#localepresession)                       | All      | ❌       | `undefined` |
+| `result`                | [`LocaleResult`](#localeresult)                               | All      | ❌       | `undefined` |
+| `retry`                 | [`LocaleRetry`](#localeretry)                                 | All      | ❌       | `undefined` |
 
-#### `DynamicStringsAccessibility`
+#### `LocaleAccessibility`
 
 An object containing the accessibility dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsAccessibility` | type     | Platform | Required | Default     |
-| ----------------------------- | -------- | -------- | -------- | ----------- |
-| `cancelButton`                | `string` | All      | ❌       | `undefined` |
-| `torchButton`                 | `string` | All      | ❌       | `undefined` |
-| `tapGuidance`                 | `string` | All      | ❌       | `undefined` |
+| `LocaleAccessibility` | type     | Platform | Required | Default     |
+| --------------------- | -------- | -------- | -------- | ----------- |
+| `cancelButton`        | `string` | All      | ❌       | `undefined` |
+| `torchButton`         | `string` | All      | ❌       | `undefined` |
+| `tapGuidance`         | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsAccessibilityFeedback`
+#### `LocaleAccessibilityFeedback`
 
 An object containing the accessibility feedback dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsAccessibilityFeedback` | type                                                                                  | Platform | Required | Default     |
-| ------------------------------------- | ------------------------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `movePhoneAway`                       | `string`                                                                              | All      | ❌       | `undefined` |
-| `movePhoneCloser`                     | `string`                                                                              | All      | ❌       | `undefined` |
-| `holdDeviceToEyeLevel`                | `string`                                                                              | All      | ❌       | `undefined` |
-| `face`                                | [`DynamicStringsAccessibilityFeedbackFace`](#dynamicstringsaccessibilityfeedbackface) | All      | ❌       | `undefined` |
+| `LocaleAccessibilityFeedback` | type                                                                  | Platform | Required | Default     |
+| ----------------------------- | --------------------------------------------------------------------- | -------- | -------- | ----------- |
+| `movePhoneAway`               | `string`                                                              | All      | ❌       | `undefined` |
+| `movePhoneCloser`             | `string`                                                              | All      | ❌       | `undefined` |
+| `holdDeviceToEyeLevel`        | `string`                                                              | All      | ❌       | `undefined` |
+| `face`                        | [`LocaleAccessibilityFeedbackFace`](#localeaccessibilityfeedbackface) | All      | ❌       | `undefined` |
 
-##### `DynamicStringsAccessibilityFeedbackFace`
+##### `LocaleAccessibilityFeedbackFace`
 
 An object containing the face feedback accessibility dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsAccessibilityFeedbackFace` | type     | Platform | Required | Default     |
-| ----------------------------------------- | -------- | -------- | -------- | ----------- |
-| `tooFarLeft`                              | `string` | All      | ❌       | `undefined` |
-| `tooFarRight`                             | `string` | All      | ❌       | `undefined` |
-| `tooLow`                                  | `string` | All      | ❌       | `undefined` |
-| `tooHigh`                                 | `string` | All      | ❌       | `undefined` |
-| `rotatedTooFarLeft`                       | `string` | All      | ❌       | `undefined` |
-| `rotatedTooFarRight`                      | `string` | All      | ❌       | `undefined` |
-| `pointingTooFarLeft`                      | `string` | All      | ❌       | `undefined` |
-| `pointingTooFarRight`                     | `string` | All      | ❌       | `undefined` |
-| `notOnCamera`                             | `string` | All      | ❌       | `undefined` |
+| `LocaleAccessibilityFeedbackFace` | type     | Platform | Required | Default     |
+| --------------------------------- | -------- | -------- | -------- | ----------- |
+| `tooFarLeft`                      | `string` | All      | ❌       | `undefined` |
+| `tooFarRight`                     | `string` | All      | ❌       | `undefined` |
+| `tooLow`                          | `string` | All      | ❌       | `undefined` |
+| `tooHigh`                         | `string` | All      | ❌       | `undefined` |
+| `rotatedTooFarLeft`               | `string` | All      | ❌       | `undefined` |
+| `rotatedTooFarRight`              | `string` | All      | ❌       | `undefined` |
+| `pointingTooFarLeft`              | `string` | All      | ❌       | `undefined` |
+| `pointingTooFarRight`             | `string` | All      | ❌       | `undefined` |
+| `notOnCamera`                     | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsAction`
+#### `LocaleAction`
 
 An object containing the action dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsAction` | type     | Platform | Required | Default     |
-| ---------------------- | -------- | -------- | -------- | ----------- |
-| `ok`                   | `string` | All      | ❌       | `undefined` |
-| `imReady`              | `string` | All      | ❌       | `undefined` |
-| `tryAgain`             | `string` | All      | ❌       | `undefined` |
-| `continue`             | `string` | All      | ❌       | `undefined` |
-| `takePhoto`            | `string` | All      | ❌       | `undefined` |
-| `retakePhoto`          | `string` | All      | ❌       | `undefined` |
-| `acceptPhoto`          | `string` | All      | ❌       | `undefined` |
-| `confirm`              | `string` | All      | ❌       | `undefined` |
-| `scanNfc`              | `string` | All      | ❌       | `undefined` |
-| `scanNfcCard`          | `string` | All      | ❌       | `undefined` |
-| `skipNfc`              | `string` | All      | ❌       | `undefined` |
+| `LocaleAction` | type     | Platform | Required | Default     |
+| -------------- | -------- | -------- | -------- | ----------- |
+| `ok`           | `string` | All      | ❌       | `undefined` |
+| `imReady`      | `string` | All      | ❌       | `undefined` |
+| `tryAgain`     | `string` | All      | ❌       | `undefined` |
+| `continue`     | `string` | All      | ❌       | `undefined` |
+| `takePhoto`    | `string` | All      | ❌       | `undefined` |
+| `retakePhoto`  | `string` | All      | ❌       | `undefined` |
+| `acceptPhoto`  | `string` | All      | ❌       | `undefined` |
+| `confirm`      | `string` | All      | ❌       | `undefined` |
+| `scanNfc`      | `string` | All      | ❌       | `undefined` |
+| `scanNfcCard`  | `string` | All      | ❌       | `undefined` |
+| `skipNfc`      | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsCamera`
+#### `LocaleCamera`
 
 An object containing the camera dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsCamera` | type                                                                | Platform | Required | Default     |
-| ---------------------- | ------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `initializingCamera`   | `string`                                                            | All      | ❌       | `undefined` |
-| `permission`           | [`DynamicStringsCameraPermission`](#dynamicstringscamerapermission) | All      | ❌       | `undefined` |
+| `LocaleCamera`       | type                                                | Platform | Required | Default     |
+| -------------------- | --------------------------------------------------- | -------- | -------- | ----------- |
+| `initializingCamera` | `string`                                            | All      | ❌       | `undefined` |
+| `permission`         | [`LocaleCameraPermission`](#localecamerapermission) | All      | ❌       | `undefined` |
 
-##### `DynamicStringsCameraPermission`
+##### `LocaleCameraPermission`
 
 An object containing the camera permission dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsCameraPermission` | type     | Platform | Required | Default     |
-| -------------------------------- | -------- | -------- | -------- | ----------- |
-| `header`                         | `string` | All      | ❌       | `undefined` |
-| `enroll`                         | `string` | All      | ❌       | `undefined` |
-| `auth`                           | `string` | All      | ❌       | `undefined` |
-| `enableCamera`                   | `string` | All      | ❌       | `undefined` |
-| `launchSettings`                 | `string` | All      | ❌       | `undefined` |
+| `LocaleCameraPermission` | type     | Platform | Required | Default     |
+| ------------------------ | -------- | -------- | -------- | ----------- |
+| `header`                 | `string` | All      | ❌       | `undefined` |
+| `enroll`                 | `string` | All      | ❌       | `undefined` |
+| `auth`                   | `string` | All      | ❌       | `undefined` |
+| `enableCamera`           | `string` | All      | ❌       | `undefined` |
+| `launchSettings`         | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsFeedback`
+#### `LocaleFeedback`
 
 An object containing the feedback dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsFeedback` | type                                                        | Platform | Required | Default     |
-| ------------------------ | ----------------------------------------------------------- | -------- | -------- | ----------- |
-| `centerFace`             | `string`                                                    | All      | ❌       | `undefined` |
-| `holdSteady`             | `string`                                                    | All      | ❌       | `undefined` |
-| `useEvenLighting`        | `string`                                                    | All      | ❌       | `undefined` |
-| `face`                   | [`DynamicStringsFeedbackFace`](#dynamicstringsfeedbackface) | All      | ❌       | `undefined` |
-| `move`                   | [`DynamicStringsFeedbackMove`](#dynamicstringsfeedbackmove) | All      | ❌       | `undefined` |
+| `LocaleFeedback`  | type                                        | Platform | Required | Default     |
+| ----------------- | ------------------------------------------- | -------- | -------- | ----------- |
+| `centerFace`      | `string`                                    | All      | ❌       | `undefined` |
+| `holdSteady`      | `string`                                    | All      | ❌       | `undefined` |
+| `useEvenLighting` | `string`                                    | All      | ❌       | `undefined` |
+| `face`            | [`LocaleFeedbackFace`](#localefeedbackface) | All      | ❌       | `undefined` |
+| `move`            | [`LocaleFeedbackMove`](#localefeedbackmove) | All      | ❌       | `undefined` |
 
-##### `DynamicStringsFeedbackFace`
+##### `LocaleFeedbackFace`
 
 An object containing the face feedback dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsFeedbackFace` | type     | Platform | Required | Default     |
-| ---------------------------- | -------- | -------- | -------- | ----------- |
-| `notFound`                   | `string` | All      | ❌       | `undefined` |
-| `notLookingStraightAhead`    | `string` | All      | ❌       | `undefined` |
-| `notUpright`                 | `string` | All      | ❌       | `undefined` |
+| `LocaleFeedbackFace`      | type     | Platform | Required | Default     |
+| ------------------------- | -------- | -------- | -------- | ----------- |
+| `notFound`                | `string` | All      | ❌       | `undefined` |
+| `notLookingStraightAhead` | `string` | All      | ❌       | `undefined` |
+| `notUpright`              | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsFeedbackMove`
+##### `LocaleFeedbackMove`
 
 An object containing the move feedback dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsFeedbackMove` | type     | Platform | Required | Default     |
-| ---------------------------- | -------- | -------- | -------- | ----------- |
-| `phoneAway`                  | `string` | All      | ❌       | `undefined` |
-| `phoneCloser`                | `string` | All      | ❌       | `undefined` |
-| `phoneToEyeLevel`            | `string` | All      | ❌       | `undefined` |
+| `LocaleFeedbackMove` | type     | Platform | Required | Default     |
+| -------------------- | -------- | -------- | -------- | ----------- |
+| `phoneAway`          | `string` | All      | ❌       | `undefined` |
+| `phoneCloser`        | `string` | All      | ❌       | `undefined` |
+| `phoneToEyeLevel`    | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsIdScan`
+#### `LocaleIdScan`
 
 An object containing the ID scan dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScan` | type                                                            | Platform | Required | Default     |
-| ---------------------- | --------------------------------------------------------------- | -------- | -------- | ----------- |
-| `typeSelectionHeader`  | `string`                                                        | All      | ❌       | `undefined` |
-| `additionalReview`     | `string`                                                        | All      | ❌       | `undefined` |
-| `capture`              | [`DynamicStringsIdScanCapture`](#dynamicstringsidscancapture)   | All      | ❌       | `undefined` |
-| `feedback`             | [`DynamicStringsIdScanFeedback`](#dynamicstringsidscanfeedback) | All      | ❌       | `undefined` |
-| `nfc`                  | [`DynamicStringsIdScanNfc`](#dynamicstringsidscannfc)           | All      | ❌       | `undefined` |
-| `ocr`                  | [`DynamicStringsIdScanOcr`](#dynamicstringsidscanocr)           | All      | ❌       | `undefined` |
-| `review`               | [`DynamicStringsIdScanReview`](#dynamicstringsidscanreview)     | All      | ❌       | `undefined` |
+| `LocaleIdScan`        | type                                            | Platform | Required | Default     |
+| --------------------- | ----------------------------------------------- | -------- | -------- | ----------- |
+| `typeSelectionHeader` | `string`                                        | All      | ❌       | `undefined` |
+| `additionalReview`    | `string`                                        | All      | ❌       | `undefined` |
+| `capture`             | [`LocaleIdScanCapture`](#localeidscancapture)   | All      | ❌       | `undefined` |
+| `feedback`            | [`LocaleIdScanFeedback`](#localeidscanfeedback) | All      | ❌       | `undefined` |
+| `nfc`                 | [`LocaleIdScanNfc`](#localeidscannfc)           | All      | ❌       | `undefined` |
+| `ocr`                 | [`LocaleIdScanOcr`](#localeidscanocr)           | All      | ❌       | `undefined` |
+| `review`              | [`LocaleIdScanReview`](#localeidscanreview)     | All      | ❌       | `undefined` |
 
-##### `DynamicStringsIdScanCapture`
+##### `LocaleIdScanCapture`
 
 An object containing the ID scan capture dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScanCapture` | type     | Platform | Required | Default     |
-| ----------------------------- | -------- | -------- | -------- | ----------- |
-| `tapToFocus`                  | `string` | All      | ❌       | `undefined` |
-| `holdSteady`                  | `string` | All      | ❌       | `undefined` |
-| `idFrontInstruction`          | `string` | All      | ❌       | `undefined` |
-| `idBackInstruction`           | `string` | All      | ❌       | `undefined` |
+| `LocaleIdScanCapture` | type     | Platform | Required | Default     |
+| --------------------- | -------- | -------- | -------- | ----------- |
+| `tapToFocus`          | `string` | All      | ❌       | `undefined` |
+| `holdSteady`          | `string` | All      | ❌       | `undefined` |
+| `idFrontInstruction`  | `string` | All      | ❌       | `undefined` |
+| `idBackInstruction`   | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsIdScanFeedback`
+##### `LocaleIdScanFeedback`
 
 An object containing the ID scan feedback dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScanFeedback` | type     | Platform | Required | Default     |
-| ------------------------------ | -------- | -------- | -------- | ----------- |
-| `flipIdToBack`                 | `string` | All      | ❌       | `undefined` |
-| `flipIdToFront`                | `string` | All      | ❌       | `undefined` |
+| `LocaleIdScanFeedback` | type     | Platform | Required | Default     |
+| ---------------------- | -------- | -------- | -------- | ----------- |
+| `flipIdToBack`         | `string` | All      | ❌       | `undefined` |
+| `flipIdToFront`        | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsIdScanNfc`
+##### `LocaleIdScanNfc`
 
 An object containing the ID scan NFC dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScanNfc`     | type     | Platform | Required | Default     |
+| `LocaleIdScanNfc`             | type     | Platform | Required | Default     |
 | ----------------------------- | -------- | -------- | -------- | ----------- |
 | `statusDisabled`              | `string` | All      | ❌       | `undefined` |
 | `statusReady`                 | `string` | All      | ❌       | `undefined` |
@@ -332,38 +347,38 @@ An object containing the ID scan NFC dynamic strings used in the Aziface SDK.
 | `cardStatusFinishedWithError` | `string` | All      | ❌       | `undefined` |
 | `statusSkipped`               | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsIdScanOcr`
+##### `LocaleIdScanOcr`
 
 An object containing the ID scan OCR dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScanOcr` | type     | Platform | Required | Default     |
-| ------------------------- | -------- | -------- | -------- | ----------- |
-| `confirmationMainHeader`  | `string` | All      | ❌       | `undefined` |
-| `confirmationScroll`      | `string` | All      | ❌       | `undefined` |
+| `LocaleIdScanOcr`        | type     | Platform | Required | Default     |
+| ------------------------ | -------- | -------- | -------- | ----------- |
+| `confirmationMainHeader` | `string` | All      | ❌       | `undefined` |
+| `confirmationScroll`     | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsIdScanReview`
+##### `LocaleIdScanReview`
 
 An object containing the ID scan review dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsIdScanReview` | type     | Platform | Required | Default     |
-| ---------------------------- | -------- | -------- | -------- | ----------- |
-| `idFrontInstruction`         | `string` | All      | ❌       | `undefined` |
-| `idBackInstruction`          | `string` | All      | ❌       | `undefined` |
+| `LocaleIdScanReview` | type     | Platform | Required | Default     |
+| -------------------- | -------- | -------- | -------- | ----------- |
+| `idFrontInstruction` | `string` | All      | ❌       | `undefined` |
+| `idBackInstruction`  | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsInstructions`
+#### `LocaleInstructions`
 
 An object containing the instructions dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsInstructions` | type                                                            | Platform | Required | Default     |
-| ---------------------------- | --------------------------------------------------------------- | -------- | -------- | ----------- |
-| `header`                     | [`Omit<DynamicStringsLabel, 'tertiary'>`](#dynamicstringslabel) | All      | ❌       | `undefined` |
-| `message`                    | [`Omit<DynamicStringsLabel, 'tertiary'>`](#dynamicstringslabel) | All      | ❌       | `undefined` |
+| `LocaleInstructions` | type                                            | Platform | Required | Default     |
+| -------------------- | ----------------------------------------------- | -------- | -------- | ----------- |
+| `header`             | [`Omit<LocaleLabel, 'tertiary'>`](#localelabel) | All      | ❌       | `undefined` |
+| `message`            | [`Omit<LocaleLabel, 'tertiary'>`](#localelabel) | All      | ❌       | `undefined` |
 
-#### `DynamicStringsPresession`
+#### `LocalePresession`
 
 An object containing the presession dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsPresession`   | type     | Platform | Required | Default     |
+| `LocalePresession`           | type     | Platform | Required | Default     |
 | ---------------------------- | -------- | -------- | -------- | ----------- |
 | `orientation`                | `string` | All      | ❌       | `undefined` |
 | `frameYourFace`              | `string` | All      | ❌       | `undefined` |
@@ -373,124 +388,124 @@ An object containing the presession dynamic strings used in the Aziface SDK.
 | `conditionsTooBright`        | `string` | All      | ❌       | `undefined` |
 | `brightenYourEnvironment`    | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsResult`
+#### `LocaleResult`
 
-| `DynamicStringsResult` | type                                                            | Platform | Required | Default     |
-| ---------------------- | --------------------------------------------------------------- | -------- | -------- | ----------- |
-| `nfcUpload`            | `string`                                                        | All      | ❌       | `undefined` |
-| `sessionAbort`         | `string`                                                        | All      | ❌       | `undefined` |
-| `faceScan`             | [`DynamicStringsResultFaceScan`](#dynamicstringsresultfacescan) | All      | ❌       | `undefined` |
-| `idScan`               | [`DynamicStringsResultIdScan`](#dynamicstringsresultidscan)     | All      | ❌       | `undefined` |
+| `LocaleResult` | type                                            | Platform | Required | Default     |
+| -------------- | ----------------------------------------------- | -------- | -------- | ----------- |
+| `nfcUpload`    | `string`                                        | All      | ❌       | `undefined` |
+| `sessionAbort` | `string`                                        | All      | ❌       | `undefined` |
+| `faceScan`     | [`LocaleResultFaceScan`](#localeresultfacescan) | All      | ❌       | `undefined` |
+| `idScan`       | [`LocaleResultIdScan`](#localeresultidscan)     | All      | ❌       | `undefined` |
 
-##### `DynamicStringsResultFaceScan`
+##### `LocaleResultFaceScan`
 
 An object containing the face scan dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultFaceScan` | type                                                                              | Platform | Required | Default     |
-| ------------------------------ | --------------------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `upload`                       | `string`                                                                          | All      | ❌       | `undefined` |
-| `uploadStillUploading`         | `string`                                                                          | All      | ❌       | `undefined` |
-| `success3d`                    | [`DynamicStringsResultFaceScanSuccess3d`](#dynamicstringsresultfacescansuccess3d) | All      | ❌       | `undefined` |
+| `LocaleResultFaceScan` | type                                                              | Platform | Required | Default     |
+| ---------------------- | ----------------------------------------------------------------- | -------- | -------- | ----------- |
+| `upload`               | `string`                                                          | All      | ❌       | `undefined` |
+| `uploadStillUploading` | `string`                                                          | All      | ❌       | `undefined` |
+| `success3d`            | [`LocaleResultFaceScanSuccess3d`](#localeresultfacescansuccess3d) | All      | ❌       | `undefined` |
 
-###### `DynamicStringsResultFaceScanSuccess3d`
+###### `LocaleResultFaceScanSuccess3d`
 
 An object containing the face scan success 3D dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultFaceScanSuccess3d` | type     | Platform | Required | Default     |
-| --------------------------------------- | -------- | -------- | -------- | ----------- |
-| `enrollment`                            | `string` | All      | ❌       | `undefined` |
-| `reverification`                        | `string` | All      | ❌       | `undefined` |
-| `livenessPriorToIdScan`                 | `string` | All      | ❌       | `undefined` |
-| `livenessAndOfficialIdPhoto`            | `string` | All      | ❌       | `undefined` |
+| `LocaleResultFaceScanSuccess3d` | type     | Platform | Required | Default     |
+| ------------------------------- | -------- | -------- | -------- | ----------- |
+| `enrollment`                    | `string` | All      | ❌       | `undefined` |
+| `reverification`                | `string` | All      | ❌       | `undefined` |
+| `livenessPriorToIdScan`         | `string` | All      | ❌       | `undefined` |
+| `livenessAndOfficialIdPhoto`    | `string` | All      | ❌       | `undefined` |
 
-##### `DynamicStringsResultIdScan`
+##### `LocaleResultIdScan`
 
 An object containing the ID scan dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultIdScan` | type                                                                      | Platform | Required | Default     |
-| ---------------------------- | ------------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `unsuccess`                  | `string`                                                                  | All      | ❌       | `undefined` |
-| `skipOrErrorNfc`             | `string`                                                                  | All      | ❌       | `undefined` |
-| `additionalReviewTag`        | `string`                                                                  | All      | ❌       | `undefined` |
-| `uploadFrontSide`            | [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)   | All      | ❌       | `undefined` |
-| `uploadBackSide`             | [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)   | All      | ❌       | `undefined` |
-| `uploadUserConfirmedInfo`    | [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)   | All      | ❌       | `undefined` |
-| `uploadNfc`                  | [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)   | All      | ❌       | `undefined` |
-| `uploadSkippedNfc`           | [`DynamicStringsResultIdScanUpload`](#dynamicstringsresultidscanupload)   | All      | ❌       | `undefined` |
-| `success`                    | [`DynamicStringsResultIdScanSuccess`](#dynamicstringsresultidscansuccess) | All      | ❌       | `undefined` |
-| `retry`                      | [`DynamicStringsResultIdScanRetry`](#dynamicstringsresultidscanretry)     | All      | ❌       | `undefined` |
+| `LocaleResultIdScan`      | type                                                      | Platform | Required | Default     |
+| ------------------------- | --------------------------------------------------------- | -------- | -------- | ----------- |
+| `unsuccess`               | `string`                                                  | All      | ❌       | `undefined` |
+| `skipOrErrorNfc`          | `string`                                                  | All      | ❌       | `undefined` |
+| `additionalReviewTag`     | `string`                                                  | All      | ❌       | `undefined` |
+| `uploadFrontSide`         | [`LocaleResultIdScanUpload`](#localeresultidscanupload)   | All      | ❌       | `undefined` |
+| `uploadBackSide`          | [`LocaleResultIdScanUpload`](#localeresultidscanupload)   | All      | ❌       | `undefined` |
+| `uploadUserConfirmedInfo` | [`LocaleResultIdScanUpload`](#localeresultidscanupload)   | All      | ❌       | `undefined` |
+| `uploadNfc`               | [`LocaleResultIdScanUpload`](#localeresultidscanupload)   | All      | ❌       | `undefined` |
+| `uploadSkippedNfc`        | [`LocaleResultIdScanUpload`](#localeresultidscanupload)   | All      | ❌       | `undefined` |
+| `success`                 | [`LocaleResultIdScanSuccess`](#localeresultidscansuccess) | All      | ❌       | `undefined` |
+| `retry`                   | [`LocaleResultIdScanRetry`](#localeresultidscanretry)     | All      | ❌       | `undefined` |
 
-###### `DynamicStringsResultIdScanUpload`
+###### `LocaleResultIdScanUpload`
 
 An object containing the upload dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultIdScanUpload` | type     | Platform | Required | Default     |
+| `LocaleResultIdScanUpload`         | type     | Platform | Required | Default     |
 | ---------------------------------- | -------- | -------- | -------- | ----------- |
 | `uploadStarted`                    | `string` | All      | ❌       | `undefined` |
 | `stillUploading`                   | `string` | All      | ❌       | `undefined` |
 | `uploadCompleteAwaitingResponse`   | `string` | All      | ❌       | `undefined` |
 | `uploadCompleteAwaitingProcessing` | `string` | All      | ❌       | `undefined` |
 
-###### `DynamicStringsResultIdScanSuccess`
+###### `LocaleResultIdScanSuccess`
 
 An object containing the ID scan success dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultIdScanSuccess` | type     | Platform | Required | Default     |
-| ----------------------------------- | -------- | -------- | -------- | ----------- |
-| `frontSide`                         | `string` | All      | ❌       | `undefined` |
-| `frontSideBackNext`                 | `string` | All      | ❌       | `undefined` |
-| `frontSideNfcNext`                  | `string` | All      | ❌       | `undefined` |
-| `backSide`                          | `string` | All      | ❌       | `undefined` |
-| `backSideNfcNext`                   | `string` | All      | ❌       | `undefined` |
-| `passport`                          | `string` | All      | ❌       | `undefined` |
-| `passportNfcNext`                   | `string` | All      | ❌       | `undefined` |
-| `userConfirmation`                  | `string` | All      | ❌       | `undefined` |
-| `nfc`                               | `string` | All      | ❌       | `undefined` |
-| `additionalReviewTag`               | `string` | All      | ❌       | `undefined` |
+| `LocaleResultIdScanSuccess` | type     | Platform | Required | Default     |
+| --------------------------- | -------- | -------- | -------- | ----------- |
+| `frontSide`                 | `string` | All      | ❌       | `undefined` |
+| `frontSideBackNext`         | `string` | All      | ❌       | `undefined` |
+| `frontSideNfcNext`          | `string` | All      | ❌       | `undefined` |
+| `backSide`                  | `string` | All      | ❌       | `undefined` |
+| `backSideNfcNext`           | `string` | All      | ❌       | `undefined` |
+| `passport`                  | `string` | All      | ❌       | `undefined` |
+| `passportNfcNext`           | `string` | All      | ❌       | `undefined` |
+| `userConfirmation`          | `string` | All      | ❌       | `undefined` |
+| `nfc`                       | `string` | All      | ❌       | `undefined` |
+| `additionalReview`          | `string` | All      | ❌       | `undefined` |
 
-###### `DynamicStringsResultIdScanRetry`
+###### `LocaleResultIdScanRetry`
 
 An object containing the ID scan retry dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsResultIdScanRetry` | type     | Platform | Required | Default     |
-| --------------------------------- | -------- | -------- | -------- | ----------- |
-| `faceDidNotMatch`                 | `string` | All      | ❌       | `undefined` |
-| `idNotFullyVisible`               | `string` | All      | ❌       | `undefined` |
-| `ocrResultsNotGoodEnough`         | `string` | All      | ❌       | `undefined` |
-| `idTypeNotSupported`              | `string` | All      | ❌       | `undefined` |
-| `barcodeNotReadable`              | `string` | All      | ❌       | `undefined` |
+| `LocaleResultIdScanRetry` | type     | Platform | Required | Default     |
+| ------------------------- | -------- | -------- | -------- | ----------- |
+| `faceDidNotMatch`         | `string` | All      | ❌       | `undefined` |
+| `idNotFullyVisible`       | `string` | All      | ❌       | `undefined` |
+| `ocrResultsNotGoodEnough` | `string` | All      | ❌       | `undefined` |
+| `idTypeNotSupported`      | `string` | All      | ❌       | `undefined` |
+| `barcodeNotRead`          | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsRetry`
+#### `LocaleRetry`
 
 An object containing the retry dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsRetry` | type                                                                        | Platform | Required | Default     |
-| --------------------- | --------------------------------------------------------------------------- | -------- | -------- | ----------- |
-| `header`              | `string`                                                                    | All      | ❌       | `undefined` |
-| `subHeader`           | `string`                                                                    | All      | ❌       | `undefined` |
-| `yourImageLabel`      | `string`                                                                    | All      | ❌       | `undefined` |
-| `idealImageLabel`     | `string`                                                                    | All      | ❌       | `undefined` |
-| `instruction`         | [`DynamicStringsLabel`](#dynamicstringslabel)                               | All      | ❌       | `undefined` |
-| `officialIdPhoto`     | [`DynamicStringsRetryOfficialIdPhoto`](#dynamicstringsretryofficialidphoto) | All      | ❌       | `undefined` |
+| `LocaleRetry`     | type                                                        | Platform | Required | Default     |
+| ----------------- | ----------------------------------------------------------- | -------- | -------- | ----------- |
+| `header`          | `string`                                                    | All      | ❌       | `undefined` |
+| `subHeader`       | `string`                                                    | All      | ❌       | `undefined` |
+| `yourImageLabel`  | `string`                                                    | All      | ❌       | `undefined` |
+| `idealImageLabel` | `string`                                                    | All      | ❌       | `undefined` |
+| `instruction`     | [`LocaleLabel`](#localelabel)                               | All      | ❌       | `undefined` |
+| `officialIdPhoto` | [`LocaleRetryOfficialIdPhoto`](#localeretryofficialidphoto) | All      | ❌       | `undefined` |
 
-##### `DynamicStringsRetryOfficialIdPhoto`
+##### `LocaleRetryOfficialIdPhoto`
 
 An object containing the retry official ID photo dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsRetryOfficialIdPhoto` | type     | Platform | Required | Default     |
-| ------------------------------------ | -------- | -------- | -------- | ----------- |
-| `header`                             | `string` | All      | ❌       | `undefined` |
-| `subHeader`                          | `string` | All      | ❌       | `undefined` |
-| `instruction`                        | `string` | All      | ❌       | `undefined` |
-| `yourImageLabel`                     | `string` | All      | ❌       | `undefined` |
-| `idealImageLabel`                    | `string` | All      | ❌       | `undefined` |
+| `LocaleRetryOfficialIdPhoto` | type     | Platform | Required | Default     |
+| ---------------------------- | -------- | -------- | -------- | ----------- |
+| `header`                     | `string` | All      | ❌       | `undefined` |
+| `subHeader`                  | `string` | All      | ❌       | `undefined` |
+| `instruction`                | `string` | All      | ❌       | `undefined` |
+| `yourImageLabel`             | `string` | All      | ❌       | `undefined` |
+| `idealImageLabel`            | `string` | All      | ❌       | `undefined` |
 
-#### `DynamicStringsLabel`
+#### `LocaleLabel`
 
 An object containing label dynamic strings used in the Aziface SDK.
 
-| `DynamicStringsLabel` | type     | Platform | Required | Default     |
-| --------------------- | -------- | -------- | -------- | ----------- |
-| `primary`             | `string` | All      | ❌       | `undefined` |
-| `secondary`           | `string` | All      | ❌       | `undefined` |
-| `tertiary`            | `string` | All      | ❌       | `undefined` |
+| `LocaleLabel` | type     | Platform | Required | Default     |
+| ------------- | -------- | -------- | -------- | ----------- |
+| `primary`     | `string` | All      | ❌       | `undefined` |
+| `secondary`   | `string` | All      | ❌       | `undefined` |
+| `tertiary`    | `string` | All      | ❌       | `undefined` |

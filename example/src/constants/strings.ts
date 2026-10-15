@@ -1,6 +1,6 @@
-import type { DynamicStrings } from '@azify/aziface-mobile';
+import type { Locale } from '@azify/aziface-mobile';
 
-export const DYNAMIC_STRINGS: DynamicStrings = {
+export const DYNAMIC_STRINGS: Locale = {
   action: {
     acceptPhoto: 'Accept Photo',
     confirm: 'Confirm',
@@ -129,14 +129,14 @@ export const DYNAMIC_STRINGS: DynamicStrings = {
       additionalReviewTag: 'Additional Review Tag',
       skipOrErrorNfc: 'Skip Or Error NFC',
       retry: {
-        barcodeNotReadable: 'Barcode Not Readable',
+        barcodeNotRead: 'Barcode Not Readable',
         faceDidNotMatch: 'Face Did Not Match',
         idNotFullyVisible: 'ID Not Fully Visible',
         idTypeNotSupported: 'ID Type Not Supported',
         ocrResultsNotGoodEnough: 'OCR Results Not Good Enough',
       },
       success: {
-        additionalReviewTag: 'Additional Review Tag',
+        additionalReview: 'Additional Review Tag',
         backSide: 'Back Side',
         backSideNfcNext: 'Back Side NFC Next',
         frontSide: 'Front Side',

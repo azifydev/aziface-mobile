@@ -14,14 +14,11 @@ import {
   photoMatch,
   photoScan,
   setLocale,
-  setDynamicStrings,
-  resetDynamicStrings,
   vocal,
   FaceView,
   type Params,
   type Headers,
   type Processor,
-  type Locale,
 } from '@azify/aziface-mobile';
 import * as pkg from '../../package.json';
 import {
@@ -38,15 +35,14 @@ import { styles } from './styles';
 import { useUser } from '../hooks';
 import { useBiometricConfigs } from '../services';
 import { DYNAMIC_STRINGS, LOCALES } from '../constants';
-import type { FaceType } from '../types';
+import type { FaceType, LocaleType } from '../types';
 
 export function Home() {
   const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, logout } = useUser();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
-  const [isDynamicStringsEnabled, setIsDynamicStringsEnabled] = useState(false);
-  const [localization, setLocalization] = useState<Locale>('default');
+  const [localization, setLocalization] = useState<LocaleType>('en');
 
   const commonButtonProps: TouchableOpacityProps = {
     style: [styles.button, { opacity: isInitialized ? 1 : 0.5 }],
@@ -122,27 +118,20 @@ export function Home() {
   };
 
   const onLocale = () => {
-    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
-    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+    const locales = Object.keys(LOCALES) as LocaleType[];
+    const localeIndex = Math.floor(Math.random() * (locales.length - 2));
+    const value = locales.filter((l) => l !== localization)[localeIndex]!;
 
     setLocalization(value);
-    setLocale(value);
+    setLocale(LOCALES[value]);
   };
 
   const onResetLocale = () => {
-    setLocalization('default');
-    setLocale('default');
+    setLocalization('en');
+    setLocale(LOCALES.en);
   };
 
-  const onDynamicStrings = () => {
-    if (isDynamicStringsEnabled) {
-      setIsDynamicStringsEnabled(false);
-      resetDynamicStrings();
-    } else {
-      setIsDynamicStringsEnabled(true);
-      setDynamicStrings(DYNAMIC_STRINGS);
-    }
-  };
+  const onDynamicStrings = () => setLocale(DYNAMIC_STRINGS);
 
   const onVocal = (enabled: boolean) => {
     console.log('onVocal', enabled);
@@ -222,11 +211,7 @@ export function Home() {
         </TouchableOpacity>
 
         <TouchableOpacity {...commonButtonProps} onPress={onDynamicStrings}>
-          <Text style={styles.buttonText}>
-            {isDynamicStringsEnabled
-              ? 'Reset Dynamic Strings'
-              : 'Set Dynamic Strings'}
-          </Text>
+          <Text style={styles.buttonText}>Set Others Strings</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonLogout} onPress={logout}>

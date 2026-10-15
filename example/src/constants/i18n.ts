@@ -1,19 +1,35 @@
-import type { Locale } from '@azify/aziface-mobile';
+import {
+  af,
+  ar,
+  de,
+  el,
+  es,
+  en,
+  fr,
+  ja,
+  kk,
+  nb,
+  ptBR,
+  ru,
+  vi,
+  zh,
+  type Locale,
+} from '@azify/aziface-mobile';
+import type { LocaleType } from '../types';
 
-export const LOCALES: Locale[] = [
-  'default',
-  'en',
-  'af',
-  'ar',
-  'de',
-  'el',
-  'es',
-  'fr',
-  'ja',
-  'kk',
-  'nb',
-  'pt-BR',
-  'ru',
-  'vi',
-  'zh',
-];
+export const LOCALES: Record<LocaleType, Required<Locale>> = {
+  af,
+  ar,
+  de,
+  el,
+  es,
+  en,
+  fr,
+  ja,
+  kk,
+  nb,
+  ptBR,
+  ru,
+  vi,
+  zh,
+};

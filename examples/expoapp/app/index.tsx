@@ -14,12 +14,9 @@ import {
   photoScan,
   photoMatch,
   setLocale,
-  setDynamicStrings,
-  resetDynamicStrings,
   vocal,
   type Processor,
   type Headers,
-  type Locale,
 } from '@azify/aziface-mobile';
 import {
   getDeviceId,
@@ -32,6 +29,7 @@ import {
 import md5 from 'md5';
 import { useState } from 'react';
 import { LOCALES, DYNAMIC_STRINGS } from '../constants';
+import type { LocaleType } from '../types';
 
 type FaceType =
   | 'enroll'
@@ -43,8 +41,7 @@ type FaceType =
 export default function Screen() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
-  const [isDynamicStringsEnabled, setIsDynamicStringsEnabled] = useState(false);
-  const [localization, setLocalization] = useState<Locale>('default');
+  const [localization, setLocalization] = useState<LocaleType>('en');
 
   async function onInitialize() {
     const clientInfo = getSystemName();
@@ -111,32 +108,26 @@ export default function Screen() {
     }
   }
 
-  function onVocal(enabled: boolean) {
+  const onVocal = (enabled: boolean) => {
+    console.log('onVocal', enabled);
     setIsEnabledVocal(enabled);
-  }
+  };
 
   const onLocale = () => {
-    const localeIndex = Math.floor(Math.random() * (LOCALES.length - 2));
-    const value = LOCALES.filter((l) => l !== localization)[localeIndex]!;
+    const locales = Object.keys(LOCALES) as LocaleType[];
+    const localeIndex = Math.floor(Math.random() * (locales.length - 2));
+    const value = locales.filter((l) => l !== localization)[localeIndex]!;
 
     setLocalization(value);
-    setLocale(value);
+    setLocale(LOCALES[value]);
   };
 
   const onResetLocale = () => {
-    setLocalization('default');
-    setLocale('default');
+    setLocalization('en');
+    setLocale(LOCALES.en);
   };
 
-  const onDynamicStrings = () => {
-    if (isDynamicStringsEnabled) {
-      setIsDynamicStringsEnabled(false);
-      resetDynamicStrings();
-    } else {
-      setIsDynamicStringsEnabled(true);
-      setDynamicStrings(DYNAMIC_STRINGS);
-    }
-  };
+  const onDynamicStrings = () => setLocale(DYNAMIC_STRINGS);
 
   const opacityStyle = { opacity: isInitialized ? 1 : 0.5 };
   const vocalStyle = {
@@ -216,11 +207,7 @@ export default function Screen() {
         style={[styles.button, opacityStyle]}
         onPress={onDynamicStrings}
       >
-        <Text style={styles.text}>
-          {isDynamicStringsEnabled
-            ? 'Reset Dynamic Strings'
-            : 'Set Dynamic Strings'}
-        </Text>
+        <Text style={styles.text}>Others Strings</Text>
       </TouchableOpacity>
     </FaceView>
   );
