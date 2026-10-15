@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/azifydev/aziface-mobile/compare/v3.8.7...v3.9.0) (2026-10-15)
+
+
+### Features
+
+* **WL-572:** introduces new locale format ([#34](https://github.com/azifydev/aziface-mobile/issues/34)) ([b9eceac](https://github.com/azifydev/aziface-mobile/commit/b9eceacfe26ba622dad475260124430a2f91fe4c))
+
 ## [3.8.7](https://github.com/azifydev/aziface-mobile/compare/v3.8.6...v3.8.7) (2026-10-05)
 
 
