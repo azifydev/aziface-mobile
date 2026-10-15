@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C076E312D13549A0082C4F9 /* FaceTecSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C076E302D13549A0082C4F9 /* FaceTecSDK.xcframework */; };
 		7C435D612BA1D46D00A5ADCD /* AzifaceMobile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D602BA1D46D00A5ADCD /* AzifaceMobile.swift */; };
 		7C435D632BA1D56900A5ADCD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D622BA1D56900A5ADCD /* Config.swift */; };
 		7C435D6A2BA1D69000A5ADCD /* AzifaceMobile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C435D692BA1D69000A5ADCD /* AzifaceMobile.m */; };
@@ -22,6 +21,7 @@
 		DD9D60982E71AC8B0009EEB4 /* please_retry_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607C2E71A19A0009EEB4 /* please_retry_sound_file.mp3 */; };
 		DD9D60992E71AC8B0009EEB4 /* uploading_sound_file.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD9D607D2E71A19A0009EEB4 /* uploading_sound_file.mp3 */; };
 		DD9D609C2E71AC8B0009EEB4 /* FaceTec_OCR_Customization.json in Resources */ = {isa = PBXBuildFile; fileRef = DD9D60762E71A1910009EEB4 /* FaceTec_OCR_Customization.json */; };
+		DDEA2814306AE6EA00A1AF86 /* FaceTecSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C076E302D13549A0082C4F9 /* FaceTecSDK.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C076E312D13549A0082C4F9 /* FaceTecSDK.xcframework in Frameworks */,
+				DDEA2814306AE6EA00A1AF86 /* FaceTecSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

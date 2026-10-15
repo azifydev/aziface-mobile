@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   type EventSubscription,
@@ -3746,126 +3746,6 @@ export function vocal(): void {
 }
 
 /**
- * @description This is the **principal** method to be called, he must be
- * **called first** to initialize the Aziface SDK. If he doesn't be called the
- * other methods **don't works!**
- *
- * @param {Initialize} initialize - Initialize the Aziface SDK with
- * specific parameters and headers.
- *
- * @return {Promise<boolean>} Represents if Aziface SDK initialized with
- * successful.
- */
-export async function initialize({
-  params,
-  headers,
-}: Initialize): Promise<boolean> {
-  return await AzifaceMobile.initialize(params, headers)
-    .then((successful) => successful)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
- * @description This method make to read from face and documents for user,
- * after compare face and face documents from user to check veracity.
- *
- * @param {object|undefined} data - The object with data to be will send on
- * photo ID match. The data is optional.
- *
- * @return {Promise<Processor>} Represents if photo match was a successful.
- *
- * @throws If photo ID match was a unsuccessful or occurred some interference.
- */
-export async function photoMatch(data?: object): Promise<Processor> {
-  return await AzifaceMobile.photoIDMatch(data)
-    .then((response) => JSON.parse(response) as Processor)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
- * @description This method makes to read from documents for user, checking
- * in your server the veracity it.
- *
- * @param {object|undefined} data - The object with data to be will send on
- * photo ID scan only. The data is optional.
- *
- * @return {Promise<Processor>} Represents if photo scan only was a successful.
- *
- * @throws If photo ID scan only was a unsuccessful or occurred some
- * interference.
- */
-export async function photoScan(data?: object): Promise<Processor> {
-  return await AzifaceMobile.photoIDScanOnly(data)
-    .then((response) => JSON.parse(response) as Processor)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
- * @description This method makes a 3D reading of the user's face. But, you must
- * use to **subscribe** user in Aziface SDK or in your server.
- *
- * @param {object|undefined} data - The object with data to be will send on
- * enrollment. The data is optional.
- *
- * @return {Promise<Processor>} Represents if enrollment was a successful.
- *
- * @throws If enrollment was a unsuccessful or occurred some interference.
- */
-export async function enroll(data?: object): Promise<Processor> {
-  return await AzifaceMobile.enroll(data)
-    .then((response) => JSON.parse(response) as Processor)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
- * @description This method makes a 3D reading of the user's face, it's an
- * equal `enroll` method, but it must be used to **authenticate** your user.
- * An important detail about it is, you must **subscribe** to your user
- * **first**, after authenticating it with this method.
- *
- * @param {object|undefined} data - The object with data to be will send on
- * enrollment. The data is optional.
- *
- * @return {Promise<Processor>} Represents if authenticate was a successful.
- *
- * @throws If authenticate was a unsuccessful or occurred some interference.
- */
-export async function authenticate(data?: object): Promise<Processor> {
-  return await AzifaceMobile.authenticate(data)
-    .then((response) => JSON.parse(response) as Processor)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
- * @description This method makes a 3D reading of the user's face, ensuring
- * the liveness check of the user.
- *
- * @param {object|undefined} data - The object with data to be will send on
- * enrollment. The data is optional.
- *
- * @return {Promise<Processor>} Represents if liveness was a successful.
- *
- * @throws If liveness was a unsuccessful or occurred some interference.
- */
-export async function liveness(data?: object): Promise<Processor> {
-  return await AzifaceMobile.liveness(data)
-    .then((response) => JSON.parse(response) as Processor)
-    .catch((error: Error) => {
-      throw new Error(error.message);
-    });
-}
-
-/**
  * @description This method must be used to **set** the **locale** of the
  * Aziface SDK.
  *
@@ -3901,6 +3781,193 @@ export function setTheme(options?: Theme): void {
  */
 export function resetTheme(): void {
   AzifaceMobile.resetTheme();
+}
+
+// Hooks
+
+/**
+ * @description This hook provides the state and methods to interact with the
+ * Aziface SDK.
+ */
+export function useAziface() {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(false);
+
+  async function initialize({ params, headers }: Initialize): Promise<boolean> {
+    setIsInitializing(true);
+
+    return await AzifaceMobile.initialize(params, headers)
+      .then((successful) => {
+        setIsInitialized(successful);
+        return successful;
+      })
+      .catch((error: Error) => {
+        setIsInitialized(false);
+        throw new Error(error.message);
+      })
+      .finally(() => setIsInitializing(false));
+  }
+
+  async function enroll(data?: object): Promise<Processor> {
+    setIsProcessing(true);
+
+    return await AzifaceMobile.enroll(data)
+      .then((response) => JSON.parse(response) as Processor)
+      .catch((error: Error) => {
+        throw new Error(error.message);
+      })
+      .finally(() => setIsProcessing(false));
+  }
+
+  async function authenticate(data?: object): Promise<Processor> {
+    setIsProcessing(true);
+
+    return await AzifaceMobile.authenticate(data)
+      .then((response) => JSON.parse(response) as Processor)
+      .catch((error: Error) => {
+        throw new Error(error.message);
+      })
+      .finally(() => setIsProcessing(false));
+  }
+
+  async function liveness(data?: object): Promise<Processor> {
+    setIsProcessing(true);
+
+    return await AzifaceMobile.liveness(data)
+      .then((response) => JSON.parse(response) as Processor)
+      .catch((error: Error) => {
+        throw new Error(error.message);
+      })
+      .finally(() => setIsProcessing(false));
+  }
+
+  async function photoScan(data?: object): Promise<Processor> {
+    setIsProcessing(true);
+
+    return await AzifaceMobile.photoIDScanOnly(data)
+      .then((response) => JSON.parse(response) as Processor)
+      .catch((error: Error) => {
+        throw new Error(error.message);
+      })
+      .finally(() => setIsProcessing(false));
+  }
+
+  async function photoMatch(data?: object): Promise<Processor> {
+    setIsProcessing(true);
+
+    return await AzifaceMobile.photoIDMatch(data)
+      .then((response) => JSON.parse(response) as Processor)
+      .catch((error: Error) => {
+        throw new Error(error.message);
+      })
+      .finally(() => setIsProcessing(false));
+  }
+
+  return {
+    /**
+     * @description This is the **principal** method to be called, he must be
+     * **called first** to initialize the Aziface SDK. If he doesn't be called the
+     * other methods **don't works!**
+     *
+     * @param {Initialize} initialize - Initialize the Aziface SDK with
+     * specific parameters and headers.
+     *
+     * @return {Promise<boolean>} Represents if Aziface SDK initialized with
+     * successful.
+     */
+    initialize,
+
+    /**
+     * @description This method makes a 3D reading of the user's face. But, you must
+     * use to **subscribe** user in Aziface SDK or in your server.
+     *
+     * @param {object|undefined} data - The object with data to be will send on
+     * enrollment. The data is optional.
+     *
+     * @return {Promise<Processor>} Represents if enrollment was a successful.
+     *
+     * @throws If enrollment was a unsuccessful or occurred some interference.
+     */
+    enroll,
+
+    /**
+     * @description This method makes a 3D reading of the user's face, it's an
+     * equal `enroll` method, but it must be used to **authenticate** your user.
+     * An important detail about it is, you must **subscribe** to your user
+     * **first**, after authenticating it with this method.
+     *
+     * @param {object|undefined} data - The object with data to be will send on
+     * enrollment. The data is optional.
+     *
+     * @return {Promise<Processor>} Represents if authenticate was a successful.
+     *
+     * @throws If authenticate was a unsuccessful or occurred some interference.
+     */
+    authenticate,
+
+    /**
+     * @description This method makes a 3D reading of the user's face, ensuring
+     * the liveness check of the user.
+     *
+     * @param {object|undefined} data - The object with data to be will send on
+     * enrollment. The data is optional.
+     *
+     * @return {Promise<Processor>} Represents if liveness was a successful.
+     *
+     * @throws If liveness was a unsuccessful or occurred some interference.
+     */
+    liveness,
+
+    /**
+     * @description This method makes to read from documents for user, checking
+     * in your server the veracity it.
+     *
+     * @param {object|undefined} data - The object with data to be will send on
+     * photo ID scan only. The data is optional.
+     *
+     * @return {Promise<Processor>} Represents if photo scan only was a successful.
+     *
+     * @throws If photo ID scan only was a unsuccessful or occurred some
+     * interference.
+     */
+    photoScan,
+
+    /**
+     * @description This method make to read from face and documents for user,
+     * after compare face and face documents from user to check veracity.
+     *
+     * @param {object|undefined} data - The object with data to be will send on
+     * photo ID match. The data is optional.
+     *
+     * @return {Promise<Processor>} Represents if photo match was a successful.
+     *
+     * @throws If photo ID match was a unsuccessful or occurred some interference.
+     */
+    photoMatch,
+
+    /**
+     * @description Indicates if the Aziface SDK is currently processing a
+     * request.
+     *
+     * @type {boolean}
+     */
+    isProcessing,
+
+    /**
+     * @description Indicates if the Aziface SDK is currently initialized.
+     *
+     * @type {boolean}
+     */
+    isInitialized,
+
+    /**
+     * @description Indicates if the Aziface SDK is currently initializing.
+     *
+     * @type {boolean}
+     */
+    isInitializing,
+  };
 }
 
 // Components

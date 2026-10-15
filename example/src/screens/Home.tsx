@@ -7,12 +7,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import {
-  initialize,
-  enroll,
-  authenticate,
-  liveness,
-  photoMatch,
-  photoScan,
+  useAziface,
   setLocale,
   vocal,
   FaceView,
@@ -29,20 +24,29 @@ import {
   getUserAgent,
   syncUniqueId,
 } from 'react-native-device-info';
-import Config from 'react-native-config';
 import md5 from 'md5';
 import { styles } from './styles';
 import { useUser } from '../hooks';
-import { useBiometricConfigs } from '../services';
 import { DYNAMIC_STRINGS, LOCALES } from '../constants';
 import type { FaceType, LocaleType } from '../types';
+import Config from 'react-native-config';
+import { useBiometricConfigs } from '../services';
 
 export function Home() {
-  const { data: configs } = useBiometricConfigs();
   const { tokenBiometric, logout } = useUser();
-  const [isInitialized, setIsInitialized] = useState(false);
+  const { data: configs } = useBiometricConfigs();
   const [isEnabledVocal, setIsEnabledVocal] = useState(false);
   const [localization, setLocalization] = useState<LocaleType>('en');
+
+  const {
+    initialize,
+    enroll,
+    authenticate,
+    liveness,
+    photoMatch,
+    photoScan,
+    isInitialized,
+  } = useAziface();
 
   const commonButtonProps: TouchableOpacityProps = {
     style: [styles.button, { opacity: isInitialized ? 1 : 0.5 }],
@@ -79,7 +83,6 @@ export function Home() {
 
     try {
       const initialized = await initialize({ params, headers });
-      setIsInitialized(initialized);
       console.log('isInitialized', initialized);
     } catch (error) {
       console.error('Initialize', error);

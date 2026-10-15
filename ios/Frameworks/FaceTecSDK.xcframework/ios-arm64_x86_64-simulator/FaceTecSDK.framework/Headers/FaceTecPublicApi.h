@@ -755,6 +755,12 @@ __attribute__((visibility("default")))
  */
 @property (nonatomic, strong) UIImage * _Nullable inactiveTorchButtonImage;
 /**
+ * The frame of the Torch button within the current screen's bounds.
+ * Note: To use the default location for the Torch button,  set this value to CGRect(0, 0, 0, 0)
+ * Default is a CGRect at origin 0,0 with a size of 0 by 0.
+ */
+@property (nonatomic) CGRect torchButtonCustomLocation;
+/**
  * Color of the Additional Review Screen background.
  * Default is white.
  */
@@ -1377,6 +1383,13 @@ __attribute__((visibility("default")))
  */
 @property (nonatomic) BOOL hideForCameraPermissions;
 
+/**
+ * On tablets where the camera is not positioned on the top middle of the device when the device is held in Portrait, the FaceTec Frame may be moved from the default location to a location that is closer physical location of the front camera. This behavior improves usability of FaceTec, and cannot be customized.  When this behavior occurs, the Cancel Button Location will be overridden, and placed in the upper left of the FaceTec Frame.
+ * Setting this customization to true will override this behavior in case you want to place the Cancel Button in the same static location configured by the FaceTecCancelButtonCustomization.customLocation customization. FaceTec recommends using the default (false) so that the cancel button is located inside the FaceTec Frame when this custom tablet behavior occurs.
+ * Default is false.
+ */
+@property (nonatomic) BOOL forceCustomCancelButtonLocationForTablets;
+
 - (nonnull instancetype) init;
 @end
 
@@ -1647,7 +1660,7 @@ __attribute__((visibility("default")))
 /** Represents the various end states of a FaceTec Session. This will be available after a Session returns to your application in the FaceTecSessionResult. */
 typedef NS_ENUM(NSInteger, FaceTecSessionStatus) {
     /**
-     The Session was completed successfully.
+     The Session was completed.
      */
     FaceTecSessionStatusSessionCompleted,
     /**

@@ -36,7 +36,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
   private static final String EXTERNAL_ID = "android_azify_app_";
   private static final DynamicStrings Strings = new DynamicStrings();
   public static final String NAME = "AzifaceMobile";
-  private static Boolean IsRunning = false;
   public static String DemonstrationExternalDatabaseRefID = "";
   private final AzifaceError error;
   private WritableMap response;
@@ -101,16 +100,11 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void initialize(ReadableMap params, ReadableMap headers, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
     CommonParams parameters = new CommonParams(params);
 
     if (parameters.isNull()) {
       this.isInitialized = false;
       this.onInitialize(false);
-
-      IsRunning = false;
 
       promise.reject("Parameters aren't provided", "ParamsNotProvided");
       return;
@@ -137,18 +131,12 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       this.isInitialized = false;
       this.onInitialize(false);
 
-      IsRunning = false;
-
       promise.reject("Configuration aren't provided", "ConfigNotProvided");
     }
   }
 
   @ReactMethod
   public void liveness(ReadableMap data, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
-
     if (this.getActivity() == null) {
       this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.getStringifyResponse());
@@ -170,10 +158,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void enroll(ReadableMap data, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
-
     if (this.getActivity() == null) {
       this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.getStringifyResponse());
@@ -195,10 +179,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void authenticate(ReadableMap data, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
-
     if (this.getActivity() == null) {
       this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.getStringifyResponse());
@@ -219,10 +199,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void photoIDMatch(ReadableMap data, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
-
     if (this.getActivity() == null) {
       this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.getStringifyResponse());
@@ -244,10 +220,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   @ReactMethod
   public void photoIDScanOnly(ReadableMap data, Promise promise) {
-    if (IsRunning) return;
-
-    IsRunning = true;
-
     if (this.getActivity() == null) {
       this.onProcessorError("AziFace SDK not found target View!", "NotFoundTargetView");
       promise.resolve(this.getStringifyResponse());
@@ -299,7 +271,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
       return;
     }
 
-    IsRunning = true;
     this.updateTheme();
 
     this.isEnabled = !this.isEnabled;
@@ -311,7 +282,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     Vocal.setVocalGuidanceMode(this.isEnabled);
 
     this.onVocal(this.isEnabled);
-    IsRunning = false;
   }
 
   private void updateTheme() {
@@ -344,15 +314,9 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
 
   private void onProcessorSuccess(JSONObject object) {
     this.response = Arguments.createMap();
-    this.response.putBoolean("isSuccess", true);
     this.response.putMap("data", this.convertJsonToWritableMap(object));
     this.response.putMap("error", null);
-
-    IsRunning = false;
   }
-
-  private void onProcessorError(String message, String code) {
-    WritableMap error = Arguments.createMap();
     error.putString("message", message);
     error.putString("code", code);
 
@@ -362,8 +326,6 @@ public class AzifaceMobileModule extends NativeAzifaceMobileSpec implements Acti
     this.response.putMap("error", error);
 
     this.onError(true);
-
-    IsRunning = false;
   }
 
   private String getStringifyResponse() {

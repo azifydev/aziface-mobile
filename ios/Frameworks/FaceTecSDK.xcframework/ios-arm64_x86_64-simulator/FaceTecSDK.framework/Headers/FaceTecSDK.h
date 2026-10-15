@@ -1,10 +1,3 @@
-//
-//  FaceTecSDK.h
-//  FaceTecSDK
-//
-//  Copyright © 2025 FaceTec. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 //! Project version number for FaceTecSDK.
